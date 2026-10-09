@@ -53,77 +53,58 @@ just test-live   # 실제 채용 사이트 호출
 ## 동작
 
 ### 구성
-```mermaid
-flowchart LR
-    user(["사용자"])
-    resume[("resume/*.md")]
-    sites["채용 사이트 8곳<br/>(공식 API · HTML)"]
-    claude["Claude<br/>(로컬 claude login 세션)"]
-
-    subgraph FE["frontend (React)"]
-        tabs["공고 · 북마크 · 회사 탭"]
-    end
-
-    subgraph BE["backend (FastAPI)"]
-        api["api.py<br/>/api/*"]
-        jobs["jobs.py<br/>스크래핑 job"]
-        scrapers["scrapers/<br/>회사별 수집 + 엔지니어링 필터"]
-        profile["profile.py<br/>이력서 → 프로필"]
-        matcher["matcher.py<br/>20건 배치 판정"]
-        repo["repository.py"]
-    end
-
-    db[("sqlite<br/>backend/data/app.db")]
-
-    user --> tabs
-    tabs -- "조회 · 북마크 · 스크래핑 시작" --> api
-    api --> repo
-    api -- "백그라운드 실행" --> jobs
-    jobs --> scrapers --> sites
-    jobs --> profile
-    profile --> resume
-    profile --> claude
-    jobs --> matcher --> claude
-    jobs --> repo
-    repo --> db
+```
+  [User]
+     |
+     v
++----------------------------------------+
+| frontend (React)                       |
+| tabs: Postings | Bookmarks | Companies |
++----------------------------------------+
+     |  /api/*
+     v
++-------------+      +---------------+      +----------------------+
+| api.py      |----->| repository.py |----->| sqlite               |
+| (FastAPI)   |      +---------------+      | backend/data/app.db  |
++-------------+              ^              +----------------------+
+     | POST /api/scrape      | save postings / judgments
+     v (background)          |
++-------------+              |
+| jobs.py     |--------------+
++-------------+
+     |
+     +--> scrapers/   -- httpx ---------> career sites (8)
+     |
+     +--> profile.py  -- read ----------> resume/*.md
+     |                -- cache ---------> repository.py (profile_cache, key = resume hash)
+     |                -- extract -------> Claude (local `claude login` session)
+     |
+     +--> matcher.py  -- judge 20/batch -> Claude
 ```
 - 스크래핑은 httpx로 짠 결정적 코드이고, LLM은 프로필 추출과 공고 판정에만 쓴다
 - LLM은 API key 없이 로컬 Claude Code 로그인 세션으로 호출한다
 
 ### 스크래핑 한 번의 흐름
-```mermaid
-sequenceDiagram
-    autonumber
-    actor U as 사용자
-    participant W as frontend
-    participant A as api.py
-    participant J as jobs.py
-    participant S as scrapers
-    participant L as Claude
-    participant D as sqlite
-
-    U->>W: "스크래핑 하기"
-    W->>A: POST /api/scrape
-    A->>J: start() → job_id 즉시 반환
-    loop 1.5초마다
-        W->>A: GET /api/scrape/{job_id}
-    end
-    J->>D: 프로필 캐시 조회 (resume 해시)
-    opt 캐시 없음 / resume 변경
-        J->>L: 이력서 → 프로필 추출
-    end
-    par 회사별 병렬 (한 회사 실패는 격리)
-        J->>S: fetch()
-        S-->>J: 공고 목록 (0건이면 실패 처리)
-        J->>D: 다시 나온 공고 복구 · 사라진 공고 soft delete
-        J->>D: 이미 판정한 공고 조회
-        J->>L: 신규 공고만 20건씩 판정
-        L-->>J: 등급 · score · gaps · 추천 이유
-        J->>D: strong/good/stretch 저장, 판정 이력 기록 (exclude는 이력만)
-    end
-    J-->>W: job 완료 (폴링으로 확인)
-    W->>A: GET /api/postings
-    A-->>W: 등급 · 북마크 여부가 붙은 공고
+```
+[스크래핑 하기] 클릭
+ |
+ +-> POST /api/scrape
+ |     job 생성 후 job_id 즉시 반환. frontend는 끝날 때까지 1.5초마다 GET /api/scrape/{job_id}
+ |
+ +-> 1. profile
+ |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 Claude로 추출
+ |
+ +-> 2. per company (parallel)
+ |     회사별로 동시에 실행, 한 회사가 실패해도 나머지는 계속
+ |     a. fetch ............. 채용 사이트에서 공고 수집 (0건이면 실패 처리)
+ |     b. sync .............. 다시 나온 공고 복구, 사라진 공고 soft delete
+ |     c. filter ............ 이미 판정한 공고 제외
+ |     d. judge ............. 신규 공고만 Claude로 20건씩 판정
+ |     e. save .............. strong/good/stretch는 postings에 저장
+ |                            exclude는 judgments에만 기록 (재판정 방지)
+ |
+ +-> 3. done
+       frontend가 GET /api/postings로 목록 갱신 (등급, 북마크 여부 포함)
 ```
 - 세션이 만료되면 job이 `auth_required`로 끝나고, 다음 실행에서 판정 못 한 공고만 다시 판정한다
 - 북마크는 공고와 JOIN으로 묶여 있어서, 공고가 삭제되면 같이 숨겨지고 공고가 다시 나타나면 같이 돌아온다
