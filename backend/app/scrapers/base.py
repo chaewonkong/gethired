@@ -33,9 +33,9 @@ class Scraper(ABC):
     careers_url: ClassVar[str]
     expected_count: ClassVar[int]
 
-    def __init_subclass__(cls, **kwargs: Any) -> None:
+    def __init_subclass__(cls, register: bool = True, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
-        if "company" in cls.__dict__:
+        if register and "company" in cls.__dict__:
             REGISTRY[cls.company] = cls
 
     @abstractmethod

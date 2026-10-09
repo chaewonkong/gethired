@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from scrapers import REGISTRY, RawPosting, kakao, line, naver
-from scrapers.coupang import CoupangScraper
-from scrapers.daangn import DaangnScraper
-from scrapers.toss import ENGINEERING_CATEGORIES, TossScraper
+from app.scrapers import REGISTRY, RawPosting, kakao, line, naver
+from app.scrapers.coupang import CoupangScraper
+from app.scrapers.daangn import DaangnScraper
+from app.scrapers.toss import ENGINEERING_CATEGORIES, TossScraper
 
 FIX = Path(__file__).parent.parent / "fixtures"
 

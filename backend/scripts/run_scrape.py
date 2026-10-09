@@ -1,3 +1,4 @@
+"""스크래퍼 단독 실행 (디버그용). DB를 건드리지 않고 out/<company>.json에 저장."""
 import asyncio
 import json
 import sys
@@ -5,11 +6,13 @@ import time
 from collections import Counter
 from pathlib import Path
 
-from pydantic import ValidationError
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scrapers import REGISTRY, RawPosting, Scraper, make_client
+from pydantic import ValidationError  # noqa: E402
 
-OUT = Path(__file__).parent / "out"
+from app.scrapers import REGISTRY, RawPosting, Scraper, make_client  # noqa: E402
+
+OUT = Path(__file__).resolve().parent.parent / "out"
 
 
 async def run_one(scraper: Scraper) -> tuple[str, list[RawPosting] | None, str | None, float]:
@@ -54,15 +57,12 @@ async def main() -> int:
             print(f"{company:8} {'failed':7} {'-':>5} {elapsed:5.1f}  {error}")
             continue
         (OUT / f"{company}.json").write_text(
-            json.dumps([p.model_dump(mode="json") for p in postings], ensure_ascii=False, indent=1)
-        )
-        warns = check(company, postings)
-        print(f"{company:8} {'ok':7} {len(postings):>5} {elapsed:5.1f}  {'; '.join(warns)}")
-        cats = Counter(p.category for p in postings)
-        print(f"{'':8} categories: {dict(cats.most_common(8))}")
+            json.dumps([p.model_dump(mode="json") for p in postings], ensure_ascii=False, indent=1))
+        print(f"{company:8} {'ok':7} {len(postings):>5} {elapsed:5.1f}  {'; '.join(check(company, postings))}")
+        print(f"{'':8} categories: {dict(Counter(p.category for p in postings).most_common(8))}")
 
-    all_posts = [p for _, ps, _, _ in results if ps for p in ps]
-    print(f"\ntotal {len(all_posts)} postings, {failed} failed, {total_elapsed:.1f}s wall")
+    total = sum(len(ps) for _, ps, _, _ in results if ps)
+    print(f"\ntotal {total} postings, {failed} failed, {total_elapsed:.1f}s wall")
     return 1 if failed else 0
 
 

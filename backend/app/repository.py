@@ -1,0 +1,168 @@
+import json
+import sqlite3
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+LEVEL_RANK = {"stretch": 1, "good": 2, "strong": 3}
+
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS postings (
+    id INTEGER PRIMARY KEY,
+    company TEXT NOT NULL,
+    external_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    tech_stack TEXT NOT NULL,
+    fit_level TEXT NOT NULL,
+    score INTEGER NOT NULL,
+    gaps TEXT NOT NULL,
+    fit_reason TEXT NOT NULL,
+    apply_url TEXT NOT NULL,
+    deadline TEXT,
+    category TEXT,
+    scraped_at TEXT NOT NULL,
+    deleted_at TEXT,
+    UNIQUE (company, external_id)
+);
+CREATE TABLE IF NOT EXISTS judgments (
+    company TEXT NOT NULL,
+    external_id TEXT NOT NULL,
+    judged_at TEXT NOT NULL,
+    stored INTEGER NOT NULL,
+    PRIMARY KEY (company, external_id)
+);
+CREATE TABLE IF NOT EXISTS scrape_runs (
+    id INTEGER PRIMARY KEY,
+    company TEXT NOT NULL,
+    started_at TEXT NOT NULL,
+    finished_at TEXT,
+    status TEXT NOT NULL,
+    error TEXT,
+    fetched_count INTEGER
+);
+CREATE TABLE IF NOT EXISTS profile_cache (
+    hash TEXT PRIMARY KEY,
+    profile TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+"""
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def _row(r: sqlite3.Row) -> dict[str, Any]:
+    d = dict(r)
+    for k in ("tech_stack", "gaps"):
+        if k in d:
+            d[k] = json.loads(d[k])
+    return d
+
+
+class Repository:
+    def __init__(self, path: str | Path = ":memory:"):
+        if path != ":memory:":
+            Path(path).parent.mkdir(parents=True, exist_ok=True)
+        self.conn = sqlite3.connect(str(path), check_same_thread=False)
+        self.conn.row_factory = sqlite3.Row
+        self.conn.executescript(SCHEMA)
+
+    def close(self) -> None:
+        self.conn.close()
+
+    # --- postings ---
+    def upsert_postings(self, rows: list[dict[str, Any]]) -> None:
+        self.conn.executemany(
+            """INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
+                                     fit_reason, apply_url, deadline, category, scraped_at, deleted_at)
+               VALUES (:company, :external_id, :title, :summary, :tech_stack, :fit_level, :score, :gaps,
+                       :fit_reason, :apply_url, :deadline, :category, :scraped_at, NULL)
+               ON CONFLICT (company, external_id) DO UPDATE SET
+                 title=excluded.title, summary=excluded.summary, tech_stack=excluded.tech_stack,
+                 fit_level=excluded.fit_level, score=excluded.score, gaps=excluded.gaps,
+                 fit_reason=excluded.fit_reason, apply_url=excluded.apply_url, deadline=excluded.deadline,
+                 category=excluded.category, scraped_at=excluded.scraped_at, deleted_at=NULL""",
+            [{**r, "tech_stack": json.dumps(r["tech_stack"], ensure_ascii=False),
+              "gaps": json.dumps(r["gaps"], ensure_ascii=False)} for r in rows],
+        )
+        self.conn.commit()
+
+    def mark_seen(self, company: str, external_ids: set[str], now: str) -> None:
+        """이번 스크랩에 다시 나타난 공고: 최근 스크래핑 일자 갱신, soft delete 해제"""
+        self.conn.executemany(
+            "UPDATE postings SET scraped_at=?, deleted_at=NULL WHERE company=? AND external_id=?",
+            [(now, company, eid) for eid in external_ids],
+        )
+        self.conn.commit()
+
+    def soft_delete_missing(self, company: str, external_ids: set[str], now: str) -> int:
+        rows = self.conn.execute(
+            "SELECT external_id FROM postings WHERE company=? AND deleted_at IS NULL", (company,)
+        ).fetchall()
+        gone = [r["external_id"] for r in rows if r["external_id"] not in external_ids]
+        self.conn.executemany(
+            "UPDATE postings SET deleted_at=? WHERE company=? AND external_id=?",
+            [(now, company, eid) for eid in gone],
+        )
+        self.conn.commit()
+        return len(gone)
+
+    def list_postings(self, company: str | None = None, min_level: str | None = None,
+                      include_deleted: bool = False) -> list[dict[str, Any]]:
+        where, params = [], []
+        if not include_deleted:
+            where.append("deleted_at IS NULL")
+        if company:
+            where.append("company=?")
+            params.append(company)
+        if min_level:
+            levels = [lv for lv, rank in LEVEL_RANK.items() if rank >= LEVEL_RANK[min_level]]
+            where.append(f"fit_level IN ({','.join('?' * len(levels))})")
+            params += levels
+        sql = "SELECT * FROM postings" + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY score DESC, id"
+        return [_row(r) for r in self.conn.execute(sql, params).fetchall()]
+
+    # --- judgments ---
+    def judged_ids(self, company: str) -> set[str]:
+        return {r["external_id"] for r in self.conn.execute(
+            "SELECT external_id FROM judgments WHERE company=?", (company,)).fetchall()}
+
+    def record_judgments(self, company: str, external_ids: list[str], stored_ids: set[str], now: str) -> None:
+        self.conn.executemany(
+            "INSERT OR REPLACE INTO judgments (company, external_id, judged_at, stored) VALUES (?, ?, ?, ?)",
+            [(company, eid, now, int(eid in stored_ids)) for eid in external_ids],
+        )
+        self.conn.commit()
+
+    # --- scrape runs ---
+    def start_run(self, company: str, now: str) -> int:
+        cur = self.conn.execute(
+            "INSERT INTO scrape_runs (company, started_at, status) VALUES (?, ?, 'running')", (company, now))
+        self.conn.commit()
+        return int(cur.lastrowid)
+
+    def finish_run(self, run_id: int, status: str, now: str, error: str | None = None,
+                   fetched_count: int | None = None) -> None:
+        self.conn.execute(
+            "UPDATE scrape_runs SET status=?, finished_at=?, error=?, fetched_count=? WHERE id=?",
+            (status, now, error, fetched_count, run_id))
+        self.conn.commit()
+
+    def last_runs(self) -> dict[str, dict[str, Any]]:
+        rows = self.conn.execute(
+            """SELECT r.* FROM scrape_runs r
+               JOIN (SELECT company, MAX(id) AS id FROM scrape_runs GROUP BY company) m ON m.id = r.id"""
+        ).fetchall()
+        return {r["company"]: dict(r) for r in rows}
+
+    # --- profile cache ---
+    def get_profile_cache(self, hash_: str) -> dict[str, Any] | None:
+        r = self.conn.execute("SELECT profile FROM profile_cache WHERE hash=?", (hash_,)).fetchone()
+        return json.loads(r["profile"]) if r else None
+
+    def set_profile_cache(self, hash_: str, profile: dict[str, Any], now: str) -> None:
+        self.conn.execute("INSERT OR REPLACE INTO profile_cache (hash, profile, created_at) VALUES (?, ?, ?)",
+                          (hash_, json.dumps(profile, ensure_ascii=False), now))
+        self.conn.commit()
