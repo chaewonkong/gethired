@@ -23,8 +23,8 @@ def assert_required(postings: list[RawPosting], company: str):
     assert all(p.title and p.apply_url.startswith("http") for p in postings)
 
 
-def test_registry_has_six():
-    assert set(REGISTRY) == {"naver", "kakao", "coupang", "toss", "daangn", "line"}
+def test_registry_has_all_companies():
+    assert set(REGISTRY) == {"naver", "kakao", "coupang", "toss", "daangn", "line", "samsung", "hyundai"}
 
 
 def test_naver_list_filters_tech_and_parses_date():

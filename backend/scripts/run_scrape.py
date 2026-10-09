@@ -36,7 +36,7 @@ def check(company: str, postings: list[RawPosting]) -> list[str]:
     if dup:
         warnings.append(f"duplicate external_id: {dup[:5]}")
     with_desc = sum(1 for p in postings if p.description and len(p.description) >= 100)
-    if with_desc / len(postings) < 0.95:
+    if REGISTRY[company].has_description and with_desc / len(postings) < 0.95:
         warnings.append(f"description coverage {with_desc}/{len(postings)}")
     return warnings
 

@@ -20,7 +20,8 @@ def test_scraper_returns_valid_postings(company):
     assert postings, f"{company}: 0 postings"
     assert all(p.external_id and p.title and p.apply_url.startswith("http") for p in postings)
     assert max(Counter(p.external_id for p in postings).values()) == 1, "duplicate external_id"
-    with_desc = sum(1 for p in postings if p.description and len(p.description) >= 100)
-    assert with_desc / len(postings) >= 0.9, f"{company}: description coverage {with_desc}/{len(postings)}"
+    if REGISTRY[company].has_description:
+        with_desc = sum(1 for p in postings if p.description and len(p.description) >= 100)
+        assert with_desc / len(postings) >= 0.9, f"{company}: description coverage {with_desc}/{len(postings)}"
     expected = REGISTRY[company].expected_count
     assert expected * 0.5 <= len(postings) <= expected * 2, f"{company}: {len(postings)} vs expected {expected}"

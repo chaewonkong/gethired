@@ -32,6 +32,7 @@ class Scraper(ABC):
     display_name: ClassVar[str]
     careers_url: ClassVar[str]
     expected_count: ClassVar[int]
+    has_description: ClassVar[bool] = True  # False면 본문(JD)을 못 가져오는 소스 (메타데이터만)
 
     def __init_subclass__(cls, register: bool = True, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
