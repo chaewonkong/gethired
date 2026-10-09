@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Company, Job, Level, LEVEL_RANK, Posting } from "../api";
 import { PostingCard } from "./PostingCard";
 import { ScrapeProgress } from "./ScrapeProgress";
@@ -17,14 +17,38 @@ function lastScrapedAt(companies: Company[]): string | null {
   return times.length ? times.sort().at(-1)! : null;
 }
 
+const PAGE_SIZE = 20;
+
 export function PostingsTab({ postings, companies, byId, job, scraping, onScrape }: Props) {
   const [company, setCompany] = useState("");
   const [minLevel, setMinLevel] = useState<Level>("stretch");
+  const [visible, setVisible] = useState(PAGE_SIZE);
+  const sentinel = useRef<HTMLDivElement>(null);
 
   const items = postings
     .filter((p) => (!company || p.company === company) && LEVEL_RANK[p.fit_level] >= LEVEL_RANK[minLevel])
     .sort((a, b) => b.score - a.score);
   const last = lastScrapedAt(companies);
+  const hasMore = visible < items.length;
+
+  // 필터·데이터가 바뀌면 처음부터
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [company, minLevel, postings]);
+
+  // 바닥 sentinel이 보이면 다음 페이지
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el || !hasMore) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setVisible((v) => v + PAGE_SIZE);
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasMore, items.length]);
 
   return (
     <section className="panel">
@@ -53,7 +77,9 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
 
       <div className="list">
         {items.length ? (
-          items.map((p) => <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} />)
+          items.slice(0, visible).map((p) => (
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} />
+          ))
         ) : (
           <div className="empty">
             저장된 공고가 없습니다.
@@ -62,6 +88,11 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
           </div>
         )}
       </div>
+      {hasMore && (
+        <div ref={sentinel} className="sentinel">
+          <span className="meta">{Math.min(visible, items.length)} / {items.length}건 · 더 불러오는 중…</span>
+        </div>
+      )}
     </section>
   );
 }
