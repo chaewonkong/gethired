@@ -8,7 +8,7 @@
 - 사전 필터: 회사별 공식 직군 분류(engineering/tech)로 1차 필터 후 LLM 판정 (Step 1 결과 보고 후 변경). 키워드 기반 추가 필터는 없음
 - LLM 모델: Claude Opus 5.5 (`claude-opus-5-5`) 고정
 
-Step 1 완료 (2026-10-09): 6개사 모두 가능. 판정표와 필터 기준은 `poc/README.md`
+Step 1~6 완료 (2026-10-09). 결과: `poc/README.md`, `design/spec.md` "PoC 결과". 품질 샘플 검토(`poc/results/fit.md`)만 사용자 대기
 
 산출물은 모두 `poc/` 아래. 본개발 코드가 아니므로 구조는 가볍게, 단 `RawPosting` 모델과 스크래퍼 인터페이스는 Phase 1에서 그대로 옮길 수 있게 spec의 `Scraper` ABC 형태를 따른다.
 

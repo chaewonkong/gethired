@@ -147,7 +147,18 @@ UI 샘플: [ui-sample.html](ui-sample.html)
   - 스트림 중 `AssistantMessage.error == "authentication_failed"` → 이후 `ResultError("Not logged in · Please run /login")` raise. 0.3초 내 실패
   - 사전 체크: `claude auth status` → JSON `loggedIn` (미인증 시 exit 1). `/auth/status`는 이걸로 구현
   - 미검증: 토큰 "만료"(로그인 이력 있음) 케이스가 같은 신호인지는 재현 불가. `authentication_failed` + `api_error_status == 401` 둘 다 auth 오류로 처리
+- 0-5 ✅ 프로필 추출 + 매칭 (상세: `poc/README.md` Step 3/4)
+  - 프로필: 이력서 2개 → 구조화 JSON, 21.5초, $0.138. 이력서 해시로 캐시. 희망 근무지/비자 등은 이력서에 없어 비어 있음 → **Phase 1: 희망 조건을 별도 입력(설정 파일)으로 받아 프로필에 병합**
+  - 매칭: 322건 + 플랜티드 3건, 배치 20 → 누락 0, 플랜티드 3/3, 결정성 20/20, fit 22건(토스 14, 당근 6, 라인 1). 품질 샘플 검토는 사용자 대기 (`poc/results/fit.md`)
+  - Phase 1 반영: 본문 1500자 제한에 요구사항이 잘리는 공고 있음 → 2500자 이상 또는 요구사항 섹션 우선. fit_reason이 이력서의 구체 경험을 인용하도록 한 프롬프트 규칙은 유지
+- 0-6 ⚠️ 시간 ✅ / 비용 ❌ (상세: `poc/README.md` Step 5)
+  - 첫 실행 325건: 226초(3.8분), 17회 호출, $5.86 상당 (목표 $5). 입력 489K / 출력 103K 토큰. 동시성 4로 순차 대비 약 4배
+  - 증분 실행(신규 0건): 호출 0, 0.5초 → 운영 비용은 신규 공고 수에 비례
+  - 비용 절감은 Phase 1에서 선택: 저점수 공고의 fit_reason 축약, 배치 30, 프롬프트 캐시 유지(시스템 프롬프트·프로필을 앞에 고정)
 - 환경 메모: sandbox에서 uv 캐시 쓰기 불가 → `UV_CACHE_DIR=<프로젝트>/.uv-cache` 사용
+
+#### PoC 결론
+6개 항목 중 비용만 목표를 소폭 초과. 본개발 진행 가능. Phase 1에 반영할 사항은 위 각 항목의 "Phase 1" 메모 참조.
 
 #### PoC 검증 계획 (Step 2~6, `design/plan.md` 기준)
 기준값(5분, $5, 80%, ±30%)은 초기 가정이며 실측 후 조정한다. 사람이 직접 봐야 하는 항목은 **(사람)** 표시.
