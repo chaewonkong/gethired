@@ -156,15 +156,15 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 | 0-5 | 프로필 추출 + 매칭 품질 | 샘플 공고 20건에 대해 적합 판정과 이유가 납득 가능 |
 | 0-6 | 병렬 수집 + 매칭 소요 시간 | 첫 실행 기준 허용 가능한 시간 측정 (목표 수십 초 단위) |
 
-결과물: `poc/` 회사별 스크립트 + 회사별 판정표 (가능 / 우회 필요 / 불가)
+결과물: `backend/` 회사별 스크립트 + 회사별 판정표 (가능 / 우회 필요 / 불가)
 
 #### PoC 결과
-- 0-1 ✅ 6개사 모두 브라우저 없이 httpx로 공고 목록 확보 (상세 표: `poc/README.md`)
+- 0-1 ✅ 6개사 모두 브라우저 없이 httpx로 공고 목록 확보 (상세 표: `design/poc.md`)
   - 네이버: 내부 JSON `loadJobList.do` + 상세 HTML / 카카오: `public/api/job-list` / 쿠팡·당근: Greenhouse Board API / 토스: Greenhouse 스키마를 자체 API로 프록시 / 라인: Gatsby page-data(Strapi)
   - 쿠팡 사이트는 Cloudflare challenge지만 Greenhouse API로 우회. 글로벌 공고라 `location`에 Korea 포함만 사용
 - 0-2 ✅ 필수 필드(external_id, title, apply_url) 6개사 확보. deadline은 네이버/카카오/라인만 실질 제공, 나머지는 null
   - 본문은 네이버·라인만 상세 1회 추가 호출 필요 (각 23건/61건)
-  - 한국 기준 수집량 ≈ 1,050건 → 회사별 공식 엔지니어링 분류로 필터 후 ≈ 340건 (네이버 `Tech`, 카카오 `TECHNOLOGY`, 토스 Job Category, 당근 `Division=Tech`, 라인 `job_unit=Engineering`, 쿠팡은 분류가 없어 제목 키워드). 상세: `poc/README.md`
+  - 한국 기준 수집량 ≈ 1,050건 → 회사별 공식 엔지니어링 분류로 필터 후 ≈ 340건 (네이버 `Tech`, 카카오 `TECHNOLOGY`, 토스 Job Category, 당근 `Division=Tech`, 라인 `job_unit=Engineering`, 쿠팡은 분류가 없어 제목 키워드). 상세: `design/poc.md`
 - 0-3 ✅ `claude-agent-sdk`가 API key 없이 `claude.ai` 세션으로 동작 (sandbox 내부 포함)
   - `tools=[]`, `setting_sources=[]`, `output_format={"type":"json_schema",...}` → `ResultMessage.structured_output`으로 dict 수신
   - 단순 호출 1회 약 5.5초, $0.025 (구독 사용량 차감 기준 추정치)
@@ -172,12 +172,12 @@ UI 샘플: [ui-sample.html](ui-sample.html)
   - 스트림 중 `AssistantMessage.error == "authentication_failed"` → 이후 `ResultError("Not logged in · Please run /login")` raise. 0.3초 내 실패
   - 사전 체크: `claude auth status` → JSON `loggedIn` (미인증 시 exit 1). `/auth/status`는 이걸로 구현
   - 미검증: 토큰 "만료"(로그인 이력 있음) 케이스가 같은 신호인지는 재현 불가. `authentication_failed` + `api_error_status == 401` 둘 다 auth 오류로 처리
-- 0-5 ✅ 프로필 추출 + 매칭 (상세: `poc/README.md` Step 3/4)
+- 0-5 ✅ 프로필 추출 + 매칭 (상세: `design/poc.md` Step 3/4)
   - 프로필: 이력서 2개 → 구조화 JSON, 21.5초, $0.138. 이력서 해시로 캐시. 희망 근무지/비자 등은 이력서에 없어 비어 있음 → **Phase 1: 희망 조건을 별도 입력(설정 파일)으로 받아 프로필에 병합**
-  - 매칭: 322건 + 플랜티드 3건, 배치 20 → 누락 0, 플랜티드 3/3, 결정성 20/20, fit 22건(토스 14, 당근 6, 라인 1). 품질 샘플 검토는 사용자 대기 (`poc/results/fit.md`)
-  - 적합도 4단계로 변경 후 재판정(카카오 33, 쿠팡 40): bool에서 0건이던 Kotlin/Spring·Staff 레벨 공고가 good 4 / stretch 24로 분류되고 `gaps`에 language/seniority가 기록됨. 검토 포인트: 도메인 "필수" 요건(의료 10년 등)이 강한 공고도 stretch 하한(45)으로 올라옴 → 규칙 보완 여지 (`poc/README.md` Step 4 보강)
+  - 매칭: 322건 + 플랜티드 3건, 배치 20 → 누락 0, 플랜티드 3/3, 결정성 20/20, fit 22건(토스 14, 당근 6, 라인 1). 품질 샘플 검토는 사용자 대기 (`design/poc-results/fit.md`)
+  - 적합도 4단계로 변경 후 재판정(카카오 33, 쿠팡 40): bool에서 0건이던 Kotlin/Spring·Staff 레벨 공고가 good 4 / stretch 24로 분류되고 `gaps`에 language/seniority가 기록됨. 검토 포인트: 도메인 "필수" 요건(의료 10년 등)이 강한 공고도 stretch 하한(45)으로 올라옴 → 규칙 보완 여지 (`design/poc.md` Step 4 보강)
   - Phase 1 반영: 본문 1500자 제한에 요구사항이 잘리는 공고 있음 → 2500자 이상 또는 요구사항 섹션 우선. fit_reason이 이력서의 구체 경험을 인용하도록 한 프롬프트 규칙은 유지
-- 0-6 ⚠️ 시간 ✅ / 비용 ❌ (상세: `poc/README.md` Step 5)
+- 0-6 ⚠️ 시간 ✅ / 비용 ❌ (상세: `design/poc.md` Step 5)
   - 첫 실행 325건: 226초(3.8분), 17회 호출, $5.86 상당 (목표 $5). 입력 489K / 출력 103K 토큰. 동시성 4로 순차 대비 약 4배
   - 증분 실행(신규 0건): 호출 0, 0.5초 → 운영 비용은 신규 공고 수에 비례
   - 비용 절감은 Phase 1에서 선택: 저점수 공고의 fit_reason 축약, 배치 30, 프롬프트 캐시 유지(시스템 프롬프트·프로필을 앞에 고정)
@@ -194,12 +194,12 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 |---|---|---|
 | 실제 수집 | `uv run python run_scrape.py` | 6개사 모두 ok, 1건 이상 |
 | 필수 필드 | 저장 전 pydantic 검증 | external_id/title/apply_url 누락 시 해당 회사 failed. 누락 0건 |
-| 필터 동작 | 회사별 `category` 분포 출력 | `poc/README.md` 필터 표와 일치 |
+| 필터 동작 | 회사별 `category` 분포 출력 | `design/poc.md` 필터 표와 일치 |
 | 건수 sanity | 회사별 건수 vs README 예상치 | ±30% 이내. 벗어나면 스키마 변경 의심 경고 |
 | 중복 | `(company, external_id)` 유니크 검사 | 중복 0 |
 | 본문 확보율 | `description` 100자 이상 비율 | 회사별 95% 이상 |
 | apply_url 유효성 | 회사별 무작위 3건 요청 | 200 (리다이렉트 허용) |
-| 파서 단위 테스트 | Step 1 응답을 `poc/fixtures/<company>.json`으로 저장, `pytest poc/tests/test_parsers.py` | 네트워크 없이 fixture → `RawPosting` 변환, 필터·날짜 파싱(네이버 `endYmd`, 라인 `until_filled`) 통과 |
+| 파서 단위 테스트 | Step 1 응답을 `backend/fixtures/<company>.json`으로 저장, `pytest backend/tests/test_parsers.py` | 네트워크 없이 fixture → `RawPosting` 변환, 필터·날짜 파싱(네이버 `endYmd`, 라인 `until_filled`) 통과 |
 | 실패 격리 | 한 회사 URL을 일부러 깨뜨려 실행 | 그 회사만 failed, 나머지 5개 정상 |
 
 **Step 3 — 프로필 추출**
@@ -234,13 +234,23 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 - PoC 결과 섹션에 0-2/0-5/0-6 각각 ✅/❌와 실측 수치, Phase 1에서 바뀔 점 기록
 - 위 검증 항목 중 파서 fixture 테스트·플랜티드 테스트·실패 격리는 Phase 3 테스트로 그대로 승계
 
-### Phase 1 — Backend
-- `scrapers/base.py`: `Scraper` ABC + registry
-- 회사별 스크래퍼 6개, `asyncio.gather` + `httpx.AsyncClient` 병렬 실행
-- `llm.py`: Agent SDK 래퍼. 인증 오류를 `ClaudeAuthError`로 변환
-- `matcher.py`: 프로필 캐싱(이력서 파일 해시 기준), 신규 공고만 배치로 LLM 판정
-- `repository.py`: sqlite upsert + soft delete sync
-- FastAPI 엔드포인트 + 백그라운드 scrape job
+### 디렉토리
+- `backend/`: Python (PoC 코드를 승격한 것). `frontend/`: React (Vite). `design/`: spec, 계획, PoC 기록. `resume/`: 입력 이력서
+- PoC 산출물은 `design/poc.md`(결과·판정표), `design/poc-results/`(매칭 샘플)
+
+### Phase 1 — Backend (PoC 승격)
+PoC에서 검증된 모듈은 그대로 쓰고, 저장·API·잡만 새로 만든다.
+
+| 모듈 | 출처 | 작업 |
+|---|---|---|
+| `scrapers/` (ABC, registry, 6개사, Greenhouse 베이스) | PoC 그대로 | 유지. 0건 응답은 실패 처리 |
+| `llm.py` (`ask_json`, `ClaudeAuthError`) | PoC 그대로 | 유지 |
+| `profile.py` | PoC | 캐시를 파일 → DB 또는 유지. 희망 조건 별도 입력 병합 |
+| `matcher.py` | PoC `match.py` | CLI·플랜티드 제거, `judgments` 연동, 신규 공고만 판정 |
+| `repository.py` | 신규 | sqlite: postings upsert, soft delete sync, judgments, scrape_runs |
+| `api.py` | 신규 | FastAPI 엔드포인트 (`/auth/status`, `/companies`, `/scrape`, `/postings`) |
+| `jobs.py` | 신규 | 백그라운드 scrape job, 회사별 상태, 인증 오류 시 `auth_required` |
+| `tests/` | PoC fixture 테스트 그대로 | + repository, sync, 세션 만료 테스트 추가 |
 
 ### Phase 2 — Frontend
 - React (Vite)

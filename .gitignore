@@ -3,7 +3,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-poc/out/
-poc/.claude/
+backend/out/
+backend/.claude/
 *.db
 .DS_Store

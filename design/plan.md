@@ -8,31 +8,31 @@
 - 사전 필터: 회사별 공식 직군 분류(engineering/tech)로 1차 필터 후 LLM 판정 (Step 1 결과 보고 후 변경). 키워드 기반 추가 필터는 없음
 - LLM 모델: Claude Opus 5.5 (`claude-opus-5-5`) 고정
 
-Step 1~6 완료 (2026-10-09). 결과: `poc/README.md`, `design/spec.md` "PoC 결과". 품질 샘플 검토(`poc/results/fit.md`)만 사용자 대기
+Step 1~6 완료 (2026-10-09). 결과: `design/poc.md`, `design/spec.md` "PoC 결과". 품질 샘플 검토(`design/poc-results/fit.md`)만 사용자 대기
 
-산출물은 모두 `poc/` 아래. 본개발 코드가 아니므로 구조는 가볍게, 단 `RawPosting` 모델과 스크래퍼 인터페이스는 Phase 1에서 그대로 옮길 수 있게 spec의 `Scraper` ABC 형태를 따른다.
+산출물은 모두 `backend/` 아래. 본개발 코드가 아니므로 구조는 가볍게, 단 `RawPosting` 모델과 스크래퍼 인터페이스는 Phase 1에서 그대로 옮길 수 있게 spec의 `Scraper` ABC 형태를 따른다.
 
 ## Step 1 — 데이터 소스 탐색 (0-1) ✅ 완료
-결과(`poc/README.md`): 네이버 내부 JSON `loadJobList.do` + 상세 HTML / 카카오 `public/api/job-list` / 쿠팡·당근 Greenhouse Board API / 토스 자체 API(Greenhouse 스키마) / 라인 Gatsby page-data. 한국 기준 ~1,050건 → 엔지니어링 필터 후 ~340건. sandbox 도메인 추가 불필요.
+결과(`design/poc.md`): 네이버 내부 JSON `loadJobList.do` + 상세 HTML / 카카오 `public/api/job-list` / 쿠팡·당근 Greenhouse Board API / 토스 자체 API(Greenhouse 스키마) / 라인 Gatsby page-data. 한국 기준 ~1,050건 → 엔지니어링 필터 후 ~340건. sandbox 도메인 추가 불필요.
 
 ## Step 2 — 회사별 스크래퍼 스크립트 (0-2)
-- `poc/scrapers/base.py`: `RawPosting` (pydantic: company, external_id, title, apply_url, deadline|None, description|None, category|None, raw: dict) + spec의 `Scraper` ABC + registry
-- `poc/scrapers/greenhouse.py`: 쿠팡·당근·토스 공통 베이스 (토스는 URL과 응답 래핑만 다름)
-- `poc/scrapers/{naver,kakao,coupang,toss,daangn,line}.py`: 각 `fetch()` 구현. 한국 근무지 + 회사별 엔지니어링 분류 필터를 구현체 안에서 적용(`poc/README.md` 필터 표). `RawPosting.category`에 원본 분류 보존
-- `poc/run_scrape.py`: `asyncio.gather`로 6개 병렬 실행 → `poc/out/<company>.json` 저장, 회사별 건수·소요 시간·실패 사유 출력
+- `backend/scrapers/base.py`: `RawPosting` (pydantic: company, external_id, title, apply_url, deadline|None, description|None, category|None, raw: dict) + spec의 `Scraper` ABC + registry
+- `backend/scrapers/greenhouse.py`: 쿠팡·당근·토스 공통 베이스 (토스는 URL과 응답 래핑만 다름)
+- `backend/scrapers/{naver,kakao,coupang,toss,daangn,line}.py`: 각 `fetch()` 구현. 한국 근무지 + 회사별 엔지니어링 분류 필터를 구현체 안에서 적용(`design/poc.md` 필터 표). `RawPosting.category`에 원본 분류 보존
+- `backend/run_scrape.py`: `asyncio.gather`로 6개 병렬 실행 → `backend/out/<company>.json` 저장, 회사별 건수·소요 시간·실패 사유 출력
 - 0-2 판정: 회사별로 필수 필드(title, apply_url, external_id) 100% 채워지는지, 선택 필드(deadline, 본문) 확보 여부를 README 표에 기록
 - 본문(description): 네이버(상세 HTML `div.detail_wrap`)·라인(상세 page-data) 추가 호출, semaphore 5~10. 나머지는 목록 응답에 포함. HTML은 텍스트로 정리해 저장
 
 ## Step 3 — 프로필 추출 (0-5 전반)
-- `poc/llm.py`: `poc/auth_check.py`의 호출 패턴(`query()` + `ResultMessage.structured_output`, `authentication_failed` 처리)을 공용화. `ClaudeAgentOptions(model="claude-opus-5-5", tools=[], setting_sources=[], output_format=json_schema)`
-- `poc/profile.py`: `resume/resume.md` + `resume/career_portfolio.md` → 구조화 프로필 `poc/out/profile.json`
+- `backend/llm.py`: `backend/auth_check.py`의 호출 패턴(`query()` + `ResultMessage.structured_output`, `authentication_failed` 처리)을 공용화. `ClaudeAgentOptions(model="claude-opus-5-5", tools=[], setting_sources=[], output_format=json_schema)`
+- `backend/profile.py`: `resume/resume.md` + `resume/career_portfolio.md` → 구조화 프로필 `backend/out/profile.json`
   - 스키마: core_skills, familiar_skills, domains, years, seniority, preferences(지역/비자/희망 도메인), dealbreakers
   - 파일 해시를 함께 저장해 재실행 시 캐시 (Phase 1 `matcher.py` 캐싱 규칙과 동일)
 
 ## Step 4 — 매칭 (0-5 후반)
-- `poc/match.py`: 전체 공고를 N건 배치(초기 20건, 공고당 title + description 앞 1500자)로 LLM 판정. 출력 스키마: `[{external_id, fit: bool, score 0-100, summary, tech_stack[], fit_reason}]`
+- `backend/match.py`: 전체 공고를 N건 배치(초기 20건, 공고당 title + description 앞 1500자)로 LLM 판정. 출력 스키마: `[{external_id, fit: bool, score 0-100, summary, tech_stack[], fit_reason}]`
   - 프롬프트에 profile.json 전체 포함, 배치 간 동시성 3~4 (`asyncio.Semaphore`)
-  - 결과 `poc/out/matches.json`, 적합 공고만 `poc/out/fit.md`로 사람이 읽기 좋게 정리
+  - 결과 `backend/out/matches.json`, 적합 공고만 `backend/out/fit.md`로 사람이 읽기 좋게 정리
 - 품질 평가: fit=true 상위 10건 + fit=false 중 무작위 10건을 사용자와 함께 검토. 오판 유형(과대/과소 적합, 이유 근거 부실)을 README에 기록하고 프롬프트 1회 수정 후 재실행
 
 ## Step 5 — 소요 시간·비용 측정 (0-6)
@@ -43,9 +43,9 @@ Step 1~6 완료 (2026-10-09). 결과: `poc/README.md`, `design/spec.md` "PoC 결
 `design/spec.md`의 "PoC 결과"에 0-2/0-5/0-6 결과 추가. 선택한 배치 크기/동시성, 실측 시간·비용, Phase 1에서 바뀌어야 할 점을 적는다.
 
 ## 수정/생성 파일
-- 생성: `poc/scrapers/base.py`, `poc/scrapers/greenhouse.py`, `poc/scrapers/<6개사>.py`, `poc/run_scrape.py`, `poc/llm.py`, `poc/profile.py`, `poc/match.py`, `poc/out/*` (gitignore 대상)
-- 수정: `poc/pyproject.toml`(httpx, pydantic 추가), `poc/README.md`, `design/spec.md`(PoC 결과)
-- 재사용: `poc/auth_check.py`의 SDK 호출 패턴
+- 생성: `backend/scrapers/base.py`, `backend/scrapers/greenhouse.py`, `backend/scrapers/<6개사>.py`, `backend/run_scrape.py`, `backend/llm.py`, `backend/profile.py`, `backend/match.py`, `backend/out/*` (gitignore 대상)
+- 수정: `backend/pyproject.toml`(httpx, pydantic 추가), `design/poc.md`, `design/spec.md`(PoC 결과)
+- 재사용: `backend/auth_check.py`의 SDK 호출 패턴
 
 ## 검증
 - `uv run python run_scrape.py` → 6개사 모두 1건 이상, 필수 필드 누락 0, 실패 시 사유 출력
