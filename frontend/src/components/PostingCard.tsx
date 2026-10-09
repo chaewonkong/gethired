@@ -7,7 +7,13 @@ function daysLeft(deadline: string | null): number | null {
   return Math.ceil((new Date(deadline).getTime() - today.getTime()) / 86400000);
 }
 
-export function PostingCard({ posting: p, companyName }: { posting: Posting; companyName: string }) {
+interface Props {
+  posting: Posting;
+  companyName: string;
+  onToggleBookmark: (p: Posting) => void;
+}
+
+export function PostingCard({ posting: p, companyName, onToggleBookmark }: Props) {
   const left = daysLeft(p.deadline);
   const soon = left !== null && left <= 7;
   const deadlineText = p.deadline ? `마감 ${p.deadline}${soon ? ` (D-${left})` : ""}` : "상시 채용";
@@ -23,6 +29,16 @@ export function PostingCard({ posting: p, companyName }: { posting: Posting; com
         <span className={`level ${p.fit_level}`}>
           {p.fit_level} · {p.score}
         </span>
+        <button
+          className={`star${p.bookmarked ? " on" : ""}`}
+          aria-label={p.bookmarked ? "북마크 해제" : "북마크"}
+          aria-pressed={p.bookmarked}
+          onClick={() => onToggleBookmark(p)}
+        >
+          <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinejoin="round">
+            <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" />
+          </svg>
+        </button>
       </div>
       <h3>{p.title}</h3>
       <p className="summary">{p.summary}</p>

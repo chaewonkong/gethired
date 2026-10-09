@@ -2,10 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { api, Company, Job, LoginRequiredError, Posting } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
+import { BookmarksTab } from "./components/BookmarksTab";
 import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 
-type Tab = "postings" | "companies";
+type Tab = "postings" | "bookmarks" | "companies";
+
+const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", companies: "회사" };
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("postings");
@@ -59,7 +62,20 @@ export default function App() {
     }
   };
 
+  const toggleBookmark = async (p: Posting) => {
+    const on = !p.bookmarked;
+    const set = (v: boolean) => setPostings((ps) => ps.map((x) => (x.id === p.id ? { ...x, bookmarked: v } : x)));
+    set(on);
+    try {
+      await api.setBookmark(p.id, on);
+    } catch (e) {
+      set(!on);
+      setError(String(e));
+    }
+  };
+
   const scraping = job?.status === "running";
+  const bookmarkCount = postings.filter((p) => p.bookmarked).length;
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
 
   return (
@@ -73,9 +89,10 @@ export default function App() {
       </header>
 
       <nav className="tabs" role="tablist">
-        {(["postings", "companies"] as Tab[]).map((t) => (
+        {(["postings", "bookmarks", "companies"] as Tab[]).map((t) => (
           <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
-            {t === "postings" ? "공고" : "회사"}
+            {TAB_LABEL[t]}
+            {t === "bookmarks" && bookmarkCount > 0 && <span className="tab-count">{bookmarkCount}</span>}
           </button>
         ))}
       </nav>
@@ -89,11 +106,12 @@ export default function App() {
       )}
       {error && <div className="banner error">{error}</div>}
 
-      {tab === "postings" ? (
-        <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping} onScrape={startScrape} />
-      ) : (
-        <CompaniesTab companies={companies} />
+      {tab === "postings" && (
+        <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping}
+                     onScrape={startScrape} onToggleBookmark={toggleBookmark} />
       )}
+      {tab === "bookmarks" && <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} />}
+      {tab === "companies" && <CompaniesTab companies={companies} />}
 
       <ScrollTopButton />
     </div>

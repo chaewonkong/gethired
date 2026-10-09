@@ -44,6 +44,11 @@ header p { margin: 0; color: var(--muted); font-size: 13px; }
 }
 .tab:hover { color: var(--text); }
 .tab[aria-selected="true"] { color: var(--accent-strong); border-bottom-color: var(--accent); }
+.tab-count {
+  display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 9px;
+  background: var(--chip); color: var(--muted); font-size: 12px; line-height: 18px;
+}
+.tab[aria-selected="true"] .tab-count { background: #e0f2fe; color: var(--accent-strong); }
 
 .panel { padding-top: 16px; }
 
@@ -90,6 +95,15 @@ select {
 .level.strong { background: #dcfce7; color: #166534; }
 .level.good { background: #e0f2fe; color: #075985; }
 .level.stretch { background: #fef3c7; color: #92400e; }
+.star {
+  flex: none; align-self: flex-start; width: 32px; height: 32px; margin: -4px -6px 0 -2px;
+  border: 0; background: none; padding: 4px; cursor: pointer; border-radius: 50%;
+  display: grid; place-items: center; transition: background .15s;
+}
+.star:hover { background: var(--chip); }
+.star svg { width: 22px; height: 22px; fill: none; stroke: #9ca3af; transition: fill .15s, stroke .15s, transform .15s; }
+.star.on svg { fill: #facc15; stroke: #eab308; }
+.star:active svg { transform: scale(.85); }
 .gaps { margin: 0 0 12px; padding-left: 18px; font-size: 13px; color: var(--muted); }
 .gaps li::marker { color: #d97706; }
 .company { font-size: 14px; color: var(--text); }

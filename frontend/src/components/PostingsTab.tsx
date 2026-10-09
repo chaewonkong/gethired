@@ -10,6 +10,7 @@ interface Props {
   job: Job | null;
   scraping: boolean;
   onScrape: () => void;
+  onToggleBookmark: (p: Posting) => void;
 }
 
 function lastScrapedAt(companies: Company[]): string | null {
@@ -19,7 +20,7 @@ function lastScrapedAt(companies: Company[]): string | null {
 
 const PAGE_SIZE = 20;
 
-export function PostingsTab({ postings, companies, byId, job, scraping, onScrape }: Props) {
+export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark }: Props) {
   const [company, setCompany] = useState("");
   const [minLevel, setMinLevel] = useState<Level>("stretch");
   const [visible, setVisible] = useState(PAGE_SIZE);
@@ -78,7 +79,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
       <div className="list">
         {items.length ? (
           items.slice(0, visible).map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} />
           ))
         ) : (
           <div className="empty">

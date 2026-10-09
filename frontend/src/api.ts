@@ -16,6 +16,7 @@ export interface Posting {
   deadline: string | null;
   category: string | null;
   scraped_at: string;
+  bookmarked: boolean;
 }
 
 export interface ScrapeRun {
@@ -57,6 +58,10 @@ export const api = {
   companies: () => get<Company[]>("/api/companies"),
   postings: () => get<Posting[]>("/api/postings"),
   job: (id: string) => get<Job>(`/api/scrape/${id}`),
+  async setBookmark(id: number, on: boolean): Promise<void> {
+    const r = await fetch(`/api/postings/${id}/bookmark`, { method: on ? "PUT" : "DELETE" });
+    if (!r.ok) throw new Error(`bookmark: ${r.status}`);
+  },
   async startScrape(): Promise<{ job_id: string }> {
     const r = await fetch("/api/scrape", { method: "POST" });
     if (r.status === 401) throw new LoginRequiredError();
