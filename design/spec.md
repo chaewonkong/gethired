@@ -238,8 +238,10 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 - `backend/`: Python (PoC 코드를 승격한 것). `frontend/`: React (Vite). `design/`: spec, 계획, PoC 기록. `resume/`: 입력 이력서
 - PoC 산출물은 `design/poc.md`(결과·판정표), `design/poc-results/`(매칭 샘플)
 
-### Phase 1 — Backend (PoC 승격)
-PoC에서 검증된 모듈은 그대로 쓰고, 저장·API·잡만 새로 만든다.
+### Phase 1 — Backend (PoC 승격) ✅ 2026-10-09
+PoC에서 검증된 모듈은 그대로 쓰고, 저장·API·잡만 새로 만든다. 결과: `backend/app/` (실행 방법은 루트 `README.md`)
+- 실측: 당근 1개사 실제 실행 → 33건 수집, 19건 저장(strong 1 / good 10 / stretch 8), 14건 exclude, $0.94 상당
+- 설계 메모: 매칭은 회사별로 독립 실행되어 한 회사 실패가 다른 회사에 영향 없음. 세션 만료 시 수집된 raw 공고는 저장하지 않고 다음 실행에서 재수집(3초)·미판정분만 판정
 
 | 모듈 | 출처 | 작업 |
 |---|---|---|
@@ -252,18 +254,21 @@ PoC에서 검증된 모듈은 그대로 쓰고, 저장·API·잡만 새로 만�
 | `jobs.py` | 신규 | 백그라운드 scrape job, 회사별 상태, 인증 오류 시 `auth_required` |
 | `tests/` | PoC fixture 테스트 그대로 | + repository, sync, 세션 만료 테스트 추가 |
 
-### Phase 2 — Frontend
+### Phase 2 — Frontend ✅ 2026-10-09
+결과: `frontend/src/` (Vite + React + TS). `npm run build` 결과물을 FastAPI가 `/`에서 서빙. 브라우저 시각 확인은 사용자 몫
 - React (Vite)
 - 탭: 공고 / 회사
 - 공고 탭: 진입 시 `GET /postings` 렌더링(등급 배지, gaps, 등급 필터 포함). "스크래핑 하기" → `POST /scrape` → 폴링하며 회사별 loading 표시 → 완료 후 재조회
 - 회사 탭: `GET /companies` 렌더링
 - 세션 만료 안내 배너, 회사 필터
 
-### Phase 3 — 검증
-- 회사별 스크래퍼 통합 테스트: 실제 호출, 1건 이상 + 필수 필드 존재
-- 응답 fixture 기반 파서 단위 테스트
-- soft delete sync 단위 테스트
-- 세션 만료 시나리오 테스트: `ClaudeAuthError` 발생 시 job 상태 `auth_required`, API 401 응답 확인
+### Phase 3 — 검증 ✅ 2026-10-09
+`backend/tests/` — `uv run pytest` 19개 통과, `LIVE=1` 통합 6개 통과
+- 회사별 스크래퍼 통합 테스트: 실제 호출, 1건 이상 + 필수 필드 + 중복 0 + 본문 90% (`test_scrapers_live.py`, `LIVE=1`일 때만)
+- 응답 fixture 기반 파서 단위 테스트 (`test_parsers.py`, 11개)
+- repository: upsert/정렬/필터, soft delete ↔ 재등장 복구, judgments, scrape_runs, 프로필 캐시 (`test_repository.py`, 4개)
+- API/job: 등급 저장·exclude 미저장·증분 재판정 없음, 실패 격리(한 회사 실패·0건 시 soft delete 안 함), 401·진행 중 job 재사용·404/400, 세션 만료 시 `auth_required` (`test_api.py`, 4개)
+- 미검증: 프론트엔드 브라우저 렌더링(빌드·타입체크만 통과), 6개사 전체 실제 매칭(PoC에서 322건 실측으로 대체)
 
 ## 등록해둔 회사
 - 네이버

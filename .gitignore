@@ -11,3 +11,4 @@ node_modules/
 .npm-cache/
 frontend/dist/
 backend/data/
+frontend/tsconfig.tsbuildinfo
