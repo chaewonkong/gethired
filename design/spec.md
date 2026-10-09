@@ -14,7 +14,7 @@
   - 스크래핑은 LLM이 아닌 결정적 코드(httpx)로 수행
 
 ## 기능
-- resume 디렉토리의 resume.md, career_portfolio.md를 읽고 사용자의 특징을 추출한다.
+- resume 디렉토리의 *.md 파일을 전부 읽고 사용자의 특징을 추출한다.
 - 사용자에게 적합한 job posting을 등록 회사들에서 서칭한다
 - 등급(strong/good/stretch)이 매겨진 공고만 sqlite DB에 저장한다. 역할이 다른 공고는 저장하지 않는다
   - 스크래핑 일자

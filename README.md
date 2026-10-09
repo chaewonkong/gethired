@@ -7,8 +7,19 @@
 
 ## 준비
 - Python 3.14+, [uv](https://docs.astral.sh/uv/), Node 20+, Claude Code CLI(`claude login` 완료)
-- `resume/resume.md`, `resume/career_portfolio.md` (선택: `resume/preferences.md`에 희망 근무지/비자/도메인)
 - `ANTHROPIC_API_KEY`는 설정하지 않음 (있으면 세션 대신 키가 쓰임)
+
+## 이력서 준비
+프로젝트 루트에 `resume/` 디렉토리를 만들고 이력서를 Markdown(`.md`) 파일로 넣는다. 디렉토리 안의 `*.md`를 전부 읽어 프로필(기술·연차·도메인·희망 조건)을 추출하고, 이를 기준으로 공고를 판정한다.
+```
+resume/
+  resume.md            # 이력서
+  career_portfolio.md  # 경력기술서 (선택)
+  preferences.md       # 희망 근무지/비자/도메인/역할 (선택)
+```
+- 파일명·개수는 자유. 하위 디렉토리는 읽지 않음
+- `resume/`는 gitignore 대상이라 커밋되지 않음
+- 파일 내용이 바뀌면 다음 실행 때 프로필을 다시 추출
 
 ## 실행 ([just](https://github.com/casey/just))
 ```bash
