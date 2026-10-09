@@ -16,7 +16,7 @@
 ## 기능
 - resume 디렉토리의 resume.md, career_portfolio.md를 읽고 사용자의 특징을 추출한다.
 - 사용자에게 적합한 job posting을 등록 회사들에서 서칭한다
-- 판정한 공고를 sqlite DB에 저장한다
+- 등급(strong/good/stretch)이 매겨진 공고만 sqlite DB에 저장한다. 역할이 다른 공고는 저장하지 않는다
   - 스크래핑 일자
   - 공고 마감일 (nullable)
   - 포지션 개요
@@ -27,17 +27,17 @@
   - deleted_at
 
 ## 적합도 등급
-단순 적합/부적합이 아니라 4단계로 저장한다. 언어·프레임워크·연차 같은 **소프트 불일치**는 등급을 낮추되 제외하지 않고, 역할 종류가 다른 **하드 불일치**만 weak로 보낸다. 도메인이 유사하면 언어가 달라도 good까지 가능.
+단순 적합/부적합이 아니라 3단계로 저장한다. 언어·프레임워크·연차 같은 **소프트 불일치**는 등급을 낮추되 제외하지 않는다. 도메인이 유사하면 언어가 달라도 good까지 가능. 역할 종류 자체가 다른 **하드 불일치**(비개발, 모바일 전담, 보안·ML 전문직 등)는 LLM이 `exclude`로 판정하며 **DB에 저장하지 않는다** (판정 이력만 `judgments`에 남겨 재판정 방지).
 
 | fit_level | 의미 | score |
 |---|---|---|
 | strong | 주력 스택·도메인·연차 모두 맞음 | 80~100 |
 | good | 핵심은 맞고 한 요소가 약함 | 65~79 |
 | stretch | 역할·도메인은 맞지만 언어/프레임워크나 연차가 다름. 지원 가능하나 서류 리스크 | 45~64 |
-| weak | 역할 자체가 다름 (비개발, 모바일, 보안 전문 등) | 0~44 |
+| (exclude) | 역할 자체가 다름. 저장 안 함 | 0~44 |
 
 - `gaps`: 부족한 점을 `종류: 설명` 형식으로 구조화. 종류는 `language`, `framework`, `seniority`, `domain`, `other`
-- UI: 등급 배지 표시, 기본 필터는 weak 제외, 등급별 필터 제공
+- UI: 등급 배지 표시, 등급별 필터 제공 (기본: 전체 = stretch 이상)
 - web page를 통해 리스트로 저장된 공고를 확인할 수 있다.
 - 과거 공고가 사라진 경우 deleted_at에 날짜를 기록해 soft delete한다
 - 공고는 병렬로 스크래핑한다.
@@ -62,7 +62,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
   - 완료 후 리스트 갱신
   - 세션 만료 시 로그인 안내 표시 (아래 "세션 만료 처리")
 - 각 공고 항목: 회사, 적합도 등급 배지(+점수), 포지션 개요, 기술 스택, 부족한 점(gaps), 맞는 이유, 마감일, 지원 링크, 스크래핑 일자
-- 회사 필터, 등급 필터 (기본: strong/good/stretch, weak 숨김)
+- 회사 필터, 등급 필터 (전체 / good 이상 / strong만)
 
 ### 회사 탭
 - 등록된 회사 목록 조회 (UI에서 추가/수정 불가)
@@ -98,7 +98,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 | title | TEXT | |
 | summary | TEXT | 포지션 개요 |
 | tech_stack | TEXT (JSON array) | |
-| fit_level | TEXT | strong / good / stretch / weak |
+| fit_level | TEXT | strong / good / stretch |
 | score | INTEGER | 0~100 |
 | gaps | TEXT (JSON array) | `["language: Kotlin/Spring 필수", ...]` |
 | fit_reason | TEXT | 사용자에게 맞는/안 맞는 이유 |
@@ -109,7 +109,15 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 
 - sync 규칙: 회사별 스크랩 성공 시, 이번 결과에 없는 external_id는 `deleted_at = now`. 다시 나타나면 `deleted_at = NULL`
 - 스크랩 실패한 회사는 soft delete 판정 대상에서 제외 (일시 장애로 전부 삭제되는 것 방지)
-- 이미 판정된 공고(external_id 존재)는 LLM 재판정하지 않음
+- 이미 판정된 공고(`judgments`에 존재)는 LLM 재판정하지 않음
+
+`judgments` (판정 이력. exclude된 공고의 재판정 방지용)
+| 컬럼 | 타입 | 비고 |
+|---|---|---|
+| company | TEXT | (company, external_id) PK |
+| external_id | TEXT | |
+| judged_at | DATETIME | |
+| stored | BOOLEAN | postings에 저장됐는지 (exclude면 false) |
 
 `scrape_runs` (회사 탭의 마지막 스크래핑 결과용)
 | 컬럼 | 타입 | 비고 |
@@ -127,7 +135,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 - `GET /companies` → registry 회사 목록 + 회사별 마지막 `scrape_runs` 결과
 - `POST /scrape` → `{job_id}`. 진행 중인 job이 있으면 그 job_id 반환. 세션 만료 시 `401 {code: "claude_login_required"}`
 - `GET /scrape/{job_id}` → 회사별 진행 상태 (pending / running / done / failed). 진행 중 세션 만료 시 job 상태 `auth_required`
-- `GET /postings?company=&min_level=stretch` → `deleted_at IS NULL`만 반환. `min_level` 기본값 stretch (weak 제외)
+- `GET /postings?company=&min_level=` → `deleted_at IS NULL`만 반환. `min_level`(good/strong) 생략 시 전체
 
 ## 세션 만료 처리
 - "스크래핑 하기" 클릭 시 `POST /scrape`가 세션을 선확인. 만료 시 스크래핑을 시작하지 않고 안내 표시
@@ -206,8 +214,9 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 | 검증 | 방법 | 통과 기준 |
 |---|---|---|
 | 출력 완전성 | 입력 공고 수 vs `matches.json` 항목 수 | 1:1. 빠진 external_id가 있으면 해당 배치만 재시도 |
-| 스키마 | 각 항목 pydantic 검증 | score 0~100, fit_level ∈ {strong,good,stretch,weak}이고 score 구간과 일치, gaps 형식 `종류: 설명`, fit_reason 20자 이상, tech_stack 리스트 |
-| 소프트 불일치 | Kotlin/Spring 필수 + 결제 도메인 공고(카카오페이), Staff 레벨 백엔드 공고(쿠팡) | weak가 아닌 stretch 이상, gaps에 language/seniority 기록 |
+| 스키마 | 각 항목 pydantic 검증 | score 0~100, fit_level ∈ {strong,good,stretch}이고 score 구간과 일치, gaps 형식 `종류: 설명`, fit_reason 20자 이상, tech_stack 리스트 |
+| 소프트 불일치 | Kotlin/Spring 필수 + 결제 도메인 공고(카카오페이), Staff 레벨 백엔드 공고(쿠팡) | exclude되지 않고 stretch 이상, gaps에 language/seniority 기록 |
+| exclude 미저장 | 플랜티드 iOS/영업 공고 | postings에 없고 judgments에만 기록. 재실행 시 재판정 안 됨 |
 | 결정성 | 같은 배치 2회 실행 | fit 판정 일치율 90% 이상 |
 | 플랜티드 테스트 | 가짜 공고 3건 혼입: ① Go 매치메이킹 백엔드 (fit) ② iOS 앱 개발 (unfit) ③ 영업 관리자 (unfit) | 3건 모두 기대대로 |
 | 품질 (사람) | fit=true 상위 10 + fit=false 무작위 10을 `fit.md`로 검토 | 오판 4건 이하. fit_reason이 이력서의 구체 경험을 인용 |

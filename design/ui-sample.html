@@ -99,7 +99,6 @@
   .level.strong { background: #dcfce7; color: #166534; }
   .level.good { background: #e0f2fe; color: #075985; }
   .level.stretch { background: #fef3c7; color: #92400e; }
-  .level.weak { background: #f3f4f6; color: #6b7280; }
   .gaps { margin: 0 0 12px; padding-left: 18px; font-size: 13px; color: var(--muted); }
   .gaps li::marker { color: #d97706; }
   .company { font-size: 14px; color: var(--text); }
@@ -191,10 +190,9 @@
       <button class="btn" id="scrapeBtn">스크래핑 하기</button>
       <select id="companyFilter"><option value="">전체 회사</option></select>
       <select id="levelFilter">
-        <option value="stretch">stretch 이상</option>
+        <option value="stretch">전체 등급</option>
         <option value="good">good 이상</option>
         <option value="strong">strong만</option>
-        <option value="weak">전체 (weak 포함)</option>
       </select>
       <span class="meta" id="countMeta"></span>
     </div>
@@ -238,7 +236,6 @@ const POSTINGS = [
   { company: "naver", title: "대규모 실시간 분산 시스템 백엔드", level: "good", score: 74, gaps: ["seniority: 7년 이상 요구, 지원자 백엔드 약 4년"], summary: "실시간 이벤트 처리 플랫폼 설계/개발", stack: ["Go", "Kubernetes", "ClickHouse"], reason: "ClickHouse 마이그레이션 주도 경험과 분산 시스템 설계 역량이 핵심 요구사항과 일치", deadline: null, scraped: "2026-10-09" },
   { company: "toss", title: "Server Developer (Platform)", level: "stretch", score: 58, gaps: ["language: Kotlin/Spring 필수, 지원자는 Go 주력", "domain: 결제 코어 원장 경험 없음"], summary: "결제 트래픽을 받는 내부 플랫폼 서버 개발", stack: ["Kotlin", "Kubernetes", "PostgreSQL"], reason: "언어는 다르지만 K8s 운영·PostgreSQL 경험과 레거시+greenfield 병행 경험이 요구 역량과 겹침", deadline: "2026-11-30", scraped: "2026-10-09" },
   { company: "daangn", title: "Backend Engineer - 검색/추천", level: "good", score: 70, gaps: ["framework: gRPC 경험 적음"], summary: "근거리 매칭 기반 추천 서버 개발", stack: ["Go", "Redis", "gRPC"], reason: "유저 매칭 도메인 경험과 Go·Redis 주력 스택이 맞음. gRPC는 학습 필요", deadline: null, scraped: "2026-10-08" },
-  { company: "line", title: "iOS Engineer (LINE Pay)", level: "weak", score: 6, gaps: ["other: Swift/iOS 전담 직무"], summary: "LINE Pay iOS 앱 개발", stack: ["Swift", "SwiftUI"], reason: "모바일 전담 직무라 Go 백엔드 경력과 관련이 없음", deadline: null, scraped: "2026-10-09" },
 ];
 
 const $ = (s) => document.querySelector(s);
@@ -250,7 +247,7 @@ function daysLeft(d) {
   return Math.ceil((new Date(d) - new Date("2026-10-09")) / 86400000);
 }
 
-const LEVEL_RANK = { weak: 0, stretch: 1, good: 2, strong: 3 };
+const LEVEL_RANK = { stretch: 1, good: 2, strong: 3 };
 
 function renderPostings() {
   const filter = $("#companyFilter").value;
@@ -277,7 +274,7 @@ function renderPostings() {
           <p class="summary">${p.summary}</p>
           <div class="chips">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
           ${p.gaps.length ? `<ul class="gaps">${p.gaps.map((g) => `<li>${g}</li>`).join("")}</ul>` : ""}
-          <p class="reason"><strong>${p.level === "weak" ? "판정 이유" : "추천 이유"}</strong>${p.reason}</p>
+          <p class="reason"><strong>추천 이유</strong>${p.reason}</p>
           <div class="card-foot">
             <span class="meta">수집 ${p.scraped}</span>
             <a class="apply" href="#">지원하기 →</a>
