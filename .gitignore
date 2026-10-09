@@ -7,3 +7,7 @@ backend/out/
 backend/.claude/
 *.db
 .DS_Store
+node_modules/
+.npm-cache/
+frontend/dist/
+backend/data/
