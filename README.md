@@ -10,17 +10,18 @@
 - `resume/resume.md`, `resume/career_portfolio.md` (선택: `resume/preferences.md`에 희망 근무지/비자/도메인)
 - `ANTHROPIC_API_KEY`는 설정하지 않음 (있으면 세션 대신 키가 쓰임)
 
-## 실행
+## 실행 ([just](https://github.com/casey/just))
 ```bash
-# 1. 프론트엔드 빌드 (최초 1회, UI 수정 시)
-cd frontend && npm install && npm run build
-
-# 2. 백엔드 실행 (빌드된 프론트엔드를 함께 서빙)
-cd backend && uv sync && uv run uvicorn app.main:app --port 8000
-# → http://localhost:8000
+just setup     # 의존성 설치 (uv sync + npm install)
+just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
 ```
+개발 시: `just dev-api`(백엔드 reload) + `just dev-web`(Vite 5173, `/api` 프록시). 전체 목록은 `just`.
 
-프론트엔드 개발 시: `cd frontend && npm run dev` (5173, `/api`는 8000으로 프록시)
+just 없이:
+```bash
+cd frontend && npm install && npm run build
+cd backend && uv sync && uv run uvicorn app.main:app --port 8000
+```
 
 ## 사용
 1. 공고 탭에서 **스크래핑 하기** → 6개사 병렬 수집 → 신규 공고만 LLM 판정 → 등급이 매겨진 공고 저장
@@ -29,15 +30,14 @@ cd backend && uv sync && uv run uvicorn app.main:app --port 8000
 
 ## 테스트
 ```bash
-cd backend
-uv run pytest                                   # 단위·API 테스트 (네트워크/LLM 없음)
-LIVE=1 uv run pytest tests/test_scrapers_live.py   # 실제 채용 사이트 호출
+just test        # 단위·API 테스트 (네트워크/LLM 없음)
+just test-live   # 실제 채용 사이트 호출
 ```
 
-## 디버그 스크립트 (`backend/scripts/`)
-- `run_scrape.py [company]`: 스크래퍼만 실행, `out/<company>.json`
-- `match.py [company] [--limit N] [--planted]`: 파일 기반 매칭, `out/fit.md`
-- `auth_check.py [config_dir]`: 세션 인증 확인
+## 디버그
+- `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
+- `just match [company] [--limit N] [--planted]`: 파일 기반 매칭, `backend/out/fit.md`
+- `just auth`: 세션 인증 확인 · `just reset-db`: 공고·판정 이력 삭제
 
 ## 구조
 ```
