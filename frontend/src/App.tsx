@@ -3,6 +3,7 @@ import { api, Company, Job, LoginRequiredError, Posting } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { CompaniesTab } from "./components/CompaniesTab";
+import { ScrollTopButton } from "./components/ScrollTopButton";
 
 type Tab = "postings" | "companies";
 
@@ -93,6 +94,8 @@ export default function App() {
       ) : (
         <CompaniesTab companies={companies} />
       )}
+
+      <ScrollTopButton />
     </div>
   );
 }

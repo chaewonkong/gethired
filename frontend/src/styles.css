@@ -148,3 +148,19 @@ select {
 }
 
 .sentinel { text-align: center; padding: 20px 0 8px; }
+
+.scroll-top {
+  position: fixed; right: 20px; bottom: 24px; z-index: 3;
+  width: 44px; height: 44px; border: 0; border-radius: 50%;
+  background: #7dd3fc; color: var(--accent-text); cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: 0 2px 8px rgba(56,189,248,.35);
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity .2s, transform .2s, background .15s;
+}
+.scroll-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.scroll-top:hover { background: #38bdf8; }
+.scroll-top svg { width: 20px; height: 20px; }
+@media (min-width: 880px) {
+  .scroll-top { right: calc(50% - 400px - 64px); }
+}
