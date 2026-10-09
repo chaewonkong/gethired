@@ -20,7 +20,7 @@ just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
 just 없이:
 ```bash
 cd frontend && npm install && npm run build
-cd backend && uv sync && uv run uvicorn app.main:app --port 8000
+cd backend && uv sync && uv run python -m app --port 8000
 ```
 
 ## 사용
