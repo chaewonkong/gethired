@@ -1,0 +1,46 @@
+{
+    "permissions": {
+        "allow": [
+            "Read(./**)",
+            "Edit(./**)",
+            "Bash",
+            "WebFetch",
+            "WebSearch"
+        ],
+        "deny": [
+            "Read(~/.ssh/**)",
+            "Bash(claude logout *)",
+            "Bash(git push *)",
+            "Bash(security *)",
+            "Bash(rm -rf *)"
+        ]
+    },
+    "sandbox": {
+        "enabled": true,
+        "autoAllowBashIfSandboxed": true,
+        "network": {
+            "allowLocalBinding": true,
+            "allowedDomains": [
+                "recruit.navercorp.com",
+                "*.kakao.com",
+                "coupang.jobs",
+                "*.coupang.jobs",
+                "toss.im",
+                "*.toss.im",
+                "*.daangn.com",
+                "*.linecorp.com",
+                "*.lycorp.co.jp",
+                "*.greenhouse.io",
+                "pypi.org",
+                "files.pythonhosted.org",
+                "registry.npmjs.org",
+                "api.anthropic.com",
+                "claude.ai",
+                "*.claude.ai",
+                "console.anthropic.com",
+                "localhost",
+                "127.0.0.1"
+            ]
+        }
+    }
+}

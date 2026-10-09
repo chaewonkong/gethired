@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>job-posting UI sample</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --accent-strong: #0369a1;
+    --accent-soft: #f0f9ff;
+    --accent-line: #bae6fd;
+    --accent-text: #0c4a6e;
+    --sunrise: linear-gradient(135deg, #7dd3fc 0%, #a5f3fc 55%, #fef3c7 100%);
+    --ok: #15803d;
+    --warn: #b45309;
+    --err: #dc2626;
+    --chip: #f3f4f6;
+    --banner-bg: #fffbeb;
+    --banner-border: #f59e0b;
+    --shadow: 0 0 0 1px rgba(17,24,39,.07), 0 1px 3px rgba(17,24,39,.06);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+  }
+  .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 16px 48px; }
+
+  header { display: flex; align-items: center; gap: 12px; padding: 20px 0 16px; }
+  .logo {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--sunrise);
+    display: grid; place-items: center; flex: none;
+  }
+  .logo svg { width: 24px; height: 24px; }
+  header h1 { margin: 0; font-size: 18px; font-weight: 700; color: var(--accent-text); letter-spacing: -.2px; }
+  header p { margin: 0; color: var(--muted); font-size: 13px; }
+
+  .tabs { display: flex; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .tab {
+    flex: 1; padding: 12px 0; border: 0; background: none; color: var(--muted);
+    font: inherit; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
+  }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] { color: var(--accent-strong); border-bottom-color: var(--accent); }
+
+  .panel { display: none; padding-top: 16px; }
+  .panel.active { display: block; }
+
+  .banner {
+    display: none; padding: 12px 14px; margin-bottom: 12px; border-radius: 8px;
+    background: var(--banner-bg); border-left: 4px solid var(--banner-border); font-size: 14px;
+  }
+  .banner.show { display: block; }
+  .banner code { background: #fff; border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+
+  .toolbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .btn {
+    padding: 11px 20px; border: 0; border-radius: 12px; background: #7dd3fc; color: var(--accent-text);
+    font: inherit; font-weight: 700; cursor: pointer; width: 100%;
+    box-shadow: 0 2px 8px rgba(56,189,248,.25); transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover:not(:disabled) { background: #38bdf8; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(56,189,248,.35); }
+  .btn:disabled { background: #f1f5f9; color: #94a3b8; box-shadow: none; cursor: not-allowed; }
+  select {
+    padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--surface); color: var(--text); font: inherit; width: 100%;
+  }
+  .meta { color: var(--muted); font-size: 13px; }
+
+  .progress { display: none; background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; }
+  .progress.show { display: block; }
+  .progress ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 12px; }
+  .progress li { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex: none; }
+  .dot.running { background: var(--warn); animation: pulse 1s infinite; }
+  .dot.done { background: var(--ok); }
+  .dot.failed { background: var(--err); }
+  @keyframes pulse { 50% { opacity: .3; } }
+
+  .list { display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--surface); border-radius: 8px; box-shadow: var(--shadow); padding: 16px; transition: box-shadow .15s; }
+  .card:hover { box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.1); }
+  .card-head { display: flex; align-items: center; gap: 10px; }
+  .co-logo {
+    width: 40px; height: 40px; border-radius: 4px; display: grid; place-items: center;
+    background: var(--chip); color: #444; font-weight: 700; font-size: 16px; flex: none;
+  }
+  .co-info { min-width: 0; flex: 1; }
+  .company { font-size: 14px; color: var(--text); }
+  .deadline { font-size: 12px; color: var(--muted); }
+  .deadline.soon { color: var(--err); font-weight: 600; }
+  .card h3 { margin: 12px 0 4px; font-size: 17px; font-weight: 600; color: var(--accent-strong); line-height: 1.35; }
+  .summary { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .chip { border: 1px solid var(--border); border-radius: 4px; padding: 1px 8px; font-size: 12px; color: #444; }
+  .reason { font-size: 14px; background: var(--accent-soft); border-radius: 6px; border: 1px solid var(--accent-line); padding: 10px 12px; margin: 0 0 12px; }
+  .reason strong { display: block; font-size: 12px; color: var(--accent-strong); margin-bottom: 2px; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .apply {
+    color: var(--accent-text); font-weight: 600; text-decoration: none; font-size: 14px;
+    background: #e0f2fe; border-radius: 10px; padding: 6px 14px; transition: background .15s;
+  }
+  .apply:hover { background: #bae6fd; }
+  .empty { text-align: center; color: var(--muted); padding: 48px 16px; border-radius: 8px; box-shadow: var(--shadow); }
+
+  .company-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .company-table thead { display: none; }
+  .company-table tr { display: grid; gap: 4px; background: var(--surface); box-shadow: var(--shadow); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .company-table td { padding: 0; }
+  .company-table .name { font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .company-table .name .co-logo { width: 32px; height: 32px; font-size: 14px; }
+  .company-table a { color: var(--accent-strong); font-size: 13px; word-break: break-all; text-decoration: none; }
+  .company-table a:hover { text-decoration: underline; }
+  .status { font-size: 13px; font-weight: 600; }
+  .status.ok { color: var(--ok); }
+  .status.fail { color: var(--err); }
+
+  .demo { margin-top: 40px; padding: 12px; border: 1px dashed var(--border); border-radius: 8px; font-size: 13px; color: var(--muted); }
+  .demo button { margin: 4px 4px 0 0; padding: 5px 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 8px; font: inherit; cursor: pointer; }
+
+  /* 480+: 툴바 2단, 진행 3열 */
+  @media (min-width: 480px) {
+    .toolbar { display: grid; grid-template-columns: 1fr 1fr; }
+    .toolbar .meta { grid-column: 1 / -1; }
+    .progress ul { grid-template-columns: repeat(3, 1fr); }
+    .tab { flex: 0 0 auto; padding: 12px 20px; }
+  }
+
+  /* 640+: 툴바 1줄, 회사 테이블 */
+  @media (min-width: 640px) {
+    header h1 { font-size: 22px; }
+    .toolbar { display: flex; flex-direction: row; align-items: center; }
+    .toolbar .btn { width: auto; }
+    .toolbar select { width: 160px; }
+    .toolbar .meta { margin-left: auto; }
+    .progress ul { grid-template-columns: repeat(6, auto); justify-content: start; }
+
+    .company-table { background: var(--surface); box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+    .company-table thead { display: table-header-group; background: #f9fafb; }
+    .company-table tr { display: table-row; background: none; box-shadow: none; border-radius: 0; padding: 0; }
+    .company-table th, .company-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .company-table th { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .company-table tbody tr:last-child td { border-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0c4a6e" stroke-width="1.8" stroke-linecap="round">
+        <path d="M5 17a7 7 0 0 1 14 0"/>
+        <path d="M3 17h18"/>
+        <path d="M12 6V4M6.3 8.3 5 7M17.7 8.3 19 7"/>
+      </svg>
+    </div>
+    <div>
+      <h1>job-posting</h1>
+      <p>등록 회사 채용 공고 중 나에게 맞는 포지션</p>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="postings">공고</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="companies">회사</button>
+  </nav>
+
+  <section id="postings" class="panel active" role="tabpanel">
+    <div class="banner" id="authBanner">
+      <strong>Claude 로그인이 필요합니다.</strong><br>
+      터미널에서 <code>claude login</code> 실행 후 다시 시도해주세요. 기존 공고는 계속 볼 수 있습니다.
+    </div>
+
+    <div class="toolbar">
+      <button class="btn" id="scrapeBtn">스크래핑 하기</button>
+      <select id="companyFilter"><option value="">전체 회사</option></select>
+      <span class="meta" id="countMeta"></span>
+    </div>
+
+    <div class="progress" id="progress">
+      <strong>스크래핑 중…</strong>
+      <ul id="progressList"></ul>
+    </div>
+
+    <div class="list" id="postingList"></div>
+  </section>
+
+  <section id="companies" class="panel" role="tabpanel">
+    <table class="company-table">
+      <thead><tr><th>회사</th><th>채용사이트</th><th>마지막 결과</th><th>마지막 스크래핑</th></tr></thead>
+      <tbody id="companyList"></tbody>
+    </table>
+  </section>
+
+  <div class="demo">
+    UI 샘플용 상태 전환 (실제 화면에는 없음)<br>
+    <button data-demo="normal">정상</button>
+    <button data-demo="scraping">스크래핑 진행</button>
+    <button data-demo="auth">세션 만료</button>
+    <button data-demo="empty">빈 목록</button>
+  </div>
+</div>
+
+<script>
+const COMPANIES = [
+  { id: "naver", name: "네이버", url: "https://recruit.navercorp.com", last: "2026-10-09 17:40", status: "ok", count: 12 },
+  { id: "kakao", name: "카카오", url: "https://careers.kakao.com", last: "2026-10-09 17:40", status: "ok", count: 8 },
+  { id: "coupang", name: "쿠팡", url: "https://www.coupang.jobs", last: "2026-10-09 17:40", status: "fail", error: "HTTP 403" },
+  { id: "toss", name: "토스", url: "https://toss.im/career", last: "2026-10-09 17:40", status: "ok", count: 5 },
+  { id: "daangn", name: "당근", url: "https://about.daangn.com/jobs", last: "2026-10-09 17:40", status: "ok", count: 4 },
+  { id: "line", name: "라인", url: "https://careers.linecorp.com", last: null, status: null },
+];
+
+const POSTINGS = [
+  { company: "kakao", title: "Backend Engineer (게임 플랫폼)", summary: "카카오게임즈 매칭/세션 서버 개발 및 운영", stack: ["Go", "Redis", "Kubernetes", "Kafka"], reason: "매치메이킹 서비스 5년 운영 경험과 Go·Redis 주력 스택이 그대로 맞음", deadline: "2026-10-14", scraped: "2026-10-09" },
+  { company: "naver", title: "대규모 실시간 분산 시스템 백엔드", summary: "실시간 이벤트 처리 플랫폼 설계/개발", stack: ["Go", "Kubernetes", "ClickHouse"], reason: "ClickHouse 마이그레이션 주도 경험과 분산 시스템 설계 역량이 핵심 요구사항과 일치", deadline: null, scraped: "2026-10-09" },
+  { company: "toss", title: "Server Developer (Platform)", summary: "결제 트래픽을 받는 내부 플랫폼 서버 개발", stack: ["Kotlin", "Kubernetes", "PostgreSQL"], reason: "언어는 다르지만 K8s 운영·PostgreSQL 경험과 레거시+greenfield 병행 경험이 요구 역량과 겹침", deadline: "2026-11-30", scraped: "2026-10-09" },
+  { company: "daangn", title: "Backend Engineer - 검색/추천", summary: "근거리 매칭 기반 추천 서버 개발", stack: ["Go", "Redis", "gRPC"], reason: "유저 매칭 도메인 경험과 Go·Redis 주력 스택이 맞음. gRPC는 학습 필요", deadline: null, scraped: "2026-10-08" },
+];
+
+const $ = (s) => document.querySelector(s);
+const byId = Object.fromEntries(COMPANIES.map((c) => [c.id, c]));
+let state = { postings: POSTINGS, scraping: false, auth: true };
+
+function daysLeft(d) {
+  if (!d) return null;
+  return Math.ceil((new Date(d) - new Date("2026-10-09")) / 86400000);
+}
+
+function renderPostings() {
+  const filter = $("#companyFilter").value;
+  const items = state.postings.filter((p) => !filter || p.company === filter);
+  $("#countMeta").textContent = `${items.length}건 · 마지막 스크래핑 2026-10-09 17:40`;
+  $("#postingList").innerHTML = items.length
+    ? items.map((p) => {
+        const left = daysLeft(p.deadline);
+        const dl = p.deadline ? `마감 ${p.deadline}${left <= 7 ? ` (D-${left})` : ""}` : "상시 채용";
+        return `
+        <article class="card">
+          <div class="card-head">
+            <div class="co-logo">${byId[p.company].name[0]}</div>
+            <div class="co-info">
+              <div class="company">${byId[p.company].name}</div>
+              <div class="deadline ${left !== null && left <= 7 ? "soon" : ""}">${dl}</div>
+            </div>
+          </div>
+          <h3>${p.title}</h3>
+          <p class="summary">${p.summary}</p>
+          <div class="chips">${p.stack.map((s) => `<span class="chip">${s}</span>`).join("")}</div>
+          <p class="reason"><strong>추천 이유</strong>${p.reason}</p>
+          <div class="card-foot">
+            <span class="meta">수집 ${p.scraped}</span>
+            <a class="apply" href="#">지원하기 →</a>
+          </div>
+        </article>`;
+      }).join("")
+    : `<div class="empty">저장된 공고가 없습니다.<br>"스크래핑 하기"를 눌러 공고를 가져오세요.</div>`;
+}
+
+function renderCompanies() {
+  $("#companyList").innerHTML = COMPANIES.map((c) => {
+    const status = c.status === "ok"
+      ? `<span class="status ok">성공 · ${c.count}건</span>`
+      : c.status === "fail"
+        ? `<span class="status fail">실패 · ${c.error}</span>`
+        : `<span class="status">기록 없음</span>`;
+    return `
+    <tr>
+      <td class="name"><span class="co-logo">${c.name[0]}</span>${c.name}</td>
+      <td><a href="${c.url}" target="_blank" rel="noopener">${c.url.replace("https://", "")}</a></td>
+      <td>${status}</td>
+      <td class="meta">${c.last ?? "-"}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderProgress(statuses) {
+  $("#progressList").innerHTML = COMPANIES.map((c) =>
+    `<li><span class="dot ${statuses[c.id] || ""}"></span>${c.name}</li>`).join("");
+}
+
+function setScraping(on) {
+  state.scraping = on;
+  $("#scrapeBtn").disabled = on;
+  $("#scrapeBtn").textContent = on ? "스크래핑 중…" : "스크래핑 하기";
+  $("#progress").classList.toggle("show", on);
+}
+
+async function scrape() {
+  if (!state.auth) {
+    $("#authBanner").classList.add("show");
+    return;
+  }
+  $("#authBanner").classList.remove("show");
+  const statuses = Object.fromEntries(COMPANIES.map((c) => [c.id, "running"]));
+  setScraping(true);
+  renderProgress(statuses);
+  for (const c of COMPANIES) {
+    await new Promise((r) => setTimeout(r, 400 + Math.random() * 500));
+    statuses[c.id] = c.id === "coupang" ? "failed" : "done";
+    renderProgress(statuses);
+  }
+  await new Promise((r) => setTimeout(r, 400));
+  setScraping(false);
+  state.postings = POSTINGS;
+  renderPostings();
+}
+
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x === t));
+  document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.id === t.dataset.tab));
+}));
+
+$("#companyFilter").innerHTML += COMPANIES.map((c) => `<option value="${c.id}">${c.name}</option>`).join("");
+$("#companyFilter").addEventListener("change", renderPostings);
+$("#scrapeBtn").addEventListener("click", scrape);
+
+document.querySelectorAll("[data-demo]").forEach((b) => b.addEventListener("click", () => {
+  const mode = b.dataset.demo;
+  $("#authBanner").classList.remove("show");
+  setScraping(false);
+  state.auth = mode !== "auth";
+  state.postings = mode === "empty" ? [] : POSTINGS;
+  renderPostings();
+  if (mode === "scraping") scrape();
+  if (mode === "auth") scrape();
+}));
+
+renderPostings();
+renderCompanies();
+</script>
+</body>
+</html>

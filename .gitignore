@@ -1,0 +1,9 @@
+.venv/
+.uv-cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+poc/out/
+poc/.claude/
+*.db
+.DS_Store
