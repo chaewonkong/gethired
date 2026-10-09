@@ -111,10 +111,33 @@ just test-live   # 실제 채용 사이트 호출
 
 ## 구조
 ```
-backend/app/   scrapers/ (회사별 구현체·registry) · llm.py · profile.py · matcher.py · repository.py · jobs.py · api.py
-backend/scripts/  디버그용 단독 실행 스크립트 (just scrape / just match)
-frontend/src/  App.tsx · api.ts · components/ (PostingsTab, BookmarksTab, CompaniesTab, PostingCard, ScrapeProgress, ScrollTopButton)
-design/        specs/ · plans/ · ui-sample.html · poc.md · poc-results/
+job-posting/
+|-- backend/                  # FastAPI + sqlite
+|   |-- app/
+|   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
+|   |   |-- api.py            # REST API
+|   |   |-- jobs.py           # 스크래핑 job 실행
+|   |   |-- profile.py        # 이력서 -> 프로필
+|   |   |-- matcher.py        # LLM 판정
+|   |   |-- llm.py            # Claude Agent SDK 래퍼
+|   |   |-- repository.py     # sqlite 접근
+|   |   `-- main.py           # 앱 조립 + 프론트 정적 서빙
+|   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
+|   |-- tests/                # pytest
+|   |-- fixtures/             # 파서 테스트용 응답 샘플
+|   `-- data/app.db           # DB (gitignore)
+|-- frontend/                 # React + Vite
+|   `-- src/
+|       |-- App.tsx           # 상태 · 탭 · 폴링
+|       |-- api.ts            # 타입 + fetch 래퍼
+|       |-- components/       # PostingsTab, BookmarksTab, CompaniesTab, PostingCard, ...
+|       `-- test/             # vitest 설정 · 픽스처
+|-- design/
+|   |-- specs/                # 기능 명세 (spec-0001 ...)
+|   |-- plans/                # 실행 계획
+|   `-- poc.md, poc-results/  # PoC 기록
+|-- resume/                   # 이력서 *.md (gitignore)
+`-- justfile                  # 실행·테스트 명령
 ```
 모듈별 상세는 [backend/AGENTS.md](backend/AGENTS.md), [frontend/AGENTS.md](frontend/AGENTS.md).
 새 회사 추가 = `backend/app/scrapers/<company>.py`에 `Scraper` 구현체 추가 (Greenhouse면 `GreenhouseScraper` 상속).
