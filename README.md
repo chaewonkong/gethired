@@ -41,7 +41,7 @@ cd backend && uv sync && uv run python -m app --port 8000
 
 ## 테스트
 ```bash
-just test        # 단위·API 테스트 (네트워크/LLM 없음)
+just test        # 백엔드 + 프론트 단위 테스트 (네트워크/LLM 없음). 따로: just test-api / just test-web
 just test-live   # 실제 채용 사이트 호출
 ```
 

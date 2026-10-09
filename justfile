@@ -35,9 +35,16 @@ dev-api:
 dev-web:
     cd frontend && npm run dev
 
-# 단위·API 테스트 (네트워크/LLM 없음)
-test:
+# 단위·API 테스트 (네트워크/LLM 없음): 백엔드 + 프론트엔드
+test: test-api test-web
+
+# 백엔드 단위·API 테스트
+test-api:
     cd backend && uv run pytest
+
+# 프론트엔드 단위 테스트 (vitest, jsdom)
+test-web:
+    cd frontend && npm test
 
 # 실제 채용 사이트 호출 통합 테스트
 test-live:

@@ -4,7 +4,7 @@ function daysLeft(deadline: string | null): number | null {
   if (!deadline) return null;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  return Math.ceil((new Date(deadline).getTime() - today.getTime()) / 86400000);
+  return Math.round((new Date(`${deadline}T00:00:00`).getTime() - today.getTime()) / 86400000);
 }
 
 interface Props {
