@@ -18,7 +18,16 @@ build:
 run: build
     cd backend && uv run uvicorn app.main:app --port {{port}}
 
-# 백엔드만 실행 (프론트 개발 시 `just dev-web`과 함께)
+# 개발 모드: 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행. Ctrl-C로 둘 다 종료
+dev:
+    #!/usr/bin/env zsh
+    set -u
+    trap 'kill 0' EXIT INT TERM
+    (cd backend && uv run uvicorn app.main:app --port {{port}} --reload) &
+    (cd frontend && npm run dev) &
+    wait
+
+# 백엔드만 실행
 dev-api:
     cd backend && uv run uvicorn app.main:app --port {{port}} --reload
 

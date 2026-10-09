@@ -15,7 +15,7 @@
 just setup     # 의존성 설치 (uv sync + npm install)
 just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
 ```
-개발 시: `just dev-api`(백엔드 reload) + `just dev-web`(Vite 5173, `/api` 프록시). 전체 목록은 `just`.
+개발 시: `just dev` → 백엔드(reload, 8000) + 프론트 Vite(5173, `/api` 프록시) 동시 실행, http://localhost:5173. 전체 목록은 `just`.
 
 just 없이:
 ```bash
