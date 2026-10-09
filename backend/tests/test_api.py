@@ -161,3 +161,22 @@ def test_auth_error_during_judging_marks_job_auth_required():
         assert {c["status"] for c in job["companies"].values()} == {"auth_required"}
         assert client.get("/api/postings").json() == []
         assert repo.judged_ids("a") == set()  # 재로그인 후 재판정 대상
+
+
+def test_bookmark_put_delete():
+    client, repo = make_client()
+    with client:
+        wait_job(client, client.post("/api/scrape").json()["job_id"])
+        first = client.get("/api/postings").json()[0]
+        assert first["bookmarked"] is False
+
+        r = client.put(f"/api/postings/{first['id']}/bookmark")
+        assert r.status_code == 200 and r.json() == {"posting_id": first["id"], "bookmarked": True}
+        assert [p["id"] for p in client.get("/api/postings").json() if p["bookmarked"]] == [first["id"]]
+        assert repo.get_bookmark(first["id"])["deleted_at"] is None
+
+        assert client.delete(f"/api/postings/{first['id']}/bookmark").json()["bookmarked"] is False
+        assert not any(p["bookmarked"] for p in client.get("/api/postings").json())
+        assert repo.get_bookmark(first["id"])["deleted_at"] is not None
+
+        assert client.put("/api/postings/9999/bookmark").status_code == 404

@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from . import auth
 from .jobs import JobManager
 from .llm import AUTH_MESSAGE
-from .repository import Repository
+from .repository import Repository, now_iso
 
 
 def create_app(repo: Repository, jobs: JobManager,
@@ -50,6 +50,19 @@ def create_app(repo: Repository, jobs: JobManager,
     @api.get("/postings")
     def postings(company: str | None = None, min_level: Literal["stretch", "good", "strong"] | None = None):
         return repo.list_postings(company=company, min_level=min_level)
+
+    def bookmark(posting_id: int, on: bool):
+        if not repo.set_bookmark(posting_id, on, now_iso()):
+            raise HTTPException(status_code=404, detail="posting not found")
+        return {"posting_id": posting_id, "bookmarked": on}
+
+    @api.put("/postings/{posting_id}/bookmark")
+    def add_bookmark(posting_id: int):
+        return bookmark(posting_id, True)
+
+    @api.delete("/postings/{posting_id}/bookmark")
+    def remove_bookmark(posting_id: int):
+        return bookmark(posting_id, False)
 
     app.include_router(api)
     return app

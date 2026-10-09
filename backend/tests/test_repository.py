@@ -57,3 +57,45 @@ def test_judgments_and_runs_and_profile_cache():
     assert repo.get_profile_cache("h") is None
     repo.set_profile_cache("h", {"name": "x"}, "T1")
     assert repo.get_profile_cache("h") == {"name": "x"}
+
+
+def bookmarked(repo):
+    return [p["external_id"] for p in repo.list_postings() if p["bookmarked"]]
+
+
+def test_bookmark_insert_soft_delete_and_rebookmark():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b")])
+    a = repo.list_postings()[0]["id"]
+    assert bookmarked(repo) == []
+
+    assert repo.set_bookmark(a, True, "T1")
+    assert bookmarked(repo) == ["a"]
+    assert repo.get_bookmark(a) == {"posting_id": a, "created_at": "T1", "deleted_at": None}
+
+    repo.set_bookmark(a, True, "T2")
+    assert repo.get_bookmark(a)["created_at"] == "T1"
+
+    repo.set_bookmark(a, False, "T3")
+    assert bookmarked(repo) == []
+    assert repo.get_bookmark(a)["deleted_at"] == "T3"
+
+    repo.set_bookmark(a, True, "T4")
+    assert repo.get_bookmark(a) == {"posting_id": a, "created_at": "T4", "deleted_at": None}
+
+    assert not repo.set_bookmark(9999, True, "T5")
+
+
+def test_bookmark_hidden_with_deleted_posting_and_restored_when_posting_returns():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a")])
+    a = repo.list_postings()[0]["id"]
+    repo.set_bookmark(a, True, "T1")
+
+    repo.soft_delete_missing("toss", set(), "T2")
+    assert repo.list_postings() == []
+    assert not repo.set_bookmark(a, False, "T3")
+
+    repo.mark_seen("toss", {"a"}, "T4")
+    assert bookmarked(repo) == ["a"]
+    assert repo.get_bookmark(a)["deleted_at"] is None
