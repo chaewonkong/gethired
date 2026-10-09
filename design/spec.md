@@ -16,14 +16,28 @@
 ## 기능
 - resume 디렉토리의 resume.md, career_portfolio.md를 읽고 사용자의 특징을 추출한다.
 - 사용자에게 적합한 job posting을 등록 회사들에서 서칭한다
-- 적합한 공고를 찾은 경우 sqlite DB에 저장한다
+- 판정한 공고를 sqlite DB에 저장한다
   - 스크래핑 일자
   - 공고 마감일 (nullable)
   - 포지션 개요
   - 기술 스택
+  - 적합도 등급(fit_level)과 점수, 부족한 점(gaps)
   - 공고가 사용자에게 맞는 이유
   - 지원 링크
   - deleted_at
+
+## 적합도 등급
+단순 적합/부적합이 아니라 4단계로 저장한다. 언어·프레임워크·연차 같은 **소프트 불일치**는 등급을 낮추되 제외하지 않고, 역할 종류가 다른 **하드 불일치**만 weak로 보낸다. 도메인이 유사하면 언어가 달라도 good까지 가능.
+
+| fit_level | 의미 | score |
+|---|---|---|
+| strong | 주력 스택·도메인·연차 모두 맞음 | 80~100 |
+| good | 핵심은 맞고 한 요소가 약함 | 65~79 |
+| stretch | 역할·도메인은 맞지만 언어/프레임워크나 연차가 다름. 지원 가능하나 서류 리스크 | 45~64 |
+| weak | 역할 자체가 다름 (비개발, 모바일, 보안 전문 등) | 0~44 |
+
+- `gaps`: 부족한 점을 `종류: 설명` 형식으로 구조화. 종류는 `language`, `framework`, `seniority`, `domain`, `other`
+- UI: 등급 배지 표시, 기본 필터는 weak 제외, 등급별 필터 제공
 - web page를 통해 리스트로 저장된 공고를 확인할 수 있다.
 - 과거 공고가 사라진 경우 deleted_at에 날짜를 기록해 soft delete한다
 - 공고는 병렬로 스크래핑한다.
@@ -47,8 +61,8 @@ UI 샘플: [ui-sample.html](ui-sample.html)
   - 진행 중에는 버튼 비활성화 + 회사별 loading 상태 표시
   - 완료 후 리스트 갱신
   - 세션 만료 시 로그인 안내 표시 (아래 "세션 만료 처리")
-- 각 공고 항목: 회사, 포지션 개요, 기술 스택, 맞는 이유, 마감일, 지원 링크, 스크래핑 일자
-- 회사 필터
+- 각 공고 항목: 회사, 적합도 등급 배지(+점수), 포지션 개요, 기술 스택, 부족한 점(gaps), 맞는 이유, 마감일, 지원 링크, 스크래핑 일자
+- 회사 필터, 등급 필터 (기본: strong/good/stretch, weak 숨김)
 
 ### 회사 탭
 - 등록된 회사 목록 조회 (UI에서 추가/수정 불가)
@@ -84,7 +98,10 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 | title | TEXT | |
 | summary | TEXT | 포지션 개요 |
 | tech_stack | TEXT (JSON array) | |
-| fit_reason | TEXT | 사용자에게 맞는 이유 |
+| fit_level | TEXT | strong / good / stretch / weak |
+| score | INTEGER | 0~100 |
+| gaps | TEXT (JSON array) | `["language: Kotlin/Spring 필수", ...]` |
+| fit_reason | TEXT | 사용자에게 맞는/안 맞는 이유 |
 | apply_url | TEXT | |
 | deadline | DATE NULL | |
 | scraped_at | DATETIME | 최초/최근 스크래핑 일자 |
@@ -110,7 +127,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 - `GET /companies` → registry 회사 목록 + 회사별 마지막 `scrape_runs` 결과
 - `POST /scrape` → `{job_id}`. 진행 중인 job이 있으면 그 job_id 반환. 세션 만료 시 `401 {code: "claude_login_required"}`
 - `GET /scrape/{job_id}` → 회사별 진행 상태 (pending / running / done / failed). 진행 중 세션 만료 시 job 상태 `auth_required`
-- `GET /postings?company=` → `deleted_at IS NULL`만 반환
+- `GET /postings?company=&min_level=stretch` → `deleted_at IS NULL`만 반환. `min_level` 기본값 stretch (weak 제외)
 
 ## 세션 만료 처리
 - "스크래핑 하기" 클릭 시 `POST /scrape`가 세션을 선확인. 만료 시 스크래핑을 시작하지 않고 안내 표시
@@ -150,6 +167,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 - 0-5 ✅ 프로필 추출 + 매칭 (상세: `poc/README.md` Step 3/4)
   - 프로필: 이력서 2개 → 구조화 JSON, 21.5초, $0.138. 이력서 해시로 캐시. 희망 근무지/비자 등은 이력서에 없어 비어 있음 → **Phase 1: 희망 조건을 별도 입력(설정 파일)으로 받아 프로필에 병합**
   - 매칭: 322건 + 플랜티드 3건, 배치 20 → 누락 0, 플랜티드 3/3, 결정성 20/20, fit 22건(토스 14, 당근 6, 라인 1). 품질 샘플 검토는 사용자 대기 (`poc/results/fit.md`)
+  - 적합도 4단계로 변경 후 재판정(카카오 33, 쿠팡 40): bool에서 0건이던 Kotlin/Spring·Staff 레벨 공고가 good 4 / stretch 24로 분류되고 `gaps`에 language/seniority가 기록됨. 검토 포인트: 도메인 "필수" 요건(의료 10년 등)이 강한 공고도 stretch 하한(45)으로 올라옴 → 규칙 보완 여지 (`poc/README.md` Step 4 보강)
   - Phase 1 반영: 본문 1500자 제한에 요구사항이 잘리는 공고 있음 → 2500자 이상 또는 요구사항 섹션 우선. fit_reason이 이력서의 구체 경험을 인용하도록 한 프롬프트 규칙은 유지
 - 0-6 ⚠️ 시간 ✅ / 비용 ❌ (상세: `poc/README.md` Step 5)
   - 첫 실행 325건: 226초(3.8분), 17회 호출, $5.86 상당 (목표 $5). 입력 489K / 출력 103K 토큰. 동시성 4로 순차 대비 약 4배
@@ -188,7 +206,8 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 | 검증 | 방법 | 통과 기준 |
 |---|---|---|
 | 출력 완전성 | 입력 공고 수 vs `matches.json` 항목 수 | 1:1. 빠진 external_id가 있으면 해당 배치만 재시도 |
-| 스키마 | 각 항목 pydantic 검증 | score 0~100, fit bool, fit_reason 20자 이상, tech_stack 리스트 |
+| 스키마 | 각 항목 pydantic 검증 | score 0~100, fit_level ∈ {strong,good,stretch,weak}이고 score 구간과 일치, gaps 형식 `종류: 설명`, fit_reason 20자 이상, tech_stack 리스트 |
+| 소프트 불일치 | Kotlin/Spring 필수 + 결제 도메인 공고(카카오페이), Staff 레벨 백엔드 공고(쿠팡) | weak가 아닌 stretch 이상, gaps에 language/seniority 기록 |
 | 결정성 | 같은 배치 2회 실행 | fit 판정 일치율 90% 이상 |
 | 플랜티드 테스트 | 가짜 공고 3건 혼입: ① Go 매치메이킹 백엔드 (fit) ② iOS 앱 개발 (unfit) ③ 영업 관리자 (unfit) | 3건 모두 기대대로 |
 | 품질 (사람) | fit=true 상위 10 + fit=false 무작위 10을 `fit.md`로 검토 | 오판 4건 이하. fit_reason이 이력서의 구체 경험을 인용 |
@@ -217,7 +236,7 @@ UI 샘플: [ui-sample.html](ui-sample.html)
 ### Phase 2 — Frontend
 - React (Vite)
 - 탭: 공고 / 회사
-- 공고 탭: 진입 시 `GET /postings` 렌더링. "스크래핑 하기" → `POST /scrape` → 폴링하며 회사별 loading 표시 → 완료 후 재조회
+- 공고 탭: 진입 시 `GET /postings` 렌더링(등급 배지, gaps, 등급 필터 포함). "스크래핑 하기" → `POST /scrape` → 폴링하며 회사별 loading 표시 → 완료 후 재조회
 - 회사 탭: `GET /companies` 렌더링
 - 세션 만료 안내 배너, 회사 필터
 
