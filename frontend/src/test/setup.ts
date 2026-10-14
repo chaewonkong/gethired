@@ -4,6 +4,7 @@ import { afterEach, vi } from "vitest";
 
 afterEach(() => {
   cleanup();
+  sessionStorage.clear();
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
   vi.useRealTimers();

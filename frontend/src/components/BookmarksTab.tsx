@@ -5,17 +5,18 @@ interface Props {
   postings: Posting[];
   byId: Record<string, Company>;
   onToggleBookmark: (p: Posting) => void;
+  onToggleHidden: (p: Posting) => void;
 }
 
-export function BookmarksTab({ postings, byId, onToggleBookmark }: Props) {
-  const items = postings.filter((p) => p.bookmarked).sort((a, b) => b.score - a.score);
+export function BookmarksTab({ postings, byId, onToggleBookmark, onToggleHidden }: Props) {
+  const items = postings.filter((p) => p.bookmarked && !p.hidden).sort((a, b) => b.score - a.score);
 
   return (
     <section className="panel">
       <div className="list">
         {items.length ? (
           items.map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
           ))
         ) : (
           <div className="empty">

@@ -130,10 +130,10 @@ job-posting/
 |   `-- src/
 |       |-- App.tsx           # 상태 · 탭 · 폴링
 |       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # PostingsTab, BookmarksTab, CompaniesTab, PostingCard, ...
+|       |-- components/       # PostingsTab, BookmarksTab, HiddenTab, CompaniesTab, PostingCard, ...
 |       `-- test/             # vitest 설정 · 픽스처
 |-- design/
-|   |-- specs/                # 기능 명세 (spec-0001 ...)
+|   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   |-- plans/                # 실행 계획
 |   `-- poc.md, poc-results/  # PoC 기록
 |-- resume/                   # 이력서 *.md (gitignore)

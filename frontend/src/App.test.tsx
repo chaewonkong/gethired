@@ -14,7 +14,7 @@ function stubApi(postings: Posting[], routes: Record<string, Handler> = {}) {
     if (routes[key]) return routes[key](init);
     if (key === "GET /api/postings") return json(postings);
     if (key === "GET /api/companies") return json([makeCompany()]);
-    if (key.endsWith("/bookmark")) return json({});
+    if (key.endsWith("/bookmark") || key.endsWith("/hide")) return json({});
     return json({}, 404);
   });
   vi.stubGlobal("fetch", fetch);
@@ -73,11 +73,110 @@ describe("App", () => {
     expect(screen.getByText(/bookmark: 500/)).toBeInTheDocument();
   });
 
+  it("숨김 버튼을 누르면 PUT 후 공고 탭에서 사라지고 숨김 탭에 나타난다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a" }), makePosting({ id: 2, title: "b", score: 10 })]);
+    render(<App />);
+    await screen.findByRole("heading", { name: "a" });
+
+    await userEvent.click(screen.getAllByRole("button", { name: "숨김" })[0]);
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/hide", { method: "PUT" });
+    expect(titles()).toEqual(["b"]);
+    expect(within(tab(/숨김/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(tab(/숨김/));
+    expect(titles()).toEqual(["a"]);
+  });
+
+  it("숨김 탭에서 해제하면 DELETE 후 숨김 탭에서 빠지고 공고 탭으로 돌아온다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a", hidden: true }), makePosting({ id: 2, title: "b", score: 10 })]);
+    render(<App />);
+    await screen.findByRole("heading", { name: "b" });
+    expect(titles()).toEqual(["b"]);
+
+    await userEvent.click(tab(/숨김/));
+    await userEvent.click(screen.getByRole("button", { name: "숨김 해제" }));
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/hide", { method: "DELETE" });
+    expect(titles()).toEqual([]);
+
+    await userEvent.click(tab(/공고/));
+    expect(titles()).toEqual(["a", "b"]);
+  });
+
+  it("숨긴 공고는 북마크 탭과 북마크 개수에서 빠진다", async () => {
+    stubApi([makePosting({ title: "a", bookmarked: true, hidden: true }), makePosting({ title: "b", bookmarked: true })]);
+    render(<App />);
+    await screen.findByRole("heading", { name: "b" });
+    expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(tab(/북마크/));
+    expect(titles()).toEqual(["b"]);
+  });
+
+  it("숨김 요청이 실패하면 되돌리고 에러를 띄운다", async () => {
+    stubApi([makePosting({ id: 1, title: "a" })], {
+      "PUT /api/postings/1/hide": () => new Response("", { status: 500 }),
+    });
+    render(<App />);
+    await screen.findByRole("heading", { name: "a" });
+
+    await userEvent.click(screen.getByRole("button", { name: "숨김" }));
+    await waitFor(() => expect(titles()).toEqual(["a"]));
+    expect(screen.getByText(/hide: 500/)).toBeInTheDocument();
+  });
+
+  it("요청이 끝나기 전 같은 버튼을 다시 누르면 무시하고, 끝난 뒤에는 최신 상태로 토글한다", async () => {
+    let release!: () => void;
+    const fetch = stubApi([makePosting({ id: 1, title: "a" })], {
+      "PUT /api/postings/1/bookmark": () => new Promise((r) => (release = () => r(new Response("{}")))),
+    });
+    render(<App />);
+    await screen.findByRole("heading", { name: "a" });
+
+    await userEvent.click(screen.getByRole("button", { name: "북마크" }));
+    await userEvent.click(screen.getByRole("button", { name: "북마크 해제" }));
+    const calls = () => fetch.mock.calls.filter(([path]) => String(path).endsWith("/bookmark"));
+    expect(calls()).toEqual([["/api/postings/1/bookmark", { method: "PUT" }]]);
+    expect(screen.getByRole("button", { name: "북마크 해제" })).toHaveClass("on");
+
+    release();
+    await userEvent.click(await screen.findByRole("button", { name: "북마크 해제" }));
+    await waitFor(() => expect(calls()).toHaveLength(2));
+    expect(calls()[1]).toEqual(["/api/postings/1/bookmark", { method: "DELETE" }]);
+    expect(screen.getByRole("button", { name: "북마크" })).not.toHaveClass("on");
+  });
+
+  it("요청 중인 북마크와 숨김은 서로 막지 않는다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a" })], {
+      "PUT /api/postings/1/bookmark": () => new Promise(() => {}),
+    });
+    render(<App />);
+    await screen.findByRole("heading", { name: "a" });
+
+    await userEvent.click(screen.getByRole("button", { name: "북마크" }));
+    await userEvent.click(screen.getByRole("button", { name: "숨김" }));
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/hide", { method: "PUT" });
+  });
+
   it("스크래핑 시 로그인이 필요하면 안내 배너", async () => {
     stubApi([], { "POST /api/scrape": () => new Response("", { status: 401 }) });
     render(<App />);
     await userEvent.click(await screen.findByRole("button", { name: "스크래핑 하기" }));
     expect(await screen.findByText("Claude 로그인이 필요합니다.")).toBeInTheDocument();
+  });
+
+  it("회사 필터는 탭을 옮겼다 돌아와도 유지된다", async () => {
+    stubApi([makePosting({ title: "a", company: "toss" }), makePosting({ title: "b", company: "naver", score: 10 })], {
+      "GET /api/companies": () => new Response(JSON.stringify([makeCompany(), makeCompany({ company: "naver", display_name: "네이버" })])),
+    });
+    render(<App />);
+    await screen.findByRole("heading", { name: "a" });
+    await userEvent.click(screen.getByRole("button", { name: /^회사 필터/ }));
+    await userEvent.click(screen.getByRole("checkbox", { name: /토스/ }));
+    expect(titles()).toEqual(["b"]);
+
+    await userEvent.click(tab(/북마크/));
+    await userEvent.click(tab(/공고/));
+    expect(titles()).toEqual(["b"]);
   });
 
   it("회사 탭으로 전환", async () => {

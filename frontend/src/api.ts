@@ -17,6 +17,7 @@ export interface Posting {
   category: string | null;
   scraped_at: string;
   bookmarked: boolean;
+  hidden: boolean;
 }
 
 export interface ScrapeRun {
@@ -61,6 +62,10 @@ export const api = {
   async setBookmark(id: number, on: boolean): Promise<void> {
     const r = await fetch(`/api/postings/${id}/bookmark`, { method: on ? "PUT" : "DELETE" });
     if (!r.ok) throw new Error(`bookmark: ${r.status}`);
+  },
+  async setHidden(id: number, on: boolean): Promise<void> {
+    const r = await fetch(`/api/postings/${id}/hide`, { method: on ? "PUT" : "DELETE" });
+    if (!r.ok) throw new Error(`hide: ${r.status}`);
   },
   async startScrape(): Promise<{ job_id: string }> {
     const r = await fetch("/api/scrape", { method: "POST" });

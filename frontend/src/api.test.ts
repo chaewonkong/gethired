@@ -33,6 +33,21 @@ describe("api", () => {
     await expect(api.setBookmark(1, true)).rejects.toThrow("bookmark: 404");
   });
 
+  it("setHidden: on이면 PUT, off면 DELETE", async () => {
+    const fetch = stubFetch();
+    await api.setHidden(7, true);
+    await api.setHidden(7, false);
+    expect(fetch.mock.calls).toEqual([
+      ["/api/postings/7/hide", { method: "PUT" }],
+      ["/api/postings/7/hide", { method: "DELETE" }],
+    ]);
+  });
+
+  it("setHidden 실패는 에러", async () => {
+    stubFetch(404);
+    await expect(api.setHidden(1, true)).rejects.toThrow("hide: 404");
+  });
+
   it("startScrape 401이면 LoginRequiredError", async () => {
     stubFetch(401);
     await expect(api.startScrape()).rejects.toBeInstanceOf(LoginRequiredError);

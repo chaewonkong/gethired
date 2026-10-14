@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { api, Company, Job, LoginRequiredError, Posting } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
+import { HiddenTab } from "./components/HiddenTab";
 import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 
-type Tab = "postings" | "bookmarks" | "companies";
+type Tab = "postings" | "bookmarks" | "hidden" | "companies";
 
-const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", companies: "회사" };
+const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", hidden: "숨김", companies: "회사" };
+
+// 낙관적 업데이트로 토글하는 공고 플래그와 그 저장 API
+const FLAG_API = { bookmarked: api.setBookmark, hidden: api.setHidden } satisfies Record<string, (id: number, on: boolean) => Promise<void>>;
+type Flag = keyof typeof FLAG_API;
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("postings");
@@ -17,6 +22,7 @@ export default function App() {
   const [job, setJob] = useState<Job | null>(null);
   const [loginRequired, setLoginRequired] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const pending = useRef(new Set<string>());
 
   const reload = useCallback(async () => {
     try {
@@ -62,20 +68,31 @@ export default function App() {
     }
   };
 
-  const toggleBookmark = async (p: Posting) => {
-    const on = !p.bookmarked;
-    const set = (v: boolean) => setPostings((ps) => ps.map((x) => (x.id === p.id ? { ...x, bookmarked: v } : x)));
+  // 같은 공고·플래그는 요청이 끝날 때까지 다시 토글하지 않는다 (중복 요청·롤백 경합 방지)
+  const toggleFlag = async (p: Posting, flag: Flag) => {
+    const key = `${flag}:${p.id}`;
+    if (pending.current.has(key)) return;
+    pending.current.add(key);
+    const on = !p[flag];
+    const set = (v: boolean) => setPostings((ps) => ps.map((x) => (x.id === p.id ? { ...x, [flag]: v } : x)));
     set(on);
     try {
-      await api.setBookmark(p.id, on);
+      await FLAG_API[flag](p.id, on);
     } catch (e) {
       set(!on);
       setError(String(e));
+    } finally {
+      pending.current.delete(key);
     }
   };
+  const toggleBookmark = (p: Posting) => toggleFlag(p, "bookmarked");
+  const toggleHidden = (p: Posting) => toggleFlag(p, "hidden");
 
   const scraping = job?.status === "running";
-  const bookmarkCount = postings.filter((p) => p.bookmarked).length;
+  const count: Partial<Record<Tab, number>> = {
+    bookmarks: postings.filter((p) => p.bookmarked && !p.hidden).length,
+    hidden: postings.filter((p) => p.hidden).length,
+  };
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
 
   return (
@@ -89,10 +106,10 @@ export default function App() {
       </header>
 
       <nav className="tabs" role="tablist">
-        {(["postings", "bookmarks", "companies"] as Tab[]).map((t) => (
+        {(["postings", "bookmarks", "hidden", "companies"] as Tab[]).map((t) => (
           <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
             {TAB_LABEL[t]}
-            {t === "bookmarks" && bookmarkCount > 0 && <span className="tab-count">{bookmarkCount}</span>}
+            {!!count[t] && <span className="tab-count">{count[t]}</span>}
           </button>
         ))}
       </nav>
@@ -108,9 +125,14 @@ export default function App() {
 
       {tab === "postings" && (
         <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping}
-                     onScrape={startScrape} onToggleBookmark={toggleBookmark} />
+                     onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
       )}
-      {tab === "bookmarks" && <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} />}
+      {tab === "bookmarks" && (
+        <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+      )}
+      {tab === "hidden" && (
+        <HiddenTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+      )}
       {tab === "companies" && <CompaniesTab companies={companies} />}
 
       <ScrollTopButton />

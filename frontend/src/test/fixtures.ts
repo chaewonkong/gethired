@@ -21,6 +21,7 @@ export function makePosting(over: Partial<Posting> = {}): Posting {
     category: "Backend",
     scraped_at: "2026-10-09T00:00:00+00:00",
     bookmarked: false,
+    hidden: false,
     ...over,
   };
 }

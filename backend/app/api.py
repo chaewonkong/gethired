@@ -64,5 +64,18 @@ def create_app(repo: Repository, jobs: JobManager,
     def remove_bookmark(posting_id: int):
         return bookmark(posting_id, False)
 
+    def hide(posting_id: int, on: bool):
+        if not repo.set_hidden(posting_id, on, now_iso()):
+            raise HTTPException(status_code=404, detail="posting not found")
+        return {"posting_id": posting_id, "hidden": on}
+
+    @api.put("/postings/{posting_id}/hide")
+    def add_hide(posting_id: int):
+        return hide(posting_id, True)
+
+    @api.delete("/postings/{posting_id}/hide")
+    def remove_hide(posting_id: int):
+        return hide(posting_id, False)
+
     app.include_router(api)
     return app

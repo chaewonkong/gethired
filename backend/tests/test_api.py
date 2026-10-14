@@ -180,3 +180,23 @@ def test_bookmark_put_delete():
         assert repo.get_bookmark(first["id"])["deleted_at"] is not None
 
         assert client.put("/api/postings/9999/bookmark").status_code == 404
+
+
+def test_hide_put_delete():
+    client, repo = make_client()
+    with client:
+        wait_job(client, client.post("/api/scrape").json()["job_id"])
+        first = client.get("/api/postings").json()[0]
+        assert first["hidden"] is False
+
+        r = client.put(f"/api/postings/{first['id']}/hide")
+        assert r.status_code == 200 and r.json() == {"posting_id": first["id"], "hidden": True}
+        assert [p["id"] for p in client.get("/api/postings").json() if p["hidden"]] == [first["id"]]
+        assert repo.get_hidden(first["id"])["deleted_at"] is None
+
+        assert client.delete(f"/api/postings/{first['id']}/hide").json()["hidden"] is False
+        assert not any(p["hidden"] for p in client.get("/api/postings").json())
+        assert repo.get_hidden(first["id"])["deleted_at"] is not None
+
+        assert client.put("/api/postings/9999/hide").status_code == 404
+        assert client.delete("/api/postings/9999/hide").status_code == 404

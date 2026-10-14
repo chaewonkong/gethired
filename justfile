@@ -22,7 +22,9 @@ run: build
 dev:
     #!/usr/bin/env zsh
     set -u
-    trap 'kill 0' EXIT INT TERM
+    # kill 0은 셸 자신에게도 TERM을 보내므로, 종료 처리 중에는 셸이 INT/TERM을 무시해야 trap이 재귀하지 않는다
+    trap 'trap "" INT TERM; kill 0; wait' EXIT
+    trap 'exit 130' INT TERM
     (cd backend && uv run uvicorn app.main:app --port {{port}} --reload) &
     (cd frontend && npm run dev) &
     wait

@@ -99,3 +99,59 @@ def test_bookmark_hidden_with_deleted_posting_and_restored_when_posting_returns(
     repo.mark_seen("toss", {"a"}, "T4")
     assert bookmarked(repo) == ["a"]
     assert repo.get_bookmark(a)["deleted_at"] is None
+
+
+def hidden(repo):
+    return [p["external_id"] for p in repo.list_postings() if p["hidden"]]
+
+
+def test_hide_insert_soft_delete_and_rehide():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b")])
+    a = repo.list_postings()[0]["id"]
+    assert hidden(repo) == []
+
+    assert repo.set_hidden(a, True, "T1")
+    assert hidden(repo) == ["a"]
+    assert repo.get_hidden(a) == {"posting_id": a, "created_at": "T1", "deleted_at": None}
+
+    repo.set_hidden(a, True, "T2")
+    assert repo.get_hidden(a)["created_at"] == "T1"
+
+    repo.set_hidden(a, False, "T3")
+    assert hidden(repo) == []
+    assert repo.get_hidden(a)["deleted_at"] == "T3"
+
+    repo.set_hidden(a, True, "T4")
+    assert repo.get_hidden(a) == {"posting_id": a, "created_at": "T4", "deleted_at": None}
+
+    assert not repo.set_hidden(9999, True, "T5")
+
+
+def test_hide_independent_of_bookmark():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a")])
+    a = repo.list_postings()[0]["id"]
+    repo.set_bookmark(a, True, "T1")
+    repo.set_hidden(a, True, "T2")
+    p = repo.list_postings()[0]
+    assert p["bookmarked"] is True and p["hidden"] is True
+
+    repo.set_hidden(a, False, "T3")
+    p = repo.list_postings()[0]
+    assert p["bookmarked"] is True and p["hidden"] is False
+
+
+def test_hide_gone_with_deleted_posting_and_restored_when_posting_returns():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a")])
+    a = repo.list_postings()[0]["id"]
+    repo.set_hidden(a, True, "T1")
+
+    repo.soft_delete_missing("toss", set(), "T2")
+    assert repo.list_postings() == []
+    assert not repo.set_hidden(a, False, "T3")
+
+    repo.mark_seen("toss", {"a"}, "T4")
+    assert hidden(repo) == ["a"]
+    assert repo.get_hidden(a)["deleted_at"] is None

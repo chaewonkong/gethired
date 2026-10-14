@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Company, Job, Level, LEVEL_RANK, Posting } from "../api";
+import { useSessionState } from "../sessionState";
+import { CompanyFilter } from "./CompanyFilter";
 import { PostingCard } from "./PostingCard";
 import { ScrapeProgress } from "./ScrapeProgress";
 
@@ -11,6 +13,7 @@ interface Props {
   scraping: boolean;
   onScrape: () => void;
   onToggleBookmark: (p: Posting) => void;
+  onToggleHidden: (p: Posting) => void;
 }
 
 function lastScrapedAt(companies: Company[]): string | null {
@@ -20,22 +23,29 @@ function lastScrapedAt(companies: Company[]): string | null {
 
 const PAGE_SIZE = 20;
 
-export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark }: Props) {
-  const [company, setCompany] = useState("");
-  const [minLevel, setMinLevel] = useState<Level>("stretch");
+const parseCompanies = (raw: unknown) => (Array.isArray(raw) && raw.every((c) => typeof c === "string") ? raw : null);
+const parseLevel = (raw: unknown) => (typeof raw === "string" && Object.hasOwn(LEVEL_RANK, raw) ? (raw as Level) : null);
+
+export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark, onToggleHidden }: Props) {
+  // 해제한 회사를 저장해 새로 추가된 회사는 기본 선택 상태가 되게 한다
+  const [excluded, setExcluded] = useSessionState<string[]>("postings.excludedCompanies", [], parseCompanies);
+  const [minLevel, setMinLevel] = useSessionState<Level>("postings.minLevel", "stretch", parseLevel);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const sentinel = useRef<HTMLDivElement>(null);
 
-  const items = postings
-    .filter((p) => (!company || p.company === company) && LEVEL_RANK[p.fit_level] >= LEVEL_RANK[minLevel])
-    .sort((a, b) => b.score - a.score);
+  const leveled = postings.filter((p) => !p.hidden && LEVEL_RANK[p.fit_level] >= LEVEL_RANK[minLevel]);
+  const counts: Record<string, number> = {};
+  for (const p of leveled) counts[p.company] = (counts[p.company] ?? 0) + 1;
+  const selected = new Set(companies.map((c) => c.company).filter((c) => !excluded.includes(c)));
+  const items = leveled.filter((p) => selected.has(p.company)).sort((a, b) => b.score - a.score);
+  const noneSelected = companies.length > 0 && selected.size === 0;
   const last = lastScrapedAt(companies);
   const hasMore = visible < items.length;
 
-  // 필터·데이터가 바뀌면 처음부터
+  // 필터가 바뀌면 처음부터. 북마크·숨김 토글로 postings가 바뀔 때는 스크롤 위치 유지
   useEffect(() => {
     setVisible(PAGE_SIZE);
-  }, [company, minLevel, postings]);
+  }, [excluded, minLevel]);
 
   // 바닥 sentinel이 보이면 다음 페이지
   useEffect(() => {
@@ -57,12 +67,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
         <button className="btn" onClick={onScrape} disabled={scraping}>
           {scraping ? "스크래핑 중…" : "스크래핑 하기"}
         </button>
-        <select value={company} onChange={(e) => setCompany(e.target.value)}>
-          <option value="">전체 회사</option>
-          {companies.map((c) => (
-            <option key={c.company} value={c.company}>{c.display_name}</option>
-          ))}
-        </select>
+        <CompanyFilter companies={companies} counts={counts} excluded={excluded} onChange={setExcluded} />
         <select value={minLevel} onChange={(e) => setMinLevel(e.target.value as Level)}>
           <option value="stretch">전체 등급</option>
           <option value="good">good 이상</option>
@@ -79,8 +84,14 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
       <div className="list">
         {items.length ? (
           items.slice(0, visible).map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
           ))
+        ) : noneSelected ? (
+          <div className="empty">
+            선택된 회사가 없습니다.
+            <br />
+            회사 필터에서 보고 싶은 회사를 선택하세요.
+          </div>
         ) : (
           <div className="empty">
             저장된 공고가 없습니다.

@@ -11,11 +11,12 @@ const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
 function renderTab(postings: Posting[], props: Partial<Parameters<typeof PostingsTab>[0]> = {}) {
   const onScrape = vi.fn();
   const onToggleBookmark = vi.fn();
+  const onToggleHidden = vi.fn();
   const utils = render(
     <PostingsTab postings={postings} companies={companies} byId={byId} job={null} scraping={false}
-                 onScrape={onScrape} onToggleBookmark={onToggleBookmark} {...props} />,
+                 onScrape={onScrape} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} {...props} />,
   );
-  return { ...utils, onScrape, onToggleBookmark };
+  return { ...utils, onScrape, onToggleBookmark, onToggleHidden };
 }
 
 const titles = () => screen.queryAllByRole("heading", { level: 3 }).map((h) => h.textContent);
@@ -27,11 +28,6 @@ describe("PostingsTab 목록", () => {
     expect(screen.getByText("3건")).toBeInTheDocument();
   });
 
-  it("회사 필터", async () => {
-    renderTab([makePosting({ title: "toss", company: "toss" }), makePosting({ title: "naver", company: "naver" })]);
-    await userEvent.selectOptions(screen.getByDisplayValue("전체 회사"), "naver");
-    expect(titles()).toEqual(["naver"]);
-  });
 
   it("등급 필터는 선택 등급 이상만", async () => {
     renderTab([
@@ -59,6 +55,126 @@ describe("PostingsTab 목록", () => {
   });
 });
 
+const companyTrigger = () => screen.getByRole("button", { name: /^회사 필터/ });
+const openCompanyFilter = () => userEvent.click(companyTrigger());
+const companyBox = (name: RegExp) => screen.getByRole("checkbox", { name });
+
+describe("PostingsTab 회사 필터", () => {
+  const posts = () => [
+    makePosting({ title: "toss-strong", company: "toss", fit_level: "strong", score: 90 }),
+    makePosting({ title: "naver-strong", company: "naver", fit_level: "strong", score: 80 }),
+    makePosting({ title: "toss-stretch", company: "toss", fit_level: "stretch", score: 50 }),
+  ];
+
+  it("처음에는 전체 회사가 선택되어 전체 공고가 보인다", () => {
+    renderTab(posts());
+    expect(companyTrigger()).toHaveTextContent("전체 회사");
+    expect(titles()).toEqual(["toss-strong", "naver-strong", "toss-stretch"]);
+  });
+
+  it("해제한 회사는 빠지고 다시 선택하면 돌아온다", async () => {
+    renderTab(posts());
+    await openCompanyFilter();
+    await userEvent.click(companyBox(/토스/));
+    expect(titles()).toEqual(["naver-strong"]);
+    await userEvent.click(companyBox(/토스/));
+    expect(titles()).toEqual(["toss-strong", "naver-strong", "toss-stretch"]);
+  });
+
+  it("등급 필터와 AND로 적용되고 건수에 반영된다", async () => {
+    renderTab(posts());
+    await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "good");
+    await openCompanyFilter();
+    await userEvent.click(companyBox(/네이버/));
+    expect(titles()).toEqual(["toss-strong"]);
+    expect(screen.getByText("1건")).toBeInTheDocument();
+  });
+
+  it("회사별 건수는 등급 필터를 반영하고 숨긴 공고를 제외한다", async () => {
+    renderTab([...posts(), makePosting({ title: "toss-hidden", company: "toss", hidden: true })]);
+    await openCompanyFilter();
+    expect(companyBox(/토스/)).toHaveAccessibleName("토스 2");
+    expect(companyBox(/네이버/)).toHaveAccessibleName("네이버 1");
+
+    await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "strong");
+    await openCompanyFilter();
+    expect(companyBox(/토스/)).toHaveAccessibleName("토스 1");
+  });
+
+  it("전체 끄기면 empty view, 전체 켜기면 복귀", async () => {
+    renderTab(posts());
+    await openCompanyFilter();
+    await userEvent.click(screen.getByRole("button", { name: "전체 끄기" }));
+    expect(titles()).toEqual([]);
+    expect(screen.getByText(/선택된 회사가 없습니다/)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "전체 켜기" }));
+    expect(titles()).toHaveLength(3);
+  });
+
+  it("선택은 sessionStorage에 저장되어 다시 마운트해도 유지된다", async () => {
+    const { unmount } = renderTab(posts());
+    await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "strong");
+    await openCompanyFilter();
+    await userEvent.click(companyBox(/네이버/));
+    unmount();
+
+    renderTab(posts());
+    expect(titles()).toEqual(["toss-strong"]);
+    expect(screen.getByDisplayValue("strong만")).toBeInTheDocument();
+    expect(companyTrigger()).toHaveTextContent("토스");
+  });
+
+  it("세션 중 새로 추가된 회사는 선택된 상태로 보인다", () => {
+    sessionStorage.setItem("postings.excludedCompanies", JSON.stringify(["naver"]));
+    const kakao = makeCompany({ company: "kakao", display_name: "카카오" });
+    renderTab([...posts(), makePosting({ title: "kakao", company: "kakao", score: 60 })], {
+      companies: [...companies, kakao],
+      byId: { ...byId, kakao },
+    });
+    expect(titles()).toEqual(["toss-strong", "kakao", "toss-stretch"]);
+  });
+
+  it("등록되지 않은 회사의 공고는 보이지 않고, 전체 끄기 시 empty view", async () => {
+    renderTab([...posts(), makePosting({ title: "orphan", company: "line", score: 99 })]);
+    expect(titles()).toEqual(["toss-strong", "naver-strong", "toss-stretch"]);
+    await openCompanyFilter();
+    await userEvent.click(screen.getByRole("button", { name: "전체 끄기" }));
+    expect(titles()).toEqual([]);
+    expect(screen.getByText(/선택된 회사가 없습니다/)).toBeInTheDocument();
+  });
+
+  it("저장된 등급이 Object 프로토타입 키여도 기본값", () => {
+    sessionStorage.setItem("postings.minLevel", JSON.stringify("toString"));
+    renderTab(posts());
+    expect(titles()).toHaveLength(3);
+    expect(screen.getByDisplayValue("전체 등급")).toBeInTheDocument();
+  });
+
+  it("저장값이 깨져 있으면 기본값", () => {
+    sessionStorage.setItem("postings.excludedCompanies", "{oops");
+    sessionStorage.setItem("postings.minLevel", JSON.stringify("bogus"));
+    renderTab(posts());
+    expect(titles()).toHaveLength(3);
+    expect(screen.getByDisplayValue("전체 등급")).toBeInTheDocument();
+  });
+});
+
+describe("PostingsTab 숨김", () => {
+  it("숨긴 공고는 목록과 건수에서 빠진다", () => {
+    renderTab([makePosting({ title: "a" }), makePosting({ title: "h", hidden: true, score: 99 })]);
+    expect(titles()).toEqual(["a"]);
+    expect(screen.getByText("1건")).toBeInTheDocument();
+  });
+
+  it("카드의 숨김 클릭을 상위로 전달한다", async () => {
+    const p = makePosting();
+    const { onToggleHidden } = renderTab([p]);
+    await userEvent.click(screen.getByRole("button", { name: "숨김" }));
+    expect(onToggleHidden).toHaveBeenCalledWith(p);
+  });
+});
+
 describe("PostingsTab infinite scroll", () => {
   const many = (n: number) => Array.from({ length: n }, (_, i) => makePosting({ title: `p${i}`, score: 1000 - i }));
 
@@ -83,6 +199,32 @@ describe("PostingsTab infinite scroll", () => {
     expect(titles()).toHaveLength(40);
 
     await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "good");
+    expect(titles()).toHaveLength(20);
+  });
+
+  it("스크롤 중 공고를 숨기거나 북마크해도 페이지가 줄어들지 않는다", () => {
+    const io = stubIntersectionObserver();
+    const posts = many(45);
+    const { rerender } = renderTab(posts);
+    act(() => io.intersect());
+    expect(titles()).toHaveLength(40);
+
+    const next = posts.map((p, i) => (i === 0 ? { ...p, hidden: true } : i === 1 ? { ...p, bookmarked: true } : p));
+    rerender(
+      <PostingsTab postings={next} companies={companies} byId={byId} job={null} scraping={false}
+                   onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />,
+    );
+    expect(titles()).toHaveLength(40);
+  });
+
+  it("회사 필터를 바꿔도 처음 20건으로 돌아간다", async () => {
+    const io = stubIntersectionObserver();
+    renderTab(many(45));
+    act(() => io.intersect());
+    expect(titles()).toHaveLength(40);
+
+    await openCompanyFilter();
+    await userEvent.click(companyBox(/네이버/));
     expect(titles()).toHaveLength(20);
   });
 

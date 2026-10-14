@@ -4,10 +4,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { makePosting } from "../test/fixtures";
 import { PostingCard } from "./PostingCard";
 
-function renderCard(over = {}, onToggleBookmark = vi.fn()) {
+function renderCard(over = {}, onToggleBookmark = vi.fn(), onToggleHidden = vi.fn()) {
   const posting = makePosting(over);
-  render(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} />);
-  return { posting, onToggleBookmark };
+  render(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />);
+  return { posting, onToggleBookmark, onToggleHidden };
 }
 
 describe("PostingCard", () => {
@@ -51,7 +51,7 @@ describe("PostingCard", () => {
 
   it("gaps·tech_stack이 비면 해당 영역을 그리지 않는다", () => {
     const { container } = render(
-      <PostingCard posting={makePosting({ gaps: [], tech_stack: [] })} companyName="토스" onToggleBookmark={vi.fn()} />,
+      <PostingCard posting={makePosting({ gaps: [], tech_stack: [] })} companyName="토스" onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />,
     );
     expect(container.querySelector(".gaps")).toBeNull();
     expect(container.querySelector(".chips")).toBeNull();
@@ -73,5 +73,23 @@ describe("PostingCard 북마크 별", () => {
     const star = screen.getByRole("button", { name: "북마크 해제" });
     expect(star).toHaveAttribute("aria-pressed", "true");
     expect(star).toHaveClass("on");
+  });
+});
+
+describe("PostingCard 숨김 버튼", () => {
+  it("숨기지 않은 공고는 꺼진 눈 버튼, 누르면 핸들러에 공고를 넘긴다", async () => {
+    const { posting, onToggleHidden } = renderCard({ hidden: false });
+    const eye = screen.getByRole("button", { name: "숨김" });
+    expect(eye).toHaveAttribute("aria-pressed", "false");
+    expect(eye).not.toHaveClass("on");
+    await userEvent.click(eye);
+    expect(onToggleHidden).toHaveBeenCalledWith(posting);
+  });
+
+  it("숨긴 공고는 켜진 눈 버튼", () => {
+    renderCard({ hidden: true });
+    const eye = screen.getByRole("button", { name: "숨김 해제" });
+    expect(eye).toHaveAttribute("aria-pressed", "true");
+    expect(eye).toHaveClass("on");
   });
 });

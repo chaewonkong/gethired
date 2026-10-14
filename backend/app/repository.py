@@ -46,6 +46,11 @@ CREATE TABLE IF NOT EXISTS bookmarks (
     created_at TEXT NOT NULL,
     deleted_at TEXT
 );
+CREATE TABLE IF NOT EXISTS hides (
+    posting_id INTEGER PRIMARY KEY REFERENCES postings(id),
+    created_at TEXT NOT NULL,
+    deleted_at TEXT
+);
 CREATE TABLE IF NOT EXISTS profile_cache (
     hash TEXT PRIMARY KEY,
     profile TEXT NOT NULL,
@@ -63,8 +68,9 @@ def _row(r: sqlite3.Row) -> dict[str, Any]:
     for k in ("tech_stack", "gaps"):
         if k in d:
             d[k] = json.loads(d[k])
-    if "bookmarked" in d:
-        d["bookmarked"] = bool(d["bookmarked"])
+    for k in ("bookmarked", "hidden"):
+        if k in d:
+            d[k] = bool(d[k])
     return d
 
 
@@ -128,8 +134,10 @@ class Repository:
             levels = [lv for lv, rank in LEVEL_RANK.items() if rank >= LEVEL_RANK[min_level]]
             where.append(f"fit_level IN ({','.join('?' * len(levels))})")
             params += levels
-        sql = ("SELECT p.*, b.posting_id IS NOT NULL AS bookmarked FROM postings p"
+        sql = ("SELECT p.*, b.posting_id IS NOT NULL AS bookmarked, h.posting_id IS NOT NULL AS hidden"
+               " FROM postings p"
                " LEFT JOIN bookmarks b ON b.posting_id = p.id AND b.deleted_at IS NULL"
+               " LEFT JOIN hides h ON h.posting_id = p.id AND h.deleted_at IS NULL"
                + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
         return [_row(r) for r in self.conn.execute(sql, params).fetchall()]
 
@@ -153,6 +161,27 @@ class Repository:
 
     def get_bookmark(self, posting_id: int) -> dict[str, Any] | None:
         r = self.conn.execute("SELECT * FROM bookmarks WHERE posting_id=?", (posting_id,)).fetchone()
+        return dict(r) if r else None
+
+    # --- hides ---
+    # 북마크와 같은 규칙: 공고 soft delete 시 JOIN에서 함께 숨겨지고, hides.deleted_at은 사용자 해제에만 쓴다.
+    def set_hidden(self, posting_id: int, on: bool, now: str) -> bool:
+        """활성 공고가 없으면 False"""
+        if not self.conn.execute("SELECT 1 FROM postings WHERE id=? AND deleted_at IS NULL", (posting_id,)).fetchone():
+            return False
+        if on:
+            self.conn.execute(
+                """INSERT INTO hides (posting_id, created_at) VALUES (?, ?)
+                   ON CONFLICT (posting_id) DO UPDATE SET created_at=excluded.created_at, deleted_at=NULL
+                   WHERE hides.deleted_at IS NOT NULL""", (posting_id, now))
+        else:
+            self.conn.execute("UPDATE hides SET deleted_at=? WHERE posting_id=? AND deleted_at IS NULL",
+                              (now, posting_id))
+        self.conn.commit()
+        return True
+
+    def get_hidden(self, posting_id: int) -> dict[str, Any] | None:
+        r = self.conn.execute("SELECT * FROM hides WHERE posting_id=?", (posting_id,)).fetchone()
         return dict(r) if r else None
 
     # --- judgments ---
