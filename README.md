@@ -10,7 +10,7 @@
 
 등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
 
-- 설계: [design/specs/](design/specs/) · 계획: [design/plans/](design/plans/) · PoC 기록: [design/poc.md](design/poc.md)
+- 설계: [design/specs/](design/specs/) · 계획: [design/plans/](design/plans/)
 - LLM은 Claude Agent SDK + 로컬 Claude Code 로그인 세션(`claude login`)을 사용. API key 불필요. 개인 로컬 용도 전용
 
 ## 사용 준비
@@ -144,8 +144,7 @@ job-posting/
 |       `-- test/             # vitest 설정 · 픽스처
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
-|   |-- plans/                # 실행 계획
-|   `-- poc.md, poc-results/  # PoC 기록
+|   `-- plans/                # 실행 계획
 |-- resume/                   # 이력서 *.md (gitignore)
 `-- justfile                  # 실행·테스트 명령
 ```
