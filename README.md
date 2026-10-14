@@ -1,15 +1,25 @@
 # job-posting
 
+**나에게 맞는 채용 포지션만 모아 보여주는 채용 지원 서비스**
+
+1. 내 이력서를 디렉토리 안으로 옮긴다.
+2. 앱을 실행한다
+3. 스크래핑하기 버튼을 눌러 내 이력서와 매칭되는 채용 포지션만 리스팅해서 확인한다
+
+## 서비스 소개
+
 등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
 
 - 설계: [design/specs/](design/specs/) · 계획: [design/plans/](design/plans/) · PoC 기록: [design/poc.md](design/poc.md)
 - LLM은 Claude Agent SDK + 로컬 Claude Code 로그인 세션(`claude login`)을 사용. API key 불필요. 개인 로컬 용도 전용
 
-## 준비
+## 사용 준비
+### 의존성
+
 - Python 3.14+, [uv](https://docs.astral.sh/uv/), Node 20+, Claude Code CLI(`claude login` 완료)
 - `ANTHROPIC_API_KEY`는 설정하지 않음 (있으면 세션 대신 키가 쓰임)
 
-## 이력서 준비
+### 이력서 준비
 프로젝트 루트에 `resume/` 디렉토리를 만들고 이력서를 Markdown(`.md`) 파일로 넣는다. 디렉토리 안의 `*.md`를 전부 읽어 프로필(기술·연차·도메인·희망 조건)을 추출하고, 이를 기준으로 공고를 판정한다.
 ```
 resume/
@@ -21,7 +31,7 @@ resume/
 - `resume/`는 gitignore 대상이라 커밋되지 않음
 - 파일 내용이 바뀌면 다음 실행 때 프로필을 다시 추출
 
-## 실행 ([just](https://github.com/casey/just))
+## 설치와 실행 ([just](https://github.com/casey/just))
 ```bash
 just setup     # 의존성 설치 (uv sync + npm install)
 just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
