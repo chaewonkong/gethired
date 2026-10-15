@@ -1,11 +1,12 @@
 """spec 0006 회사들의 파서 테스트 (fixtures/ 저장 응답 기반)."""
 import json
+import re
 from datetime import date
 from pathlib import Path
 
 import pytest
 
-from app.scrapers import REGISTRY, fortytwodot, greetinghr, hyperconnect, kakaobank, woowahan
+from app.scrapers import REGISTRY, dunamu, fortytwodot, greetinghr, hyperconnect, kakaobank, woowahan
 from app.scrapers.kakaopay import KakaoPayScraper
 from app.scrapers.upstage import UpstageScraper
 
@@ -144,3 +145,45 @@ def test_kakaobank_keep_and_to_posting():
     assert p.deadline == date.fromisoformat(kept[0]["receiveEndDatetime"][:10])
     assert p.category == kept[0]["recruitClassName"]
     assert p.description and "<" not in p.description and len(p.description) > 200
+
+
+# --- dunamu (Next.js RSC payload) ---
+
+def test_dunamu_parse_list_and_keep():
+    jobs = dunamu.parse_list((FIX / "dunamu_list.rsc").read_bytes())
+    assert jobs and all({"id", "name", "jobGroupCode"} <= set(j) for j in jobs)
+    kept = [j for j in jobs if dunamu.keep(j)]
+    assert kept and len(kept) < len(jobs)
+    assert not any(j["jobGroupCode"] == "T_TALENT_POOL" for j in kept)
+    with pytest.raises(ValueError):
+        dunamu.parse_list(b"0:{}\n")
+
+
+def test_dunamu_text_chunks_use_utf8_byte_length_without_newlines():
+    rsc = "1d:T5,abcde2d:T8,한글\nx2e:I[1]\n".encode()  # 한글 = 6 bytes, 청크 뒤에 개행 없이 다음 행
+    assert dunamu.text_chunks(rsc) == {"1d": "abcde", "2d": "한글\nx"}
+
+
+def test_dunamu_parse_detail_picks_resolvable_ref():
+    rsc = (FIX / "dunamu_detail.rsc").read_bytes()
+    pid = int(re.search(rb'"positionId":(\d+)', rsc).group(1))
+    refs = [r.decode() for r in re.findall(rb'"jobNoticeContent":"\$([0-9a-f]+)"', rsc)]
+    assert len(refs) == 2 and sum(r in dunamu.text_chunks(rsc) for r in refs) == 1
+    detail = dunamu.parse_detail(rsc, pid)
+    assert detail["positionId"] == pid and detail["jobNoticeContent"].startswith("<")
+    job = {"id": pid, "name": detail["jobNoticeName"], "jobGroupCode": detail["jobGroupCode"],
+           "experienceLevel": detail["experienceLevel"]}
+    p = dunamu.to_posting(job, detail)
+    assert p.company == "dunamu" and p.apply_url == f"https://careers.dunamu.com/detail/{pid}"
+    assert p.category == f"{detail['jobGroupCode']}/{detail['experienceLevel']}"
+    assert p.description and "<" not in p.description and len(p.description) > 300
+    assert "두나무 소개" in p.description
+    with pytest.raises(KeyError):
+        dunamu.parse_detail(rsc, -1)
+
+
+def test_dunamu_parse_detail_falls_back_to_empty_body():
+    rsc = (FIX / "dunamu_detail.rsc").read_bytes()
+    pid = int(re.search(rb'"positionId":(\d+)', rsc).group(1))
+    without_chunk = b"\n".join(l for l in rsc.split(b"\n") if not re.match(rb"^[0-9a-f]+:T", l))
+    assert dunamu.parse_detail(without_chunk, pid)["jobNoticeContent"] == ""
