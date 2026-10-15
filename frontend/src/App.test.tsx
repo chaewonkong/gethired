@@ -186,4 +186,65 @@ describe("App", () => {
     await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
     expect(await screen.findByRole("table")).toHaveTextContent("토스");
   });
+
+  describe("관심회사", () => {
+    const companies = () => [makeCompany(), makeCompany({ company: "naver", display_name: "네이버", interested: false })];
+    const companiesRoute = { "GET /api/companies": () => new Response(JSON.stringify(companies())) };
+
+    it("관심회사가 아닌 회사의 공고는 모든 탭과 배지, 필터 옵션에서 빠진다", async () => {
+      stubApi([
+        makePosting({ title: "a", company: "toss", bookmarked: true }),
+        makePosting({ title: "n", company: "naver", bookmarked: true }),
+        makePosting({ title: "nh", company: "naver", hidden: true }),
+      ], companiesRoute);
+      render(<App />);
+      await screen.findByRole("heading", { name: "a" });
+      expect(titles()).toEqual(["a"]);
+      expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
+      expect(within(tab(/숨김/)).queryByText(/\d/)).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getByRole("button", { name: /^회사 필터/ }));
+      expect(screen.queryByRole("checkbox", { name: /네이버/ })).not.toBeInTheDocument();
+      expect(screen.getByRole("checkbox", { name: /토스/ })).toBeInTheDocument();
+
+      await userEvent.click(tab(/북마크/));
+      expect(titles()).toEqual(["a"]);
+      await userEvent.click(tab(/숨김/));
+      expect(titles()).toEqual([]);
+    });
+
+    it("회사 탭에서 별을 켜면 PUT 후 해당 회사 공고가 나타난다", async () => {
+      const fetch = stubApi([makePosting({ title: "a", company: "toss" }), makePosting({ title: "n", company: "naver", score: 10 })], {
+        ...companiesRoute,
+        "PUT /api/companies/naver/interest": () => new Response("{}"),
+      });
+      render(<App />);
+      await screen.findByRole("heading", { name: "a" });
+      await userEvent.click(tab(/회사/));
+      await userEvent.click(screen.getByRole("button", { name: "네이버 관심회사 추가" }));
+      expect(fetch).toHaveBeenCalledWith("/api/companies/naver/interest", { method: "PUT" });
+      expect(screen.getByRole("button", { name: "네이버 관심회사 해제" })).toHaveClass("on");
+
+      await userEvent.click(tab(/공고/));
+      expect(titles()).toEqual(["a", "n"]);
+    });
+
+    it("별 요청이 실패하면 되돌리고 에러를 띄운다", async () => {
+      stubApi([], { ...companiesRoute, "PUT /api/companies/naver/interest": () => new Response("", { status: 500 }) });
+      render(<App />);
+      await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
+      await userEvent.click(screen.getByRole("button", { name: "네이버 관심회사 추가" }));
+      await waitFor(() => expect(screen.getByRole("button", { name: "네이버 관심회사 추가" })).not.toHaveClass("on"));
+      expect(screen.getByText(/interest: 500/)).toBeInTheDocument();
+    });
+
+    it("마지막 관심회사를 해제하면 DELETE 후 회사 선택 화면", async () => {
+      const fetch = stubApi([], { ...companiesRoute, "DELETE /api/companies/toss/interest": () => new Response("{}") });
+      render(<App />);
+      await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
+      await userEvent.click(screen.getByRole("button", { name: "토스 관심회사 해제" }));
+      expect(fetch).toHaveBeenCalledWith("/api/companies/toss/interest", { method: "DELETE" });
+      expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
+    });
+  });
 });

@@ -85,6 +85,7 @@ export default function App() {
     try {
       await api.setInterests(selected);
       setCompanies(await api.companies());
+      setTab("postings");
     } catch (e) {
       setError(String(e));
     }
@@ -141,19 +142,41 @@ export default function App() {
       pending.current.delete(key);
     }
   };
+  // 마지막 관심회사를 해제하면 phase 계산에 따라 회사 선택 화면으로 간다
+  const toggleInterest = async (c: Company) => {
+    const key = `interest:${c.company}`;
+    if (pending.current.has(key)) return;
+    pending.current.add(key);
+    const on = !c.interested;
+    const set = (v: boolean) => setCompanies((cs) => cs.map((x) => (x.company === c.company ? { ...x, interested: v } : x)));
+    set(on);
+    try {
+      await api.setInterest(c.company, on);
+    } catch (e) {
+      set(!on);
+      setError(String(e));
+    } finally {
+      pending.current.delete(key);
+    }
+  };
+
   const toggleBookmark = (p: Posting) => toggleFlag(p, "bookmarked");
   const toggleHidden = (p: Posting) => toggleFlag(p, "hidden");
 
   const scraping = job?.status === "running";
+  // 관심회사가 아닌 회사의 공고는 모든 탭·배지에서 뺀다 (DB에는 남아 있음)
+  const interested = companies.filter((c) => c.interested);
+  const interestSet = new Set(interested.map((c) => c.company));
+  const shown = postings.filter((p) => interestSet.has(p.company));
   const count: Partial<Record<Tab, number>> = {
-    bookmarks: postings.filter((p) => p.bookmarked && !p.hidden).length,
-    hidden: postings.filter((p) => p.hidden).length,
+    bookmarks: shown.filter((p) => p.bookmarked && !p.hidden).length,
+    hidden: shown.filter((p) => p.hidden).length,
   };
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
   const phase =
     resumeFiles === null ? "loading"
     : resumeFiles.length === 0 || holdUpload ? "upload"
-    : !companies.some((c) => c.interested) ? "select"
+    : interested.length === 0 ? "select"
     : "main";
 
   return (
@@ -199,16 +222,16 @@ export default function App() {
           {error && <div className="banner error">{error}</div>}
 
           {tab === "postings" && (
-            <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping}
+            <PostingsTab postings={shown} companies={interested} byId={byId} job={job} scraping={!!scraping}
                          onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
           )}
           {tab === "bookmarks" && (
-            <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+            <BookmarksTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
           )}
           {tab === "hidden" && (
-            <HiddenTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+            <HiddenTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
           )}
-          {tab === "companies" && <CompaniesTab companies={companies} />}
+          {tab === "companies" && <CompaniesTab companies={companies} onToggleInterest={toggleInterest} />}
 
           <ScrollTopButton />
         </>

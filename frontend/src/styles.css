@@ -156,6 +156,7 @@ select {
 .company-table tr { display: grid; gap: 4px; background: var(--surface); box-shadow: var(--shadow); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
 .company-table td { padding: 0; }
 .company-table .name { font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.company-table .name .star { align-self: center; margin: 0 -4px 0 -6px; }
 .company-table .name .co-logo { width: 32px; height: 32px; font-size: 14px; }
 .company-table a { color: var(--accent-strong); font-size: 13px; word-break: break-all; text-decoration: none; }
 .company-table a:hover { text-decoration: underline; }

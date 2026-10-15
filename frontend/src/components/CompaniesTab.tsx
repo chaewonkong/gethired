@@ -9,7 +9,12 @@ function Status({ run }: { run: ScrapeRun | null }) {
   return <span className="status fail">실패 · {run.error ?? "원인 불명"}</span>;
 }
 
-export function CompaniesTab({ companies }: { companies: Company[] }) {
+interface Props {
+  companies: Company[];
+  onToggleInterest: (c: Company) => void;
+}
+
+export function CompaniesTab({ companies, onToggleInterest }: Props) {
   return (
     <section className="panel">
       <table className="company-table">
@@ -25,6 +30,16 @@ export function CompaniesTab({ companies }: { companies: Company[] }) {
           {companies.map((c) => (
             <tr key={c.company}>
               <td className="name">
+                <button
+                  className={`star${c.interested ? " on" : ""}`}
+                  aria-label={c.interested ? `${c.display_name} 관심회사 해제` : `${c.display_name} 관심회사 추가`}
+                  aria-pressed={c.interested}
+                  onClick={() => onToggleInterest(c)}
+                >
+                  <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinejoin="round">
+                    <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" />
+                  </svg>
+                </button>
                 <span className="co-logo">{c.display_name[0]}</span>
                 {c.display_name}
               </td>

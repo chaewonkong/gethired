@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 import { ScrapeRun } from "../api";
 import { makeCompany } from "../test/fixtures";
 import { CompaniesTab } from "./CompaniesTab";
@@ -11,7 +12,7 @@ const run = (over: Partial<ScrapeRun>): ScrapeRun => ({
 describe("CompaniesTab", () => {
   it("회사별 마지막 실행 상태를 보여준다", () => {
     render(
-      <CompaniesTab companies={[
+      <CompaniesTab onToggleInterest={() => {}} companies={[
         makeCompany({ company: "a", display_name: "A사", last_run: run({}) }),
         makeCompany({ company: "b", display_name: "B사", last_run: run({ status: "failed", error: "timeout" }) }),
         makeCompany({ company: "c", display_name: "C사", last_run: run({ status: "auth_required" }) }),
@@ -28,7 +29,17 @@ describe("CompaniesTab", () => {
   });
 
   it("채용 사이트 링크는 프로토콜 없이 표시", () => {
-    render(<CompaniesTab companies={[makeCompany({ careers_url: "https://toss.im/career" })]} />);
+    render(<CompaniesTab onToggleInterest={() => {}} companies={[makeCompany({ careers_url: "https://toss.im/career" })]} />);
     expect(screen.getByRole("link", { name: "toss.im/career" })).toHaveAttribute("href", "https://toss.im/career");
+  });
+
+  it("관심회사는 칠해진 별, 누르면 onToggleInterest", async () => {
+    const onToggle = vi.fn();
+    const naver = makeCompany({ company: "naver", display_name: "네이버", interested: false });
+    render(<CompaniesTab onToggleInterest={onToggle} companies={[makeCompany(), naver]} />);
+    expect(screen.getByRole("button", { name: "토스 관심회사 해제" })).toHaveClass("on");
+    expect(screen.getByRole("button", { name: "네이버 관심회사 추가" })).not.toHaveClass("on");
+    await userEvent.click(screen.getByRole("button", { name: "네이버 관심회사 추가" }));
+    expect(onToggle).toHaveBeenCalledWith(naver);
   });
 });
