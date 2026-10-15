@@ -132,3 +132,68 @@ describe("onboarding", () => {
     expect(await screen.findByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
   });
 });
+
+describe("resume manager", () => {
+  beforeEach(() => {
+    stubIntersectionObserver();
+  });
+
+  function stubWithDelete(names: string[]) {
+    const backend = stubBackend({ files: names, interested: ["toss"] });
+    const inner = backend.fetch.getMockImplementation()!;
+    backend.fetch.mockImplementation(async (path: string, init?: RequestInit) => {
+      const m = path.match(/^\/api\/resume\/(.+)$/);
+      if (m && init?.method === "DELETE") {
+        backend.files.delete(decodeURIComponent(m[1]));
+        return json({});
+      }
+      return inner(path, init);
+    });
+    return backend;
+  }
+
+  const openManager = async () => {
+    await userEvent.click(await screen.findByRole("button", { name: "이력서" }));
+    return screen.getByRole("dialog");
+  };
+
+  it("파일 목록을 보여주고, 업로드하면 toast만 띄우고 화면 유지", async () => {
+    const backend = stubWithDelete(["resume.md"]);
+    render(<App />);
+    const dialog = await openManager();
+    expect(dialog).toHaveTextContent("resume.md");
+
+    drop([file("resume.md", "new"), file("portfolio.md")]);
+    expect(await screen.findByRole("status")).toHaveTextContent("이력서를 업로드했습니다");
+    expect(backend.files.get("resume.md")).toBe("new");
+    expect(await screen.findByText("portfolio.md")).toBeInTheDocument();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
+  });
+
+  it("파일을 삭제하면 목록에서 빠지고, 마지막 파일을 삭제하면 업로드 화면", async () => {
+    const backend = stubWithDelete(["a.md", "b.md"]);
+    render(<App />);
+    await openManager();
+
+    await userEvent.click(screen.getByRole("button", { name: "a.md 삭제" }));
+    expect(backend.fetch).toHaveBeenCalledWith("/api/resume/a.md", { method: "DELETE" });
+    await waitFor(() => expect(screen.queryByText("a.md")).not.toBeInTheDocument());
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "b.md 삭제" }));
+    expect(await screen.findByRole("heading", { name: "이력서 업로드" })).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("Esc나 닫기 버튼으로 닫힌다", async () => {
+    stubWithDelete(["a.md"]);
+    render(<App />);
+    await openManager();
+    await userEvent.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    await openManager();
+    await userEvent.click(screen.getByRole("button", { name: "이력서 창 닫기" }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+});

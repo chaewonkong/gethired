@@ -8,6 +8,7 @@ import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 import { CompanySelect } from "./components/CompanySelect";
 import { invalidResumeFiles, ResumeDropzone } from "./components/ResumeDropzone";
+import { ResumeModal } from "./components/ResumeModal";
 import { Toast, ToastMessage } from "./components/Toast";
 
 type Tab = "postings" | "bookmarks" | "hidden" | "companies";
@@ -29,6 +30,7 @@ export default function App() {
   const [toast, setToast] = useState<(ToastMessage & { after?: () => void }) | null>(null);
   // 온보딩 업로드 직후 toast가 닫힐 때까지 업로드 화면에 머문다
   const [holdUpload, setHoldUpload] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const pending = useRef(new Set<string>());
   const toastSeq = useRef(0);
 
@@ -80,6 +82,27 @@ export default function App() {
     setHoldUpload(true);
     showToast("이력서를 업로드했습니다", "ok", () => setHoldUpload(false));
   };
+
+  const managerUpload = async (files: File[]) => {
+    if (await uploadResumes(files)) showToast("이력서를 업로드했습니다", "ok");
+  };
+
+  // 마지막 파일을 지우면 phase 계산에 따라 업로드 화면으로 간다
+  const deleteResume = async (name: string) => {
+    try {
+      await api.deleteResume(name);
+    } catch (e) {
+      setError(String(e));
+    }
+    try {
+      const files = await api.resumeFiles();
+      setResumeFiles(files);
+      if (!files.length) setResumeOpen(false);
+    } catch (e) {
+      setError(String(e));
+    }
+  };
+  const closeResume = useCallback(() => setResumeOpen(false), []);
 
   const saveInterests = async (selected: string[]) => {
     try {
@@ -187,6 +210,11 @@ export default function App() {
           <h1>job-posting</h1>
           <p>등록 회사 채용 공고 중 나에게 맞는 포지션</p>
         </div>
+        {phase === "main" && (
+          <button type="button" className="header-btn" onClick={() => setResumeOpen(true)}>
+            이력서
+          </button>
+        )}
       </header>
 
       {phase !== "main" && error && <div className="banner error">{error}</div>}
@@ -234,6 +262,9 @@ export default function App() {
           {tab === "companies" && <CompaniesTab companies={companies} onToggleInterest={toggleInterest} />}
 
           <ScrollTopButton />
+          {resumeOpen && resumeFiles && (
+            <ResumeModal files={resumeFiles} onUpload={managerUpload} onDelete={deleteResume} onClose={closeResume} />
+          )}
         </>
       )}
 
