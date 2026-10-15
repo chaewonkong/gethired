@@ -15,6 +15,64 @@ sandbox에서는 홈 uv 캐시에 쓸 수 없으므로 `UV_CACHE_DIR=../.uv-cach
 `POST /api/scrape` → `JobManager.start()` → 프로필 로드 → 회사별 병렬로
 fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` → exclude 아닌 것만 `upsert_postings` → `record_judgments`
 
+### 구성
+```
+  [User]
+     |
+     v
++----------------------------------------+
+| frontend (React)                       |
+| tabs: Postings | Bookmarks | Hidden    |
+|       | Companies                      |
++----------------------------------------+
+     |  /api/*
+     v
++-------------+      +---------------+      +----------------------+
+| api.py      |----->| repository.py |----->| sqlite               |
+| (FastAPI)   |      +---------------+      | backend/data/app.db  |
++-------------+              ^              +----------------------+
+     | POST /api/scrape      | save postings / judgments
+     v (background)          |
++-------------+              |
+| jobs.py     |--------------+
++-------------+
+     |
+     +--> scrapers/   -- httpx ---------> career sites (8)
+     |
+     +--> profile.py  -- read ----------> resume/*.md
+     |                -- cache ---------> repository.py (profile_cache, key = resume hash)
+     |                -- extract -------> Claude (local `claude login` session)
+     |
+     +--> matcher.py  -- judge 20/batch -> Claude
+```
+- 스크래핑은 httpx로 짠 결정적 코드이고, LLM은 프로필 추출과 공고 판정에만 쓴다
+- LLM은 API key 없이 로컬 Claude Code 로그인 세션으로 호출한다
+
+### 스크래핑 한 번의 흐름
+```
+[스크래핑 하기] 클릭
+ |
+ +-> POST /api/scrape
+ |     job 생성 후 job_id 즉시 반환. frontend는 끝날 때까지 1.5초마다 GET /api/scrape/{job_id}
+ |
+ +-> 1. profile
+ |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 Claude로 추출
+ |
+ +-> 2. per company (parallel)
+ |     회사별로 동시에 실행, 한 회사가 실패해도 나머지는 계속
+ |     a. fetch ............. 채용 사이트에서 공고 수집 (0건이면 실패 처리)
+ |     b. sync .............. 다시 나온 공고 복구, 사라진 공고 soft delete
+ |     c. filter ............ 이미 판정한 공고 제외
+ |     d. judge ............. 신규 공고만 Claude로 20건씩 판정
+ |     e. save .............. strong/good/stretch는 postings에 저장
+ |                            exclude는 judgments에만 기록 (재판정 방지)
+ |
+ +-> 3. done
+       frontend가 GET /api/postings로 목록 갱신 (등급, 북마크 여부 포함)
+```
+- 세션이 만료되면 job이 `auth_required`로 끝나고, 다음 실행에서 판정 못 한 공고만 다시 판정한다
+- 북마크는 공고와 JOIN으로 묶여 있어서, 공고가 삭제되면 같이 숨겨지고 공고가 다시 나타나면 같이 돌아온다
+
 ## 모듈
 | 파일 | 역할 |
 |---|---|
@@ -25,9 +83,9 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/llm.py` | `ask_json()`: Agent SDK structured output 래퍼. 모델 `claude-opus-5-5` 고정. 인증 실패는 `ClaudeAuthError` |
 | `app/profile.py` | `resume/*.md` → `Profile`. 파일 이름·내용 해시로 `profile_cache`에 캐시 |
 | `app/matcher.py` | 20건 배치 판정 → `Match`(fit_level/score/gaps/fit_reason). score 구간이 fit_level보다 우선. 누락 id는 재시도 |
-| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `scrape_runs`, `profile_cache` |
+| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `scrape_runs`, `profile_cache` |
 | `app/jobs.py` | 스크래핑 job 실행·상태(`Job`, `CompanyState`). 회사 단위 실패 격리, 세션 만료 시 `auth_required` |
-| `app/api.py` | `create_app(repo, jobs, logged_in)`: `/api/{auth/status, companies, scrape, scrape/{id}, postings, postings/{id}/bookmark}` |
+| `app/api.py` | `create_app(repo, jobs, logged_in)`: `/api/{auth/status, companies, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide}` |
 | `app/main.py` | 앱 조립 + `frontend/dist` 정적 서빙. `ANTHROPIC_API_KEY` 제거 |
 | `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증. DB는 `profile_cache`만 사용. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
 
@@ -36,7 +94,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 - 스크래핑은 결정적 코드(httpx)로. LLM은 프로필 추출과 매칭에만 쓴다
 - 스크래퍼가 0건을 반환하면 실패로 처리한다 (soft delete 오작동 방지)
 - 삭제는 soft delete(`deleted_at`). 공고가 다시 나타나면 복구된다
-- `bookmarks.deleted_at`은 사용자 해제 전용. 공고 삭제 여부는 `postings`와 JOIN으로 판단
+- `bookmarks.deleted_at`·`hides.deleted_at`은 사용자 해제 전용. 공고 삭제 여부는 `postings`와 JOIN으로 판단
 - exclude 판정은 `postings`에 저장하지 않고 `judgments`에만 기록한다 (재판정 방지)
 - Agent SDK `query()` 제너레이터 안에서 raise하지 않는다 (aclose 충돌). 플래그를 세우고 루프 밖에서 raise
 - 스키마 변경은 `CREATE TABLE IF NOT EXISTS`로 기존 `data/app.db`와 호환되게. 컬럼 추가는 마이그레이션 필요

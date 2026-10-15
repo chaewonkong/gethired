@@ -1,3 +1,3 @@
 # frontend
 
-React (Vite). Phase 2에서 작성. UI 기준: ../design/ui-sample.html
+React 19 + Vite. 구조·명령·규칙은 [AGENTS.md](AGENTS.md), UI 기준은 [../design/ui-sample.html](../design/ui-sample.html).

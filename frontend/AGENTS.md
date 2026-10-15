@@ -15,14 +15,17 @@ sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 �
 | 파일 | 역할 |
 |---|---|
 | `src/api.ts` | 타입(`Posting`, `Company`, `Job` …)과 fetch 래퍼 `api`. 스크래핑 401은 `LoginRequiredError` |
-| `src/App.tsx` | 최상위 상태: postings, companies, 진행 중 job(1.5초 폴링), 로그인/에러 배너, 탭 전환. 북마크 토글(낙관적 업데이트, 실패 시 롤백) |
-| `components/PostingsTab.tsx` | 공고 탭: 스크래핑 버튼, 회사·등급 필터, score 정렬, infinite scroll(20건, `IntersectionObserver`), 스크래핑 진행·완료 요약. `formatTime` export |
-| `components/BookmarksTab.tsx` | 북마크 탭: `bookmarked` 공고만 score순. 해제 시 즉시 빠짐 |
+| `src/App.tsx` | 최상위 상태: postings, companies, 진행 중 job(1.5초 폴링), 로그인/에러 배너, 탭 전환. 북마크·숨김 토글(`toggleFlag`: 낙관적 업데이트, 실패 시 롤백, 요청 중 중복 토글 무시) |
+| `components/PostingsTab.tsx` | 공고 탭: 스크래핑 버튼, 회사·등급 필터(sessionStorage 유지), 숨긴 공고 제외, score 정렬, infinite scroll(20건, `IntersectionObserver`), 스크래핑 진행·완료 요약. `formatTime` export |
+| `components/CompanyFilter.tsx` | 회사 Multi-select 드롭다운: 전체 켜기/끄기, 회사별 공고 수, 바깥 클릭·Esc로 닫힘. 선택은 "해제한 회사 목록"으로 다룸 |
+| `components/BookmarksTab.tsx` | 북마크 탭: `bookmarked`이고 숨기지 않은 공고만 score순. 해제 시 즉시 빠짐 |
+| `components/HiddenTab.tsx` | 숨김 탭: `hidden` 공고만 score순. 해제 시 공고 탭으로 복귀 |
 | `components/CompaniesTab.tsx` | 회사 탭: 채용 사이트 링크, 마지막 스크래핑 결과·시각 |
-| `components/PostingCard.tsx` | 공고 카드: 등급·점수, 마감 D-day(7일 이내 강조), 기술 스택, gaps, 추천 이유, 북마크 별, 지원 링크 |
+| `components/PostingCard.tsx` | 공고 카드: 등급·점수, 마감 D-day(7일 이내 강조), 기술 스택, gaps, 추천 이유, 북마크 별, 숨김(눈) 버튼, 지원 링크 |
 | `components/ScrapeProgress.tsx` | 스크래핑 중 회사별 상태 점 |
 | `components/ScrollTopButton.tsx` | 600px 이상 스크롤 시 나타나는 맨 위로 버튼 |
 | `components/Logo.tsx` | 헤더 로고 |
+| `src/sessionState.ts` | `useSessionState`: sessionStorage에 유지되는 state. 접근·파싱 실패 시 기본값 |
 | `src/styles.css` | 전역 스타일. 색은 `:root` 변수. 모바일 우선, 480/640px 브레이크포인트, 최대 폭 800px |
 
 ## 규칙

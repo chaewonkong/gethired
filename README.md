@@ -10,7 +10,6 @@
 
 등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
 
-- 설계: [design/specs/](design/specs/) · 계획: [design/plans/](design/plans/)
 - LLM은 Claude Agent SDK + 로컬 Claude Code 로그인 세션(`claude login`)을 사용. API key 불필요. 개인 로컬 용도 전용
 
 ## 사용 준비
@@ -55,98 +54,18 @@ just test        # 백엔드 + 프론트 단위 테스트 (네트워크/LLM 없�
 just test-live   # 실제 채용 사이트 호출
 ```
 
-## 디버그
-- `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
-- `just match [company] [--limit N] [--planted]`: 파일 기반 매칭, `backend/out/fit.md`
-- `just auth`: 세션 인증 확인 · `just reset-db`: 공고·판정 이력 삭제
-
 ## 동작
-
-### 구성
 ```
-  [User]
-     |
-     v
-+----------------------------------------+
-| frontend (React)                       |
-| tabs: Postings | Bookmarks | Companies |
-+----------------------------------------+
-     |  /api/*
-     v
-+-------------+      +---------------+      +----------------------+
-| api.py      |----->| repository.py |----->| sqlite               |
-| (FastAPI)   |      +---------------+      | backend/data/app.db  |
-+-------------+              ^              +----------------------+
-     | POST /api/scrape      | save postings / judgments
-     v (background)          |
-+-------------+              |
-| jobs.py     |--------------+
-+-------------+
-     |
-     +--> scrapers/   -- httpx ---------> career sites (8)
-     |
-     +--> profile.py  -- read ----------> resume/*.md
-     |                -- cache ---------> repository.py (profile_cache, key = resume hash)
-     |                -- extract -------> Claude (local `claude login` session)
-     |
-     +--> matcher.py  -- judge 20/batch -> Claude
+[브라우저] --/api--> [백엔드 (FastAPI)] ---> sqlite (공고·판정·북마크)
+                          |
+     [스크래핑 하기] 클릭 |  백그라운드 job, 진행 상황은 화면에 실시간 표시
+                          |
+                          +-> 1. 프로필   resume/*.md를 읽어 바뀌었으면 Claude가 프로필 추출 (안 바뀌었으면 저장된 프로필 사용)
+                          +-> 2. 수집     8개사 채용 사이트를 병렬로 읽음 (한 곳이 실패해도 나머지는 계속)
+                          +-> 3. 판정     새로 나온 공고만 Claude가 strong / good / stretch로 판정해 저장
 ```
-- 스크래핑은 httpx로 짠 결정적 코드이고, LLM은 프로필 추출과 공고 판정에만 쓴다
-- LLM은 API key 없이 로컬 Claude Code 로그인 세션으로 호출한다
-
-### 스크래핑 한 번의 흐름
-```
-[스크래핑 하기] 클릭
- |
- +-> POST /api/scrape
- |     job 생성 후 job_id 즉시 반환. frontend는 끝날 때까지 1.5초마다 GET /api/scrape/{job_id}
- |
- +-> 1. profile
- |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 Claude로 추출
- |
- +-> 2. per company (parallel)
- |     회사별로 동시에 실행, 한 회사가 실패해도 나머지는 계속
- |     a. fetch ............. 채용 사이트에서 공고 수집 (0건이면 실패 처리)
- |     b. sync .............. 다시 나온 공고 복구, 사라진 공고 soft delete
- |     c. filter ............ 이미 판정한 공고 제외
- |     d. judge ............. 신규 공고만 Claude로 20건씩 판정
- |     e. save .............. strong/good/stretch는 postings에 저장
- |                            exclude는 judgments에만 기록 (재판정 방지)
- |
- +-> 3. done
-       frontend가 GET /api/postings로 목록 갱신 (등급, 북마크 여부 포함)
-```
-- 세션이 만료되면 job이 `auth_required`로 끝나고, 다음 실행에서 판정 못 한 공고만 다시 판정한다
-- 북마크는 공고와 JOIN으로 묶여 있어서, 공고가 삭제되면 같이 숨겨지고 공고가 다시 나타나면 같이 돌아온다
-
-## 구조
-```
-job-posting/
-|-- backend/                  # FastAPI + sqlite
-|   |-- app/
-|   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
-|   |   |-- api.py            # REST API
-|   |   |-- jobs.py           # 스크래핑 job 실행
-|   |   |-- profile.py        # 이력서 -> 프로필
-|   |   |-- matcher.py        # LLM 판정
-|   |   |-- llm.py            # Claude Agent SDK 래퍼
-|   |   |-- repository.py     # sqlite 접근
-|   |   `-- main.py           # 앱 조립 + 프론트 정적 서빙
-|   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
-|   |-- tests/                # pytest
-|   |-- fixtures/             # 파서 테스트용 응답 샘플
-|   `-- data/app.db           # DB (gitignore)
-|-- frontend/                 # React + Vite
-|   `-- src/
-|       |-- App.tsx           # 상태 · 탭 · 폴링
-|       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # PostingsTab, BookmarksTab, HiddenTab, CompaniesTab, PostingCard, ...
-|       `-- test/             # vitest 설정 · 픽스처
-|-- design/
-|   |-- specs/                # 기능 명세 (0001-*.md ...)
-|   `-- plans/                # 실행 계획
-|-- resume/                   # 이력서 *.md (gitignore)
-`-- justfile                  # 실행·테스트 명령
-```
-모듈별 상세는 [backend/AGENTS.md](backend/AGENTS.md), [frontend/AGENTS.md](frontend/AGENTS.md).
-새 회사 추가 = `backend/app/scrapers/<company>.py`에 `Scraper` 구현체 추가 (Greenhouse면 `GreenhouseScraper` 상속).
+- 수집은 사이트별로 짠 일반 코드, LLM은 프로필 추출과 판정에만 쓴다
+- LLM은 API key 없이 로컬 `claude login` 세션으로 호출한다
+- 한 번 판정한 공고는 다시 판정하지 않아 두 번째 실행부터 빠르고 저렴하다
+- 채용 사이트에서 내려간 공고는 목록에서 사라지고, 다시 올라오면 북마크와 함께 돌아온다
+- 세션이 만료되면 중단되고, 다음 실행에서 판정 못 한 공고만 이어서 판정한다
