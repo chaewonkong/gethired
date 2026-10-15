@@ -1,5 +1,6 @@
 from . import (  # noqa: F401  (registers scrapers)
-    coupang, daangn, fortytwodot, hyperconnect, hyundai, kakao, kakaopay, line, naver, samsung, toss, upstage,
+    coupang, daangn, fortytwodot, hyperconnect, hyundai, kakao, kakaobank, kakaopay, line, naver, samsung, toss, upstage,
+    woowahan,
 )
 from .base import REGISTRY, RawPosting, Scraper, make_client
 

@@ -1,0 +1,722 @@
+{
+ "code": "2000",
+ "message": "OK",
+ "data": {
+  "recruitSeq": 26075,
+  "recruitNumber": "R2605009",
+  "recruitVersion": 9,
+  "recruitCorporationNumber": "WOOWA_BROTHERS",
+  "recruitHiddenUrl": "",
+  "pluarApplicationCount": -1,
+  "recruitmentCount": -1,
+  "recruitOpenDate": "2026-05-13 19:30:15",
+  "recruitEndDate": "9999-12-31 00:00:00",
+  "recruitCloseDate": "2999-12-31 00:00:00",
+  "careerRestrictionMinYears": 1,
+  "careerRestrictionMaxYears": 10,
+  "applicationMobileYn": false,
+  "recruitName": "QA Engineer(Test)",
+  "recruitmentRequestOrganizationSeq": 105015,
+  "recruitmentRequestOrganizationId": "3590",
+  "recruitmentRequestOrganizationName": "",
+  "recruitmentRequestOrganizations": null,
+  "recruitmentRequestUser": 1995,
+  "recruitStatusCode": {
+   "code": "CRBST002",
+   "text": "등록"
+  },
+  "recruitDisplayCode": "BA004001",
+  "recruitCampaignSeq": 0,
+  "recruitDeleteYn": false,
+  "createUser": 7407,
+  "createDate": "2026-10-08 17:28:37",
+  "updateUser": 7407,
+  "updateDate": "2026-10-08 17:28:37",
+  "recruitContents": "<p id=\"isPasted\"><span style=\"font-family: Roboto, sans-serif; font-size: 14px; color: rgb(0, 0, 0);\"><strong>구분: 경력<br>계약기간: 12개월(이후 평가에 따라 최대 23개월까지 연장 가능)&nbsp;</strong><br></span></p><p><span style=\"font-family: Roboto, sans-serif; font-size: 14px; color: rgb(0, 0, 0);\"><b id=\"isPasted\" style=\"font-weight: 700; font-weight: 700;\">[조직소개]</b><br>QA팀은 대한민국 1등 배달앱 배달의민족과 사장님·라이더 서비스, 그리고 서비스를 구성하는 플랫폼의 품질을 책임지고 있습니다.<br>우리는 단순히 테스트를 수행하는 팀이 아니라 제품 품질을 설계하고, 개선하고, 개발 과정에 녹여내는 팀입니다.<br>품질을 수치로 측정하고, 더 나은 품질 기준을 만들며, 해결 방향까지 제안하여 더 좋은 사용자 경험을 만드는 것을 목표로 합니다.<br>정해진 프로세스를 따르기보다 문제의 본질을 발견하고 해법을 만들어가기 위해 제품 개발 과정 전반에 참여할 수 있는 동료를 찾고 있습니다.</span></p><p><span style=\"font-family: Roboto, sans-serif; font-size: 14px; color: rgb(0, 0, 0);\"><span id=\"isPasted\" style=\"background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; vertical-align: middle; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.65px; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; font-family: Roboto, sans-serif; font-size: 14px;\">👉 [팀 스토리]&nbsp;</span><span style=\"background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; vertical-align: middle; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.65px; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; font-family: Roboto, sans-serif; font-size: 14px;\"><a href=\"https://bcut.baemin.com/7887/\" style=\"background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent; text-decoration: none; cursor: pointer; vertical-align: middle; color: rgb(42, 193, 188);\" target=\"_blank\">의심을 넘어 대안을 설계하는 사람들, QA팀</a></span> <br><br><b style=\"font-weight: 700; font-weight: 700;\">[업무내용]</b><br>- 다양한 테스트 기법 및 툴을 활용한 기능·비기능 테스트<br>- 기획, 디자인, 개발 문서에 따른 테스트 시나리오 작성<br>- 테스트 설계 및 수행<br>- 결함 관리 및 산출물 작성<br><br><b style=\"font-weight: 700; font-weight: 700;\">[지원자격]</b><br>- QA 분야 1년 이상의 경력<br>- 소프트웨어 테스팅 관련 기본 지식<br>- 웹·앱·API 등 서비스 구성 요소의 특성과 원리에 대한 이해 및 관련 경력<br>- 지속적인 QA 활동과 결함 분석·오류 보고 역량<br><br><b style=\"font-weight: 700; font-weight: 700;\">[우대사항]</b><br>- 빠른 주기의 앱·웹 배포 경험<br>- 다양한 테스트 도구(Selenium, Appium, Postman, Charles 등) 활용 경험<br>- Jira, Confluence, GitLab 사용 경험<br>- 커머스 사업에 대한 이해와 커머스 기반 품질 관리 경험<br>- 질문을 주저하지 않는 태도<br>- ISTQB·CSTS 등 QA 관련 자격 또는 AI 관련 자격·교육 이수 경험<br><br><b style=\"font-weight: 700; font-weight: 700;\">[개발환경]</b><br>- Language: Python, Java, JavaScript<br>- Automation: Selenium, Appium, 자체 테스트 프레임워크(BDD), AI 기반 자동화<br>- Testing Tools: Postman, Charles, SonarQube<br>- Collaboration: GitLab, Jira, Confluence, Slack, Figma, Google Workspace<br>- Infra: AWS<br><br><b style=\"font-weight: 700; font-weight: 700;\">[꼭 읽어주세요!]</b><br>- 본 포지션은 서류 전형 내 사전 과제를 진행하며, 개별 안내드릴 예정입니다.<br>- 사전 과제 진행 후, 과제 내용을 포함하여 서류 전형에 대한 최종 결과를 안내드릴 예정입니다.&nbsp;</span></p>",
+  "careerType": {
+   "recruitItemGroupCode": "BA003",
+   "recruitItemCode": "BA003002",
+   "primary": false
+  },
+  "jobGroup": {
+   "recruitItemGroupCode": "BA005",
+   "recruitItemCode": "BA005001",
+   "primary": false
+  },
+  "employmentType": {
+   "recruitItemGroupCode": "BA002",
+   "recruitItemCode": "BA002002",
+   "primary": false
+  },
+  "typicalClassification": {
+   "recruitItemGroupCode": "BA001",
+   "recruitItemCode": "BA001001",
+   "primary": false
+  },
+  "jobs": [
+   {
+    "recruitItemGroupCode": "BA007",
+    "recruitItemCode": "BA007010",
+    "primary": true
+   }
+  ],
+  "serviceSections": [
+   {
+    "recruitItemGroupCode": "BA006",
+    "recruitItemCode": "BA006015",
+    "primary": true
+   }
+  ],
+  "keywords": [],
+  "jobClassifications": {
+   "recruitItemGroupCode": "GR030",
+   "recruitItemCode": "GR030001",
+   "primary": false
+  },
+  "recruitNameTag": null,
+  "resumeEntryGroups": [
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR001",
+    "recruitItemCode": "GR001000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001004",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001005",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001006",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001007",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001008",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001009",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001010",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001011",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001012",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001013",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001014",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001015",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR001",
+      "recruitItemCode": "GR001016",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR002",
+    "recruitItemCode": "GR002000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR002",
+      "recruitItemCode": "GR002001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR002",
+      "recruitItemCode": "GR002002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR002",
+      "recruitItemCode": "GR002003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR002",
+      "recruitItemCode": "GR002004",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR003",
+    "recruitItemCode": "GR003000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR003",
+      "recruitItemCode": "GR003001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR003",
+      "recruitItemCode": "GR003002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR003",
+      "recruitItemCode": "GR003003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR004",
+    "recruitItemCode": "GR004000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR004",
+      "recruitItemCode": "GR004001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR004",
+      "recruitItemCode": "GR004003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR004",
+      "recruitItemCode": "GR004004",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR004",
+      "recruitItemCode": "GR004006",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR005",
+    "recruitItemCode": "GR005000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR006",
+    "recruitItemCode": "GR006000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR007",
+    "recruitItemCode": "GR007000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR008",
+    "recruitItemCode": "GR008000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008005",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008006",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008008",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008009",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008010",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR008",
+      "recruitItemCode": "GR008011",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR009",
+    "recruitItemCode": "GR009000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009004",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009005",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009006",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009007",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR009",
+      "recruitItemCode": "GR009008",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR010",
+    "recruitItemCode": "GR010000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR011",
+    "recruitItemCode": "GR011000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR012",
+    "recruitItemCode": "GR012000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR013",
+    "recruitItemCode": "GR013000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013001",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013003",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013004",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013006",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013015",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013016",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR013",
+      "recruitItemCode": "GR013999",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": 26075,
+    "recruitItemGroupCode": "GR014",
+    "recruitItemCode": "GR014000",
+    "recruitItemNecessaryYn": true,
+    "recruitItemCheckYn": true,
+    "entries": [
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR014",
+      "recruitItemCode": "GR014002",
+      "recruitItemNecessaryYn": true,
+      "recruitItemCheckYn": true,
+      "entries": null
+     },
+     {
+      "recruitSeq": 26075,
+      "recruitItemGroupCode": "GR014",
+      "recruitItemCode": "GR014003",
+      "recruitItemNecessaryYn": false,
+      "recruitItemCheckYn": true,
+      "entries": null
+     }
+    ]
+   },
+   {
+    "recruitSeq": null,
+    "recruitItemGroupCode": "GR015",
+    "recruitItemCode": "GR015000",
+    "recruitItemNecessaryYn": false,
+    "recruitItemCheckYn": false,
+    "entries": []
+   }
+  ],
+  "supplyButtonDisplayYn": true,
+  "displayTopYn": false,
+  "managers": null,
+  "pluarApplications": [],
+  "permanentConversionYn": false,
+  "specialRecruitmentYn": false,
+  "directorRecruitmentYn": false,
+  "selfIntroduceDisabledYn": false,
+  "selfIntroduces": [
+   {
+    "recruitSelfIntroduceSeq": 24094,
+    "recruitSeq": 26075,
+    "recruitSelfIntroduceOrder": 1,
+    "recruitSelfIntroduceContents": "스스로 문제를 발견하고 해결한 경험을 알려 주세요. 당시 상황, 문제라고 판단한 이유, 어려움을 극복한 방법, 결과적으로 달라진 점을 구체적으로 작성해 주세요.",
+    "selfIntroduceRestrictionMin": -1,
+    "selfIntroduceRestrictionMax": -1,
+    "selfIntroduceNecessaryYn": false
+   }
+  ],
+  "judgmentProcedures": null,
+  "recruitCampaignRequests": null,
+  "qualificationRestriction": {
+   "recruitItemCheckYn": false,
+   "recruitItemNecessaryYn": true,
+   "gender": {
+    "recruitSeq": 26075,
+    "value": "",
+    "checkYn": false
+   },
+   "educationBackground": {
+    "recruitSeq": 26075,
+    "value": "",
+    "inequality": null,
+    "checkYn": false
+   },
+   "americanAges": [
+    {
+     "recruitSeq": 26075,
+     "value": 0,
+     "inequality": null,
+     "checkYn": false,
+     "order": 1
+    },
+    {
+     "recruitSeq": 26075,
+     "value": 0,
+     "inequality": null,
+     "checkYn": false,
+     "order": 2
+    }
+   ],
+   "careers": [
+    {
+     "recruitSeq": 26075,
+     "value": 0,
+     "inequality": null,
+     "checkYn": false,
+     "order": 1
+    },
+    {
+     "recruitSeq": 26075,
+     "value": 0,
+     "inequality": null,
+     "checkYn": false,
+     "order": 2
+    }
+   ],
+   "selfIntroduces": [
+    {
+     "recruitSeq": 26075,
+     "recruitSelfIntroduceOrder": 1,
+     "lettersCount": 100,
+     "inequality": "GE",
+     "checkYn": false
+    }
+   ],
+   "applicationHistory": {
+    "recruitSeq": 26075,
+    "value": 1,
+    "inequality": null,
+    "checkYn": false
+   }
+  },
+  "isUnlimitedEndDate": true,
+  "isHidden": false,
+  "isAfterOrEqualEndDay": false,
+  "isPublicTypical": false,
+  "isAfterOrEqualOpenDay": true,
+  "isTemporaryStatus": false,
+  "representativeRecruitmentRequestOrganization": 0
+ }
+}

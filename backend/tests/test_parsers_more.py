@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from app.scrapers import REGISTRY, fortytwodot, greetinghr, hyperconnect
+from app.scrapers import REGISTRY, fortytwodot, greetinghr, hyperconnect, kakaobank, woowahan
 from app.scrapers.kakaopay import KakaoPayScraper
 from app.scrapers.upstage import UpstageScraper
 
@@ -114,3 +114,33 @@ def test_fortytwodot_keeps_korea_engineering():
     assert all(p.description for p in postings)
     unlisted = dict(data["jobs"][0], isListed=False)
     assert not fortytwodot.keep(unlisted)
+
+
+# --- woowahan, kakaobank ---
+
+def test_woowahan_to_posting_and_open_ended_deadline():
+    jobs = load("woowahan_list.json")["data"]["list"]
+    detail = load("woowahan_detail.json")["data"]
+    p = woowahan.to_posting(jobs[0], detail)
+    assert p.company == "woowahan" and p.external_id == jobs[0]["recruitNumber"]
+    assert p.apply_url == f"https://career.woowahan.com/recruitment/{p.external_id}/detail"
+    assert p.category == woowahan.DEV_JOB_GROUP
+    assert p.description and "<" not in p.description and len(p.description) > 200
+    assert woowahan.deadline("9999-12-31 00:00:00") is None
+    assert woowahan.deadline("2999-12-31 00:00:00") is None
+    assert woowahan.deadline("2026-11-30 23:59:59") == date(2026, 11, 30)
+    assert woowahan.deadline(None) is None
+
+
+def test_kakaobank_keep_and_to_posting():
+    data = load("kakaobank_list.json")
+    kept = [j for j in data["list"] if kakaobank.keep(j)]
+    assert kept and len(kept) < len(data["list"])
+    assert all(j["recruitClassName"] in kakaobank.TECH_CLASSES for j in kept)
+    detail = load("kakaobank_detail.json")
+    p = kakaobank.to_posting(kept[0], detail)
+    assert p.company == "kakaobank" and p.external_id == str(kept[0]["recruitNoticeSn"])
+    assert p.apply_url == f"https://recruit.kakaobank.com/jobs/{p.external_id}"
+    assert p.deadline == date.fromisoformat(kept[0]["receiveEndDatetime"][:10])
+    assert p.category == kept[0]["recruitClassName"]
+    assert p.description and "<" not in p.description and len(p.description) > 200

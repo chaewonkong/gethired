@@ -1,0 +1,277 @@
+{
+ "code": "2000",
+ "message": "OK",
+ "data": {
+  "pageSize": 100,
+  "pageNumber": 1,
+  "totalPageNumber": 1,
+  "totalSize": 3,
+  "list": [
+   {
+    "recruitSeq": 26075,
+    "recruitNumber": "R2605009",
+    "recruitVersion": 9,
+    "recruitCorporationNumber": "WOOWA_BROTHERS",
+    "recruitHiddenUrl": "",
+    "pluarApplicationCount": -1,
+    "recruitmentCount": -1,
+    "recruitOpenDate": "2026-05-13 19:30:15",
+    "recruitEndDate": "9999-12-31 00:00:00",
+    "recruitCloseDate": "2999-12-31 00:00:00",
+    "careerRestrictionMinYears": 1,
+    "careerRestrictionMaxYears": 10,
+    "applicationMobileYn": false,
+    "recruitName": "QA Engineer(Test)",
+    "recruitmentRequestOrganizationSeq": 105015,
+    "recruitmentRequestOrganizationId": "3590",
+    "recruitmentRequestOrganizationName": "",
+    "recruitmentRequestOrganizations": null,
+    "recruitmentRequestUser": 1995,
+    "recruitStatusCode": {
+     "code": "CRBST002",
+     "text": "등록"
+    },
+    "recruitDisplayCode": "BA004001",
+    "recruitCampaignSeq": 0,
+    "recruitDeleteYn": false,
+    "createUser": 7407,
+    "createDate": "2026-10-08 17:28:37",
+    "updateUser": 7407,
+    "updateDate": "2026-10-08 17:28:37",
+    "recruitContents": null,
+    "careerType": {
+     "recruitItemGroupCode": "BA003",
+     "recruitItemCode": "BA003002",
+     "primary": false
+    },
+    "jobGroup": {
+     "recruitItemGroupCode": "BA005",
+     "recruitItemCode": "BA005001",
+     "primary": false
+    },
+    "employmentType": {
+     "recruitItemGroupCode": "BA002",
+     "recruitItemCode": "BA002002",
+     "primary": false
+    },
+    "typicalClassification": {
+     "recruitItemGroupCode": "BA001",
+     "recruitItemCode": "BA001001",
+     "primary": false
+    },
+    "jobs": null,
+    "serviceSections": null,
+    "keywords": null,
+    "jobClassifications": null,
+    "recruitNameTag": null,
+    "resumeEntryGroups": null,
+    "supplyButtonDisplayYn": true,
+    "displayTopYn": false,
+    "managers": null,
+    "pluarApplications": [],
+    "permanentConversionYn": false,
+    "specialRecruitmentYn": false,
+    "directorRecruitmentYn": false,
+    "selfIntroduceDisabledYn": false,
+    "selfIntroduces": null,
+    "judgmentProcedures": null,
+    "recruitCampaignRequests": null,
+    "qualificationRestriction": null,
+    "isUnlimitedEndDate": true,
+    "isHidden": false,
+    "isAfterOrEqualEndDay": false,
+    "isPublicTypical": false,
+    "isAfterOrEqualOpenDay": true,
+    "isTemporaryStatus": false,
+    "representativeRecruitmentRequestOrganization": 0
+   },
+   {
+    "recruitSeq": 26072,
+    "recruitNumber": "R2603042",
+    "recruitVersion": 20,
+    "recruitCorporationNumber": "WOOWA_BROTHERS",
+    "recruitHiddenUrl": "",
+    "pluarApplicationCount": -1,
+    "recruitmentCount": -1,
+    "recruitOpenDate": "2026-03-10 19:34:20",
+    "recruitEndDate": "9999-12-31 00:00:00",
+    "recruitCloseDate": "2999-12-31 00:00:00",
+    "careerRestrictionMinYears": 5,
+    "careerRestrictionMaxYears": 21,
+    "applicationMobileYn": false,
+    "recruitName": "QA Engineer(자동화 및 품질 전략)",
+    "recruitmentRequestOrganizationSeq": 105015,
+    "recruitmentRequestOrganizationId": "3590",
+    "recruitmentRequestOrganizationName": "",
+    "recruitmentRequestOrganizations": null,
+    "recruitmentRequestUser": 1995,
+    "recruitStatusCode": {
+     "code": "CRBST002",
+     "text": "등록"
+    },
+    "recruitDisplayCode": "BA004001",
+    "recruitCampaignSeq": 0,
+    "recruitDeleteYn": false,
+    "createUser": 7407,
+    "createDate": "2026-10-08 17:27:40",
+    "updateUser": 7407,
+    "updateDate": "2026-10-08 17:27:40",
+    "recruitContents": null,
+    "careerType": {
+     "recruitItemGroupCode": "BA003",
+     "recruitItemCode": "BA003002",
+     "primary": false
+    },
+    "jobGroup": {
+     "recruitItemGroupCode": "BA005",
+     "recruitItemCode": "BA005001",
+     "primary": false
+    },
+    "employmentType": {
+     "recruitItemGroupCode": "BA002",
+     "recruitItemCode": "BA002001",
+     "primary": false
+    },
+    "typicalClassification": {
+     "recruitItemGroupCode": "BA001",
+     "recruitItemCode": "BA001001",
+     "primary": false
+    },
+    "jobs": null,
+    "serviceSections": null,
+    "keywords": null,
+    "jobClassifications": null,
+    "recruitNameTag": null,
+    "resumeEntryGroups": null,
+    "supplyButtonDisplayYn": true,
+    "displayTopYn": false,
+    "managers": null,
+    "pluarApplications": [],
+    "permanentConversionYn": false,
+    "specialRecruitmentYn": false,
+    "directorRecruitmentYn": false,
+    "selfIntroduceDisabledYn": false,
+    "selfIntroduces": null,
+    "judgmentProcedures": null,
+    "recruitCampaignRequests": null,
+    "qualificationRestriction": null,
+    "isUnlimitedEndDate": true,
+    "isHidden": false,
+    "isAfterOrEqualEndDay": false,
+    "isPublicTypical": false,
+    "isAfterOrEqualOpenDay": true,
+    "isTemporaryStatus": false,
+    "representativeRecruitmentRequestOrganization": 0
+   },
+   {
+    "recruitSeq": 26034,
+    "recruitNumber": "R2601047",
+    "recruitVersion": 7,
+    "recruitCorporationNumber": "WOOWA_BROTHERS",
+    "recruitHiddenUrl": "",
+    "pluarApplicationCount": -1,
+    "recruitmentCount": -1,
+    "recruitOpenDate": "2026-01-22 22:42:16",
+    "recruitEndDate": "9999-12-31 00:00:00",
+    "recruitCloseDate": "2999-12-31 00:00:00",
+    "careerRestrictionMinYears": 10,
+    "careerRestrictionMaxYears": 32,
+    "applicationMobileYn": false,
+    "recruitName": "플랫폼엔지니어링(배포시스템)",
+    "recruitmentRequestOrganizationSeq": 105221,
+    "recruitmentRequestOrganizationId": "4011",
+    "recruitmentRequestOrganizationName": "",
+    "recruitmentRequestOrganizations": null,
+    "recruitmentRequestUser": 1526,
+    "recruitStatusCode": {
+     "code": "CRBST002",
+     "text": "등록"
+    },
+    "recruitDisplayCode": "BA004001",
+    "recruitCampaignSeq": 0,
+    "recruitDeleteYn": false,
+    "createUser": 7638,
+    "createDate": "2026-10-07 10:54:12",
+    "updateUser": 7638,
+    "updateDate": "2026-10-07 10:54:12",
+    "recruitContents": null,
+    "careerType": {
+     "recruitItemGroupCode": "BA003",
+     "recruitItemCode": "BA003002",
+     "primary": false
+    },
+    "jobGroup": {
+     "recruitItemGroupCode": "BA005",
+     "recruitItemCode": "BA005001",
+     "primary": false
+    },
+    "employmentType": {
+     "recruitItemGroupCode": "BA002",
+     "recruitItemCode": "BA002001",
+     "primary": false
+    },
+    "typicalClassification": {
+     "recruitItemGroupCode": "BA001",
+     "recruitItemCode": "BA001001",
+     "primary": false
+    },
+    "jobs": null,
+    "serviceSections": null,
+    "keywords": [
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008002",
+      "primary": false
+     },
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008011",
+      "primary": false
+     },
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008042",
+      "primary": false
+     },
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008059",
+      "primary": false
+     },
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008025",
+      "primary": false
+     },
+     {
+      "recruitItemGroupCode": "BA008",
+      "recruitItemCode": "BA008021",
+      "primary": false
+     }
+    ],
+    "jobClassifications": null,
+    "recruitNameTag": null,
+    "resumeEntryGroups": null,
+    "supplyButtonDisplayYn": true,
+    "displayTopYn": false,
+    "managers": null,
+    "pluarApplications": null,
+    "permanentConversionYn": false,
+    "specialRecruitmentYn": false,
+    "directorRecruitmentYn": false,
+    "selfIntroduceDisabledYn": false,
+    "selfIntroduces": null,
+    "judgmentProcedures": null,
+    "recruitCampaignRequests": null,
+    "qualificationRestriction": null,
+    "isUnlimitedEndDate": true,
+    "isHidden": false,
+    "isAfterOrEqualEndDay": false,
+    "isPublicTypical": false,
+    "isAfterOrEqualOpenDay": true,
+    "isTemporaryStatus": false,
+    "representativeRecruitmentRequestOrganization": 0
+   }
+  ]
+ }
+}

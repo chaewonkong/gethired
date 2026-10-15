@@ -1,0 +1,71 @@
+{
+ "paging": {
+  "pageNumber": 1,
+  "pageSize": 20,
+  "totalPages": 1,
+  "totalElements": 88,
+  "filterType": null,
+  "recruitClassNames": null,
+  "recruitEmployeeTypes": null,
+  "recruitSectorNames": null,
+  "keyword": null,
+  "receiptFilterType": null
+ },
+ "list": [
+  {
+   "recruitNoticeSn": 268717,
+   "recruitNoticeName": "쿠버네티스(Kubernetes) 엔지니어",
+   "recruitNoticeUrl": "kakaobank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=268717",
+   "recruitNoticeResumeType": "RESUME_TEMPLATE",
+   "recruitTypeName": "일반채용",
+   "recruitClassName": "Engineering",
+   "receiveStartDatetime": "2026-10-07 00:00:00",
+   "receiveEndDatetime": "2026-10-28 23:59:59",
+   "sortOrder": 0
+  },
+  {
+   "recruitNoticeSn": 264119,
+   "recruitNoticeName": "AI 엔지니어",
+   "recruitNoticeUrl": "kakaobank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=264119",
+   "recruitNoticeResumeType": "RESUME_TEMPLATE",
+   "recruitTypeName": "일반채용",
+   "recruitClassName": "AI",
+   "receiveStartDatetime": "2026-08-24 00:00:00",
+   "receiveEndDatetime": "2026-11-03 23:59:59",
+   "sortOrder": 11
+  },
+  {
+   "recruitNoticeSn": 263314,
+   "recruitNoticeName": "재무리스크 시스템 개발자 (계약직)",
+   "recruitNoticeUrl": "kakaobank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=263314",
+   "recruitNoticeResumeType": "RESUME_TEMPLATE",
+   "recruitTypeName": "일반채용",
+   "recruitClassName": "Core Banking",
+   "receiveStartDatetime": "2026-08-14 00:00:00",
+   "receiveEndDatetime": "2026-10-23 23:59:59",
+   "sortOrder": 15
+  },
+  {
+   "recruitNoticeSn": 266112,
+   "recruitNoticeName": "서비스 기획자 - 신사업",
+   "recruitNoticeUrl": "kakaobank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=266112",
+   "recruitNoticeResumeType": "RESUME_TEMPLATE",
+   "recruitTypeName": "일반채용",
+   "recruitClassName": "Service & Biz",
+   "receiveStartDatetime": "2026-09-09 00:00:00",
+   "receiveEndDatetime": "2026-11-03 23:59:59",
+   "sortOrder": 0
+  },
+  {
+   "recruitNoticeSn": 267914,
+   "recruitNoticeName": "펀드 운영 담당자 (계약직)",
+   "recruitNoticeUrl": "kakaobank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=267914",
+   "recruitNoticeResumeType": "RESUME_TEMPLATE",
+   "recruitTypeName": "일반채용",
+   "recruitClassName": "Service & Biz",
+   "receiveStartDatetime": "2026-09-29 00:00:00",
+   "receiveEndDatetime": "2026-10-20 23:59:59",
+   "sortOrder": 0
+  }
+ ]
+}
