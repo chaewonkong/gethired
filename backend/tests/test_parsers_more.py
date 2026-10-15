@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from app.scrapers import REGISTRY, greetinghr
+from app.scrapers import REGISTRY, fortytwodot, greetinghr, hyperconnect
 from app.scrapers.kakaopay import KakaoPayScraper
 from app.scrapers.upstage import UpstageScraper
 
@@ -83,3 +83,34 @@ def test_kakaopay_to_posting_with_due_date():
 def test_greetinghr_base_is_not_registered():
     assert "upstage" in REGISTRY and "kakaopay" in REGISTRY
     assert all(not issubclass(c, greetinghr.GreetingHRScraper) or c.company in ("upstage", "kakaopay") for c in REGISTRY.values())
+
+
+# --- hyperconnect (Lever), 42dot (Ashby) ---
+
+def test_hyperconnect_keeps_seoul_including_match_group():
+    jobs = load("hyperconnect_lever.json")
+    postings = hyperconnect.parse(jobs)
+    assert postings and len(postings) < len(jobs)
+    assert all(p.company == "hyperconnect" and p.apply_url.startswith("https://jobs.lever.co/") for p in postings)
+    assert any(p.category.startswith("Match Group/") for p in postings)
+    assert any(p.category.startswith("Hyperconnect/") for p in postings)
+    assert not any("Seoul" not in j["categories"]["location"] for j in jobs if hyperconnect.keep(j))
+
+
+def test_hyperconnect_description_joins_lists():
+    job = load("hyperconnect_lever.json")[0]
+    desc = hyperconnect.description(job)
+    assert job["descriptionPlain"].strip()[:40] in desc
+    assert all(lst["text"] in desc for lst in job["lists"])
+    assert "<li>" not in desc
+
+
+def test_fortytwodot_keeps_korea_engineering():
+    data = load("fortytwodot_ashby.json")
+    postings = fortytwodot.parse(data)
+    assert postings and len(postings) < len(data["jobs"])
+    assert all(p.company == "42dot" and p.category.startswith("ENGINEERING/") for p in postings)
+    assert all(p.apply_url.startswith("https://jobs.ashbyhq.com/42dot/") for p in postings)
+    assert all(p.description for p in postings)
+    unlisted = dict(data["jobs"][0], isListed=False)
+    assert not fortytwodot.keep(unlisted)

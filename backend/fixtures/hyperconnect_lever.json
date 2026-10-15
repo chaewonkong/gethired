@@ -1,0 +1,202 @@
+[
+ {
+  "additionalPlain": "#LI-HP1\n\n\n제출해 주신 내용 중 허위 사실이 있거나 관련법 상 근로제공에 결격사유가 있는 경우 채용이 취소될 수 있으며, 필요시 사전에 안내된 채용 절차 외에도 추가 전형 및 서류 확인이 진행될 수 있습니다.\n국가보훈대상자는 관계 법령에 따라 우대하오니, 해당되시는 분께서는 지원 시 고지해주시고 채용 시 증빙서류를 제출해주시기 바랍니다.\n하이퍼커넥트가 채용하는 포지션에 지원하는 경우, 개인정보 처리에 관하여서는 본 개인정보처리방침이 적용됩니다: https://career.hyperconnect.com/privacy\n\n\n#HPCNT\n",
+  "additional": "<div>#LI-HP1</div><div><br></div><div>제출해 주신 내용 중 허위 사실이 있거나 관련법 상 근로제공에 결격사유가 있는 경우 채용이 취소될 수 있으며, 필요시 사전에 안내된 채용 절차 외에도 추가 전형 및 서류 확인이 진행될 수 있습니다.</div><div>국가보훈대상자는 관계 법령에 따라 우대하오니, 해당되시는 분께서는 지원 시 고지해주시고 채용 시 증빙서류를 제출해주시기 바랍니다.</div><div>하이퍼커넥트가 채용하는 포지션에 지원하는 경우, 개인정보 처리에 관하여서는 본 개인정보처리방침이 적용됩니다:&nbsp;<a href=\"https://career.hyperconnect.com/privacy\">https://career.hyperconnect.com/privacy</a></div><div><br></div><div><br></div><div><span style=\"font-size: 10px\">#HPCNT</span></div>",
+  "categories": {
+   "commitment": "Full-time",
+   "department": "Hyperconnect",
+   "location": "Seoul, South Korea",
+   "team": "Engineering",
+   "allLocations": [
+    "Seoul, South Korea"
+   ]
+  },
+  "createdAt": 1783501026023,
+  "description": "",
+  "descriptionPlain": "",
+  "id": "3c12c050-2719-43e6-a69e-fdb971f399a7",
+  "lists": [
+   {
+    "text": "Product Analytics Team",
+    "content": "<div>\n\n<li>Product Analytics Team은 Business Operations &amp; Analytics 조직의 일원으로, 아자르의 제품 성장을 데이터로 뒷받침합니다.</li>\n<li>매일 수천만 건의 글로벌 매칭이 만들어내는 데이터를 기반으로 다국적 유저 데이터의 공통점과 차이를 분석합니다.</li>\n<li>실험 설계부터 결과 해석까지 분석가가 주도합니다. 대규모 트래픽에서 A/B 테스트를 직접 분석하여 제품 의사결정에 직접 기여합니다.</li>\n<li>PM, Designer, Engineer로 구성된 프로덕트 스쿼드에 참여하며, 분석 결과가 실제 제품의 변화로 이어지는 환경에서 일합니다.</li>\n<li>Data Analytics Engineer와 긴밀하게 협업하여 분석 프레임워크와 데이터 인프라를 함께 구조화합니다.</li>\n\n</div>"
+   },
+   {
+    "text": "Responsibilities",
+    "content": "<div>\n<ul style=\"list-style-type: disc;\">\n<li>프로덕트 스쿼드에 참여하여 핵심 지표를 정의하고, 데이터 분석이 제품 의사결정으로 이어지도록 돕습니다.</li>\n<li>A/B 테스트를 직접 설계하고, 결과를 다양한 이해관계자에게 커뮤니케이션합니다.</li>\n<li>유저 행동 데이터를 분석하여 문제를 정의하고, 제품 핵심 지표의 변화 원인을 파악하여 실행 가능한 액션 아이템을 제안합니다.</li>\n<li>신규 기능에 대한 이벤트 로그를 직접 설계하고, 유저 행동이 정확히 측정될 수 있는 데이터 구조를 관리합니다.</li>\n<li>Airflow 기반 자동화 파이프라인과 Tableau/Data Studio/evidence 등의 대시보드를 구축하여 데이터 활용 효율을 높입니다.</li>\n<li>분석 방법론과 베스트 프랙티스를 공유하고, 실험 분석 프레임워크 구축 등 팀 전체의 분석 역량 향상에 기여합니다.</li>\n\n</ul></div>"
+   },
+   {
+    "text": "Requirements",
+    "content": "<div>\n<ul style=\"list-style-type: disc;\">\n<li>SQL을 활용한 데이터 분석 경력 3년 이상 또는 이에 준하는 경험</li>\n<li>A/B 테스트를 설계부터 결과 분석 및 인사이트 도출까지 전 과정을 실행한 경험</li>\n<li>Tableau/Data Studio/evidence 등의 BI 툴을 활용한 대시보드 설계 및 운영 경험</li>\n<li>유저 행동 측정을 위한 로그를 설계하고 데이터 구조를 체계화한 경험</li>\n<li>다양한 지표에 대한 정확한 이해 및 상황에 맞는 분석 방법론을 적용할 수 있는 능력</li>\n<li>지표의 상관관계와 인과관계를 구분하고 이를 바탕으로 논리적인 주장을 제시할 수 있는 능력</li>\n<li>데이터 분석 결과를 다양한 이해관계자에게 명확하게 전달할 수 있는 커뮤니케이션 역량</li>\n\n</ul></div>"
+   },
+   {
+    "text": "Preferred Qualifications",
+    "content": "<div>\n<ul style=\"list-style-type: disc;\">\n<li>실험 분석 프레임워크 구축 또는 A/B 테스트 플랫폼 운영 경험</li>\n<li>소셜·커뮤니케이션 서비스 도메인에서의 프로덕트 분석 경험</li>\n<li>Airflow 등 데이터 파이프라인/자동화 툴 실무 적용 경험</li>\n<li>영어 기반 업무 커뮤니케이션 능력</li>\n\n</ul></div>"
+   },
+   {
+    "text": "Hiring Process",
+    "content": "<ul style=\"list-style-type: disc;\">\n<li>고용 형태: 정규직</li>\n<li>채용 절차: 서류전형 &gt; Technical Assessment &gt; Recruiter Call &gt; 1차 면접 &gt; 2차 면접 &gt; 최종합격 (*필요 시 전형이 추가/변경 진행될 수 있습니다.)</li>\n<li>지원 서류: 자유 양식의 상세 경력기반 국문 또는 영문이력서(PDF)</li>\n</ul>"
+   }
+  ],
+  "text": "Data Analyst (Azar)",
+  "country": "KR",
+  "workplaceType": "hybrid",
+  "opening": "",
+  "openingPlain": "",
+  "descriptionBody": "",
+  "descriptionBodyPlain": "",
+  "hostedUrl": "https://jobs.lever.co/matchgroup/3c12c050-2719-43e6-a69e-fdb971f399a7",
+  "applyUrl": "https://jobs.lever.co/matchgroup/3c12c050-2719-43e6-a69e-fdb971f399a7/apply"
+ },
+ {
+  "additionalPlain": "#LI-YN1\n\n\n제출해 주신 내용 중 허위 사실이 있거나 관련법 상 근로제공에 결격사유가 있는 경우 채용이 취소될 수 있으며, 필요시 사전에 안내된 채용 절차 외에도 추가 전형 및 서류 확인이 진행될 수 있습니다.\n국가보훈대상자는 관계 법령에 따라 우대하오니, 해당되시는 분께서는 지원 시 고지해주시고 채용 시 증빙서류를 제출해주시기 바랍니다.\n하이퍼커넥트가 채용하는 포지션에 지원하는 경우, 개인정보 처리에 관하여서는 본 개인정보처리방침이 적용됩니다: https://career.hyperconnect.com/privacy\n\n\n#HPCNT\n",
+  "additional": "<div>#LI-YN1</div><div><br></div><div>제출해 주신 내용 중 허위 사실이 있거나 관련법 상 근로제공에 결격사유가 있는 경우 채용이 취소될 수 있으며, 필요시 사전에 안내된 채용 절차 외에도 추가 전형 및 서류 확인이 진행될 수 있습니다.</div><div>국가보훈대상자는 관계 법령에 따라 우대하오니, 해당되시는 분께서는 지원 시 고지해주시고 채용 시 증빙서류를 제출해주시기 바랍니다.</div><div>하이퍼커넥트가 채용하는 포지션에 지원하는 경우, 개인정보 처리에 관하여서는 본 개인정보처리방침이 적용됩니다:&nbsp;<a href=\"https://career.hyperconnect.com/privacy\">https://career.hyperconnect.com/privacy</a></div><div><br></div><div><br></div><div><span style=\"font-size: 10px\">#HPCNT</span></div>",
+  "categories": {
+   "commitment": "Full-time",
+   "department": "Match Group",
+   "location": "Seoul, South Korea",
+   "team": "Core",
+   "allLocations": [
+    "Seoul, South Korea"
+   ]
+  },
+  "createdAt": 1785811007391,
+  "description": "",
+  "descriptionPlain": "",
+  "id": "2196948b-9338-4943-acba-cb529335ed16",
+  "lists": [
+   {
+    "text": "Match Group AI Team Introduction",
+    "content": "<div>\n<p>Match Group AI (MG AI) is the central tech organization that drives innovation across Match Group's global portfolio, including <strong>Tinder, Hinge, Azar, Pairs, Match, BLK, and more</strong>. Match Group aims to spark meaningful connections for everyone, worldwide, and the MG AI team's role is to apply cutting-edge AI to some of the hardest challenges along that journey, across diverse domains (e.g., Recommendation, Trust &amp; Safety, Profile Enhancement).</p>\n<p>&nbsp;</p>\n<p>Unlike brand-specific teams (e.g., Tinder, HYPERCONNECT AI), the MG AI team offers a unique opportunity to impact the entire Match Group ecosystem. You won't just build for one app; you'll help develop scalable AI solutions that power Tinder, Hinge and beyond, defining the technological gold standard for the global dating industry.</p>\n<p>&nbsp;</p>\n\n<li>Detailed article:&nbsp;<span style=\"color: #3598db;\"><a href=\"https://career.hyperconnect.com/post/68f1fe3749ec060001acde16/\" style=\"color: #3598db;\">Introduction to Match Group AI Team</a></span> (written in Korean)</li>\n\n</div>"
+   },
+   {
+    "text": "Working as a Machine Learning Engineer at MG AI",
+    "content": "<div>\n<p>ML Engineers at MG AI own the model and the metric it optimizes. You turn broad product goals and data into ML problems worth solving, build the models that address them, and measure their impact.</p>\n<p>&nbsp;</p>\n<p>Your responsibility covers the decisions around the model as much as the model itself. You choose the optimization target that translates into business results, design how the training data behind that target is collected and processed, and set the online and offline evaluation criteria that determine whether the model solved the problem.</p>\n<p>&nbsp;</p>\n<p>You will work across a wide range of ML problems, and the problems change as the products and the technology do.</p>\n<p>&nbsp;</p>\n<p>Recent examples from the team:</p>\n\n<li><strong>Utility modeling:</strong> Move beyond event prediction (whether a user will like another user, whether a user will report someone) to model the utility each event delivers to users and to the system, and optimize for the utility of the system as a whole.</li>\n<li><strong>Cold start and data scarcity:</strong> Build models that work when data is missing or thin — prototyping stages, privacy constraints, rare events — and design the loop that collects the data those models need next.</li>\n<li><strong>LLM and agentic systems:</strong> Leverage LLMs and agentic systems in Recommendation, Trust &amp; Safety, and Profile Enhancement, both as products in their own right and as a way to raise the performance of existing models.</li>\n<li><strong>Generative model evaluation:</strong> Define evaluation metrics for generative models that connect to business outcomes and that the model can be optimized against.</li>\n\n<div>&nbsp;</div>\n<p>Our engineers also publish selected technical work on the Hyperconnect <span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/\" style=\"color: #3598db;\">Tech blog</a></span> (written in Korean).</p>\n\n<li style=\"color: #3598db;\"><span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/2025/11/28/how-to-set-ml-objective.html\" style=\"color: #3598db;\">How to Set ML Objectives</a></span></li>\n<li style=\"color: #3598db;\"><span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/2026/04/22/how-hyperconnect-built-llm-explanation-policy.html\" style=\"color: #3598db;\">How Hyperconnect Built an LLM Explanation Policy</a></span></li>\n<li style=\"color: #3598db;\"><span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/2026/04/22/llm-as-a-judge-for-explanation-quality.html\" style=\"color: #3598db;\">LLM-as-a-Judge for Explanation Quality</a></span></li>\n\n</div>"
+   },
+   {
+    "text": "What You'll Do",
+    "content": "<div>\n<p>You own ML projects end-to-end. You work alongside other ML Engineers and carry projects from a rough goal through launch and measurement.</p>\n<p>&nbsp;</p>\n\n<li><strong>Shape the Problem:</strong> You are given the goal in broad terms. You make it concrete: what problem the project actually solves, what falls outside it, and what technical direction it takes.</li>\n<li><strong>Define What Success Means:</strong> Translate the goal into a metric a model can optimize, and define the online and offline evaluation criteria that determine whether the target metric improved.</li>\n<li><strong>Design the Model and the Data Behind It:</strong> Choose the modeling approach that fits the problem and the metric you are optimizing. Design how training data is collected, processed, and fed back, so that user behavior in production becomes the data that improves the next model.</li>\n<li><strong>Collaborate Across Teams:</strong> Work with engineers, product partners, and brand counterparts across Match Group's global offices — Seoul, Palo Alto, LA, Vancouver, Dallas, Tokyo. Keep partners outside your project team informed, and surface blockers early enough for the team to address them.</li>\n\n</div>"
+   },
+   {
+    "text": "What We're Looking For",
+    "content": "<div>\n\n<li><strong>Project Ownership (most important):</strong> Demonstrated experience owning an ML project end-to-end, including planning and coordinating the work required to deliver a measurable result.</li>\n<li><strong>Depth in AI/ML:</strong> A solid foundation in AI/ML with deep knowledge in at least one domain, backed by project experience in which you applied it.</li>\n<li><strong>Problem Definition and Technical Judgment:</strong> You turn a business and technical goal into an ML problem that can be solved and measured, and you make reasonable technical choices when the information is incomplete.</li>\n<li><strong>Data Literacy:</strong> You use exploratory data analysis to find the statistical properties and patterns in the data, and let what you find shape how you approach the problem.</li>\n<li><strong>ML Frameworks and Tooling:</strong> Proficiency in Python and frameworks such as PyTorch, TensorFlow, or JAX, and the ability to pick up new AI/ML tools quickly as the field moves.</li>\n<li><strong>Cross-Functional Collaboration:</strong> Experience working on projects with people from other functions, and the ability to keep stakeholders outside the project aligned on its progress, key decisions, and risks.</li>\n<li><strong>Professional Working Proficiency in English:</strong> Able to conduct business meetings and participate in complex discussions without requiring assistance.</li>\n<li><strong>Fluent in Korean:</strong> Sophisticated professional interactions with native-level precision. Essential for cross-functional collaboration within the Seoul office.</li>\n<li><strong>Global Operational Readiness:</strong> Ability to accommodate flexible working hours for regular early morning syncs with US teams (ET/PT).</li>\n\n</div>"
+   },
+   {
+    "text": "Nice to Have",
+    "content": "<div>\n\n<li><strong>Research Track Record:</strong> Publications at top-tier AI/ML venues (NeurIPS, ICLR, ICML, ACL, RecSys, KDD, CVPR) or awards in related competitions.</li>\n<li><strong>Problem Discovery and Initiative:</strong> Experience identifying a problem or research direction on your own, without one being handed to you, and carrying it through to a paper or a business result.</li>\n<li><strong>Experimentation and Causal Analysis:</strong> Designing A/B tests, defining target KPIs, and using causal analysis and SQL-based analysis to turn data into decisions.</li>\n<li><strong>ML Systems Engineering:</strong> Software engineering capability to build the AI/ML systems around your models, such as training pipelines and serving systems.</li>\n<li><strong>Leading Projects Across Functions:</strong> Experience leading a project that spans multiple functions, and working with stakeholders and leadership outside the project team.</li>\n<li><strong>Fluent in English:</strong> Sophisticated professional interactions with native-level precision and an understanding of cultural nuances.</li>\n\n</div>"
+   },
+   {
+    "text": "Hiring Process",
+    "content": "\n<li>Work type: Full-time</li>\n<li>Legal Entity: Hyperconnect / Brand: Match Group AI</li>\n<li>Recruitment Process: Resume Review &gt; Live Coding Interview &gt; Hiring Manager Interview &gt; Technical Interview &gt; Technical Deep-dive &amp; Cultural Alignment Interview &gt; Offer\n\n</li><li><em>(* Please note that part of the interview process may be conducted in English)</em></li>\n\n\n<li>For the document screening stage, only successful candidates will be individually notified of the results.</li>\n<li>Application documents: A detailed, career-based English resume (PDF) in free format</li>\n<li>This position is open to candidates seeking to transfer as Alternative Military Service Researchers (전문연구요원). For those under this program, service management will be conducted in accordance with the relevant military service exemption laws.</li>\n"
+   }
+  ],
+  "text": "Machine Learning Engineer (Match Group AI)",
+  "country": "KR",
+  "workplaceType": "hybrid",
+  "opening": "",
+  "openingPlain": "",
+  "descriptionBody": "",
+  "descriptionBodyPlain": "",
+  "hostedUrl": "https://jobs.lever.co/matchgroup/2196948b-9338-4943-acba-cb529335ed16",
+  "applyUrl": "https://jobs.lever.co/matchgroup/2196948b-9338-4943-acba-cb529335ed16/apply"
+ },
+ {
+  "additionalPlain": "#mg\n \n#LI-YN1\n",
+  "additional": "<div>#mg</div>\n<div>&nbsp;</div>\n<div>#LI-YN1</div>",
+  "categories": {
+   "commitment": "Full-time",
+   "department": "Match Group",
+   "location": "Seoul, South Korea",
+   "team": "Core",
+   "allLocations": [
+    "Seoul, South Korea"
+   ]
+  },
+  "createdAt": 1785130340465,
+  "description": "",
+  "descriptionPlain": "",
+  "id": "cb6122d7-9b0b-4e26-9f58-d6706f5cae66",
+  "lists": [
+   {
+    "text": "Match Group AI Team Introduction",
+    "content": "<div>\n<p>Match Group AI (MG AI) is the central tech organization that drives innovation across Match Group’s global portfolio, including <strong>Tinder, Hinge, Azar, Pairs, Match, BLK, etc</strong>. Our mission is to solve the most complex challenges in online dating (e.g., Recommendation, Trust &amp; Safety, Profile Enhancement) by bridging cutting-edge AI research with excellent software engineering.</p>\n<p>&nbsp;</p>\n<p>Unlike brand-specific teams (e.g., Tinder, HYPERCONNECT AI), MG AI team offers the unique opportunity to impact the entire Match Group ecosystem. You won't just build for one app; we aim to develop scalable AI solutions that power Tinder, Hinge, and beyond, defining the technological gold standard for the global dating industry.</p>\n<p>&nbsp;</p>\n\n<li>Detailed article: <span style=\"color: #3598db;\"><a href=\"https://career.hyperconnect.com/post/68f1fe3749ec060001acde16/\" style=\"color: #3598db;\">Introduction to Match Group AI Team</a></span> (written in Korean)</li>\n\n</div>"
+   },
+   {
+    "text": "Working as a MLSE at MG AI",
+    "content": "<div>\n<p>While ML Engineers focus on modeling, Machine Learning Software Engineers (MLSEs) at MG AI team focus on the critical bridge between research and production. We ensure that state-of-the-art models (including LLMs and Multimodal systems) are integrated into high-traffic environments, serving millions of users in real-time.</p>\n<p>&nbsp;</p>\n<p>We also upload a selection of interesting problems solved by our team's engineers to the Hyperconnect <a href=\"https://hyperconnect.github.io/\"><span style=\"color: #3598db;\">Tech blog</span></a> (written in Korean).</p>\n<p>&nbsp;</p>\n\n<li style=\"color: #3598db;\"><span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/2026/01/23/On-device-Face-Verification-Pipeline-Optimization.html\" style=\"color: #3598db;\">On-device AI Face Verification Pipeline Optimization</a></span></li>\n<li style=\"color: #3598db;\"><span style=\"color: #3598db;\"><a href=\"https://hyperconnect.github.io/2023/05/30/Python-Performance-Tips.html\" style=\"color: #3598db;\">10 Python Performance Optimization Tips for High-Performance ML Backends</a></span></li>\n\n</div>"
+   },
+   {
+    "text": "What You’ll Do",
+    "content": "\n<li><strong>Build ML Services:</strong> Design and develop backend services and distributed systems that enable the seamless consumption, scaling, and monitoring of ML models.</li>\n<li><strong>Build ML Pipelines:</strong> Design and develop ML serving pipelines (real-time and batch) to deliver model outputs with low latency and high reliability.</li>\n<li><strong>Improve Recommendation System:</strong> Improve the AI-powered personalized recommendation system to help users find better matches on Match Group’s dating apps (serve better retrieval/ranking/utility models, add better features, etc).</li>\n<li><strong>Co-Engineering with Brands:</strong> Engage in deep technical collaboration with engineering counterparts (Tinder, Hinge, Match, Azar, Pairs, etc.) across various global offices, including Seoul, Palo Alto, LA, Vancouver, Dallas, and Tokyo.</li>\n\n<div>&nbsp;</div>\n"
+   },
+   {
+    "text": "What We're Looking For",
+    "content": "\n<li>2+ years of experience in software engineering, with a focus on Backend, ML Engineering, or Data Engineering.</li>\n<li>Strong understanding of CS Fundamentals (data structures, algorithms, operating systems) and distributed system design.</li>\n<li>Proficiency in at least one modern programming language (e.g., Python, Go, Java, Kotlin, C#) and a \"polyglot mindset\" to adapt to new stacks quickly.</li>\n<li>A strong interest in how ML models are built and a passion for solving the engineering challenges of deploying them in the real world.</li>\n<li>Proficiency in leveraging AI-powered tools (e.g., Claude Code, Codex, Cursor) to accelerate productivity.</li>\n<li>Professional working proficiency in English. (Able to conduct business meetings and participate in complex discussions without requiring assistance.)</li>\n<li><span data-token-index=\"0\" data-notion-highlight=\"blue\">Fluent in Korean (Sophisticated professional interactions with native-level precision): Essential for cross-functional collaboration within the Seoul office.</span></li>\n\n<div>&nbsp;</div>\n"
+   },
+   {
+    "text": "Nice to Have",
+    "content": "<div>\n\n<li>Experience with the full ML lifecycle, from model training to production deployment.</li>\n<li><span data-token-index=\"0\" data-notion-highlight=\"blue\">Experience in building AI-based recommendation system.</span></li>\n<li>Experience in developing scalable backend servers (handling millions of users).</li>\n<li>Experience in developing and serving ML-driven services using frameworks such as vLLM, Triton, Ray Serve, or Seldon.</li>\n<li>Experience with big data or stream processing frameworks (e.g., Spark, Flink, Kafka) for building robust ML data pipelines.</li>\n<li>Experience in collaborating with cross-functional teams and diverse organizations.</li>\n<li>Fluent in English (Sophisticated professional interactions with native-level precision and an understanding of cultural nuances.)</li>\n\n</div>"
+   },
+   {
+    "text": "Hiring Process",
+    "content": "<div>\n\n<li>Work type: Full-time</li>\n<li>Legal Entity: Hyperconnect / Brand: Match Group AI</li>\n<li>Recruitment Process: Resume Review &gt; Live Coding Interview &gt; Technical Interview &gt; Technical Deep-dive &amp; Cultural Alignment Interview &gt; Offer\n\n</li><li><em>(* Please note that part of the interview process may be conducted in English)</em></li>\n\n\n<li>For the document screening stage, only successful candidates will be individually notified of the results.</li>\n<li>Application documents: A detailed, career-based English resume (PDF) in free format</li>\n<li>This position is open to candidates seeking to transfer as Alternative Military Service Researchers (전문연구요원). For those under this program, service management will be conducted in accordance with the relevant military service exemption laws.</li>\n\n</div>"
+   }
+  ],
+  "text": "Machine Learning Software Engineer (Match Group AI)",
+  "country": "KR",
+  "workplaceType": "hybrid",
+  "opening": "",
+  "openingPlain": "",
+  "descriptionBody": "",
+  "descriptionBodyPlain": "",
+  "hostedUrl": "https://jobs.lever.co/matchgroup/cb6122d7-9b0b-4e26-9f58-d6706f5cae66",
+  "applyUrl": "https://jobs.lever.co/matchgroup/cb6122d7-9b0b-4e26-9f58-d6706f5cae66/apply"
+ },
+ {
+  "additionalPlain": "Why Match Group?\n \nOur mission is simple – to help people find love and happiness! We love our employees too and understand the importance of all life's milestones. \n\nWe are proud to be an equal opportunity employer and we value the rich dynamics that diversity brings to our company. We do not discriminate on the basis of race, religion, color, creed, national origin, ancestry, disability, marital status, age, sexual orientation, sex (including pregnancy and sexual harassment), gender identity or expression, uniformed service or veteran status, genetic information, or any other legally protected characteristic.  Period. \n \nIf you require a reasonable accommodation to participate in the hiring process — such as during pre-employment testing or interviews — please indicate this by selecting “Yes” in the accommodation request field. We’ll reach out to discuss your needs if you're selected for the interview stage.   \n \n#MG\n",
+  "additional": "<div><strong style=\"font-size: 14pt;\">Why Match Group?</strong></div>\n<div>&nbsp;</div>\n<div><span style=\"font-size: 16px;\">Our mission is simple – to help people find love and happiness! We love our employees too and understand the importance of all life's milestones.&nbsp;<br><br></span></div>\n<div><em>We are proud to be an equal opportunity employer and we value the rich dynamics that diversity brings to our company. We do not discriminate on the basis of race, religion, color, creed, national origin, ancestry, disability, marital status, age, sexual orientation, sex (including pregnancy and sexual harassment), gender identity or expression, uniformed service or veteran status, genetic information, or any other legally protected characteristic.&nbsp; Period.&nbsp;</em></div>\n<div>&nbsp;</div>\n<div><em style=\"font-size: 10px;\">If you require a reasonable accommodation to participate in the hiring process — such as during pre-employment testing or interviews — please indicate this by selecting “Yes” in the accommodation request field. We’ll reach out to discuss your needs if you're selected for the interview stage.&nbsp; &nbsp;</em></div>\n<div>&nbsp;</div>\n<div><span style=\"font-size: 10px;\"><em>#MG</em></span></div>",
+  "categories": {
+   "commitment": "Internship",
+   "department": "Match Group",
+   "location": "Vancouver, British Columbia",
+   "team": "Internships",
+   "allLocations": [
+    "Vancouver, British Columbia"
+   ]
+  },
+  "createdAt": 1789748062697,
+  "descriptionPlain": "Know where you belong!\n\nMatch Group is a leading provider of dating products across the globe. Our portfolio includes Tinder, Hinge, Match, Meetic, PlentyOfFish, OkCupid, The League, HER, and others, each designed to spark meaningful connections for singles worldwide. Creating a sense of belonging doesn’t stop at our products - it’s the foundation of every team we hire.\n \nWhen it comes to dating, the connection starts online, but the real magic happens once you meet in real life (IRL).  We think the same is true for creating the best platforms, so we work together IRL 3 days/week.\n\n\nWe are seeking a talented and motivated early-career software engineer to join the Match Group Core in a brand new role enabling greater productivity in non-technical teams through bespoke software and workflow solutions.\nMatch Group Core is the central services division for Match Group, providing shared services and data solutions for all brands under the Match Group portfolio, including Tinder, Hinge, Match.com, POF, OKC, and many others. Additionally, Match Group Core is a technical service provider for many internal central and corporate teams, such as HR, Finance, Accounting, Legal, Privacy, Marketing, IT, and Security.\nWith a special focus on internal product development and workflow enablement, you'll play a crucial role in designing, building, and maintaining internal products and workflow solutions (HR/People-focused) that benefit employees across the organisation. Most crucially, you will be enabled with extensive agentic tooling to achieve your goals, and in turn, you will be expected to impart your expertise on your stakeholders, and enable them with AI to achieve their own goals.\nThis role is a paid, fixed-term 4-6 month internship, with an opportunity that this role can be converted into a full-time permanent position at the conclusion. This is also a hybrid role, and requires in-office collaboration three times per week.\n",
+  "description": "<div>\n<div>Know where you belong!<br><br>Match Group is a leading provider of dating products across the globe. Our portfolio includes Tinder, Hinge, Match, Meetic, PlentyOfFish, OkCupid, The League, HER, and others, each designed to spark meaningful connections for singles worldwide. Creating a sense of belonging doesn’t stop at our products - it’s the foundation of every team we hire.</div>\n<div>&nbsp;</div>\n<div>When it comes to dating, the connection starts online, but the real magic happens once you meet in real life (IRL).&nbsp; We think the same is true for creating the best platforms, so we work together IRL 3 days/week.</div>\n</div><div><br></div><div>\n<p>We are seeking a talented and motivated early-career software engineer to join the Match Group Core in a brand new role enabling greater productivity in non-technical teams through bespoke software and workflow solutions.</p>\n<p>Match Group Core is the central services division for Match Group, providing shared services and data solutions for all brands under the Match Group portfolio, including Tinder, Hinge, Match.com, POF, OKC, and many others. Additionally, Match Group Core is a technical service provider for many internal central and corporate teams, such as HR, Finance, Accounting, Legal, Privacy, Marketing, IT, and Security.</p>\n<p>With a special focus on internal product development and workflow enablement, you'll play a crucial role in designing, building, and maintaining internal products and workflow solutions (HR/People-focused) that benefit employees across the organisation. Most crucially, you will be enabled with extensive agentic tooling to achieve your goals, and in turn, you will be expected to impart your expertise on your stakeholders, and enable them with AI to achieve their own goals.</p>\n<p>This role is a paid, fixed-term 4-6 month internship, with an opportunity that this role can be converted into a full-time permanent position at the conclusion. This is also a hybrid role, and requires in-office collaboration three times per week.</p>\n</div>",
+  "id": "69396299-e587-4063-aef6-0ce2fd66e9ee",
+  "lists": [
+   {
+    "text": "In this role, you will: ",
+    "content": "<div>\n<p><strong>In this role, you will:</strong></p>\n\n<li>\n<p>Partner directly with corporate teams (primarily HR) to understand their problems and ship working internal tools quickly: dashboards, portals, small web apps, reports, and integrations.</p>\n</li>\n<li>\n<p>Use AI-assisted development tools (Claude Code, Cursor, Codex, etc) as your primary means of building, while applying engineering judgement to what those tools produce.</p>\n</li>\n<li>\n<p>Administer, optimize, and expand a multi-tenanted Databricks platform to meet evolving analytics and business intelligence requirements.</p>\n</li>\n<li>\n<p>Teach and coach non-technical stakeholders to build and maintain their own AI-assisted workflows and tools, which may include running informal group sessions and pairing sessions, or producing guidance, templates, or sufficient guardrails that they can leverage or re-use.</p>\n</li>\n<li>\n<p>Develop and deliver solutions according to lightweight but sensible software development methodologies, with close collaboration MG Core's product engineering arm, to ensure what is built is secure and maintainable.</p>\n</li>\n<li>\n<p>Create and maintain clear documentation, including technical notes, integration docs, and operational and how-to guides written for a non-technical audience.</p>\n</li>\n<li>\n<p>Monitor and troubleshoot the tools you ship, providing timely fixes and keeping stakeholders informed.</p>\n</li>\n<li>\n<p>Keep up to date with the fast-moving AI tooling landscape and bring the best of it back to the team.</p>\n</li>\n<li>\n<p>Gain broad exposure across Match Group’s central services and corporate functions.</p>\n</li>\n\n</div>"
+   },
+   {
+    "text": "What We're Looking For:",
+    "content": "<div>\n\n<li>\n<p>0-2 years of professional experience as a software engineer, or a recent degree, diploma, or bootcamp qualification in a relevant field.</p>\n</li>\n<li>\n<p>Hands-on experience using agentic development harnesses and similar AI tools (Claude Code, Cursor, Codex, etc), with experience or familiarity with agentic instructions (<a href=\"http://agents.md\">AGENTS.md</a>, skills) and MCP servers.</p>\n</li>\n<li>\n<p>A strong understanding of foundational software principles and programming fundamentals, as well as development lifecycles, spanning source control (GitHub), CI/CD (automated testing and quality analysis), and monitoring (logs, metrics, error detection and troubleshooting).</p>\n</li>\n<li>\n<p>Familiarity with software delivery methodologies, such as agile scrum or kanban.</p>\n</li>\n<li>\n<p>Experience in building modern web frontends (using React or similar), as well as accompanying backend REST APIs.</p>\n</li>\n<li>\n<p>Familiarity with relational/SQL, as well as NoSQL or KV databases.</p>\n</li>\n<li>\n<p>Working knowledge of cloud platforms (such as AWS, GCP, Azure, Cloudflare), including conceptual understanding of serverless concepts.</p>\n</li>\n<li>\n<p>Strong interpersonal and communication skills - a significant part of this role is explaining technical work to non-technical people, so patience, empathy, and clarity matter as much as coding ability.</p>\n</li>\n<li>\n<p>Solid understanding of IT security concepts, as well as sound judgement around data sensitivity and confidentiality - much of what you build will touch employee and business data.</p>\n</li>\n<li>\n<p>Excellent problem-solving skills and a bias toward delivering value quickly rather than getting it perfect - as is the nature of internal tooling.</p>\n</li>\n<li>\n<p>Strong enthusiasm for software development and eagerness to learn and grow.</p>\n</li>\n<li>\n<p>Legally authorized to work in Canada for the duration of the internship.</p>\n</li>\n\n</div>"
+   },
+   {
+    "text": "Nice to have:",
+    "content": "<p>&nbsp;</p>\n\n<li>\n<p>Any exposure to HRIS platforms, especially Workday - even light experience as a user or administrator of a HRIS or similar is valuable here.</p>\n</li>\n<li>\n<p>Experience in the Human Resources domain, or with people data, recruiting, payroll, or benefits systems.</p>\n</li>\n<li>\n<p>Experience working within specific cloud environments, namely Cloudflare (primary) and AWS (secondary).</p>\n</li>\n<li>\n<p>Experience working with serverless hosting technologies, such as Cloudflare Workers.</p>\n</li>\n<li>\n<p>Experience working within containerised environments, such as Docker and/or DevContainers.</p>\n</li>\n<li>\n<p>Exposure or experience working within project management tools such as Jira or Monday.com.</p>\n</li>\n<li>\n<p>Experience contributing to open source projects.</p>\n</li>\n<li>\n<p>Experience working at a B2B or SaaS company.</p>\n</li>\n"
+   }
+  ],
+  "salaryRange": {
+   "min": 35,
+   "max": 38,
+   "currency": "CAD",
+   "interval": "per-hour-wage"
+  },
+  "salaryDescription": "<div>Factors such as scope and responsibilities of the position, candidate's work experience, education/training, job-related skills, as well as market and business considerations may influence hourly rate offered. This hourly rate will be subject to a geographic adjustment (according to a specific city and state), if an authorization is granted to work outside of the location listed in this posting.</div>",
+  "salaryDescriptionPlain": "Factors such as scope and responsibilities of the position, candidate's work experience, education/training, job-related skills, as well as market and business considerations may influence hourly rate offered. This hourly rate will be subject to a geographic adjustment (according to a specific city and state), if an authorization is granted to work outside of the location listed in this posting.\n",
+  "text": "AI Product Engineer",
+  "country": "CA",
+  "workplaceType": "hybrid",
+  "opening": "<div>\n<div>Know where you belong!<br><br>Match Group is a leading provider of dating products across the globe. Our portfolio includes Tinder, Hinge, Match, Meetic, PlentyOfFish, OkCupid, The League, HER, and others, each designed to spark meaningful connections for singles worldwide. Creating a sense of belonging doesn&rsquo;t stop at our products - it&rsquo;s the foundation of every team we hire.</div>\n<div>&nbsp;</div>\n<div>When it comes to dating, the connection starts online, but the real magic happens once you meet in real life (IRL).&nbsp; We think the same is true for creating the best platforms, so we work together IRL 3 days/week.</div>\n</div>",
+  "openingPlain": "Know where you belong!\n\nMatch Group is a leading provider of dating products across the globe. Our portfolio includes Tinder, Hinge, Match, Meetic, PlentyOfFish, OkCupid, The League, HER, and others, each designed to spark meaningful connections for singles worldwide. Creating a sense of belonging doesn’t stop at our products - it’s the foundation of every team we hire.\n \nWhen it comes to dating, the connection starts online, but the real magic happens once you meet in real life (IRL).  We think the same is true for creating the best platforms, so we work together IRL 3 days/week.\n",
+  "descriptionBody": "<div>\n<p>We are seeking a talented and motivated early-career software engineer to join the Match Group Core in a brand new role enabling greater productivity in non-technical teams through bespoke software and workflow solutions.</p>\n<p>Match Group Core is the central services division for Match Group, providing shared services and data solutions for all brands under the Match Group portfolio, including Tinder, Hinge, Match.com, POF, OKC, and many others. Additionally, Match Group Core is a technical service provider for many internal central and corporate teams, such as HR, Finance, Accounting, Legal, Privacy, Marketing, IT, and Security.</p>\n<p>With a special focus on internal product development and workflow enablement, you'll play a crucial role in designing, building, and maintaining internal products and workflow solutions (HR/People-focused) that benefit employees across the organisation. Most crucially, you will be enabled with extensive agentic tooling to achieve your goals, and in turn, you will be expected to impart your expertise on your stakeholders, and enable them with AI to achieve their own goals.</p>\n<p>This role is a paid, fixed-term 4-6 month internship, with an opportunity that this role can be converted into a full-time permanent position at the conclusion. This is also a hybrid role, and requires in-office collaboration three times per week.</p>\n</div>",
+  "descriptionBodyPlain": "We are seeking a talented and motivated early-career software engineer to join the Match Group Core in a brand new role enabling greater productivity in non-technical teams through bespoke software and workflow solutions.\nMatch Group Core is the central services division for Match Group, providing shared services and data solutions for all brands under the Match Group portfolio, including Tinder, Hinge, Match.com, POF, OKC, and many others. Additionally, Match Group Core is a technical service provider for many internal central and corporate teams, such as HR, Finance, Accounting, Legal, Privacy, Marketing, IT, and Security.\nWith a special focus on internal product development and workflow enablement, you'll play a crucial role in designing, building, and maintaining internal products and workflow solutions (HR/People-focused) that benefit employees across the organisation. Most crucially, you will be enabled with extensive agentic tooling to achieve your goals, and in turn, you will be expected to impart your expertise on your stakeholders, and enable them with AI to achieve their own goals.\nThis role is a paid, fixed-term 4-6 month internship, with an opportunity that this role can be converted into a full-time permanent position at the conclusion. This is also a hybrid role, and requires in-office collaboration three times per week.\n",
+  "hostedUrl": "https://jobs.lever.co/matchgroup/69396299-e587-4063-aef6-0ce2fd66e9ee",
+  "applyUrl": "https://jobs.lever.co/matchgroup/69396299-e587-4063-aef6-0ce2fd66e9ee/apply"
+ }
+]
