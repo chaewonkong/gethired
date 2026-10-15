@@ -51,6 +51,10 @@ CREATE TABLE IF NOT EXISTS hides (
     created_at TEXT NOT NULL,
     deleted_at TEXT
 );
+CREATE TABLE IF NOT EXISTS interests (
+    company TEXT PRIMARY KEY,
+    created_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS profile_cache (
     hash TEXT PRIMARY KEY,
     profile TEXT NOT NULL,
@@ -183,6 +187,24 @@ class Repository:
     def get_hidden(self, posting_id: int) -> dict[str, Any] | None:
         r = self.conn.execute("SELECT * FROM hides WHERE posting_id=?", (posting_id,)).fetchone()
         return dict(r) if r else None
+
+    # --- interests ---
+    # 관심회사 해제는 이 테이블에서만 지운다. 공고·판정은 그대로 둔다
+    def list_interests(self) -> list[str]:
+        return [r["company"] for r in self.conn.execute("SELECT company FROM interests ORDER BY company").fetchall()]
+
+    def set_interests(self, companies: list[str], now: str) -> None:
+        self.conn.execute("DELETE FROM interests")
+        self.conn.executemany("INSERT INTO interests (company, created_at) VALUES (?, ?)",
+                              [(c, now) for c in dict.fromkeys(companies)])
+        self.conn.commit()
+
+    def set_interest(self, company: str, on: bool, now: str) -> None:
+        if on:
+            self.conn.execute("INSERT OR IGNORE INTO interests (company, created_at) VALUES (?, ?)", (company, now))
+        else:
+            self.conn.execute("DELETE FROM interests WHERE company=?", (company,))
+        self.conn.commit()
 
     # --- judgments ---
     def judged_ids(self, company: str) -> set[str]:

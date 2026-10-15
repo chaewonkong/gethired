@@ -69,8 +69,9 @@ async def load_profile(repo):
     return PROFILE
 
 
-def make_client(judge=fake_judge, logged_in=True, resume_dir=None):
+def make_client(judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b")):
     repo = Repository()
+    repo.set_interests(list(interests), "T0")
     jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge)
 
     async def is_logged_in():
@@ -244,3 +245,41 @@ def test_resume_delete(tmp_path):
         assert client.get("/api/resume").json() == []
         assert client.delete("/api/resume/a.md").status_code == 404
         assert client.delete("/api/resume/a.txt").status_code == 400
+
+
+def test_interests_put_and_toggle():
+    client, repo = make_client(interests=())
+    with client:
+        assert [c["interested"] for c in client.get("/api/companies").json()] == [False, False]
+        assert client.put("/api/interests", json={"companies": []}).status_code == 400
+        assert client.put("/api/interests", json={"companies": ["zzz"]}).status_code == 400
+        assert client.put("/api/interests", json={"companies": ["b"]}).json() == {"companies": ["b"]}
+        assert {c["company"]: c["interested"] for c in client.get("/api/companies").json()} == {"a": False, "b": True}
+
+        assert client.put("/api/companies/a/interest").json() == {"company": "a", "interested": True}
+        assert client.delete("/api/companies/b/interest").json() == {"company": "b", "interested": False}
+        assert repo.list_interests() == ["a"]
+        assert client.put("/api/companies/zzz/interest").status_code == 400
+
+        client.delete("/api/companies/a/interest")
+        assert repo.list_interests() == []
+
+
+def test_scrape_targets_only_interest_companies_and_keeps_postings_on_unstar():
+    client, repo = make_client(interests=())
+    with client:
+        assert client.post("/api/scrape").status_code == 400
+
+        client.put("/api/interests", json={"companies": ["b"]})
+        job = wait_job(client, client.post("/api/scrape").json()["job_id"])
+        assert list(job["companies"]) == ["b"]
+        assert judge_calls == [["3"]]
+
+        client.put("/api/companies/a/interest")
+        job = wait_job(client, client.post("/api/scrape").json()["job_id"])
+        assert sorted(job["companies"]) == ["a", "b"]
+
+        client.delete("/api/companies/b/interest")
+        assert "b" in {p["company"] for p in client.get("/api/postings").json()}
+        job = wait_job(client, client.post("/api/scrape").json()["job_id"])
+        assert list(job["companies"]) == ["a"]

@@ -155,3 +155,16 @@ def test_hide_gone_with_deleted_posting_and_restored_when_posting_returns():
     repo.mark_seen("toss", {"a"}, "T4")
     assert hidden(repo) == ["a"]
     assert repo.get_hidden(a)["deleted_at"] is None
+
+
+def test_interests_set_and_toggle():
+    repo = Repository()
+    assert repo.list_interests() == []
+    repo.set_interests(["toss", "naver", "toss"], "T1")
+    assert repo.list_interests() == ["naver", "toss"]
+    repo.set_interest("kakao", True, "T2")
+    repo.set_interest("kakao", True, "T3")
+    repo.set_interest("toss", False, "T4")
+    assert repo.list_interests() == ["kakao", "naver"]
+    repo.set_interests(["line"], "T5")
+    assert repo.list_interests() == ["line"]

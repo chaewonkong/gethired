@@ -17,6 +17,10 @@ class ResumeBody(BaseModel):
     content: str
 
 
+class InterestsBody(BaseModel):
+    companies: list[str]
+
+
 def create_app(repo: Repository, jobs: JobManager,
                logged_in: Callable[[], Awaitable[bool]] = auth.is_logged_in,
                resume_dir: Path = RESUME_DIR) -> FastAPI:
@@ -30,11 +34,38 @@ def create_app(repo: Repository, jobs: JobManager,
     @api.get("/companies")
     def companies():
         last = repo.last_runs()
+        interests = set(repo.list_interests())
         return [
             {"company": name, "display_name": cls.display_name, "careers_url": cls.careers_url,
-             "last_run": last.get(name)}
+             "last_run": last.get(name), "interested": name in interests}
             for name, cls in jobs.scrapers.items()
         ]
+
+    def check_known(companies: list[str]) -> None:
+        unknown = [c for c in companies if c not in jobs.scrapers]
+        if unknown:
+            raise HTTPException(status_code=400, detail=f"unknown companies: {unknown}")
+
+    @api.put("/interests")
+    def put_interests(body: InterestsBody):
+        if not body.companies:
+            raise HTTPException(status_code=400, detail="at least one company is required")
+        check_known(body.companies)
+        repo.set_interests(body.companies, now_iso())
+        return {"companies": repo.list_interests()}
+
+    def interest(company: str, on: bool):
+        check_known([company])
+        repo.set_interest(company, on, now_iso())
+        return {"company": company, "interested": on}
+
+    @api.put("/companies/{company}/interest")
+    def add_interest(company: str):
+        return interest(company, True)
+
+    @api.delete("/companies/{company}/interest")
+    def remove_interest(company: str):
+        return interest(company, False)
 
     @api.post("/scrape", status_code=202)
     async def scrape(companies: list[str] | None = Query(default=None)):
@@ -42,10 +73,11 @@ def create_app(repo: Repository, jobs: JobManager,
             return {"job_id": jobs.current.id, "status": "running"}
         if not await logged_in():
             return JSONResponse(status_code=401, content={"code": "claude_login_required", "message": AUTH_MESSAGE})
-        unknown = [c for c in companies or [] if c not in jobs.scrapers]
-        if unknown:
-            raise HTTPException(status_code=400, detail=f"unknown companies: {unknown}")
-        job = jobs.start(companies)
+        check_known(companies or [])
+        targets = companies or [c for c in repo.list_interests() if c in jobs.scrapers]
+        if not targets:
+            raise HTTPException(status_code=400, detail="no interest companies")
+        job = jobs.start(targets)
         return {"job_id": job.id, "status": job.status}
 
     @api.get("/scrape/{job_id}")
