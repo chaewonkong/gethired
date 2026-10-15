@@ -32,6 +32,7 @@ export function makeCompany(over: Partial<Company> = {}): Company {
     display_name: "토스",
     careers_url: "https://toss.im/career",
     last_run: null,
+    interested: true,
     ...over,
   };
 }

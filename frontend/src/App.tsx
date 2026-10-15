@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, Company, Job, LoginRequiredError, Posting } from "./api";
+import { api, Company, Job, LoginRequiredError, Posting, ResumeFile } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
 import { HiddenTab } from "./components/HiddenTab";
 import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
+import { CompanySelect } from "./components/CompanySelect";
+import { invalidResumeFiles, ResumeDropzone } from "./components/ResumeDropzone";
+import { Toast, ToastMessage } from "./components/Toast";
 
 type Tab = "postings" | "bookmarks" | "hidden" | "companies";
 
@@ -22,17 +25,70 @@ export default function App() {
   const [job, setJob] = useState<Job | null>(null);
   const [loginRequired, setLoginRequired] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resumeFiles, setResumeFiles] = useState<ResumeFile[] | null>(null);
+  const [toast, setToast] = useState<(ToastMessage & { after?: () => void }) | null>(null);
+  // 온보딩 업로드 직후 toast가 닫힐 때까지 업로드 화면에 머문다
+  const [holdUpload, setHoldUpload] = useState(false);
   const pending = useRef(new Set<string>());
+  const toastSeq = useRef(0);
 
   const reload = useCallback(async () => {
     try {
-      const [p, c] = await Promise.all([api.postings(), api.companies()]);
+      const [p, c, r] = await Promise.all([api.postings(), api.companies(), api.resumeFiles()]);
       setPostings(p);
       setCompanies(c);
+      setResumeFiles(r);
     } catch (e) {
       setError(String(e));
     }
   }, []);
+
+  // 이전 toast의 after는 새 toast가 닫힐 때 이어서 실행한다
+  const showToast = (text: string, kind: ToastMessage["kind"], after?: () => void) =>
+    setToast((prev) => {
+      const chained = prev?.after && after ? () => (prev.after!(), after()) : (after ?? prev?.after);
+      return { id: ++toastSeq.current, text, kind, after: chained };
+    });
+  const closeToast = () => {
+    toast?.after?.();
+    setToast(null);
+  };
+
+  const uploadResumes = async (files: File[]): Promise<boolean> => {
+    const invalid = invalidResumeFiles(files);
+    if (invalid) {
+      showToast(invalid, "error");
+      return false;
+    }
+    try {
+      for (const f of files) await api.putResume(f.name, await f.text());
+      return true;
+    } catch (e) {
+      setError(String(e));
+      return false;
+    } finally {
+      try {
+        setResumeFiles(await api.resumeFiles());
+      } catch (e) {
+        setError(String(e));
+      }
+    }
+  };
+
+  const onboardingUpload = async (files: File[]) => {
+    if (!(await uploadResumes(files))) return;
+    setHoldUpload(true);
+    showToast("이력서를 업로드했습니다", "ok", () => setHoldUpload(false));
+  };
+
+  const saveInterests = async (selected: string[]) => {
+    try {
+      await api.setInterests(selected);
+      setCompanies(await api.companies());
+    } catch (e) {
+      setError(String(e));
+    }
+  };
 
   useEffect(() => {
     reload();
@@ -94,6 +150,11 @@ export default function App() {
     hidden: postings.filter((p) => p.hidden).length,
   };
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
+  const phase =
+    resumeFiles === null ? "loading"
+    : resumeFiles.length === 0 || holdUpload ? "upload"
+    : !companies.some((c) => c.interested) ? "select"
+    : "main";
 
   return (
     <div className="container">
@@ -105,37 +166,55 @@ export default function App() {
         </div>
       </header>
 
-      <nav className="tabs" role="tablist">
-        {(["postings", "bookmarks", "hidden", "companies"] as Tab[]).map((t) => (
-          <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
-            {TAB_LABEL[t]}
-            {!!count[t] && <span className="tab-count">{count[t]}</span>}
-          </button>
-        ))}
-      </nav>
+      {phase !== "main" && error && <div className="banner error">{error}</div>}
 
-      {loginRequired && (
-        <div className="banner">
-          <strong>Claude 로그인이 필요합니다.</strong>
-          <br />
-          터미널에서 <code>claude login</code> 실행 후 다시 시도해주세요. 기존 공고는 계속 볼 수 있습니다.
-        </div>
+      {phase === "upload" && (
+        <section className="panel onboarding">
+          <h2>이력서 업로드</h2>
+          <p className="meta">이력서를 기준으로 나에게 맞는 공고를 골라 등급을 매깁니다. 이력서·경력기술서·포트폴리오 등 여러 파일을 올릴 수 있습니다.</p>
+          <ResumeDropzone onFiles={onboardingUpload} />
+        </section>
       )}
-      {error && <div className="banner error">{error}</div>}
+      {phase === "select" && (
+        <CompanySelect companies={companies} onConfirm={saveInterests} onEmpty={() => showToast("관심회사를 1개 이상 선택하세요", "error")} />
+      )}
+      {phase === "main" && (
+        <>
+          <nav className="tabs" role="tablist">
+            {(["postings", "bookmarks", "hidden", "companies"] as Tab[]).map((t) => (
+              <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
+                {TAB_LABEL[t]}
+                {!!count[t] && <span className="tab-count">{count[t]}</span>}
+              </button>
+            ))}
+          </nav>
 
-      {tab === "postings" && (
-        <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping}
-                     onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-      )}
-      {tab === "bookmarks" && (
-        <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-      )}
-      {tab === "hidden" && (
-        <HiddenTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-      )}
-      {tab === "companies" && <CompaniesTab companies={companies} />}
+          {loginRequired && (
+            <div className="banner">
+              <strong>Claude 로그인이 필요합니다.</strong>
+              <br />
+              터미널에서 <code>claude login</code> 실행 후 다시 시도해주세요. 기존 공고는 계속 볼 수 있습니다.
+            </div>
+          )}
+          {error && <div className="banner error">{error}</div>}
 
-      <ScrollTopButton />
+          {tab === "postings" && (
+            <PostingsTab postings={postings} companies={companies} byId={byId} job={job} scraping={!!scraping}
+                         onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+          )}
+          {tab === "bookmarks" && (
+            <BookmarksTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+          )}
+          {tab === "hidden" && (
+            <HiddenTab postings={postings} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+          )}
+          {tab === "companies" && <CompaniesTab companies={companies} />}
+
+          <ScrollTopButton />
+        </>
+      )}
+
+      {toast && <Toast toast={toast} onClose={closeToast} />}
     </div>
   );
 }

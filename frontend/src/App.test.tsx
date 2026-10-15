@@ -14,6 +14,7 @@ function stubApi(postings: Posting[], routes: Record<string, Handler> = {}) {
     if (routes[key]) return routes[key](init);
     if (key === "GET /api/postings") return json(postings);
     if (key === "GET /api/companies") return json([makeCompany()]);
+    if (key === "GET /api/resume") return json([{ name: "resume.md", size: 10, updated_at: "2026-10-15T00:00:00+00:00" }]);
     if (key.endsWith("/bookmark") || key.endsWith("/hide")) return json({});
     return json({}, 404);
   });
@@ -182,7 +183,7 @@ describe("App", () => {
   it("회사 탭으로 전환", async () => {
     stubApi([]);
     render(<App />);
-    await userEvent.click(tab(/회사/));
+    await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
     expect(await screen.findByRole("table")).toHaveTextContent("토스");
   });
 });

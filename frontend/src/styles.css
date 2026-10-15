@@ -206,3 +206,30 @@ select {
 @media (min-width: 880px) {
   .scroll-top { right: calc(50% - 400px - 64px); }
 }
+
+.onboarding h2 { margin: 8px 0 4px; font-size: 18px; color: var(--accent-text); }
+.onboarding > .meta { margin: 0 0 16px; }
+.dropzone {
+  display: grid; justify-items: center; gap: 6px; padding: 40px 16px; text-align: center; cursor: pointer;
+  border: 2px dashed var(--accent-line); border-radius: 12px; background: var(--accent-soft); transition: background .15s, border-color .15s;
+}
+.dropzone:hover, .dropzone:focus-visible, .dropzone.over { border-color: var(--accent); background: #e0f2fe; outline: none; }
+.dropzone svg { width: 40px; height: 40px; fill: none; stroke: var(--accent-strong); }
+.dropzone strong { color: var(--accent-text); font-size: 15px; }
+.company-select { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.company-select label {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer;
+  box-shadow: var(--shadow); font-weight: 600; transition: box-shadow .15s, background .15s;
+}
+.company-select label.on { background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent); }
+.company-select input { margin: 0; accent-color: var(--accent-strong); }
+.company-select .co-logo { width: 28px; height: 28px; font-size: 13px; }
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20;
+  display: flex; align-items: center; gap: 12px; max-width: calc(100% - 32px);
+  padding: 10px 10px 10px 16px; border-radius: 10px; background: #0c4a6e; color: #fff; font-size: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+}
+.toast.error { background: var(--err); }
+.toast button { border: 0; background: none; color: inherit; font-size: 18px; line-height: 1; cursor: pointer; padding: 2px 6px; opacity: .8; }
+.toast button:hover { opacity: 1; }
