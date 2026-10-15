@@ -1,17 +1,25 @@
 from collections.abc import Awaitable, Callable
+from pathlib import Path
 from typing import Literal
 
 from fastapi import APIRouter, FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
-from . import auth
+from . import auth, resume
+from .config import RESUME_DIR
 from .jobs import JobManager
 from .llm import AUTH_MESSAGE
 from .repository import Repository, now_iso
 
 
+class ResumeBody(BaseModel):
+    content: str
+
+
 def create_app(repo: Repository, jobs: JobManager,
-               logged_in: Callable[[], Awaitable[bool]] = auth.is_logged_in) -> FastAPI:
+               logged_in: Callable[[], Awaitable[bool]] = auth.is_logged_in,
+               resume_dir: Path = RESUME_DIR) -> FastAPI:
     app = FastAPI(title="job-posting")
     api = APIRouter(prefix="/api")
 
@@ -76,6 +84,28 @@ def create_app(repo: Repository, jobs: JobManager,
     @api.delete("/postings/{posting_id}/hide")
     def remove_hide(posting_id: int):
         return hide(posting_id, False)
+
+    @api.get("/resume")
+    def resume_files():
+        return resume.list_files(resume_dir)
+
+    @api.put("/resume/{name}")
+    def put_resume(name: str, body: ResumeBody):
+        try:
+            resume.save(resume_dir, name, body.content)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        return {"name": name}
+
+    @api.delete("/resume/{name}")
+    def delete_resume(name: str):
+        try:
+            found = resume.delete(resume_dir, name)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        if not found:
+            raise HTTPException(status_code=404, detail="resume file not found")
+        return {"name": name}
 
     app.include_router(api)
     return app

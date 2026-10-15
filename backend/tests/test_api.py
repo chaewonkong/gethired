@@ -1,11 +1,13 @@
 import asyncio
 import time
+from pathlib import Path
 from typing import ClassVar
 
 import httpx
 import pytest
 from fastapi.testclient import TestClient
 
+from app import resume
 from app.api import create_app
 from app.jobs import JobManager
 from app.llm import ClaudeAuthError
@@ -67,14 +69,15 @@ async def load_profile(repo):
     return PROFILE
 
 
-def make_client(judge=fake_judge, logged_in=True):
+def make_client(judge=fake_judge, logged_in=True, resume_dir=None):
     repo = Repository()
     jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge)
 
     async def is_logged_in():
         return logged_in
 
-    return TestClient(create_app(repo, jobs, logged_in=is_logged_in)), repo
+    app = create_app(repo, jobs, logged_in=is_logged_in, resume_dir=resume_dir or Path("/nonexistent"))
+    return TestClient(app), repo
 
 
 def wait_job(client: TestClient, job_id: str) -> dict:
@@ -200,3 +203,44 @@ def test_hide_put_delete():
 
         assert client.put("/api/postings/9999/hide").status_code == 404
         assert client.delete("/api/postings/9999/hide").status_code == 404
+
+
+def test_resume_upload_overwrite_and_coexist(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    with client:
+        assert client.get("/api/resume").json() == []
+        assert client.put("/api/resume/resume.md", json={"content": "v1"}).status_code == 200
+        assert (d / "resume.md").read_text() == "v1"
+        client.put("/api/resume/resume.md", json={"content": "v2"})
+        client.put("/api/resume/portfolio.md", json={"content": "p"})
+        assert (d / "resume.md").read_text() == "v2"
+        files = client.get("/api/resume").json()
+        assert [f["name"] for f in files] == ["portfolio.md", "resume.md"]
+        assert files[1]["size"] == 2 and files[1]["updated_at"]
+
+
+def test_resume_rejects_invalid_files(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    with client:
+        assert client.put("/api/resume/resume.pdf", json={"content": "x"}).status_code == 400
+        assert client.put("/api/resume/..%2Fescape.md", json={"content": "x"}).status_code in (400, 404)
+        assert client.put("/api/resume/.hidden.md", json={"content": "x"}).status_code == 400
+        assert client.put("/api/resume/big.md", json={"content": "x" * (1024 * 1024 + 1)}).status_code == 400
+        for bad in ("../escape.md", "sub/x.md"):
+            with pytest.raises(ValueError):
+                resume.save(d, bad, "x")
+        assert not (tmp_path / "escape.md").exists()
+        assert not d.exists() or list(d.iterdir()) == []
+
+
+def test_resume_delete(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    with client:
+        client.put("/api/resume/a.md", json={"content": "a"})
+        assert client.delete("/api/resume/a.md").status_code == 200
+        assert client.get("/api/resume").json() == []
+        assert client.delete("/api/resume/a.md").status_code == 404
+        assert client.delete("/api/resume/a.txt").status_code == 400
