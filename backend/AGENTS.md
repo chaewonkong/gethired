@@ -37,7 +37,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | jobs.py     |--------------+
 +-------------+
      |
-     +--> scrapers/   -- httpx ---------> career sites (8)
+     +--> scrapers/   -- httpx ---------> career sites (15)
      |
      +--> profile.py  -- read ----------> resume/*.md
      |                -- cache ---------> repository.py (profile_cache, key = resume hash)
@@ -80,6 +80,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/scrapers/base.py` | `RawPosting`(정규화된 공고), `Scraper` ABC, `REGISTRY`(서브클래스 정의 시 자동 등록), `html_to_text`, `parse_date` |
 | `app/scrapers/<company>.py` | 회사별 `fetch()`. 엔지니어링 직군 1차 필터는 여기서. 원본 분류는 `category`에 보존 |
 | `app/scrapers/greenhouse.py` | Greenhouse 계열 공통 베이스 (쿠팡·당근·토스) |
+| `app/scrapers/greetinghr.py` | GreetingHR 계열 공통 베이스 (업스테이지·카카오페이). 공개 API가 없어 목록은 첫 페이지, 본문은 공고 페이지의 `__NEXT_DATA__`에서 꺼낸다 |
 | `app/llm.py` | `ask_json()`: Agent SDK structured output 래퍼. 모델 `claude-opus-5-5` 고정. 인증 실패는 `ClaudeAuthError` |
 | `app/profile.py` | `resume/*.md` → `Profile`. 파일 이름·내용 해시로 `profile_cache`에 캐시 |
 | `app/resume.py` | `resume/` 파일 목록·저장·삭제. 파일명은 basename만, `.md`만, 1MB 제한, 디렉토리 자동 생성, 같은 이름 덮어쓰기 |
@@ -107,6 +108,11 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 2. `app/scrapers/__init__.py` import 목록에 추가 (import 시 등록됨)
 3. `fixtures/`에 응답 샘플 저장 + `tests/test_parsers*.py`에 파싱 테스트, `test_registry_has_all_companies` 갱신
 4. 새 도메인은 `.claude/settings.json`의 sandbox `allowedDomains`에 추가
+
+소스별 주의:
+- Greenhouse / Lever(하이퍼커넥트, Match Group 보드) / Ashby(42dot)는 공개 JSON API. 하이퍼커넥트는 서울 포지션 전부(Match Group 소속 포함)를 가져오고 소속은 `category`로 구분
+- 두나무는 API가 없어 `RSC: 1` 헤더로 받은 Next.js 페이로드를 파싱한다. 본문 청크 길이는 UTF-8 바이트 수이고 청크 뒤에 개행이 없어 bytes로 순차 파싱한다. 빌드가 바뀌면 fixture 테스트가 먼저 깨진다
+- 기아는 현대차와 같은 플랫폼(`career.kia.com`, `X-HKMC-TOKEN: null` 헤더 필요)이지만 엔지니어링 공고가 없어 보류
 
 ## 테스트
 - `tests/test_parsers*.py`: `fixtures/`의 저장된 응답으로 파서 검증
