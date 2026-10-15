@@ -1,0 +1,250 @@
+[
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 137821,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 155861,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 304,
+      "occupation": "기술",
+      "sortOrder": 0
+     },
+     "workspaceJob": null,
+     "workspacePlace": {
+      "id": 226,
+      "location": "카카오페이",
+      "place": "경기도 성남시 분당구 판교역로 166",
+      "detailPlace": "카카오판교아지트 B동",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJ-fgTNRRZezURdgrUMyBUZrs",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 124870,
+      "careerFrom": 10,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 128698,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 0,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 216356,
+  "title": "[스테이블코인] 서버 개발자 - 스테이블코인 발행 & 유통",
+  "workspaceDivision": null,
+  "openDate": "2026-05-13T05:44:42Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오페이",
+   "imageUrl": "https://profiles.greetinghr.com/group/59b9b6e3-0481-4bde-9e6f-544d04cc9642"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 116702,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 129971,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 304,
+      "occupation": "기술",
+      "sortOrder": 0
+     },
+     "workspaceJob": null,
+     "workspacePlace": {
+      "id": 226,
+      "location": "카카오페이",
+      "place": "경기도 성남시 분당구 판교역로 166",
+      "detailPlace": "카카오판교아지트 B동",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJ-fgTNRRZezURdgrUMyBUZrs",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 106033,
+      "careerFrom": 10,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 108432,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 0,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 191154,
+  "title": "[디지털자산] DevOps 엔지니어 - 클라우드 기반 블록체인 서비스 인프라 구축 & 운영",
+  "workspaceDivision": null,
+  "openDate": "2025-12-03T07:15:52Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오페이",
+   "imageUrl": "https://profiles.greetinghr.com/group/59b9b6e3-0481-4bde-9e6f-544d04cc9642"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 156673,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 179404,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 304,
+      "occupation": "기술",
+      "sortOrder": 0
+     },
+     "workspaceJob": null,
+     "workspacePlace": {
+      "id": 226,
+      "location": "카카오페이",
+      "place": "경기도 성남시 분당구 판교역로 166",
+      "detailPlace": "카카오판교아지트 B동",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJ-fgTNRRZezURdgrUMyBUZrs",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 145631,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 149496,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 0,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 239250,
+  "title": "IT 자체감사 담당자",
+  "workspaceDivision": null,
+  "openDate": "2026-10-01T08:44:53Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오페이",
+   "imageUrl": "https://profiles.greetinghr.com/group/59b9b6e3-0481-4bde-9e6f-544d04cc9642"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 130393,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 147072,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 558,
+      "occupation": "프로덕트",
+      "sortOrder": 2
+     },
+     "workspaceJob": null,
+     "workspacePlace": {
+      "id": 226,
+      "location": "카카오페이",
+      "place": "경기도 성남시 분당구 판교역로 166",
+      "detailPlace": "카카오판교아지트 B동",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJ-fgTNRRZezURdgrUMyBUZrs",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 117567,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 121383,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 0,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 206749,
+  "title": "[스테이블코인] 프로덕트 매니저 - 스테이블코인 & 월렛 프로덕트",
+  "workspaceDivision": null,
+  "openDate": "2026-03-16T08:43:53Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오페이",
+   "imageUrl": "https://profiles.greetinghr.com/group/59b9b6e3-0481-4bde-9e6f-544d04cc9642"
+  }
+ }
+]

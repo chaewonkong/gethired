@@ -1,0 +1,237 @@
+[
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 138455,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 156560,
+     "workspaceField": {
+      "id": 4597,
+      "field": "Upstage",
+      "sortOrder": 7
+     },
+     "workspaceOccupation": {
+      "id": 24038,
+      "occupation": "Tech",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 10054,
+      "job": "AI Research Engineering",
+      "sortOrder": 0
+     },
+     "workspacePlace": null,
+     "jobPositionCareer": {
+      "id": 125484,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 129320,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 1,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 0,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 217109,
+  "title": "[독파모] AI Research Engineer - LLM Evaluation & Analysis",
+  "workspaceDivision": null,
+  "openDate": "2026-05-18T23:21:00Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "Upstage",
+   "imageUrl": "https://profiles.greetinghr.com/group/b26b9ea2-f544-4f97-b3e6-5ab033440219"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 120258,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 133813,
+     "workspaceField": {
+      "id": 4597,
+      "field": "Upstage",
+      "sortOrder": 7
+     },
+     "workspaceOccupation": {
+      "id": 24038,
+      "occupation": "Tech",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 10054,
+      "job": "AI Research Engineering",
+      "sortOrder": 0
+     },
+     "workspacePlace": null,
+     "jobPositionCareer": {
+      "id": 115539,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 119352,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 1,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 0,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 194876,
+  "title": "[독파모] AI Research Engineer - Post-training",
+  "workspaceDivision": null,
+  "openDate": "2025-12-16T10:27:05Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "Upstage",
+   "imageUrl": "https://profiles.greetinghr.com/group/b26b9ea2-f544-4f97-b3e6-5ab033440219"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 145722,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 165160,
+     "workspaceField": {
+      "id": 4597,
+      "field": "Upstage",
+      "sortOrder": 7
+     },
+     "workspaceOccupation": {
+      "id": 24038,
+      "occupation": "Tech",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 10054,
+      "job": "AI Research Engineering",
+      "sortOrder": 0
+     },
+     "workspacePlace": null,
+     "jobPositionCareer": {
+      "id": 133070,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 137007,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 1,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 0,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 226350,
+  "title": "[독파모] AI Research Engineer - Post-training (VLM Tech Lead) ",
+  "workspaceDivision": null,
+  "openDate": "2026-07-03T02:30:21Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "Upstage",
+   "imageUrl": "https://profiles.greetinghr.com/group/b26b9ea2-f544-4f97-b3e6-5ab033440219"
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 128886,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 145317,
+     "workspaceField": {
+      "id": 4598,
+      "field": "Upstage Japan",
+      "sortOrder": 8
+     },
+     "workspaceOccupation": {
+      "id": 24752,
+      "occupation": "Education",
+      "sortOrder": 2
+     },
+     "workspaceJob": null,
+     "workspacePlace": {
+      "id": 17304,
+      "location": "Tokyo Office",
+      "place": "일본 도쿄도",
+      "detailPlace": "",
+      "workFromHome": false,
+      "geo": {
+       "lat": 35.6764225,
+       "lng": 139.650027
+      },
+      "mapApi": {
+       "placeId": "ChIJ51cu8IcbXWARiRtXIothAS4",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 3
+     },
+     "jobPositionCareer": null,
+     "jobPositionEmployment": null
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 1,
+   "occupationCount": 1,
+   "jobCount": 0,
+   "placeCount": 1,
+   "careerCount": 0,
+   "employmentCount": 0
+  },
+  "openingId": 194861,
+  "title": "【Upstage Japan】 Education Program Manager (教育プログラムマネージャー)",
+  "workspaceDivision": null,
+  "openDate": "2025-12-16T10:39:53Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "Upstage",
+   "imageUrl": "https://profiles.greetinghr.com/group/b26b9ea2-f544-4f97-b3e6-5ab033440219"
+  }
+ }
+]

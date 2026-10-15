@@ -24,7 +24,10 @@ def assert_required(postings: list[RawPosting], company: str):
 
 
 def test_registry_has_all_companies():
-    assert set(REGISTRY) == {"naver", "kakao", "coupang", "toss", "daangn", "line", "samsung", "hyundai"}
+    assert set(REGISTRY) == {
+        "naver", "kakao", "coupang", "toss", "daangn", "line", "samsung", "hyundai",
+        "upstage", "kakaopay",
+    }
 
 
 def test_naver_list_filters_tech_and_parses_date():
