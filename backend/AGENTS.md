@@ -82,10 +82,11 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/scrapers/greenhouse.py` | Greenhouse 계열 공통 베이스 (쿠팡·당근·토스) |
 | `app/llm.py` | `ask_json()`: Agent SDK structured output 래퍼. 모델 `claude-opus-5-5` 고정. 인증 실패는 `ClaudeAuthError` |
 | `app/profile.py` | `resume/*.md` → `Profile`. 파일 이름·내용 해시로 `profile_cache`에 캐시 |
+| `app/resume.py` | `resume/` 파일 목록·저장·삭제. 파일명은 basename만, `.md`만, 1MB 제한, 디렉토리 자동 생성, 같은 이름 덮어쓰기 |
 | `app/matcher.py` | 20건 배치 판정 → `Match`(fit_level/score/gaps/fit_reason). score 구간이 fit_level보다 우선. 누락 id는 재시도 |
-| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `scrape_runs`, `profile_cache` |
+| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `interests`, `scrape_runs`, `profile_cache` |
 | `app/jobs.py` | 스크래핑 job 실행·상태(`Job`, `CompanyState`). 회사 단위 실패 격리, 세션 만료 시 `auth_required` |
-| `app/api.py` | `create_app(repo, jobs, logged_in)`: `/api/{auth/status, companies, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide}` |
+| `app/api.py` | `create_app(repo, jobs, logged_in, resume_dir)`: `/api/{auth/status, companies, companies/{c}/interest, interests, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide, resume, resume/{name}}` |
 | `app/main.py` | 앱 조립 + `frontend/dist` 정적 서빙. `ANTHROPIC_API_KEY` 제거 |
 | `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증. DB는 `profile_cache`만 사용. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
 
@@ -96,6 +97,8 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 - 삭제는 soft delete(`deleted_at`). 공고가 다시 나타나면 복구된다
 - `bookmarks.deleted_at`·`hides.deleted_at`은 사용자 해제 전용. 공고 삭제 여부는 `postings`와 JOIN으로 판단
 - exclude 판정은 `postings`에 저장하지 않고 `judgments`에만 기록한다 (재판정 방지)
+- `POST /api/scrape`를 파라미터 없이 부르면 관심회사(`interests`)만 스크래핑한다. 관심회사가 없으면 400
+- 관심회사 해제는 `interests` row만 지운다. 공고·판정은 남기고, 관심회사 기준 숨김은 프론트에서 한다
 - Agent SDK `query()` 제너레이터 안에서 raise하지 않는다 (aclose 충돌). 플래그를 세우고 루프 밖에서 raise
 - 스키마 변경은 `CREATE TABLE IF NOT EXISTS`로 기존 `data/app.db`와 호환되게. 컬럼 추가는 마이그레이션 필요
 
@@ -108,5 +111,5 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 ## 테스트
 - `tests/test_parsers*.py`: `fixtures/`의 저장된 응답으로 파서 검증
 - `tests/test_repository.py`: in-memory sqlite
-- `tests/test_api.py`: `FakeScraper` + fake judge/profile로 job·API 전체 흐름 (LLM 없음)
+- `tests/test_api.py`: `FakeScraper` + fake judge/profile로 job·API 전체 흐름 (LLM 없음). `make_client`는 기본으로 관심회사 a·b를 넣고, resume는 `tmp_path`를 넘겨 쓴다
 - `tests/test_scrapers_live.py`: `LIVE=1`일 때만

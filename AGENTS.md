@@ -15,6 +15,7 @@ job-posting/
 |   |   |-- api.py            # REST API
 |   |   |-- jobs.py           # 스크래핑 job 실행
 |   |   |-- profile.py        # 이력서 -> 프로필
+|   |   |-- resume.py         # resume/*.md 파일 목록·저장·삭제
 |   |   |-- matcher.py        # LLM 판정
 |   |   |-- llm.py            # Claude Agent SDK 래퍼
 |   |   |-- repository.py     # sqlite 접근
@@ -27,7 +28,7 @@ job-posting/
 |   `-- src/
 |       |-- App.tsx           # 상태 · 탭 · 폴링
 |       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # PostingsTab, BookmarksTab, HiddenTab, CompaniesTab, PostingCard, ...
+|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, CompanySelect), ...
 |       `-- test/             # vitest 설정 · 픽스처
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
