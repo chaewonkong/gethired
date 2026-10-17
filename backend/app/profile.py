@@ -3,6 +3,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from . import resume
 from .config import RESUME_DIR
 from .llm import ask_json
 from .repository import Repository, now_iso
@@ -40,19 +41,24 @@ SYSTEM = """당신은 시니어 테크 리크루터입니다. 지원자가 제�
 
 
 def source_files() -> list[Path]:
-    return sorted(f for f in RESUME_DIR.glob("*.md") if f.is_file())
+    if not RESUME_DIR.is_dir():
+        return []
+    return sorted(f for f in RESUME_DIR.iterdir()
+                  if f.is_file() and f.suffix in resume.EXTENSIONS and not f.name.startswith("."))
 
 
 def source_hash(files: list[Path] | None = None) -> str:
     h = hashlib.sha256()
     for f in files or source_files():
         h.update(f.name.encode())
-        h.update(f.read_bytes())
+        with f.open("rb") as fp:
+            while chunk := fp.read(1024 * 1024):
+                h.update(chunk)
     return h.hexdigest()[:16]
 
 
 async def extract(files: list[Path]) -> Profile:
-    docs = "\n\n".join(f'<document name="{f.name}">\n{f.read_text()}\n</document>' for f in files)
+    docs = "\n\n".join(f'<document name="{f.name}">\n{resume.extract_text(f)}\n</document>' for f in files)
     res = await ask_json(f"다음 문서에서 지원자 프로필을 추출하세요.\n\n{docs}",
                          Profile.model_json_schema(), system_prompt=SYSTEM)
     return Profile.model_validate(res.data)
@@ -61,7 +67,7 @@ async def extract(files: list[Path]) -> Profile:
 async def get_profile(repo: Repository, force: bool = False) -> Profile:
     files = source_files()
     if not files:
-        raise FileNotFoundError(f"no *.md files in {RESUME_DIR}")
+        raise FileNotFoundError(f"no *.md / *.pdf files in {RESUME_DIR}")
     h = source_hash(files)
     if not force and (cached := repo.get_profile_cache(h)):
         return Profile.model_validate(cached)
