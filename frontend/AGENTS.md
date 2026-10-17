@@ -15,14 +15,14 @@ sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 �
 ## 컴포넌트
 | 파일 | 역할 |
 |---|---|
-| `src/api.ts` | 타입(`Posting`, `Company`, `Job`, `ProviderSetting`, `AuthStatus` …)과 fetch 래퍼 `api`. 스크래핑 401은 `LoginRequiredError`(`provider`, `message`), provider 변경 409는 `JobRunningError` |
+| `src/api.ts` | 타입(`Posting`, `Company`, `Job`, `ProviderSetting`, `AuthStatus` …)과 fetch 래퍼 `api`. 스크래핑 401은 `LoginRequiredError`(`provider`, `message`), provider 변경 409는 `JobRunningError`, 이력서 업로드 400은 `ResumeRejectedError`(message = 서버 detail). `putResume`는 파일 바이트를 그대로 PUT |
 | `src/App.tsx` | 최상위 상태: postings, companies, resume 파일, provider 설정(`setting`)·로그인 상태(`auth`), 진행 중 job(1.5초 폴링), 로그인/에러 배너, toast, 탭 전환. auth 폴링은 AI 선택 화면·AI 모달·로그인 배너가 보일 때만, 응답 후 3초 setTimeout 체인. 화면 단계(`phase`) 계산. 관심회사 기준으로 공고를 걸러 탭에 전달. 북마크·숨김 토글(`toggleFlag`: 낙관적 업데이트, 실패 시 롤백, 요청 중 중복 토글 무시), 관심회사 별 토글도 같은 방식 |
 | `components/PostingsTab.tsx` | 공고 탭: 스크래핑 버튼, 회사·등급 필터(sessionStorage 유지), 숨긴 공고 제외, score 정렬, infinite scroll(20건, `IntersectionObserver`), 스크래핑 진행·완료 요약. `formatTime` export |
 | `components/CompanyFilter.tsx` | 회사 Multi-select 드롭다운: 전체 켜기/끄기, 회사별 공고 수, 바깥 클릭·Esc로 닫힘. 선택은 "해제한 회사 목록"으로 다룸 |
 | `components/BookmarksTab.tsx` | 북마크 탭: `bookmarked`이고 숨기지 않은 공고만 score순. 해제 시 즉시 빠짐 |
 | `components/HiddenTab.tsx` | 숨김 탭: `hidden` 공고만 score순. 해제 시 공고 탭으로 복귀 |
 | `components/CompaniesTab.tsx` | 회사 탭: 관심회사 별 토글, 채용 사이트 링크, 마지막 스크래핑 결과·시각 |
-| `components/ResumeDropzone.tsx` | 이력서 드래그앤드롭·클릭 업로드 영역(여러 파일). `invalidResumeFiles`: `.md`·1MB 검증 |
+| `components/ResumeDropzone.tsx` | 이력서 드래그앤드롭·클릭 업로드 영역(여러 파일). `invalidResumeFiles`: `.md`·`.pdf` 확장자 검증, 크기 제한 없음 |
 | `components/CompanySelect.tsx` | 온보딩 관심회사 선택: 초기 전부 해제, 0개 확인은 `onEmpty` |
 | `components/ProviderPicker.tsx` | Claude Code / Codex 카드(radiogroup). 선택 카드에 로그인 배지 3상태(확인 중 / 로그인됨 / 로그인 필요 + 명령). `disabled`면 안내만. 화살표 이동, Enter/Space 선택. `PROVIDERS`, `PROVIDER_NAME` export |
 | `components/ProviderSelect.tsx` | 온보딩 AI 선택: 카드 선택 시 PUT, "계속"은 미저장이면 PUT 후 진행. 로그인 여부 무관 |
@@ -38,6 +38,7 @@ sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 �
 
 ## 규칙
 - 데이터는 `App`에서만 fetch한다. 탭·카드는 props와 콜백만 받는다
+- 이력서 업로드 중 서버가 400으로 거부한 파일은 toast로 알리고 나머지는 계속 올린다. 전부 성공일 때만 성공 toast·`holdUpload`
 - 화면 단계는 상태에서 계산한다: `resumeFiles`·`setting` 로드 전 → loading, resume 파일 없음 → upload, `!setting.chosen` → provider, 관심회사 없음 → select, 그 외 main. 첫 화면은 `/api/auth/status`(CLI 실행)를 기다리지 않는다. 온보딩 업로드 직후에만 toast가 닫힐 때까지 upload에 머문다 (`holdUpload`)
 - 관심회사가 아닌 회사의 공고는 `App`에서 걸러 모든 탭·배지에서 뺀다
 - 날짜 `YYYY-MM-DD`는 로컬 자정으로 해석한다 (`new Date(s)`는 UTC로 읽어 KST에서 하루 밀림)

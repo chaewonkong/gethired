@@ -39,7 +39,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
      |
      +--> scrapers/   -- httpx ---------> career sites (15)
      |
-     +--> profile.py  -- read ----------> resume/*.md
+     +--> profile.py  -- read ----------> resume/*.md, *.pdf (pdf는 pypdf로 텍스트 추출)
      |                -- cache ---------> repository.py (profile_cache, key = resume hash)
      |                -- extract -------> LLM (provider CLI 로그인 세션)
      |
@@ -56,7 +56,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
  |     job 생성 후 job_id 즉시 반환. frontend는 끝날 때까지 1.5초마다 GET /api/scrape/{job_id}
  |
  +-> 1. profile
- |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 LLM으로 추출
+ |     resume/*.{md,pdf} 해시로 캐시 조회 -> 없거나 바뀌었으면 LLM으로 추출
  |
  +-> 2. per company (parallel)
  |     회사별로 동시에 실행, 한 회사가 실패해도 나머지는 계속
@@ -83,14 +83,14 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/scrapers/greetinghr.py` | GreetingHR 계열 공통 베이스 (업스테이지·카카오페이). 공개 API가 없어 목록은 첫 페이지, 본문은 공고 페이지의 `__NEXT_DATA__`에서 꺼낸다 |
 | `app/llm.py` | `ask_json()`: structured output 래퍼. `configure(provider)`로 모듈 상태를 두고 claude(Agent SDK) / codex(`codex exec` subprocess) 분기. 인증 실패는 `LLMAuthError`, 그 외 `LLMError`. codex는 호출 전 `is_logged_in` 선체크(미로그인 exec는 끝나지 않음), strict schema 변환(`to_strict_schema`), `-o` 파일로 결과, `--json`으로 usage·401 감지. runner는 `llm.codex_runner`로 주입 |
 | `app/auth.py` | `is_logged_in(provider)`: claude는 `claude auth status` JSON, codex는 `$CODEX_BIN login status` exit code. provider별 single-flight |
-| `app/profile.py` | `resume/*.md` → `Profile`. 파일 이름·내용 해시로 `profile_cache`에 캐시 |
-| `app/resume.py` | `resume/` 파일 목록·저장·삭제. 파일명은 basename만, `.md`만, 1MB 제한, 디렉토리 자동 생성, 같은 이름 덮어쓰기 |
+| `app/profile.py` | `resume/*.md`·`*.pdf` → `Profile`. 본문은 `resume.extract_text`(문서당 50k자 상한). 파일 이름·내용 해시(1MB 청크)로 `profile_cache`에 캐시 |
+| `app/resume.py` | `resume/` 파일 목록·저장·삭제·텍스트 추출. 파일명은 basename만, `.md`·`.pdf`만, 크기 제한 없음(임시 dotfile에 스트리밍 후 `os.replace`), 디렉토리 자동 생성, 같은 이름 덮어쓰기. `extract_text`: md는 그대로, pdf는 pypdf, `TEXT_LIMIT`(50k자) 초과는 잘라 `[이하 생략]`. 텍스트 없는 pdf는 저장 취소 + `ValueError`(API 400) |
 | `app/matcher.py` | 20건 배치 판정 → `Match`(fit_level/score/gaps/fit_reason). score 구간이 fit_level보다 우선. 누락 id는 재시도 |
 | `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `interests`, `scrape_runs`, `profile_cache`, `settings`(key/value, `provider`) |
 | `app/jobs.py` | 스크래핑 job 실행·상태(`Job`, `CompanyState`). job 시작 시 settings의 provider로 `llm.configure()`, job 전체가 그 provider로 고정(`Job.provider`). 회사 단위 실패 격리, 세션 만료 시 `auth_required` |
 | `app/api.py` | `create_app(repo, jobs, logged_in: (provider) -> bool, resume_dir)`: `/api/{settings/provider, auth/status, companies, companies/{c}/interest, interests, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide, resume, resume/{name}}`. `GET settings/provider`는 DB만(`{provider, chosen}`), `auth/status`는 CLI 실행. `PUT settings/provider`는 job 실행 중 409, 저장 후 auth status 반환. 미로그인 scrape는 401 `{code: "login_required", provider, message}` |
 | `app/main.py` | 앱 조립 + `frontend/dist` 정적 서빙. `ANTHROPIC_API_KEY`·`OPENAI_API_KEY` 제거 |
-| `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증. DB는 `profile_cache`만 사용. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
+| `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증, `--provider`로 하네스 선택. DB는 `profile_cache`만 사용. `resume_text.py`(`just resume-text`): 이력서 텍스트 추출 결과를 `out/resume_text/`에 저장. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
 
 ## 규칙
 - LLM은 선택한 provider CLI(Claude Code / Codex)의 로컬 로그인 세션으로만 호출한다. API key를 쓰지 않는다
@@ -119,6 +119,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 ## 테스트
 - `tests/test_parsers*.py`: `fixtures/`의 저장된 응답으로 파서 검증
 - `tests/test_repository.py`: in-memory sqlite
+- `tests/test_resume.py` · `tests/test_profile.py`: 텍스트 추출(`fixtures/resume_sample.pdf`, `resume_blank.pdf`는 합성 PDF), 절단, 프로필 문서 구성·해시
 - `tests/test_llm.py` · `tests/test_llm_codex.py` · `tests/test_auth.py`: provider 분기, strict 변환, codex 출력 파싱(`fixtures/codex_*.jsonl`, 실측 출력), 인증 판별, single-flight. 실제 CLI 실행 없음. `conftest.py`가 매 테스트 후 `configure("claude")`
 - `tests/test_api.py`: `FakeScraper` + fake judge/profile로 job·API 전체 흐름 (LLM 없음). `make_client`는 기본으로 관심회사 a·b를 넣고, resume는 `tmp_path`를 넘겨 쓴다
 - `tests/test_scrapers_live.py`: `LIVE=1`일 때만

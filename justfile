@@ -68,6 +68,10 @@ scrape *companies:
 match *args:
     cd backend && uv run python scripts/match.py {{args}}
 
+# 이력서 텍스트 추출 확인 → backend/out/resume_text/<name>.txt (예: just resume-text resume.pdf)
+resume-text *args:
+    cd backend && uv run python scripts/resume_text.py {{args}}
+
 # provider CLI 로그인 확인 (예: just auth codex)
 auth provider="claude":
     #!/usr/bin/env zsh

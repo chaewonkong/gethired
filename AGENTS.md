@@ -15,7 +15,7 @@ job-posting/
 |   |   |-- api.py            # REST API
 |   |   |-- jobs.py           # 스크래핑 job 실행
 |   |   |-- profile.py        # 이력서 -> 프로필
-|   |   |-- resume.py         # resume/*.md 파일 목록·저장·삭제
+|   |   |-- resume.py         # resume/ 파일 목록·저장·삭제, md·pdf 텍스트 추출
 |   |   |-- matcher.py        # LLM 판정
 |   |   |-- llm.py            # LLM 호출 (Claude Agent SDK / Codex CLI)
 |   |   |-- auth.py           # provider CLI 로그인 확인
@@ -35,11 +35,12 @@ job-posting/
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   `-- plans/                # 실행 계획
-|-- resume/                   # 이력서 *.md (gitignore)
+|-- resume/                   # 이력서 *.md, *.pdf (gitignore)
 `-- justfile                  # 실행·테스트 명령
 ```
 
 ## 디버그
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
-- `just match [company] [--limit N] [--planted]`: 파일 기반 매칭, `backend/out/fit.md`
+- `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
+- `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
 - `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제
