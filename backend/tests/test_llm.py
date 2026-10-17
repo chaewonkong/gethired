@@ -48,12 +48,6 @@ def test_login_command_and_message_per_provider():
     assert "`codex login`" in llm.auth_message("codex")
 
 
-def test_codex_branch_not_implemented_yet():
-    llm.configure("codex")
-    with pytest.raises(NotImplementedError):
-        asyncio.run(llm.ask_json("p", SCHEMA))
-
-
 def test_claude_path_uses_model_and_sums_tokens(monkeypatch):
     query, captured = fake_query([result_msg()])
     monkeypatch.setattr(llm, "query", query)
