@@ -282,41 +282,109 @@ def test_hide_put_delete():
         assert client.delete("/api/postings/9999/hide").status_code == 404
 
 
+FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
+
+
 def test_resume_upload_overwrite_and_coexist(tmp_path):
     d = tmp_path / "resume"
     client, _ = make_client(resume_dir=d)
     with client:
         assert client.get("/api/resume").json() == []
-        assert client.put("/api/resume/resume.md", json={"content": "v1"}).status_code == 200
+        res = client.put("/api/resume/resume.md", content=b"v1")
+        assert res.status_code == 200 and res.json() == {}
         assert (d / "resume.md").read_text() == "v1"
-        client.put("/api/resume/resume.md", json={"content": "v2"})
-        client.put("/api/resume/portfolio.md", json={"content": "p"})
+        client.put("/api/resume/resume.md", content=b"v2")
+        client.put("/api/resume/portfolio.md", content=b"p", headers={"content-type": "application/json"})
         assert (d / "resume.md").read_text() == "v2"
         files = client.get("/api/resume").json()
         assert [f["name"] for f in files] == ["portfolio.md", "resume.md"]
         assert files[1]["size"] == 2 and files[1]["updated_at"]
 
 
+def test_resume_pdf_upload_list_delete(tmp_path):
+    d = tmp_path / "resume"
+    pdf = (FIXTURES / "resume_sample.pdf").read_bytes()
+    client, _ = make_client(resume_dir=d)
+    with client:
+        res = client.put("/api/resume/cv.pdf", content=pdf, headers={"content-type": "application/octet-stream"})
+        assert res.status_code == 200 and res.json() == {}
+        assert (d / "cv.pdf").read_bytes() == pdf
+        client.put("/api/resume/notes.md", content=b"n")
+        files = client.get("/api/resume").json()
+        assert [(f["name"], f["size"]) for f in files] == [("cv.pdf", len(pdf)), ("notes.md", 1)]
+        assert sorted(f.name for f in d.iterdir()) == ["cv.pdf", "notes.md"]
+        assert client.delete("/api/resume/cv.pdf").status_code == 200
+        assert [f["name"] for f in client.get("/api/resume").json()] == ["notes.md"]
+        assert client.delete("/api/resume/cv.pdf").status_code == 404
+
+
+def test_resume_blank_pdf_rejected_and_not_saved(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    with client:
+        res = client.put("/api/resume/scan.pdf", content=(FIXTURES / "resume_blank.pdf").read_bytes())
+        assert res.status_code == 400
+        assert res.json()["detail"] == "텍스트를 추출할 수 없는 PDF입니다 (스캔·이미지 PDF): scan.pdf"
+        assert client.put("/api/resume/broken.pdf", content=b"%PDF-1.4 not a pdf").status_code == 400
+        assert client.get("/api/resume").json() == []
+        assert list(d.iterdir()) == []
+
+
 def test_resume_rejects_invalid_files(tmp_path):
     d = tmp_path / "resume"
     client, _ = make_client(resume_dir=d)
     with client:
-        assert client.put("/api/resume/resume.pdf", json={"content": "x"}).status_code == 400
-        assert client.put("/api/resume/..%2Fescape.md", json={"content": "x"}).status_code in (400, 404)
-        assert client.put("/api/resume/.hidden.md", json={"content": "x"}).status_code == 400
-        assert client.put("/api/resume/big.md", json={"content": "x" * (1024 * 1024 + 1)}).status_code == 400
-        for bad in ("../escape.md", "sub/x.md"):
+        res = client.put("/api/resume/resume.txt", content=b"x")
+        assert res.status_code == 400
+        assert res.json()["detail"] == "md 또는 pdf 파일만 업로드할 수 있습니다: resume.txt"
+        assert client.put("/api/resume/resume.PDF", content=b"x").status_code == 400
+        assert client.put("/api/resume/..%2Fescape.md", content=b"x").status_code in (400, 404)
+        assert client.put("/api/resume/.hidden.md", content=b"x").status_code == 400
+        for bad in ("../escape.md", "sub/x.md", ".tmp.pdf"):
             with pytest.raises(ValueError):
-                resume.save(d, bad, "x")
+                resume._path(d, bad)
         assert not (tmp_path / "escape.md").exists()
         assert not d.exists() or list(d.iterdir()) == []
+
+
+def test_resume_large_body_streams_to_disk(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    body = b"x" * (5 * 1024 * 1024)
+    with client:
+        assert client.put("/api/resume/big.md", content=body).status_code == 200
+        assert (d / "big.md").stat().st_size == len(body)
+        assert client.get("/api/resume").json()[0]["size"] == len(body)
+
+
+def test_resume_temp_file_hidden_from_list(tmp_path):
+    d = tmp_path / "resume"
+    client, _ = make_client(resume_dir=d)
+    with client:
+        client.put("/api/resume/a.md", content=b"a")
+        (d / ".a.md.tmp").write_bytes(b"partial")
+        (d / ".hidden.pdf").write_bytes(b"x")
+        (d / "notes.txt").write_text("t")
+        assert [f["name"] for f in client.get("/api/resume").json()] == ["a.md"]
+
+
+def test_resume_save_failure_removes_temp(tmp_path):
+    d = tmp_path / "resume"
+
+    async def chunks():
+        yield b"part"
+        raise RuntimeError("client gone")
+
+    with pytest.raises(RuntimeError):
+        asyncio.run(resume.save(d, "x.md", chunks()))
+    assert list(d.iterdir()) == []
 
 
 def test_resume_delete(tmp_path):
     d = tmp_path / "resume"
     client, _ = make_client(resume_dir=d)
     with client:
-        client.put("/api/resume/a.md", json={"content": "a"})
+        client.put("/api/resume/a.md", content=b"a")
         assert client.delete("/api/resume/a.md").status_code == 200
         assert client.get("/api/resume").json() == []
         assert client.delete("/api/resume/a.md").status_code == 404

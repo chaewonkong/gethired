@@ -1,18 +1,23 @@
+import os
+from collections.abc import AsyncIterator
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from pypdf import PdfReader
 from pypdf.errors import PyPdfError
+from starlette.concurrency import run_in_threadpool
 
-MAX_BYTES = 1024 * 1024
 TEXT_LIMIT = 50_000
+EXTENSIONS = (".md", ".pdf")
 
 
 def _path(resume_dir: Path, name: str) -> Path:
     base = Path(name).name
-    if base != name or not base.endswith(".md") or base.startswith("."):
+    if base != name or base.startswith("."):
         raise ValueError(f"invalid resume file name: {name}")
+    if not base.endswith(EXTENSIONS):
+        raise ValueError(f"md 또는 pdf 파일만 업로드할 수 있습니다: {name}")
     return resume_dir / base
 
 
@@ -36,20 +41,37 @@ def extract_text(path: Path) -> str:
 def list_files(resume_dir: Path) -> list[dict[str, Any]]:
     if not resume_dir.is_dir():
         return []
+    files = sorted(f for f in resume_dir.iterdir()
+                   if f.is_file() and f.suffix in EXTENSIONS and not f.name.startswith("."))
     return [
         {"name": f.name, "size": f.stat().st_size,
          "updated_at": datetime.fromtimestamp(f.stat().st_mtime, timezone.utc).isoformat(timespec="seconds")}
-        for f in sorted(resume_dir.glob("*.md")) if f.is_file()
+        for f in files
     ]
 
 
-def save(resume_dir: Path, name: str, content: str) -> None:
+async def save(resume_dir: Path, name: str, chunks: AsyncIterator[bytes]) -> None:
+    """임시 dotfile에 스트리밍 후 교체. 텍스트 없는 pdf는 저장하지 않고 ValueError"""
     path = _path(resume_dir, name)
-    data = content.encode()
-    if len(data) > MAX_BYTES:
-        raise ValueError(f"resume file too large: {len(data)} bytes")
     resume_dir.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(data)
+    tmp = resume_dir / f".{path.name}.tmp"
+    try:
+        with tmp.open("wb") as f:
+            async for chunk in chunks:
+                f.write(chunk)
+        os.replace(tmp, path)
+    except BaseException:
+        tmp.unlink(missing_ok=True)
+        raise
+    if path.suffix == ".pdf":
+        try:
+            text = await run_in_threadpool(extract_text, path)
+        except ValueError:
+            path.unlink(missing_ok=True)
+            raise
+        if not text:
+            path.unlink(missing_ok=True)
+            raise ValueError(f"텍스트를 추출할 수 없는 PDF입니다 (스캔·이미지 PDF): {name}")
 
 
 def delete(resume_dir: Path, name: str) -> bool:

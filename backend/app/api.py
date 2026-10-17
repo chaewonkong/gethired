@@ -2,7 +2,7 @@ from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Literal
 
-from fastapi import APIRouter, FastAPI, HTTPException, Query
+from fastapi import APIRouter, FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
@@ -11,10 +11,6 @@ from .config import RESUME_DIR
 from .jobs import JobManager
 from .llm import LOGIN_COMMAND, PROVIDERS, auth_message, resolve_provider
 from .repository import Repository, now_iso
-
-
-class ResumeBody(BaseModel):
-    content: str
 
 
 class InterestsBody(BaseModel):
@@ -153,12 +149,12 @@ def create_app(repo: Repository, jobs: JobManager,
         return resume.list_files(resume_dir)
 
     @api.put("/resume/{name}")
-    def put_resume(name: str, body: ResumeBody):
+    async def put_resume(name: str, request: Request):
         try:
-            resume.save(resume_dir, name, body.content)
+            await resume.save(resume_dir, name, request.stream())
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
-        return {"name": name}
+        return {}
 
     @api.delete("/resume/{name}")
     def delete_resume(name: str):
