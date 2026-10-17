@@ -53,6 +53,14 @@ def current_provider() -> str:
     return _provider
 
 
+def resolve_provider(stored: str | None) -> str:
+    """저장값 → LLM_PROVIDER env → claude. 모르는 값은 건너뛴다"""
+    for candidate in (stored, config.LLM_PROVIDER):
+        if candidate in PROVIDERS:
+            return candidate
+    return "claude"
+
+
 async def ask_json(prompt: str, schema: dict[str, Any], system_prompt: str | None = None) -> LLMResult:
     if _provider == "codex":
         return await _ask_codex(prompt, schema, system_prompt)

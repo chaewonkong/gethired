@@ -8,7 +8,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app.config import DB_PATH  # noqa: E402
+from app import llm  # noqa: E402
+from app.config import DB_PATH, LLM_PROVIDER  # noqa: E402
 from app.llm import LLMAuthError  # noqa: E402
 from app.matcher import LEVEL_MIN, LEVELS, Match, judge  # noqa: E402
 from app.profile import get_profile  # noqa: E402
@@ -62,7 +63,9 @@ async def main() -> int:
     ap.add_argument("--planted", action="store_true")
     ap.add_argument("--out", default="matches.json")
     ap.add_argument("--skip-judged", action="store_true")
+    ap.add_argument("--provider", choices=llm.PROVIDERS, default=None, help=f"기본 $LLM_PROVIDER ({LLM_PROVIDER})")
     args = ap.parse_args()
+    llm.configure(args.provider or LLM_PROVIDER)
 
     postings = load_postings(args.companies or None)
     if args.limit:
@@ -100,7 +103,7 @@ async def main() -> int:
 
     by_level = {lv: sum(1 for m in matches if m.fit_level == lv) for lv in LEVELS}
     print(f"postings={len(postings)} stored={len(matches)} excluded={len(excluded_ids)} missing={len(missing)} levels={by_level}")
-    print(f"llm_calls={len(results)} cost=${cost:.3f}")
+    print(f"provider={llm.current_provider()} llm_calls={len(results)} cost=${cost:.3f}")
     if args.planted:
         for pid, expect in (("planted-fit", True), ("planted-unfit-ios", False), ("planted-unfit-sales", False)):
             stored = any(m.external_id == pid for m in matches)

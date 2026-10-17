@@ -4,6 +4,7 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from typing import Any
 
+from . import llm
 from .llm import LLMAuthError
 from .matcher import Match, judge, to_row
 from .profile import Profile, get_profile
@@ -33,9 +34,10 @@ class Job:
     started_at: str = field(default_factory=now_iso)
     finished_at: str | None = None
     cost_usd: float = 0.0
+    provider: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {"job_id": self.id, "status": self.status, "started_at": self.started_at,
+        return {"job_id": self.id, "status": self.status, "provider": self.provider, "started_at": self.started_at,
                 "finished_at": self.finished_at, "cost_usd": round(self.cost_usd, 4),
                 "companies": {c: vars(s) for c, s in self.companies.items()}}
 
@@ -65,6 +67,9 @@ class JobManager:
         return job
 
     async def _run(self, job: Job) -> None:
+        # job 전체는 시작 시점의 provider로 고정 (실행 중 PUT /api/settings/provider는 409)
+        job.provider = llm.resolve_provider(self.repo.get_setting("provider"))
+        llm.configure(job.provider)
         auth_failed = asyncio.Event()
         try:
             profile = await self.profile_loader(self.repo)

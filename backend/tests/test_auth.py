@@ -42,7 +42,6 @@ def test_claude_parses_logged_in_json(tmp_path, monkeypatch):
     assert asyncio.run(auth.is_logged_in("claude")) is False
     fake_bin(tmp_path, "claude", 'echo garbage')
     assert asyncio.run(auth.is_logged_in("claude")) is False
-    assert asyncio.run(auth.is_logged_in()) is False
 
 
 def test_claude_missing_binary(tmp_path, monkeypatch):

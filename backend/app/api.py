@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from . import auth, resume
 from .config import RESUME_DIR
 from .jobs import JobManager
-from .llm import auth_message, current_provider
+from .llm import LOGIN_COMMAND, PROVIDERS, auth_message, resolve_provider
 from .repository import Repository, now_iso
 
 
@@ -21,15 +21,44 @@ class InterestsBody(BaseModel):
     companies: list[str]
 
 
+class ProviderBody(BaseModel):
+    provider: str
+
+
 def create_app(repo: Repository, jobs: JobManager,
-               logged_in: Callable[[], Awaitable[bool]] = auth.is_logged_in,
+               logged_in: Callable[[str], Awaitable[bool]] = auth.is_logged_in,
                resume_dir: Path = RESUME_DIR) -> FastAPI:
     app = FastAPI(title="job-posting")
     api = APIRouter(prefix="/api")
 
+    def provider_setting() -> dict:
+        stored = repo.get_setting("provider")
+        return {"provider": resolve_provider(stored), "chosen": stored is not None}
+
+    async def auth_status_body() -> dict:
+        provider = provider_setting()["provider"]
+        return {"provider": provider, "logged_in": await logged_in(provider), "login_command": LOGIN_COMMAND[provider]}
+
+    def job_running() -> bool:
+        return bool(jobs.current and jobs.current.status == "running")
+
+    @api.get("/settings/provider")
+    def get_provider():
+        return provider_setting()
+
+    @api.put("/settings/provider")
+    async def put_provider(body: ProviderBody):
+        if body.provider not in PROVIDERS:
+            raise HTTPException(status_code=400, detail=f"unknown provider: {body.provider}")
+        if job_running():
+            return JSONResponse(status_code=409, content={"code": "job_running",
+                                                          "message": "스크래핑 중에는 AI를 바꿀 수 없습니다."})
+        repo.set_setting("provider", body.provider, now_iso())
+        return await auth_status_body()
+
     @api.get("/auth/status")
     async def auth_status():
-        return {"logged_in": await logged_in()}
+        return await auth_status_body()
 
     @api.get("/companies")
     def companies():
@@ -69,11 +98,12 @@ def create_app(repo: Repository, jobs: JobManager,
 
     @api.post("/scrape", status_code=202)
     async def scrape(companies: list[str] | None = Query(default=None)):
-        if jobs.current and jobs.current.status == "running":
+        if job_running():
             return {"job_id": jobs.current.id, "status": "running"}
-        if not await logged_in():
-            return JSONResponse(status_code=401, content={"code": "claude_login_required",
-                                                          "message": auth_message(current_provider())})
+        provider = provider_setting()["provider"]
+        if not await logged_in(provider):
+            return JSONResponse(status_code=401, content={"code": "login_required", "provider": provider,
+                                                          "message": auth_message(provider)})
         check_known(companies or [])
         targets = companies or [c for c in repo.list_interests() if c in jobs.scrapers]
         if not targets:

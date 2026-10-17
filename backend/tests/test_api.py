@@ -7,7 +7,7 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
-from app import resume
+from app import config, llm, resume
 from app.api import create_app
 from app.jobs import JobManager
 from app.llm import LLMAuthError
@@ -69,13 +69,17 @@ async def load_profile(repo):
     return PROFILE
 
 
+auth_calls: list[str] = []
+
+
 def make_client(judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b")):
     repo = Repository()
     repo.set_interests(list(interests), "T0")
     jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge)
 
-    async def is_logged_in():
-        return logged_in
+    async def is_logged_in(provider: str):
+        auth_calls.append(provider)
+        return logged_in if isinstance(logged_in, bool) else logged_in[provider]
 
     app = create_app(repo, jobs, logged_in=is_logged_in, resume_dir=resume_dir or Path("/nonexistent"))
     return TestClient(app), repo
@@ -96,6 +100,7 @@ def reset():
                         "b": [posting("b", "3", "Server Dev")]}
     FakeScraper.fail = set()
     judge_calls.clear()
+    auth_calls.clear()
 
 
 def test_scrape_stores_graded_and_skips_excluded_then_incremental():
@@ -144,8 +149,11 @@ def test_scrape_requires_login_and_running_job_is_reused():
     client, _ = make_client(logged_in=False)
     with client:
         r = client.post("/api/scrape")
-        assert r.status_code == 401 and r.json()["code"] == "claude_login_required"
-        assert client.get("/api/auth/status").json() == {"logged_in": False}
+        assert r.status_code == 401
+        assert r.json() == {"code": "login_required", "provider": "claude", "message": llm.auth_message("claude")}
+        assert "`claude login`" in r.json()["message"]
+        assert client.get("/api/auth/status").json() == {"provider": "claude", "logged_in": False,
+                                                         "login_command": "claude login"}
 
     client, _ = make_client()
     with client:
@@ -155,6 +163,74 @@ def test_scrape_requires_login_and_running_job_is_reused():
         wait_job(client, first)
         assert client.get("/api/scrape/nope").status_code == 404
         assert client.post("/api/scrape", params={"companies": ["zzz"]}).status_code == 400
+
+
+def test_provider_setting_reads_db_only_and_env_default(monkeypatch):
+    client, repo = make_client()
+    with client:
+        assert client.get("/api/settings/provider").json() == {"provider": "claude", "chosen": False}
+        assert auth_calls == []
+
+        monkeypatch.setattr(config, "LLM_PROVIDER", "codex")
+        assert client.get("/api/settings/provider").json() == {"provider": "codex", "chosen": False}
+        assert client.get("/api/auth/status").json() == {"provider": "codex", "logged_in": True,
+                                                         "login_command": "codex login"}
+        assert auth_calls == ["codex"]
+
+        monkeypatch.setattr(config, "LLM_PROVIDER", "gpt")
+        assert client.get("/api/settings/provider").json() == {"provider": "claude", "chosen": False}
+
+        repo.set_setting("provider", "codex", "T1")
+        monkeypatch.setattr(config, "LLM_PROVIDER", "claude")
+        assert client.get("/api/settings/provider").json() == {"provider": "codex", "chosen": True}
+
+
+def test_put_provider_contract():
+    client, repo = make_client(logged_in={"claude": True, "codex": False})
+    with client:
+        r = client.put("/api/settings/provider", json={"provider": "gpt"})
+        assert r.status_code == 400 and r.json() == {"detail": "unknown provider: gpt"}
+        assert client.get("/api/settings/provider").json()["chosen"] is False
+
+        r = client.put("/api/settings/provider", json={"provider": "codex"})
+        assert r.status_code == 200
+        assert r.json() == {"provider": "codex", "logged_in": False, "login_command": "codex login"}
+        assert r.json() == client.get("/api/auth/status").json()
+        assert client.get("/api/settings/provider").json() == {"provider": "codex", "chosen": True}
+        assert repo.get_setting("provider") == "codex"
+
+        r = client.post("/api/scrape")
+        assert r.status_code == 401
+        assert r.json() == {"code": "login_required", "provider": "codex", "message": llm.auth_message("codex")}
+
+        r = client.put("/api/settings/provider", json={"provider": "claude"})
+        assert r.json() == {"provider": "claude", "logged_in": True, "login_command": "claude login"}
+
+
+def test_put_provider_blocked_while_job_running():
+    client, repo = make_client()
+    with client:
+        job_id = client.post("/api/scrape").json()["job_id"]
+        r = client.put("/api/settings/provider", json={"provider": "codex"})
+        assert r.status_code == 409
+        assert r.json()["code"] == "job_running" and r.json()["message"]
+        assert repo.get_setting("provider") is None
+
+        wait_job(client, job_id)
+        assert client.put("/api/settings/provider", json={"provider": "codex"}).status_code == 200
+
+
+def test_job_configures_llm_with_resolved_provider(monkeypatch):
+    configured: list[str] = []
+    monkeypatch.setattr(llm, "configure", configured.append)
+    client, repo = make_client()
+    with client:
+        job = wait_job(client, client.post("/api/scrape").json()["job_id"])
+        assert configured == ["claude"] and job["provider"] == "claude"
+
+        repo.set_setting("provider", "codex", "T1")
+        job = wait_job(client, client.post("/api/scrape").json()["job_id"])
+        assert configured == ["claude", "codex"] and job["provider"] == "codex"
 
 
 def test_auth_error_during_judging_marks_job_auth_required():

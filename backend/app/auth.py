@@ -8,7 +8,7 @@ STATUS_TIMEOUT_S = 15
 _inflight: dict[str, asyncio.Future] = {}
 
 
-async def is_logged_in(provider: str = "claude") -> bool:
+async def is_logged_in(provider: str) -> bool:
     """provider CLI의 로그인 상태. CLI가 없거나 실패·타임아웃이면 False. 같은 provider의 동시 호출은 결과를 공유한다."""
     fut = _inflight.get(provider)
     if fut is None or fut.done():
