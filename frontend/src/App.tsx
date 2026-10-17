@@ -75,18 +75,18 @@ export default function App() {
       showToast(invalid, "error");
       return false;
     }
-    let rejected = 0;
+    const rejected: string[] = [];
     try {
       for (const f of files) {
         try {
           await api.putResume(f.name, f);
         } catch (e) {
           if (!(e instanceof ResumeRejectedError)) throw e;
-          rejected++;
-          showToast(e.message, "error");
+          rejected.push(e.message);
         }
       }
-      return rejected === 0;
+      if (rejected.length) showToast(rejected.join(" / "), "error");
+      return rejected.length === 0;
     } catch (e) {
       setError(String(e));
       return false;
