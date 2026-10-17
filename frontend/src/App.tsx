@@ -8,6 +8,8 @@ import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 import { CompanySelect } from "./components/CompanySelect";
 import { ProviderSelect } from "./components/ProviderSelect";
+import { ProviderModal } from "./components/ProviderModal";
+import { PROVIDER_NAME } from "./components/ProviderPicker";
 import { invalidResumeFiles, ResumeDropzone } from "./components/ResumeDropzone";
 import { ResumeModal } from "./components/ResumeModal";
 import { Toast, ToastMessage } from "./components/Toast";
@@ -26,13 +28,15 @@ export default function App() {
   const [postings, setPostings] = useState<Posting[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [job, setJob] = useState<Job | null>(null);
-  const [loginRequired, setLoginRequired] = useState(false);
+  // 스크래핑 401·auth_required 배너. message는 401 body 문구 (auth 응답이 없을 때 대신 보여줌)
+  const [loginRequired, setLoginRequired] = useState<{ message: string | null } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [resumeFiles, setResumeFiles] = useState<ResumeFile[] | null>(null);
   const [toast, setToast] = useState<(ToastMessage & { after?: () => void }) | null>(null);
   // 온보딩 업로드 직후 toast가 닫힐 때까지 업로드 화면에 머문다
   const [holdUpload, setHoldUpload] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
   const [setting, setSetting] = useState<ProviderSetting | null>(null);
   const [auth, setAuth] = useState<AuthStatus | null>(null);
   const pending = useRef(new Set<string>());
@@ -111,6 +115,7 @@ export default function App() {
     }
   };
   const closeResume = useCallback(() => setResumeOpen(false), []);
+  const closeAi = useCallback(() => setAiOpen(false), []);
 
   const saveInterests = async (selected: string[]) => {
     try {
@@ -122,6 +127,17 @@ export default function App() {
     }
   };
 
+  // 현재 provider가 로그인돼 있으면 로그인 배너는 의미가 없다
+  const applyAuth = (a: AuthStatus) => {
+    setAuth(a);
+    if (a.logged_in) setLoginRequired(null);
+  };
+  // 서버가 미로그인이라 했으니 알고 있던 상태를 버리고 다시 확인한다
+  const requireLogin = (message: string | null) => {
+    setLoginRequired({ message });
+    setAuth(null);
+  };
+
   // 선택은 먼저 바꾸고 PUT. 실패하면 되돌린다. 요청 중 중복 선택은 무시
   const selectProvider = async (p: Provider): Promise<boolean> => {
     const prev = setting;
@@ -129,7 +145,7 @@ export default function App() {
     pending.current.add("provider");
     setSetting({ ...prev, provider: p });
     try {
-      setAuth(await api.setProvider(p));
+      applyAuth(await api.setProvider(p));
       return true;
     } catch (e) {
       setSetting((s) => (s ? { ...s, provider: prev.provider } : s));
@@ -154,7 +170,7 @@ export default function App() {
         const j = await api.job(job.job_id);
         setJob(j);
         if (j.status !== "running") {
-          if (j.status === "auth_required") setLoginRequired(true);
+          if (j.status === "auth_required") requireLogin(null);
           reload();
         }
       } catch (e) {
@@ -166,12 +182,12 @@ export default function App() {
 
   const startScrape = async () => {
     setError(null);
-    setLoginRequired(false);
+    setLoginRequired(null);
     try {
       const { job_id } = await api.startScrape();
       setJob(await api.job(job_id));
     } catch (e) {
-      if (e instanceof LoginRequiredError) setLoginRequired(true);
+      if (e instanceof LoginRequiredError) requireLogin(e.message);
       else setError(String(e));
     }
   };
@@ -231,9 +247,9 @@ export default function App() {
     : interested.length === 0 ? "select"
     : "main";
 
-  // provider 화면이 보이고 아직 로그인 전이면 로그인 상태를 폴링한다. 응답 후 3초 뒤 재조회, 다른 provider 응답은 버린다
+  // provider 화면·AI 모달·로그인 배너가 보이고 아직 로그인 전이면 로그인 상태를 폴링한다. 응답 후 3초 뒤 재조회, 다른 provider 응답은 버린다
   const loggedIn = !!auth && auth.provider === provider && auth.logged_in;
-  const watchAuth = phase === "provider" && !loggedIn;
+  const watchAuth = (phase === "provider" || aiOpen || !!loginRequired) && !loggedIn;
   useEffect(() => {
     if (!watchAuth) return;
     let cancelled = false;
@@ -242,7 +258,7 @@ export default function App() {
       try {
         const a = await api.authStatus();
         if (cancelled) return;
-        if (a.provider === providerRef.current) setAuth(a);
+        if (a.provider === providerRef.current) applyAuth(a);
       } catch (e) {
         if (cancelled) return;
         setError(String(e));
@@ -265,9 +281,14 @@ export default function App() {
           <p>등록 회사 채용 공고 중 나에게 맞는 포지션</p>
         </div>
         {phase === "main" && (
-          <button type="button" className="header-btn" onClick={() => setResumeOpen(true)}>
-            이력서
-          </button>
+          <div className="header-actions">
+            <button type="button" className="header-btn" onClick={() => setResumeOpen(true)}>
+              이력서
+            </button>
+            <button type="button" className="header-btn" onClick={() => setAiOpen(true)}>
+              AI
+            </button>
+          </div>
         )}
       </header>
 
@@ -297,11 +318,17 @@ export default function App() {
             ))}
           </nav>
 
-          {loginRequired && (
+          {loginRequired && setting && (
             <div className="banner">
-              <strong>Claude 로그인이 필요합니다.</strong>
+              <strong>{PROVIDER_NAME[setting.provider]} 로그인이 필요합니다.</strong>
               <br />
-              터미널에서 <code>claude login</code> 실행 후 다시 시도해주세요. 기존 공고는 계속 볼 수 있습니다.
+              {auth && auth.provider === setting.provider ? (
+                <>터미널에서 <code>{auth.login_command}</code> 실행 후 다시 시도해주세요.</>
+              ) : (
+                loginRequired.message
+              )}{" "}
+              기존 공고는 계속 볼 수 있습니다.
+              <button type="button" className="banner-btn" onClick={() => setAiOpen(true)}>AI 변경</button>
             </div>
           )}
           {error && <div className="banner error">{error}</div>}
@@ -321,6 +348,9 @@ export default function App() {
           <ScrollTopButton />
           {resumeOpen && resumeFiles && (
             <ResumeModal files={resumeFiles} onUpload={managerUpload} onDelete={deleteResume} onClose={closeResume} />
+          )}
+          {aiOpen && setting && (
+            <ProviderModal value={setting.provider} auth={auth} disabled={!!scraping} onSelect={selectProvider} onClose={closeAi} />
           )}
         </>
       )}

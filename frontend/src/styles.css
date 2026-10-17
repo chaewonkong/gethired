@@ -58,6 +58,11 @@ header p { margin: 0; color: var(--muted); font-size: 13px; }
 }
 .banner.error { background: #fef2f2; border-left-color: var(--err); }
 .banner code { background: #fff; border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; }
+.banner-btn {
+  display: block; margin-top: 8px; padding: 6px 12px; border: 1px solid var(--banner-border); border-radius: 8px;
+  background: #fff; color: var(--warn); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.banner-btn:hover { background: #fef3c7; }
 
 .toolbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 .btn {
@@ -235,8 +240,9 @@ select {
 .toast button { border: 0; background: none; color: inherit; font-size: 18px; line-height: 1; cursor: pointer; padding: 2px 6px; opacity: .8; }
 .toast button:hover { opacity: 1; }
 
+.header-actions { margin-left: auto; flex: none; display: flex; gap: 8px; }
 .header-btn {
-  margin-left: auto; flex: none; padding: 7px 14px; border: 1px solid var(--accent-line); border-radius: 10px;
+  flex: none; padding: 7px 14px; border: 1px solid var(--accent-line); border-radius: 10px;
   background: var(--accent-soft); color: var(--accent-text); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
 }
 .header-btn:hover { background: #e0f2fe; }

@@ -70,7 +70,7 @@ export interface AuthStatus {
 export class LoginRequiredError extends Error {
   provider: Provider | null;
   constructor(body?: { provider?: Provider; message?: string } | null) {
-    super(body?.message ?? "login required");
+    super(body?.message ?? "로그인이 필요합니다. 터미널에서 로그인 후 다시 시도해주세요.");
     this.provider = body?.provider ?? null;
   }
 }
