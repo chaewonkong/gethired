@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile } from "./api";
+import { api, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile, ResumeRejectedError } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
@@ -68,15 +68,25 @@ export default function App() {
     setToast(null);
   };
 
+  // 서버가 400으로 거부한 파일은 toast로 알리고 나머지는 계속 올린다. 모두 올라갔을 때만 true
   const uploadResumes = async (files: File[]): Promise<boolean> => {
     const invalid = invalidResumeFiles(files);
     if (invalid) {
       showToast(invalid, "error");
       return false;
     }
+    let rejected = 0;
     try {
-      for (const f of files) await api.putResume(f.name, await f.text());
-      return true;
+      for (const f of files) {
+        try {
+          await api.putResume(f.name, f);
+        } catch (e) {
+          if (!(e instanceof ResumeRejectedError)) throw e;
+          rejected++;
+          showToast(e.message, "error");
+        }
+      }
+      return rejected === 0;
     } catch (e) {
       setError(String(e));
       return false;

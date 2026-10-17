@@ -78,6 +78,9 @@ export class LoginRequiredError extends Error {
 /** job 실행 중이라 provider를 바꿀 수 없음 (409) */
 export class JobRunningError extends Error {}
 
+/** 이력서 업로드 400. message는 서버 detail (확장자·텍스트 없는 PDF 등) */
+export class ResumeRejectedError extends Error {}
+
 const readJson = (r: Response) => r.json().catch(() => null);
 
 async function get<T>(path: string): Promise<T> {
@@ -104,7 +107,13 @@ export const api = {
   postings: () => get<Posting[]>("/api/postings"),
   job: (id: string) => get<Job>(`/api/scrape/${id}`),
   resumeFiles: () => get<ResumeFile[]>("/api/resume"),
-  putResume: (name: string, content: string) => send("resume", `/api/resume/${encodeURIComponent(name)}`, "PUT", { content }),
+  async putResume(name: string, file: Blob): Promise<void> {
+    const r = await fetch(`/api/resume/${encodeURIComponent(name)}`, { method: "PUT", headers: { "Content-Type": "application/octet-stream" }, body: file });
+    if (r.ok) return;
+    const detail = (await readJson(r))?.detail;
+    const message = typeof detail === "string" ? detail : `resume: ${r.status}`;
+    throw r.status === 400 ? new ResumeRejectedError(message) : new Error(message);
+  },
   deleteResume: (name: string) => send("resume", `/api/resume/${encodeURIComponent(name)}`, "DELETE"),
   setInterests: (companies: string[]) => send("interests", "/api/interests", "PUT", { companies }),
   setInterest: (company: string, on: boolean) => send("interest", `/api/companies/${company}/interest`, on ? "PUT" : "DELETE"),

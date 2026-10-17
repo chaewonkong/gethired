@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { api, JobRunningError, LoginRequiredError } from "./api";
+import { api, JobRunningError, LoginRequiredError, ResumeRejectedError } from "./api";
 
 function stubFetch(status = 200, body: unknown = {}) {
   const fetch = vi.fn(async () => new Response(JSON.stringify(body), { status }));
@@ -95,6 +95,31 @@ describe("api", () => {
     expect(err).not.toBeInstanceOf(JobRunningError);
     expect(err).not.toBeInstanceOf(LoginRequiredError);
     expect(err.message).toBe("provider: 400");
+  });
+
+  it("putResume은 파일을 바이트 그대로 PUT", async () => {
+    const fetch = stubFetch();
+    const pdf = new File(["%PDF-1.4"], "이력서.pdf", { type: "application/pdf" });
+    await api.putResume("이력서.pdf", pdf);
+    expect(fetch).toHaveBeenCalledWith(`/api/resume/${encodeURIComponent("이력서.pdf")}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: pdf,
+    });
+  });
+
+  it("putResume 400은 detail을 message로 하는 ResumeRejectedError", async () => {
+    stubFetch(400, { detail: "md 또는 pdf 파일만 업로드할 수 있습니다: a.txt" });
+    const err = await api.putResume("a.txt", new Blob(["x"])).catch((e) => e);
+    expect(err).toBeInstanceOf(ResumeRejectedError);
+    expect(err.message).toBe("md 또는 pdf 파일만 업로드할 수 있습니다: a.txt");
+  });
+
+  it("putResume 그 외 실패는 일반 Error", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("", { status: 500 })));
+    const err = await api.putResume("a.md", new Blob(["x"])).catch((e) => e);
+    expect(err).not.toBeInstanceOf(ResumeRejectedError);
+    expect(err.message).toBe("resume: 500");
   });
 
   it("startScrape 성공 시 job_id", async () => {

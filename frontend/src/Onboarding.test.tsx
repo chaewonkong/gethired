@@ -6,7 +6,7 @@ import { AuthStatus, Company, Provider, ResumeFile } from "./api";
 import { makeCompany, stubIntersectionObserver } from "./test/fixtures";
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
-const file = (name: string, content = "# resume") => new File([content], name, { type: "text/markdown" });
+const file = (name: string, content = "# resume") => new File([content], name, { type: name.endsWith(".pdf") ? "application/pdf" : "text/markdown" });
 type Handler = (init?: RequestInit) => Response | Promise<Response>;
 
 interface BackendInit {
@@ -45,7 +45,7 @@ function stubBackend(init: BackendInit = {}, routes: Record<string, Handler> = {
       return json([...files.keys()].sort().map((name): ResumeFile => ({ name, size: 1, updated_at: "2026-10-15T00:00:00+00:00" })));
     const resume = path.match(/^\/api\/resume\/(.+)$/);
     if (resume && method === "PUT") {
-      files.set(decodeURIComponent(resume[1]), JSON.parse(String(init!.body)).content);
+      files.set(decodeURIComponent(resume[1]), await (init!.body as Blob).text());
       return json({});
     }
     if (method === "PUT" && path === "/api/interests") {
@@ -102,23 +102,58 @@ describe("onboarding", () => {
     expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
   });
 
-  it("md가 아닌 파일이 섞여 있으면 업로드하지 않고 알린다", async () => {
+  it("md·pdf가 아닌 파일이 섞여 있으면 업로드하지 않고 알린다", async () => {
     const backend = stubBackend();
     render(<App />);
     await screen.findByRole("heading", { name: "이력서 업로드" });
-    drop([file("resume.md"), file("resume.pdf")]);
-    expect(await screen.findByRole("alert")).toHaveTextContent("md 파일만 업로드할 수 있습니다: resume.pdf");
+    drop([file("resume.md"), file("resume.txt"), file("photo.PDF")]);
+    expect(await screen.findByRole("alert")).toHaveTextContent("md 또는 pdf 파일만 업로드할 수 있습니다: resume.txt, photo.PDF");
     expect(backend.files.size).toBe(0);
     expect(screen.getByRole("heading", { name: "이력서 업로드" })).toBeInTheDocument();
   });
 
-  it("1MB를 넘는 파일은 거부한다", async () => {
+  it("pdf는 바이트 그대로 올라가고 목록에 나타난다", async () => {
+    const backend = stubBackend();
+    render(<App />);
+    await screen.findByRole("heading", { name: "이력서 업로드" });
+    drop([file("resume.pdf", "%PDF-1.4 fake")]);
+    expect(await screen.findByRole("status")).toHaveTextContent("이력서를 업로드했습니다");
+    expect(backend.files.get("resume.pdf")).toBe("%PDF-1.4 fake");
+    expect(backend.fetch).toHaveBeenCalledWith("/api/resume/resume.pdf", expect.objectContaining({ method: "PUT", headers: { "Content-Type": "application/octet-stream" } }));
+    await userEvent.click(screen.getByRole("button", { name: "닫기" }));
+    expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
+  });
+
+  it("1MB를 넘는 파일도 업로드한다", async () => {
     const backend = stubBackend();
     render(<App />);
     await screen.findByRole("heading", { name: "이력서 업로드" });
     drop([file("big.md", "x".repeat(1024 * 1024 + 1))]);
-    expect(await screen.findByRole("alert")).toHaveTextContent("1MB");
+    expect(await screen.findByRole("status")).toHaveTextContent("이력서를 업로드했습니다");
+    expect(backend.files.get("big.md")).toHaveLength(1024 * 1024 + 1);
+  });
+
+  it("서버가 400으로 거부한 파일은 detail을 toast로 보여주고 나머지는 올린다", async () => {
+    const detail = "텍스트를 추출할 수 없는 PDF입니다 (스캔·이미지 PDF): scan.pdf";
+    const backend = stubBackend({}, { "PUT /api/resume/scan.pdf": () => json({ detail }, 400) });
+    render(<App />);
+    await screen.findByRole("heading", { name: "이력서 업로드" });
+    drop([file("scan.pdf"), file("resume.md")]);
+    expect(await screen.findByRole("alert")).toHaveTextContent(detail);
+    expect(backend.files.has("scan.pdf")).toBe(false);
+    expect(backend.files.get("resume.md")).toBe("# resume");
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
+  });
+
+  it("업로드가 400 외로 실패하면 에러 배너", async () => {
+    const backend = stubBackend({}, { "PUT /api/resume/resume.md": () => new Response("", { status: 500 }) });
+    render(<App />);
+    await screen.findByRole("heading", { name: "이력서 업로드" });
+    drop([file("resume.md"), file("portfolio.md")]);
+    expect(await screen.findByText("Error: resume: 500")).toBeInTheDocument();
     expect(backend.files.size).toBe(0);
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   });
 
   it("클릭으로 파일 선택해 업로드할 수 있다", async () => {
@@ -343,10 +378,10 @@ describe("resume manager", () => {
     const dialog = await openManager();
     expect(dialog).toHaveTextContent("resume.md");
 
-    drop([file("resume.md", "new"), file("portfolio.md")]);
+    drop([file("resume.md", "new"), file("portfolio.pdf")]);
     expect(await screen.findByRole("status")).toHaveTextContent("이력서를 업로드했습니다");
     expect(backend.files.get("resume.md")).toBe("new");
-    expect(await screen.findByText("portfolio.md")).toBeInTheDocument();
+    expect(await screen.findByText("portfolio.pdf")).toBeInTheDocument();
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
   });
