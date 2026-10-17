@@ -168,3 +168,14 @@ def test_interests_set_and_toggle():
     assert repo.list_interests() == ["kakao", "naver"]
     repo.set_interests(["line"], "T5")
     assert repo.list_interests() == ["line"]
+
+
+def test_settings_get_set_overwrite():
+    repo = Repository()
+    assert repo.get_setting("provider") is None
+    repo.set_setting("provider", "claude", "T1")
+    assert repo.get_setting("provider") == "claude"
+    repo.set_setting("provider", "codex", "T2")
+    assert repo.get_setting("provider") == "codex"
+    assert repo.conn.execute("SELECT updated_at FROM settings WHERE key='provider'").fetchone()[0] == "T2"
+    assert repo.get_setting("missing") is None

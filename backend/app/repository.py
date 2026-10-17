@@ -60,6 +60,11 @@ CREATE TABLE IF NOT EXISTS profile_cache (
     profile TEXT NOT NULL,
     created_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
 """
 
 
@@ -247,4 +252,14 @@ class Repository:
     def set_profile_cache(self, hash_: str, profile: dict[str, Any], now: str) -> None:
         self.conn.execute("INSERT OR REPLACE INTO profile_cache (hash, profile, created_at) VALUES (?, ?, ?)",
                           (hash_, json.dumps(profile, ensure_ascii=False), now))
+        self.conn.commit()
+
+    # --- settings ---
+    def get_setting(self, key: str) -> str | None:
+        r = self.conn.execute("SELECT value FROM settings WHERE key=?", (key,)).fetchone()
+        return r["value"] if r else None
+
+    def set_setting(self, key: str, value: str, now: str) -> None:
+        self.conn.execute("INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, ?)",
+                          (key, value, now))
         self.conn.commit()
