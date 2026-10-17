@@ -53,7 +53,32 @@ export interface Job {
   companies: Record<string, { status: CompanyStatus; fetched: number; new: number; stored: number; excluded: number; deleted: number; error: string | null }>;
 }
 
-export class LoginRequiredError extends Error {}
+export type Provider = "claude" | "codex";
+
+export interface ProviderSetting {
+  provider: Provider;
+  chosen: boolean;
+}
+
+export interface AuthStatus {
+  provider: Provider;
+  logged_in: boolean;
+  login_command: string;
+}
+
+/** 스크래핑 401. body가 있으면 provider·message를 담는다 */
+export class LoginRequiredError extends Error {
+  provider: Provider | null;
+  constructor(body?: { provider?: Provider; message?: string } | null) {
+    super(body?.message ?? "login required");
+    this.provider = body?.provider ?? null;
+  }
+}
+
+/** job 실행 중이라 provider를 바꿀 수 없음 (409) */
+export class JobRunningError extends Error {}
+
+const readJson = (r: Response) => r.json().catch(() => null);
 
 async function get<T>(path: string): Promise<T> {
   const r = await fetch(path);
@@ -67,7 +92,14 @@ async function send(label: string, path: string, method: string, body?: unknown)
 }
 
 export const api = {
-  authStatus: () => get<{ logged_in: boolean }>("/api/auth/status"),
+  authStatus: () => get<AuthStatus>("/api/auth/status"),
+  providerSetting: () => get<ProviderSetting>("/api/settings/provider"),
+  async setProvider(provider: Provider): Promise<AuthStatus> {
+    const r = await fetch("/api/settings/provider", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ provider }) });
+    if (r.status === 409) throw new JobRunningError((await readJson(r))?.message ?? "job running");
+    if (!r.ok) throw new Error(`provider: ${r.status}`);
+    return r.json();
+  },
   companies: () => get<Company[]>("/api/companies"),
   postings: () => get<Posting[]>("/api/postings"),
   job: (id: string) => get<Job>(`/api/scrape/${id}`),
@@ -86,7 +118,7 @@ export const api = {
   },
   async startScrape(): Promise<{ job_id: string }> {
     const r = await fetch("/api/scrape", { method: "POST" });
-    if (r.status === 401) throw new LoginRequiredError();
+    if (r.status === 401) throw new LoginRequiredError(await readJson(r));
     if (!r.ok) throw new Error(`scrape: ${r.status}`);
     return r.json();
   },
