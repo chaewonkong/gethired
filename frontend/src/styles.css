@@ -265,3 +265,25 @@ select {
   padding: 5px 12px; color: var(--err); font: inherit; font-size: 13px; cursor: pointer;
 }
 .file-delete:hover { background: #fef2f2; border-color: #fecaca; }
+
+.provider-picker { display: grid; gap: 10px; margin-bottom: 16px; }
+.provider-card {
+  display: grid; gap: 4px; padding: 14px 16px; border-radius: 10px; cursor: pointer;
+  background: var(--surface); box-shadow: var(--shadow); transition: box-shadow .15s, background .15s;
+}
+.provider-card:hover { box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.1); }
+.provider-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.provider-card.on { background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent); }
+.provider-card .provider-name { font-weight: 700; color: var(--accent-text); }
+.provider-picker[aria-disabled="true"] .provider-card { cursor: not-allowed; opacity: .7; }
+.provider-badge {
+  justify-self: start; margin-top: 4px; padding: 2px 8px; border-radius: 6px;
+  background: var(--chip); color: var(--muted); font-size: 12px; font-weight: 600;
+}
+.provider-badge.ok { background: #dcfce7; color: var(--ok); }
+.provider-badge.need { background: #fef3c7; color: var(--warn); }
+.provider-badge code { background: #fff; border: 1px solid var(--border); padding: 0 5px; border-radius: 4px; }
+.provider-notice { margin: -6px 0 16px; color: var(--warn); }
+@media (min-width: 480px) {
+  .provider-picker { grid-template-columns: 1fr 1fr; }
+}
