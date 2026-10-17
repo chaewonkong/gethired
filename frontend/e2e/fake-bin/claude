@@ -1,0 +1,7 @@
+#!/bin/sh
+# 가짜 claude CLI. `claude auth status` → {"loggedIn": <FAKE_AUTH_FILE의 claude>}
+if [ "${1:-}" = "auth" ] && [ "${2:-}" = "status" ]; then
+  v=$(grep -oE '"claude": *(true|false)' "${FAKE_AUTH_FILE:-/dev/null}" | grep -oE 'true|false' || true)
+  printf '{"loggedIn": %s}\n' "${v:-false}"
+fi
+exit 0

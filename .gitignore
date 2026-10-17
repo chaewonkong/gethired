@@ -14,3 +14,6 @@ backend/data/
 frontend/tsconfig.tsbuildinfo
 handoff.md
 resume/
+frontend/.playwright/
+frontend/test-results/
+frontend/playwright-report/

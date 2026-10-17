@@ -1,0 +1,12 @@
+#!/bin/sh
+# 가짜 codex CLI. `codex login status` → 로그인이면 stdout "Logged in using ChatGPT" exit 0, 아니면 stderr "Not logged in" exit 1
+if [ "${1:-}" = "login" ] && [ "${2:-}" = "status" ]; then
+  v=$(grep -oE '"codex": *(true|false)' "${FAKE_AUTH_FILE:-/dev/null}" | grep -oE 'true|false' || true)
+  if [ "$v" = "true" ]; then
+    echo "Logged in using ChatGPT"
+    exit 0
+  fi
+  echo "Not logged in" >&2
+  exit 1
+fi
+exit 0
