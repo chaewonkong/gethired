@@ -4,7 +4,7 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from typing import Any
 
-from .llm import ClaudeAuthError
+from .llm import LLMAuthError
 from .matcher import Match, judge, to_row
 from .profile import Profile, get_profile
 from .repository import Repository, now_iso
@@ -68,7 +68,7 @@ class JobManager:
         auth_failed = asyncio.Event()
         try:
             profile = await self.profile_loader(self.repo)
-        except ClaudeAuthError:
+        except LLMAuthError:
             for s in job.companies.values():
                 s.status = "auth_required"
             job.status, job.finished_at = "auth_required", now_iso()
@@ -102,7 +102,7 @@ class JobManager:
             new = [p for p in postings if p.external_id not in judged]
             state.new = len(new)
             if auth_failed.is_set():
-                raise ClaudeAuthError("session expired during job")
+                raise LLMAuthError("session expired during job")
             matches, results = await self.judge_fn(profile, new)
             job.cost_usd += sum(getattr(r, "cost_usd", 0.0) for r in results)
 
@@ -113,7 +113,7 @@ class JobManager:
             state.stored, state.excluded = len(rows), sum(1 for m in matches if not m.stored)
             state.status = "done"
             self.repo.finish_run(run_id, "done", now_iso(), fetched_count=len(postings))
-        except ClaudeAuthError as e:
+        except LLMAuthError as e:
             auth_failed.set()
             state.status, state.error = "auth_required", str(e)
             self.repo.finish_run(run_id, "auth_required", now_iso(), error=str(e)[:200], fetched_count=state.fetched or None)

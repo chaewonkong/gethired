@@ -10,7 +10,7 @@ from fastapi.testclient import TestClient
 from app import resume
 from app.api import create_app
 from app.jobs import JobManager
-from app.llm import ClaudeAuthError
+from app.llm import LLMAuthError
 from app.matcher import Match
 from app.profile import Preferences, Profile
 from app.repository import Repository
@@ -62,7 +62,7 @@ async def fake_judge(profile, postings):
 
 
 async def auth_failing_judge(profile, postings):
-    raise ClaudeAuthError("Not logged in")
+    raise LLMAuthError("Not logged in")
 
 
 async def load_profile(repo):

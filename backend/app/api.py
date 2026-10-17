@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from . import auth, resume
 from .config import RESUME_DIR
 from .jobs import JobManager
-from .llm import AUTH_MESSAGE
+from .llm import auth_message, current_provider
 from .repository import Repository, now_iso
 
 
@@ -72,7 +72,8 @@ def create_app(repo: Repository, jobs: JobManager,
         if jobs.current and jobs.current.status == "running":
             return {"job_id": jobs.current.id, "status": "running"}
         if not await logged_in():
-            return JSONResponse(status_code=401, content={"code": "claude_login_required", "message": AUTH_MESSAGE})
+            return JSONResponse(status_code=401, content={"code": "claude_login_required",
+                                                          "message": auth_message(current_provider())})
         check_known(companies or [])
         targets = companies or [c for c in repo.list_interests() if c in jobs.scrapers]
         if not targets:

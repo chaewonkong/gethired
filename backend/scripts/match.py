@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.config import DB_PATH  # noqa: E402
-from app.llm import ClaudeAuthError  # noqa: E402
+from app.llm import LLMAuthError  # noqa: E402
 from app.matcher import LEVEL_MIN, LEVELS, Match, judge  # noqa: E402
 from app.profile import get_profile  # noqa: E402
 from app.repository import Repository  # noqa: E402
@@ -85,7 +85,7 @@ async def main() -> int:
     try:
         profile = await get_profile(Repository(DB_PATH))
         judged_now, results = await judge(profile, todo, args.batch_size, args.concurrency)
-    except ClaudeAuthError as e:
+    except LLMAuthError as e:
         print(f"auth error: {e}", file=sys.stderr)
         return 2
     missing = {p.external_id for p in todo} - {m.external_id for m in judged_now}
