@@ -46,7 +46,13 @@
                 "*.claude.ai",
                 "console.anthropic.com",
                 "localhost",
-                "127.0.0.1"
+                "127.0.0.1",
+                "chatgpt.com",
+                "*.chatgpt.com",
+                "api.openai.com",
+                "auth.openai.com",
+                "cdn.playwright.dev",
+                "playwright.download.prss.microsoft.com"
             ]
         }
     }
