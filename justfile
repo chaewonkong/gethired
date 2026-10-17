@@ -52,17 +52,26 @@ test-web:
 test-live:
     cd backend && LIVE=1 uv run pytest tests/test_scrapers_live.py
 
+# 브라우저 e2e (Playwright, chromium). sandbox 안에서는 chromium이 못 떠서 밖에서 실행
+test-e2e: build
+    cd frontend && npm run test:e2e
+
+# e2e 최초 1회: chromium 설치 (frontend/.playwright/)
+e2e-install:
+    cd frontend && PLAYWRIGHT_BROWSERS_PATH=$PWD/.playwright npx playwright install chromium
+
 # 스크래퍼만 실행 → backend/out/<company>.json
 scrape *companies:
     cd backend && uv run python scripts/run_scrape.py {{companies}}
 
-# 파일 기반 매칭 → backend/out/fit.md (예: just match daangn --limit 10)
+# 파일 기반 매칭 → backend/out/fit.md (예: just match daangn --limit 10 --provider codex)
 match *args:
     cd backend && uv run python scripts/match.py {{args}}
 
-# Claude 세션 인증 확인
-auth:
-    claude auth status
+# provider CLI 로그인 확인 (예: just auth codex)
+auth provider="claude":
+    #!/usr/bin/env zsh
+    if [ "{{provider}}" = codex ]; then "${CODEX_BIN:-codex}" login status; else claude auth status; fi
 
 # DB 초기화 (공고·판정 이력 삭제)
 reset-db:

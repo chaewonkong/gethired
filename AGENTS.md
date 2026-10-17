@@ -17,7 +17,8 @@ job-posting/
 |   |   |-- profile.py        # 이력서 -> 프로필
 |   |   |-- resume.py         # resume/*.md 파일 목록·저장·삭제
 |   |   |-- matcher.py        # LLM 판정
-|   |   |-- llm.py            # Claude Agent SDK 래퍼
+|   |   |-- llm.py            # LLM 호출 (Claude Agent SDK / Codex CLI)
+|   |   |-- auth.py           # provider CLI 로그인 확인
 |   |   |-- repository.py     # sqlite 접근
 |   |   `-- main.py           # 앱 조립 + 프론트 정적 서빙
 |   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
@@ -28,8 +29,9 @@ job-posting/
 |   `-- src/
 |       |-- App.tsx           # 상태 · 탭 · 폴링
 |       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, CompanySelect), ...
-|       `-- test/             # vitest 설정 · 픽스처
+|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
+|       |-- test/             # vitest 설정 · 픽스처
+|       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서)
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   `-- plans/                # 실행 계획
@@ -40,4 +42,4 @@ job-posting/
 ## 디버그
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
 - `just match [company] [--limit N] [--planted]`: 파일 기반 매칭, `backend/out/fit.md`
-- `just auth`: 세션 인증 확인 · `just reset-db`: 공고·판정 이력 삭제
+- `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제

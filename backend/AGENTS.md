@@ -1,6 +1,6 @@
 # backend
 
-FastAPI + sqlite. 채용 사이트 스크래핑(httpx) → 이력서 프로필 기반 LLM 판정(Claude Agent SDK) → 저장·조회 API.
+FastAPI + sqlite. 채용 사이트 스크래핑(httpx) → 이력서 프로필 기반 LLM 판정(Claude Agent SDK 또는 Codex CLI) → 저장·조회 API.
 설계 근거는 `../design/specs/`.
 
 ## 명령 (backend/에서)
@@ -41,12 +41,12 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
      |
      +--> profile.py  -- read ----------> resume/*.md
      |                -- cache ---------> repository.py (profile_cache, key = resume hash)
-     |                -- extract -------> Claude (local `claude login` session)
+     |                -- extract -------> LLM (provider CLI 로그인 세션)
      |
-     +--> matcher.py  -- judge 20/batch -> Claude
+     +--> matcher.py  -- judge 20/batch -> LLM
 ```
 - 스크래핑은 httpx로 짠 결정적 코드이고, LLM은 프로필 추출과 공고 판정에만 쓴다
-- LLM은 API key 없이 로컬 Claude Code 로그인 세션으로 호출한다
+- LLM은 API key 없이 provider(Claude Code / Codex) CLI의 로컬 로그인 세션으로 호출한다. provider는 `settings` 테이블에 저장되고 UI에서 고른다
 
 ### 스크래핑 한 번의 흐름
 ```
@@ -56,14 +56,14 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
  |     job 생성 후 job_id 즉시 반환. frontend는 끝날 때까지 1.5초마다 GET /api/scrape/{job_id}
  |
  +-> 1. profile
- |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 Claude로 추출
+ |     resume/*.md 해시로 캐시 조회 -> 없거나 바뀌었으면 LLM으로 추출
  |
  +-> 2. per company (parallel)
  |     회사별로 동시에 실행, 한 회사가 실패해도 나머지는 계속
  |     a. fetch ............. 채용 사이트에서 공고 수집 (0건이면 실패 처리)
  |     b. sync .............. 다시 나온 공고 복구, 사라진 공고 soft delete
  |     c. filter ............ 이미 판정한 공고 제외
- |     d. judge ............. 신규 공고만 Claude로 20건씩 판정
+ |     d. judge ............. 신규 공고만 LLM으로 20건씩 판정
  |     e. save .............. strong/good/stretch는 postings에 저장
  |                            exclude는 judgments에만 기록 (재판정 방지)
  |
@@ -76,23 +76,25 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 ## 모듈
 | 파일 | 역할 |
 |---|---|
-| `app/config.py` | 경로(`RESUME_DIR`, `DB_PATH`, `FRONTEND_DIST`), 매칭 배치 크기·동시성 |
+| `app/config.py` | 경로(`RESUME_DIR`, `DB_PATH`, `FRONTEND_DIST`), 매칭 배치 크기·동시성. env override: `DB_PATH`, `RESUME_DIR`, `LLM_PROVIDER`, `LLM_TIMEOUT_S`, `CLAUDE_MODEL`, `CODEX_BIN`, `CODEX_MODEL` |
 | `app/scrapers/base.py` | `RawPosting`(정규화된 공고), `Scraper` ABC, `REGISTRY`(서브클래스 정의 시 자동 등록), `html_to_text`, `parse_date` |
 | `app/scrapers/<company>.py` | 회사별 `fetch()`. 엔지니어링 직군 1차 필터는 여기서. 원본 분류는 `category`에 보존 |
 | `app/scrapers/greenhouse.py` | Greenhouse 계열 공통 베이스 (쿠팡·당근·토스) |
 | `app/scrapers/greetinghr.py` | GreetingHR 계열 공통 베이스 (업스테이지·카카오페이). 공개 API가 없어 목록은 첫 페이지, 본문은 공고 페이지의 `__NEXT_DATA__`에서 꺼낸다 |
-| `app/llm.py` | `ask_json()`: Agent SDK structured output 래퍼. 모델 `claude-opus-5-5` 고정. 인증 실패는 `ClaudeAuthError` |
+| `app/llm.py` | `ask_json()`: structured output 래퍼. `configure(provider)`로 모듈 상태를 두고 claude(Agent SDK) / codex(`codex exec` subprocess) 분기. 인증 실패는 `LLMAuthError`, 그 외 `LLMError`. codex는 호출 전 `is_logged_in` 선체크(미로그인 exec는 끝나지 않음), strict schema 변환(`to_strict_schema`), `-o` 파일로 결과, `--json`으로 usage·401 감지. runner는 `llm.codex_runner`로 주입 |
+| `app/auth.py` | `is_logged_in(provider)`: claude는 `claude auth status` JSON, codex는 `$CODEX_BIN login status` exit code. provider별 single-flight |
 | `app/profile.py` | `resume/*.md` → `Profile`. 파일 이름·내용 해시로 `profile_cache`에 캐시 |
 | `app/resume.py` | `resume/` 파일 목록·저장·삭제. 파일명은 basename만, `.md`만, 1MB 제한, 디렉토리 자동 생성, 같은 이름 덮어쓰기 |
 | `app/matcher.py` | 20건 배치 판정 → `Match`(fit_level/score/gaps/fit_reason). score 구간이 fit_level보다 우선. 누락 id는 재시도 |
-| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `interests`, `scrape_runs`, `profile_cache` |
-| `app/jobs.py` | 스크래핑 job 실행·상태(`Job`, `CompanyState`). 회사 단위 실패 격리, 세션 만료 시 `auth_required` |
-| `app/api.py` | `create_app(repo, jobs, logged_in, resume_dir)`: `/api/{auth/status, companies, companies/{c}/interest, interests, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide, resume, resume/{name}}` |
-| `app/main.py` | 앱 조립 + `frontend/dist` 정적 서빙. `ANTHROPIC_API_KEY` 제거 |
+| `app/repository.py` | sqlite 접근 전부. 테이블: `postings`, `judgments`, `bookmarks`, `hides`, `interests`, `scrape_runs`, `profile_cache`, `settings`(key/value, `provider`) |
+| `app/jobs.py` | 스크래핑 job 실행·상태(`Job`, `CompanyState`). job 시작 시 settings의 provider로 `llm.configure()`, job 전체가 그 provider로 고정(`Job.provider`). 회사 단위 실패 격리, 세션 만료 시 `auth_required` |
+| `app/api.py` | `create_app(repo, jobs, logged_in: (provider) -> bool, resume_dir)`: `/api/{settings/provider, auth/status, companies, companies/{c}/interest, interests, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide, resume, resume/{name}}`. `GET settings/provider`는 DB만(`{provider, chosen}`), `auth/status`는 CLI 실행. `PUT settings/provider`는 job 실행 중 409, 저장 후 auth status 반환. 미로그인 scrape는 401 `{code: "login_required", provider, message}` |
+| `app/main.py` | 앱 조립 + `frontend/dist` 정적 서빙. `ANTHROPIC_API_KEY`·`OPENAI_API_KEY` 제거 |
 | `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증. DB는 `profile_cache`만 사용. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
 
 ## 규칙
-- LLM은 로컬 Claude Code 로그인 세션으로만 호출한다. API key를 쓰지 않는다
+- LLM은 선택한 provider CLI(Claude Code / Codex)의 로컬 로그인 세션으로만 호출한다. API key를 쓰지 않는다
+- Claude Code sandbox 안에서는 실제 `codex exec`가 실패한다(`~/.codex` 쓰기 불가). codex 경로는 runner fake로 테스트하고, 라이브 확인은 sandbox 밖에서
 - 스크래핑은 결정적 코드(httpx)로. LLM은 프로필 추출과 매칭에만 쓴다
 - 스크래퍼가 0건을 반환하면 실패로 처리한다 (soft delete 오작동 방지)
 - 삭제는 soft delete(`deleted_at`). 공고가 다시 나타나면 복구된다
@@ -117,5 +119,6 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 ## 테스트
 - `tests/test_parsers*.py`: `fixtures/`의 저장된 응답으로 파서 검증
 - `tests/test_repository.py`: in-memory sqlite
+- `tests/test_llm.py` · `tests/test_llm_codex.py` · `tests/test_auth.py`: provider 분기, strict 변환, codex 출력 파싱(`fixtures/codex_*.jsonl`, 실측 출력), 인증 판별, single-flight. 실제 CLI 실행 없음. `conftest.py`가 매 테스트 후 `configure("claude")`
 - `tests/test_api.py`: `FakeScraper` + fake judge/profile로 job·API 전체 흐름 (LLM 없음). `make_client`는 기본으로 관심회사 a·b를 넣고, resume는 `tmp_path`를 넘겨 쓴다
 - `tests/test_scrapers_live.py`: `LIVE=1`일 때만
