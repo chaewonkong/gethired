@@ -2,7 +2,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from pypdf import PdfReader
+from pypdf.errors import PyPdfError
+
 MAX_BYTES = 1024 * 1024
+TEXT_LIMIT = 50_000
 
 
 def _path(resume_dir: Path, name: str) -> Path:
@@ -10,6 +14,23 @@ def _path(resume_dir: Path, name: str) -> Path:
     if base != name or not base.endswith(".md") or base.startswith("."):
         raise ValueError(f"invalid resume file name: {name}")
     return resume_dir / base
+
+
+def extract_text(path: Path) -> str:
+    """md는 그대로, pdf는 페이지 텍스트를 이어 붙인다. 텍스트가 없으면 "". 깨진 pdf는 ValueError"""
+    if path.suffix == ".pdf":
+        try:
+            pages = [page.extract_text() or "" for page in PdfReader(path).pages]
+        except (PyPdfError, ValueError, OSError, KeyError, TypeError, IndexError) as e:
+            raise ValueError(f"cannot read pdf: {path.name}: {e}") from e
+        text = "\n".join(pages)
+    else:
+        text = path.read_text()
+    if not text.strip():
+        return ""
+    if len(text) > TEXT_LIMIT:
+        return text[:TEXT_LIMIT] + "\n[이하 생략]"
+    return text
 
 
 def list_files(resume_dir: Path) -> list[dict[str, Any]]:
