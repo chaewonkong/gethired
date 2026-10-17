@@ -15,6 +15,8 @@ function stubApi(postings: Posting[], routes: Record<string, Handler> = {}) {
     if (key === "GET /api/postings") return json(postings);
     if (key === "GET /api/companies") return json([makeCompany()]);
     if (key === "GET /api/resume") return json([{ name: "resume.md", size: 10, updated_at: "2026-10-15T00:00:00+00:00" }]);
+    if (key === "GET /api/settings/provider") return json({ provider: "claude", chosen: true });
+    if (key === "GET /api/auth/status") return json({ provider: "claude", logged_in: true, login_command: "claude login" });
     if (key.endsWith("/bookmark") || key.endsWith("/hide")) return json({});
     return json({}, 404);
   });

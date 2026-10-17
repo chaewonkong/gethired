@@ -2,19 +2,43 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App";
-import { Company, ResumeFile } from "./api";
+import { AuthStatus, Company, Provider, ResumeFile } from "./api";
 import { makeCompany, stubIntersectionObserver } from "./test/fixtures";
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
 const file = (name: string, content = "# resume") => new File([content], name, { type: "text/markdown" });
+type Handler = (init?: RequestInit) => Response | Promise<Response>;
 
-/** resume/관심회사 상태를 들고 있는 가짜 백엔드 */
-function stubBackend(init: { files?: string[]; interested?: string[] } = {}) {
+interface BackendInit {
+  files?: string[];
+  interested?: string[];
+  provider?: Provider;
+  chosen?: boolean;
+  loggedIn?: Partial<Record<Provider, boolean>>;
+}
+
+/** resume/관심회사/provider/로그인 상태를 들고 있는 가짜 백엔드. routes로 경로별 응답을 덮어쓸 수 있다 */
+function stubBackend(init: BackendInit = {}, routes: Record<string, Handler> = {}) {
   const files = new Map((init.files ?? []).map((n) => [n, "x"]));
   let interested = new Set(init.interested ?? []);
+  let provider: Provider = init.provider ?? "claude";
+  let chosen = init.chosen ?? true;
+  const loggedIn: Record<Provider, boolean> = { claude: false, codex: false, ...init.loggedIn };
+  const authBody = (): AuthStatus => ({ provider, logged_in: loggedIn[provider], login_command: `${provider} login` });
   const base: Company[] = [makeCompany({ company: "toss", display_name: "토스" }), makeCompany({ company: "naver", display_name: "네이버" })];
   const fetch = vi.fn(async (path: string, init?: RequestInit) => {
     const method = init?.method ?? "GET";
+    const key = `${method} ${path}`;
+    if (routes[key]) return routes[key](init);
+    if (key === "GET /api/settings/provider") return json({ provider, chosen });
+    if (key === "GET /api/auth/status") return json(authBody());
+    if (key === "PUT /api/settings/provider") {
+      const p = JSON.parse(String(init!.body)).provider;
+      if (p !== "claude" && p !== "codex") return json({ detail: `unknown provider: ${p}` }, 400);
+      provider = p;
+      chosen = true;
+      return json(authBody());
+    }
     if (method === "GET" && path === "/api/postings") return json([]);
     if (method === "GET" && path === "/api/companies") return json(base.map((c) => ({ ...c, interested: interested.has(c.company) })));
     if (method === "GET" && path === "/api/resume")
@@ -31,7 +55,16 @@ function stubBackend(init: { files?: string[]; interested?: string[] } = {}) {
     return json({}, 404);
   });
   vi.stubGlobal("fetch", fetch);
-  return { fetch, files, interested: () => interested };
+  const calls = (key: string) => fetch.mock.calls.filter(([path, init]) => `${init?.method ?? "GET"} ${path}` === key).length;
+  return {
+    fetch,
+    files,
+    interested: () => interested,
+    setting: () => ({ provider, chosen }),
+    setLoggedIn: (p: Provider, v: boolean) => (loggedIn[p] = v),
+    authCalls: () => calls("GET /api/auth/status"),
+    putCalls: () => calls("PUT /api/settings/provider"),
+  };
 }
 
 const drop = (files: File[]) => fireEvent.drop(screen.getByRole("button", { name: "이력서 파일 업로드" }), { dataTransfer: { files } });
@@ -130,6 +163,153 @@ describe("onboarding", () => {
     stubBackend({ files: ["resume.md"], interested: ["toss"] });
     render(<App />);
     expect(await screen.findByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
+  });
+});
+
+describe("provider step", () => {
+  const radio = (name: string) => screen.getByRole("radio", { name });
+  const advance = (ms: number) =>
+    act(() => {
+      vi.advanceTimersByTime(ms);
+    });
+
+  beforeEach(() => {
+    stubIntersectionObserver();
+  });
+
+  it("업로드 → AI 선택 → 관심회사 → 공고 화면. 카드 선택이 저장하고 계속은 다시 저장하지 않는다", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const backend = stubBackend({ chosen: false });
+    render(<App />);
+    await screen.findByRole("heading", { name: "이력서 업로드" });
+    drop([file("resume.md")]);
+    await screen.findByRole("status");
+    advance(2000);
+
+    expect(await screen.findByRole("heading", { name: "AI 선택" })).toBeInTheDocument();
+    expect(radio("Claude Code")).toHaveAttribute("aria-checked", "true");
+    await userEvent.click(radio("Codex"));
+    await waitFor(() => expect(backend.setting()).toEqual({ provider: "codex", chosen: true }));
+    expect(radio("Codex")).toHaveAttribute("aria-checked", "true");
+    expect(await screen.findByText("codex login")).toBeInTheDocument();
+    expect(radio("Codex")).toHaveTextContent("로그인 필요");
+    expect(screen.getByRole("heading", { name: "AI 선택" })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "계속" }));
+    expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
+    expect(backend.putCalls()).toBe(1);
+
+    await userEvent.click(screen.getByRole("checkbox", { name: /네이버/ }));
+    await userEvent.click(screen.getByRole("button", { name: /^확인/ }));
+    expect(await screen.findByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
+  });
+
+  it("chosen이면 AI 선택을 건너뛴다", async () => {
+    stubBackend({ files: ["resume.md"], chosen: true });
+    render(<App />);
+    expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "AI 선택" })).not.toBeInTheDocument();
+  });
+
+  it("resume·관심회사가 있고 provider만 없으면 AI 선택부터. 미로그인이라도 계속하면 현재 선택을 저장하고 공고 화면", async () => {
+    const backend = stubBackend({ files: ["resume.md"], interested: ["toss"], chosen: false });
+    render(<App />);
+    expect(await screen.findByRole("heading", { name: "AI 선택" })).toBeInTheDocument();
+    expect(radio("Claude Code")).toHaveAttribute("aria-checked", "true");
+    expect(await screen.findByText("claude login")).toBeInTheDocument();
+    expect(radio("Claude Code")).toHaveTextContent("로그인 필요");
+
+    await userEvent.click(screen.getByRole("button", { name: "계속" }));
+    expect(await screen.findByRole("button", { name: "스크래핑 하기" })).toBeInTheDocument();
+    expect(backend.setting()).toEqual({ provider: "claude", chosen: true });
+    expect(backend.putCalls()).toBe(1);
+  });
+
+  it("provider가 codex로 미리 정해져 있으면 Codex가 선택돼 있다", async () => {
+    stubBackend({ files: ["resume.md"], provider: "codex", chosen: false });
+    render(<App />);
+    await screen.findByRole("heading", { name: "AI 선택" });
+    expect(radio("Codex")).toHaveAttribute("aria-checked", "true");
+    expect(radio("Claude Code")).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("auth 응답을 기다리지 않고 첫 화면을 그린다. 배지는 확인 중", async () => {
+    stubBackend({ files: ["resume.md"], chosen: false }, { "GET /api/auth/status": () => new Promise(() => {}) });
+    render(<App />);
+    expect(await screen.findByRole("heading", { name: "AI 선택" })).toBeInTheDocument();
+    expect(radio("Claude Code")).toHaveTextContent("확인 중");
+  });
+
+  it("저장이 실패하면 선택을 되돌리고 에러를 띄운다", async () => {
+    const backend = stubBackend({ files: ["resume.md"], chosen: false }, { "PUT /api/settings/provider": () => new Response("", { status: 500 }) });
+    render(<App />);
+    await screen.findByRole("heading", { name: "AI 선택" });
+    await userEvent.click(radio("Codex"));
+    await waitFor(() => expect(radio("Claude Code")).toHaveAttribute("aria-checked", "true"));
+    expect(screen.getByText(/provider: 500/)).toBeInTheDocument();
+    expect(backend.setting().chosen).toBe(false);
+    expect(screen.getByRole("heading", { name: "AI 선택" })).toBeInTheDocument();
+  });
+
+  describe("폴링", () => {
+    it("응답 후 3초 뒤 다시 조회한다", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const backend = stubBackend({ files: ["resume.md"], chosen: false });
+      render(<App />);
+      await screen.findByText("claude login");
+      expect(backend.authCalls()).toBe(1);
+      advance(2000);
+      expect(backend.authCalls()).toBe(1);
+      advance(1000);
+      expect(backend.authCalls()).toBe(2);
+    });
+
+    it("응답이 오기 전에는 겹쳐 호출하지 않는다", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const pendingAuth: ((r: Response) => void)[] = [];
+      const backend = stubBackend({ files: ["resume.md"], chosen: false }, {
+        "GET /api/auth/status": () => new Promise<Response>((r) => pendingAuth.push(r)),
+      });
+      render(<App />);
+      await screen.findByRole("heading", { name: "AI 선택" });
+      expect(backend.authCalls()).toBe(1);
+      advance(10000);
+      expect(backend.authCalls()).toBe(1);
+
+      pendingAuth[0](json({ provider: "claude", logged_in: false, login_command: "claude login" }));
+      await screen.findByText("claude login");
+      advance(3000);
+      expect(backend.authCalls()).toBe(2);
+    });
+
+    it("로그인되면 배지가 바뀌고 폴링이 멈춘다", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const backend = stubBackend({ files: ["resume.md"], chosen: false });
+      render(<App />);
+      await screen.findByText("claude login");
+      backend.setLoggedIn("claude", true);
+      advance(3000);
+      await waitFor(() => expect(radio("Claude Code")).toHaveTextContent("로그인됨"));
+      const n = backend.authCalls();
+      advance(10000);
+      expect(backend.authCalls()).toBe(n);
+    });
+
+    it("provider를 바꾸면 새 provider 상태로 배지가 바뀐다", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const backend = stubBackend({ files: ["resume.md"], chosen: false, loggedIn: { claude: true } });
+      render(<App />);
+      await waitFor(() => expect(radio("Claude Code")).toHaveTextContent("로그인됨"));
+      const n = backend.authCalls();
+      advance(10000);
+      expect(backend.authCalls()).toBe(n);
+
+      await userEvent.click(radio("Codex"));
+      await screen.findByText("codex login");
+      backend.setLoggedIn("codex", true);
+      advance(3000);
+      await waitFor(() => expect(radio("Codex")).toHaveTextContent("로그인됨"));
+    });
   });
 });
 

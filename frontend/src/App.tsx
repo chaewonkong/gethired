@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, Company, Job, LoginRequiredError, Posting, ResumeFile } from "./api";
+import { api, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
@@ -7,6 +7,7 @@ import { HiddenTab } from "./components/HiddenTab";
 import { CompaniesTab } from "./components/CompaniesTab";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 import { CompanySelect } from "./components/CompanySelect";
+import { ProviderSelect } from "./components/ProviderSelect";
 import { invalidResumeFiles, ResumeDropzone } from "./components/ResumeDropzone";
 import { ResumeModal } from "./components/ResumeModal";
 import { Toast, ToastMessage } from "./components/Toast";
@@ -14,6 +15,7 @@ import { Toast, ToastMessage } from "./components/Toast";
 type Tab = "postings" | "bookmarks" | "hidden" | "companies";
 
 const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", hidden: "숨김", companies: "회사" };
+export const AUTH_POLL_MS = 3000;
 
 // 낙관적 업데이트로 토글하는 공고 플래그와 그 저장 API
 const FLAG_API = { bookmarked: api.setBookmark, hidden: api.setHidden } satisfies Record<string, (id: number, on: boolean) => Promise<void>>;
@@ -31,15 +33,21 @@ export default function App() {
   // 온보딩 업로드 직후 toast가 닫힐 때까지 업로드 화면에 머문다
   const [holdUpload, setHoldUpload] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [setting, setSetting] = useState<ProviderSetting | null>(null);
+  const [auth, setAuth] = useState<AuthStatus | null>(null);
   const pending = useRef(new Set<string>());
   const toastSeq = useRef(0);
+  const provider = setting?.provider;
+  const providerRef = useRef(provider);
+  providerRef.current = provider;
 
   const reload = useCallback(async () => {
     try {
-      const [p, c, r] = await Promise.all([api.postings(), api.companies(), api.resumeFiles()]);
+      const [p, c, r, s] = await Promise.all([api.postings(), api.companies(), api.resumeFiles(), api.providerSetting()]);
       setPostings(p);
       setCompanies(c);
       setResumeFiles(r);
+      setSetting(s);
     } catch (e) {
       setError(String(e));
     }
@@ -113,6 +121,26 @@ export default function App() {
       setError(String(e));
     }
   };
+
+  // 선택은 먼저 바꾸고 PUT. 실패하면 되돌린다. 요청 중 중복 선택은 무시
+  const selectProvider = async (p: Provider): Promise<boolean> => {
+    const prev = setting;
+    if (!prev || pending.current.has("provider")) return false;
+    pending.current.add("provider");
+    setSetting({ ...prev, provider: p });
+    try {
+      setAuth(await api.setProvider(p));
+      return true;
+    } catch (e) {
+      setSetting((s) => (s ? { ...s, provider: prev.provider } : s));
+      if (e instanceof JobRunningError) showToast(e.message, "error");
+      else setError(String(e));
+      return false;
+    } finally {
+      pending.current.delete("provider");
+    }
+  };
+  const finishProviderStep = () => setSetting((s) => (s ? { ...s, chosen: true } : s));
 
   useEffect(() => {
     reload();
@@ -197,10 +225,36 @@ export default function App() {
   };
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
   const phase =
-    resumeFiles === null ? "loading"
+    resumeFiles === null || setting === null ? "loading"
     : resumeFiles.length === 0 || holdUpload ? "upload"
+    : !setting.chosen ? "provider"
     : interested.length === 0 ? "select"
     : "main";
+
+  // provider 화면이 보이고 아직 로그인 전이면 로그인 상태를 폴링한다. 응답 후 3초 뒤 재조회, 다른 provider 응답은 버린다
+  const loggedIn = !!auth && auth.provider === provider && auth.logged_in;
+  const watchAuth = phase === "provider" && !loggedIn;
+  useEffect(() => {
+    if (!watchAuth) return;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const tick = async () => {
+      try {
+        const a = await api.authStatus();
+        if (cancelled) return;
+        if (a.provider === providerRef.current) setAuth(a);
+      } catch (e) {
+        if (cancelled) return;
+        setError(String(e));
+      }
+      timer = setTimeout(tick, AUTH_POLL_MS);
+    };
+    tick();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [watchAuth, provider]);
 
   return (
     <div className="container">
@@ -225,6 +279,9 @@ export default function App() {
           <p className="meta">이력서를 기준으로 나에게 맞는 공고를 골라 등급을 매깁니다. 이력서·경력기술서·포트폴리오 등 여러 파일을 올릴 수 있습니다.</p>
           <ResumeDropzone onFiles={onboardingUpload} />
         </section>
+      )}
+      {phase === "provider" && setting && (
+        <ProviderSelect setting={setting} auth={auth} onSelect={selectProvider} onContinue={finishProviderStep} />
       )}
       {phase === "select" && (
         <CompanySelect companies={companies} onConfirm={saveInterests} onEmpty={() => showToast("관심회사를 1개 이상 선택하세요", "error")} />
