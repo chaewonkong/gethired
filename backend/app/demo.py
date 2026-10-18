@@ -2,6 +2,7 @@
 모든 텍스트는 가상이다."""
 import asyncio
 import os
+import sys
 import tempfile
 from datetime import date
 from pathlib import Path
@@ -190,6 +191,11 @@ def make_app() -> FastAPI:
     jobs = JobManager(repo, scrapers=dict(SCRAPERS), profile_loader=load_profile, judge_fn=judge)
     app = create_app(repo, jobs, logged_in=logged_in, resume_dir=resume_dir)
     app.state.db_path, app.state.resume_dir = db_path, resume_dir
+    print(f"demo mode: DB_PATH={db_path} RESUME_DIR={resume_dir}", file=sys.stderr)
     if FRONTEND_DIST.exists():
         app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
     return app
+
+
+if os.environ.get("JOB_POSTING_DEMO") == "1":
+    app = make_app()

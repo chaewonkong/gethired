@@ -115,3 +115,26 @@ def test_make_app_without_env_uses_temp_paths(tmp_path, monkeypatch):
     assert app.state.db_path != config.DB_PATH
     assert app.state.resume_dir != config.RESUME_DIR
     assert app.state.db_path.exists()
+
+
+def test_demo_app_not_created_on_import():
+    assert not hasattr(demo, "app")
+
+
+def test_main_demo_flag(monkeypatch):
+    from app import __main__ as entry
+
+    calls = []
+    monkeypatch.delenv("JOB_POSTING_DEMO", raising=False)
+    monkeypatch.setattr(entry.uvicorn, "run", lambda target, **kw: calls.append((target, kw)))
+
+    monkeypatch.setattr(entry.sys, "argv", ["app", "--demo", "--port", "8123"])
+    entry.main()
+    assert calls == [("app.demo:app", {"host": "127.0.0.1", "port": 8123})]
+    assert entry.os.environ["JOB_POSTING_DEMO"] == "1"
+
+    monkeypatch.delenv("JOB_POSTING_DEMO")
+    monkeypatch.setattr(entry.sys, "argv", ["app"])
+    entry.main()
+    assert calls[-1][0] == "app.main:app"
+    assert "JOB_POSTING_DEMO" not in entry.os.environ
