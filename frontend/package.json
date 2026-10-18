@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test --project chromium",
+    "demo:record": "playwright test --project demo"
   },
   "dependencies": {
     "react": "^19.1.0",
