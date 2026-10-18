@@ -2,6 +2,10 @@ set shell := ["zsh", "-cu"]
 
 port := "8000"
 
+# 개발 중에는 데이터를 저장소 안에 둔다 (설치형은 platformdirs 사용자 디렉토리)
+export DB_PATH := justfile_directory() + "/backend/data/app.db"
+export RESUME_DIR := justfile_directory() + "/resume"
+
 default:
     @just --list
 
@@ -10,13 +14,13 @@ setup:
     cd backend && uv sync
     cd frontend && npm install
 
-# 프론트엔드 빌드
+# 프론트엔드 빌드 → backend/app/static/
 build:
     cd frontend && npm run build
 
 # 프론트엔드 빌드 후 정적 서빙 + API 실행 → http://localhost:8000
 run: build
-    cd backend && uv run python -m app --port {{port}}
+    cd backend && uv run job-posting --port {{port}}
 
 # 개발 모드: 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행. Ctrl-C로 둘 다 종료
 dev:
@@ -69,6 +73,10 @@ screenshots: build
     E2E_DEMO=1 E2E_TMP="$tmp" npm run demo:record
     sh e2e/make-gif.sh "$tmp/demo.webm" ../docs/demo.gif
 
+# 휠 빌드 (프론트 포함) → backend/dist/
+build-wheel: build
+    cd backend && uv build
+
 # 스크래퍼만 실행 → backend/out/<company>.json
 scrape *companies:
     cd backend && uv run python scripts/run_scrape.py {{companies}}
@@ -83,9 +91,8 @@ resume-text *args:
 
 # provider CLI 로그인 확인 (예: just auth codex)
 auth provider="claude":
-    #!/usr/bin/env zsh
-    if [ "{{provider}}" = codex ]; then "${CODEX_BIN:-codex}" login status; else claude auth status; fi
+    cd backend && uv run job-posting auth {{provider}}
 
 # DB 초기화 (공고·판정 이력 삭제)
 reset-db:
-    rm -f backend/data/app.db
+    cd backend && uv run job-posting reset-db

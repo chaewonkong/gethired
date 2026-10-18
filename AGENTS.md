@@ -11,6 +11,8 @@
 job-posting/
 |-- backend/                  # FastAPI + sqlite
 |   |-- app/
+|   |   |-- __main__.py       # 콘솔 진입점 job-posting (serve·auth·reset-db·paths)
+|   |   |-- static/           # 프론트 빌드 산출물 (gitignore, 휠에 포함)
 |   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
 |   |   |-- api.py            # REST API
 |   |   |-- jobs.py           # 스크래핑 job 실행
@@ -25,7 +27,7 @@ job-posting/
 |   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
 |   |-- tests/                # pytest
 |   |-- fixtures/             # 파서 테스트용 응답 샘플
-|   `-- data/app.db           # DB (gitignore)
+|   `-- data/app.db           # 개발용 DB (gitignore). 설치형은 platformdirs 사용자 디렉토리
 |-- frontend/                 # React + Vite
 |   `-- src/
 |       |-- App.tsx           # 상태 · 탭 · 폴링
@@ -33,11 +35,12 @@ job-posting/
 |       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
 |       |-- test/             # vitest 설정 · 픽스처
 |       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
+|-- .github/workflows/        # release.yml: v* 태그 → 프론트 빌드 → 휠 → PyPI + GitHub Release
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   `-- plans/                # 실행 계획
 |-- docs/demo.gif             # README 데모 GIF (just screenshots로 갱신)
-|-- resume/                   # 이력서 *.md, *.pdf (gitignore)
+|-- resume/                   # 개발용 이력서 *.md, *.pdf (gitignore). 설치형은 사용자 디렉토리
 `-- justfile                  # 실행·테스트 명령
 ```
 
@@ -45,5 +48,5 @@ job-posting/
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
 - `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
 - `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
-- `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제
+- `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제 · `just build-wheel`: 휠 빌드(`backend/dist/`)
 - `just screenshots`: 데모 모드로 골든 패스를 녹화해 `docs/demo.gif` 갱신 (chromium·ffmpeg, sandbox 밖에서 사용자가)

@@ -1,0 +1,41 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build-publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci && npm run build
+        working-directory: frontend
+
+      - uses: astral-sh/setup-uv@v6
+      - name: tag must match pyproject version
+        run: test "v$(uv version --short)" = "$GITHUB_REF_NAME"
+        working-directory: backend
+      - run: uv build
+        working-directory: backend
+      - name: wheel contains built frontend
+        run: unzip -l backend/dist/*.whl | grep -q app/static/index.html
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: backend/dist
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: backend/dist/*

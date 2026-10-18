@@ -9,7 +9,8 @@ backend/.claude/
 .DS_Store
 node_modules/
 .npm-cache/
-frontend/dist/
+backend/app/static/
+backend/dist/
 backend/data/
 frontend/tsconfig.tsbuildinfo
 handoff.md

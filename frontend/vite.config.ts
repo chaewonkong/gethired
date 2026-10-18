@@ -7,6 +7,8 @@ process.env.TZ = "Asia/Seoul";
 
 export default defineConfig({
   plugins: [react()],
+  // 빌드 산출물은 백엔드 패키지 안에 둬서 휠에 포함되게 한다
+  build: { outDir: "../backend/app/static", emptyOutDir: true },
   server: {
     proxy: { "/api": "http://localhost:8000" },
   },

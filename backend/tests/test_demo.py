@@ -121,20 +121,35 @@ def test_demo_app_not_created_on_import():
     assert not hasattr(demo, "app")
 
 
-def test_main_demo_flag(monkeypatch):
+def test_main_demo_flag(monkeypatch, tmp_path):
     from app import __main__ as entry
 
     calls = []
-    monkeypatch.delenv("JOB_POSTING_DEMO", raising=False)
-    monkeypatch.setattr(entry.uvicorn, "run", lambda target, **kw: calls.append((target, kw)))
+    monkeypatch.setattr(entry.uvicorn, "run", lambda app, **kw: calls.append((app, kw)))
+    monkeypatch.setenv("DB_PATH", str(tmp_path / "app.db"))
+    monkeypatch.setenv("RESUME_DIR", str(tmp_path / "resume"))
 
-    monkeypatch.setattr(entry.sys, "argv", ["app", "--demo", "--port", "8123"])
-    entry.main()
-    assert calls == [("app.demo:app", {"host": "127.0.0.1", "port": 8123})]
-    assert entry.os.environ["JOB_POSTING_DEMO"] == "1"
+    entry.main(["--demo", "--no-open", "--port", "8123"])
+    app, kw = calls[0]
+    assert kw == {"host": "127.0.0.1", "port": 8123}
+    assert app.state.db_path == tmp_path / "app.db"
 
-    monkeypatch.delenv("JOB_POSTING_DEMO")
-    monkeypatch.setattr(entry.sys, "argv", ["app"])
-    entry.main()
-    assert calls[-1][0] == "app.main:app"
-    assert "JOB_POSTING_DEMO" not in entry.os.environ
+    sentinel = object()
+    monkeypatch.setattr(entry, "_load_app", lambda: sentinel)
+    entry.main(["serve", "--no-open"])
+    assert calls[-1] == (sentinel, {"host": "127.0.0.1", "port": 8000})
+
+
+def test_main_reset_db_and_paths(monkeypatch, tmp_path, capsys):
+    from app import __main__ as entry
+
+    db = tmp_path / "app.db"
+    db.write_bytes(b"")
+    monkeypatch.setattr(config, "DB_PATH", db)
+    entry.main(["reset-db"])
+    assert not db.exists()
+    entry.main(["reset-db"])
+    assert "no db" in capsys.readouterr().out
+
+    entry.main(["paths"])
+    assert str(db) in capsys.readouterr().out
