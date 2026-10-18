@@ -68,7 +68,17 @@ CREATE TABLE IF NOT EXISTS settings (
 """
 
 
+_fixed_now: str | None = None
+
+
+def set_fixed_now(iso: str | None) -> None:
+    global _fixed_now
+    _fixed_now = iso
+
+
 def now_iso() -> str:
+    if _fixed_now is not None:
+        return _fixed_now
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
