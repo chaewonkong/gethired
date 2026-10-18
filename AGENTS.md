@@ -11,7 +11,7 @@
 job-posting/
 |-- backend/                  # FastAPI + sqlite
 |   |-- app/
-|   |   |-- __main__.py       # 콘솔 진입점 job-posting (serve·auth·reset-db·paths)
+|   |   |-- __main__.py       # 콘솔 진입점 gethired (serve·auth·reset-db·paths)
 |   |   |-- static/           # 프론트 빌드 산출물 (gitignore, 휠에 포함)
 |   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
 |   |   |-- api.py            # REST API

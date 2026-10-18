@@ -1,5 +1,5 @@
 [project]
-name = "job-posting"
+name = "gethired"
 version = "0.1.0"
 description = "내 이력서에 맞는 채용 공고만 모아 보여주는 로컬 앱"
 requires-python = ">=3.14"
@@ -17,7 +17,7 @@ dependencies = [
 Homepage = "https://github.com/chaewonkong/job-posting"
 
 [project.scripts]
-job-posting = "app.__main__:main"
+gethired = "app.__main__:main"
 
 [build-system]
 requires = ["hatchling"]

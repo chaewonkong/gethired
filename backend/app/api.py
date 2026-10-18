@@ -24,7 +24,7 @@ class ProviderBody(BaseModel):
 def create_app(repo: Repository, jobs: JobManager,
                logged_in: Callable[[str], Awaitable[bool]] = auth.is_logged_in,
                resume_dir: Path = RESUME_DIR) -> FastAPI:
-    app = FastAPI(title="job-posting")
+    app = FastAPI(title="gethired")
     api = APIRouter(prefix="/api")
 
     def provider_setting() -> dict:

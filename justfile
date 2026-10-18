@@ -20,7 +20,7 @@ build:
 
 # 프론트엔드 빌드 후 정적 서빙 + API 실행 → http://localhost:8000
 run: build
-    cd backend && uv run job-posting --port {{port}}
+    cd backend && uv run gethired --port {{port}}
 
 # 개발 모드: 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행. Ctrl-C로 둘 다 종료
 dev:
@@ -91,8 +91,8 @@ resume-text *args:
 
 # provider CLI 로그인 확인 (예: just auth codex)
 auth provider="claude":
-    cd backend && uv run job-posting auth {{provider}}
+    cd backend && uv run gethired auth {{provider}}
 
 # DB 초기화 (공고·판정 이력 삭제)
 reset-db:
-    cd backend && uv run job-posting reset-db
+    cd backend && uv run gethired reset-db

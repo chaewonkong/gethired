@@ -7,7 +7,7 @@ APP_DIR = Path(__file__).resolve().parent
 FRONTEND_DIST = APP_DIR / "static"
 
 # 사용자 데이터. 개발 시에는 justfile이 DB_PATH·RESUME_DIR로 저장소 안 경로를 넘긴다
-HOME = Path(os.environ.get("JOB_POSTING_HOME") or user_data_dir("job-posting"))
+HOME = Path(os.environ.get("GETHIRED_HOME") or user_data_dir("gethired"))
 DB_PATH = Path(os.environ.get("DB_PATH") or HOME / "app.db")
 RESUME_DIR = Path(os.environ.get("RESUME_DIR") or HOME / "resume")
 

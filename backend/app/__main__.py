@@ -1,4 +1,4 @@
-"""`job-posting [serve|auth|reset-db|paths]` — 빌드된 프론트(app/static)를 정적 서빙하며 API 실행.
+"""`gethired [serve|auth|reset-db|paths]` — 빌드된 프론트(app/static)를 정적 서빙하며 API 실행.
 `python -m app [--port N] [--demo]`도 같다 (서브커맨드 생략 = serve)."""
 import argparse
 import asyncio
@@ -30,7 +30,7 @@ def _serve(args: argparse.Namespace) -> None:
     url = f"http://{args.host}:{args.port}"
     if not args.no_open:
         threading.Timer(1.0, webbrowser.open, [url]).start()
-    print(f"job-posting: {url}", file=sys.stderr)
+    print(f"gethired: {url}", file=sys.stderr)
     uvicorn.run(app, host=args.host, port=args.port)
 
 
@@ -56,7 +56,7 @@ def _paths(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(prog="job-posting")
+    ap = argparse.ArgumentParser(prog="gethired")
     sub = ap.add_subparsers(dest="command", required=True)
 
     serve = sub.add_parser("serve", help="서버 실행 후 브라우저 열기 (기본)")

@@ -181,7 +181,7 @@ def make_app() -> FastAPI:
 
     def temp_path(name: str) -> Path:
         nonlocal tmp
-        tmp = tmp or Path(tempfile.mkdtemp(prefix="job-posting-demo-"))
+        tmp = tmp or Path(tempfile.mkdtemp(prefix="gethired-demo-"))
         return tmp / name
 
     db_path = Path(os.environ.get("DB_PATH") or temp_path("app.db"))
@@ -197,5 +197,5 @@ def make_app() -> FastAPI:
     return app
 
 
-if os.environ.get("JOB_POSTING_DEMO") == "1":
+if os.environ.get("GETHIRED_DEMO") == "1":
     app = make_app()

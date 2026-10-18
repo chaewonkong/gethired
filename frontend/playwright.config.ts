@@ -8,7 +8,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 
 process.env.PLAYWRIGHT_BROWSERS_PATH ??= path.join(here, ".playwright");
 process.env.E2E_PORT ??= "8765";
-process.env.E2E_TMP ??= mkdtempSync(path.join(tmpdir(), "job-posting-e2e-"));
+process.env.E2E_TMP ??= mkdtempSync(path.join(tmpdir(), "gethired-e2e-"));
 
 const baseURL = `http://127.0.0.1:${process.env.E2E_PORT}`;
 const demoSize = { width: 1000, height: 720 };
