@@ -10,6 +10,8 @@
 
 등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차, 업스테이지, 우아한형제들, 두나무, 42dot, 카카오뱅크, 카카오페이, 하이퍼커넥트)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
 
+![데모: 이력서 업로드부터 매칭 결과까지](docs/demo.gif)
+
 - LLM은 Claude Agent SDK + 로컬 Claude Code 로그인 세션(`claude login`)을 사용. API key 불필요. 개인 로컬 용도 전용
 
 ## 사용 준비
@@ -56,7 +58,9 @@ cd backend && uv sync && uv run python -m app --port 8000
 ```bash
 just test        # 백엔드 + 프론트 단위 테스트 (네트워크/LLM 없음). 따로: just test-api / just test-web
 just test-live   # 실제 채용 사이트 호출
+just test-e2e    # 브라우저 e2e (chromium, 최초 1회 just e2e-install)
 ```
+위 데모 GIF는 `just screenshots`로 다시 찍는다 (가짜 데이터 데모 모드, chromium·ffmpeg 필요). UI가 바뀌면 갱신해서 커밋.
 
 ## 동작
 ```

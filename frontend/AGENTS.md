@@ -8,7 +8,8 @@ React 19 + Vite 6 + TypeScript. 상태 관리·라우팅 라이브러리 없이 
 npm run dev     # 5173, /api → localhost:8000
 npm run build   # tsc -b && vite build → dist/
 npm test        # vitest run (jsdom, src/**/*.test.*)
-npm run test:e2e  # Playwright (build 선행, sandbox 밖). 최초 1회 just e2e-install
+npm run test:e2e  # Playwright chromium 프로젝트 (build 선행, sandbox 밖). 최초 1회 just e2e-install
+E2E_DEMO=1 npm run demo:record  # demo 프로젝트: 데모 모드 백엔드 위에서 골든 패스 녹화 (루트: just screenshots)
 ```
 sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 캐시 쓰기 불가).
 
@@ -52,3 +53,4 @@ sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 �
 - 네트워크는 `vi.stubGlobal("fetch", …)`로 대체. 테스트 파일은 대상 옆에 `*.test.ts(x)`
 - 온보딩·이력서 관리·AI 선택 흐름은 `src/Onboarding.test.tsx`의 `stubBackend`(resume·관심회사·provider·로그인 상태를 가진 가짜 백엔드, 두 번째 인자 `routes`로 경로별 응답 override)로 검증
 - e2e: `e2e/README.md`. 실제 FastAPI + 빌드된 dist + chromium. `e2e/fake-bin`의 가짜 `claude`/`codex`가 `FAKE_AUTH_FILE`로 로그인 상태를 흉내 낸다. vitest가 집어 들지 않도록 `*.spec.ts`
+- Playwright 프로젝트 둘: `chromium`(테스트, `demo.spec.ts` 제외)과 `demo`(`demo.spec.ts`만, 1000×720 · 1x · Asia/Seoul · ko-KR · video on). `test:e2e`는 `--project chromium`이라 녹화를 돌리지 않는다. `server.sh`는 `E2E_DEMO=1`이면 `--demo`로 백엔드를 띄운다. `make-gif.sh`가 webm → GIF (5MB 초과 시 실패)

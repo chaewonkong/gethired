@@ -20,6 +20,7 @@ job-posting/
 |   |   |-- llm.py            # LLM 호출 (Claude Agent SDK / Codex CLI)
 |   |   |-- auth.py           # provider CLI 로그인 확인
 |   |   |-- repository.py     # sqlite 접근
+|   |   |-- demo.py           # 데모 모드 (가짜 스크래퍼·판정, 고정 시각) — README GIF 녹화용
 |   |   `-- main.py           # 앱 조립 + 프론트 정적 서빙
 |   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
 |   |-- tests/                # pytest
@@ -31,10 +32,11 @@ job-posting/
 |       |-- api.ts            # 타입 + fetch 래퍼
 |       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
 |       |-- test/             # vitest 설정 · 픽스처
-|       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서)
+|       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   `-- plans/                # 실행 계획
+|-- docs/demo.gif             # README 데모 GIF (just screenshots로 갱신)
 |-- resume/                   # 이력서 *.md, *.pdf (gitignore)
 `-- justfile                  # 실행·테스트 명령
 ```
@@ -44,3 +46,4 @@ job-posting/
 - `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
 - `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
 - `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제
+- `just screenshots`: 데모 모드로 골든 패스를 녹화해 `docs/demo.gif` 갱신 (chromium·ffmpeg, sandbox 밖에서 사용자가)

@@ -60,6 +60,15 @@ test-e2e: build
 e2e-install:
     cd frontend && PLAYWRIGHT_BROWSERS_PATH=$PWD/.playwright npx playwright install chromium
 
+# README 데모 GIF 녹화 → docs/demo.gif (데모 모드 백엔드, chromium·ffmpeg 필요, sandbox 밖에서)
+screenshots: build
+    #!/usr/bin/env zsh
+    set -eu
+    tmp=$(mktemp -d)
+    cd frontend
+    E2E_DEMO=1 E2E_TMP="$tmp" npm run demo:record
+    sh e2e/make-gif.sh "$tmp/demo.webm" ../docs/demo.gif
+
 # 스크래퍼만 실행 → backend/out/<company>.json
 scrape *companies:
     cd backend && uv run python scripts/run_scrape.py {{companies}}
