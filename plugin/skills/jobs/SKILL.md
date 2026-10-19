@@ -8,9 +8,9 @@ description: gethired CLI로 내 이력서에 매칭된 채용 공고를 읽어 
 gethired가 수집·판정해 둔 공고를 읽어 요약한다. **읽기 전용**: 아래 세 명령만 실행한다.
 
 ```bash
-uvx --from gethired~=0.2.0 gethired status --json
-uvx --from gethired~=0.2.0 gethired postings --json [--min-level good] [--company <c>...] [--since 24h|7d] [--limit N] [--full]
-uvx --from gethired~=0.2.0 gethired companies --json
+uvx --from gethired~=0.3.0 gethired status --json
+uvx --from gethired~=0.3.0 gethired postings --json [--min-level good] [--company <c>...] [--since 24h|7d] [--limit N] [--full]
+uvx --from gethired~=0.3.0 gethired companies --json
 ```
 
 `scrape`·`resume`·`provider`·`interest`는 실행하지 않는다. 사용자에게 명령을 안내만 한다.

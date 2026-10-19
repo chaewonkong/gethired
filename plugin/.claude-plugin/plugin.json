@@ -1,6 +1,6 @@
 {
   "name": "gethired",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "gethired CLI로 내 이력서에 맞는 채용 공고를 읽어 요약한다 (읽기 전용)",
   "author": {
     "name": "chaewonkong"
