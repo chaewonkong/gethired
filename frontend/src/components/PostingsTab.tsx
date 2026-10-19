@@ -23,13 +23,26 @@ function lastScrapedAt(companies: Company[]): string | null {
 
 const PAGE_SIZE = 20;
 
+type Sort = "score" | "newest" | "oldest";
+const SORTS: Record<Sort, string> = { score: "적합도순", newest: "최신순", oldest: "오래된순" };
+
+const byScore = (a: Posting, b: Posting) => b.score - a.score;
+const seen = (p: Posting) => Date.parse(p.first_seen_at);
+const COMPARE: Record<Sort, (a: Posting, b: Posting) => number> = {
+  score: byScore,
+  newest: (a, b) => seen(b) - seen(a) || byScore(a, b),
+  oldest: (a, b) => seen(a) - seen(b) || byScore(a, b),
+};
+
 const parseCompanies = (raw: unknown) => (Array.isArray(raw) && raw.every((c) => typeof c === "string") ? raw : null);
 const parseLevel = (raw: unknown) => (typeof raw === "string" && Object.hasOwn(LEVEL_RANK, raw) ? (raw as Level) : null);
+const parseSort = (raw: unknown) => (typeof raw === "string" && Object.hasOwn(SORTS, raw) ? (raw as Sort) : null);
 
 export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark, onToggleHidden }: Props) {
   // 해제한 회사를 저장해 새로 추가된 회사는 기본 선택 상태가 되게 한다
   const [excluded, setExcluded] = useSessionState<string[]>("postings.excludedCompanies", [], parseCompanies);
   const [minLevel, setMinLevel] = useSessionState<Level>("postings.minLevel", "stretch", parseLevel);
+  const [sort, setSort] = useSessionState<Sort>("postings.sort", "score", parseSort);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const sentinel = useRef<HTMLDivElement>(null);
 
@@ -37,7 +50,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
   const counts: Record<string, number> = {};
   for (const p of leveled) counts[p.company] = (counts[p.company] ?? 0) + 1;
   const selected = new Set(companies.map((c) => c.company).filter((c) => !excluded.includes(c)));
-  const items = leveled.filter((p) => selected.has(p.company)).sort((a, b) => b.score - a.score);
+  const items = leveled.filter((p) => selected.has(p.company)).sort(COMPARE[sort]);
   const noneSelected = companies.length > 0 && selected.size === 0;
   const last = lastScrapedAt(companies);
   const hasMore = visible < items.length;
@@ -45,7 +58,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
   // 필터가 바뀌면 처음부터. 북마크·숨김 토글로 postings가 바뀔 때는 스크롤 위치 유지
   useEffect(() => {
     setVisible(PAGE_SIZE);
-  }, [excluded, minLevel]);
+  }, [excluded, minLevel, sort]);
 
   // 바닥 sentinel이 보이면 다음 페이지
   useEffect(() => {
@@ -72,6 +85,11 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
           <option value="stretch">전체 등급</option>
           <option value="good">good 이상</option>
           <option value="strong">strong만</option>
+        </select>
+        <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} aria-label="정렬">
+          {(Object.keys(SORTS) as Sort[]).map((s) => (
+            <option key={s} value={s}>{SORTS[s]}</option>
+          ))}
         </select>
         <span className="meta">
           {items.length}건{last ? ` · 마지막 스크래핑 ${formatTime(last)}` : ""}

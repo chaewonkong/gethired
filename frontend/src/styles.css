@@ -183,7 +183,7 @@ select {
 
 /* 640+: 툴바 1줄, 회사 테이블 */
 @media (min-width: 640px) {
-  .toolbar { display: flex; flex-direction: row; align-items: center; }
+  .toolbar { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; }
   .toolbar .btn { width: auto; }
   .toolbar select, .toolbar .company-filter { width: 150px; }
   .toolbar .meta { margin-left: auto; }

@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS postings (
     deadline TEXT,
     category TEXT,
     scraped_at TEXT NOT NULL,
+    first_seen_at TEXT,
     deleted_at TEXT,
     UNIQUE (company, external_id)
 );
@@ -113,6 +114,14 @@ class Repository:
         self.conn = sqlite3.connect(str(path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        self._migrate()
+
+    def _migrate(self) -> None:
+        cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(postings)")}
+        if "first_seen_at" not in cols:
+            self.conn.execute("ALTER TABLE postings ADD COLUMN first_seen_at TEXT")
+            self.conn.execute("UPDATE postings SET first_seen_at=scraped_at")
+            self.conn.commit()
 
     def close(self) -> None:
         self.conn.close()
@@ -121,9 +130,9 @@ class Repository:
     def upsert_postings(self, rows: list[dict[str, Any]]) -> None:
         self.conn.executemany(
             """INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
-                                     fit_reason, apply_url, deadline, category, scraped_at, deleted_at)
+                                     fit_reason, apply_url, deadline, category, scraped_at, first_seen_at, deleted_at)
                VALUES (:company, :external_id, :title, :summary, :tech_stack, :fit_level, :score, :gaps,
-                       :fit_reason, :apply_url, :deadline, :category, :scraped_at, NULL)
+                       :fit_reason, :apply_url, :deadline, :category, :scraped_at, :scraped_at, NULL)
                ON CONFLICT (company, external_id) DO UPDATE SET
                  title=excluded.title, summary=excluded.summary, tech_stack=excluded.tech_stack,
                  fit_level=excluded.fit_level, score=excluded.score, gaps=excluded.gaps,
@@ -178,7 +187,8 @@ class Repository:
                + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
         rows = [_row(r) for r in self.conn.execute(sql, params).fetchall()]
         if since:  # 오프셋이 섞일 수 있어 문자열 비교 대신 시각으로
-            rows = [r for r in rows if _dt(r["scraped_at"]) >= _dt(since)]
+            # readonly는 마이그레이션 전 DB일 수 있어 scraped_at으로 대체
+            rows = [r for r in rows if _dt(r.get("first_seen_at") or r["scraped_at"]) >= _dt(since)]
         return rows
 
     # --- bookmarks ---

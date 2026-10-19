@@ -46,6 +46,33 @@ def test_soft_delete_and_mark_seen_cycle():
     assert b["deleted_at"] is None and b["scraped_at"] == "T2"
 
 
+def test_first_seen_at_kept_across_upsert_and_mark_seen():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a", scraped_at="T1")])
+    repo.mark_seen("toss", {"a"}, "T2")
+    repo.upsert_postings([row(eid="a", scraped_at="T3", score=90)])
+    a = repo.list_postings()[0]
+    assert a["first_seen_at"] == "T1" and a["scraped_at"] == "T3"
+
+
+def test_migrate_adds_first_seen_at_from_scraped_at(tmp_path):
+    db = tmp_path / "old.db"
+    conn = sqlite3.connect(db)
+    conn.executescript("""CREATE TABLE postings (
+        id INTEGER PRIMARY KEY, company TEXT NOT NULL, external_id TEXT NOT NULL, title TEXT NOT NULL,
+        summary TEXT NOT NULL, tech_stack TEXT NOT NULL, fit_level TEXT NOT NULL, score INTEGER NOT NULL,
+        gaps TEXT NOT NULL, fit_reason TEXT NOT NULL, apply_url TEXT NOT NULL, deadline TEXT, category TEXT,
+        scraped_at TEXT NOT NULL, deleted_at TEXT, UNIQUE (company, external_id));
+        INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
+                              fit_reason, apply_url, scraped_at)
+        VALUES ('toss', 'a', 't', 's', '[]', 'good', 70, '[]', 'r', 'u', 'T1');""")
+    conn.close()
+    repo = Repository(db)
+    assert repo.list_postings()[0]["first_seen_at"] == "T1"
+    repo.close()
+    assert Repository(db).list_postings()[0]["first_seen_at"] == "T1"
+
+
 def test_judgments_and_runs_and_profile_cache():
     repo = Repository()
     repo.record_judgments("toss", ["a", "b"], {"a"}, "T1")
@@ -202,6 +229,9 @@ def test_list_postings_hidden_interests_since():
     assert [p["external_id"] for p in repo.list_postings(since="2026-10-10T00:00:00+00:00")] == ["b", "n"]
     assert [p["external_id"] for p in repo.list_postings(include_hidden=False, interests_only=True,
                                                          since="2026-10-09T12:00:00+00:00")] == []
+    # 다시 확인돼 scraped_at이 갱신돼도 since는 처음 수집 시각 기준
+    repo.mark_seen("toss", {"a"}, "2026-10-11T00:00:00+00:00")
+    assert [p["external_id"] for p in repo.list_postings(since="2026-10-10T00:00:00+00:00")] == ["b", "n"]
 
 
 def test_last_success_runs_and_stale():

@@ -42,6 +42,21 @@ describe("PostingsTab 목록", () => {
     expect(titles()).toEqual(["s"]);
   });
 
+  it("정렬: 최신순·오래된순은 처음 수집 시각 기준, 같으면 score순", async () => {
+    renderTab([
+      makePosting({ title: "old", score: 90, first_seen_at: "2026-10-01T00:00:00+00:00" }),
+      makePosting({ title: "new-lo", score: 50, first_seen_at: "2026-10-05T00:00:00+00:00" }),
+      makePosting({ title: "new-hi", score: 80, first_seen_at: "2026-10-05T00:00:00+00:00" }),
+    ]);
+    expect(titles()).toEqual(["old", "new-hi", "new-lo"]);
+    const sort = screen.getByRole("combobox", { name: "정렬" });
+    await userEvent.selectOptions(sort, "newest");
+    expect(titles()).toEqual(["new-hi", "new-lo", "old"]);
+    await userEvent.selectOptions(sort, "oldest");
+    expect(titles()).toEqual(["old", "new-hi", "new-lo"]);
+    expect(sessionStorage.getItem("postings.sort")).toBe(JSON.stringify("oldest"));
+  });
+
   it("공고가 없으면 빈 상태 안내", () => {
     renderTab([]);
     expect(screen.getByText(/저장된 공고가 없습니다/)).toBeInTheDocument();
@@ -154,9 +169,11 @@ describe("PostingsTab 회사 필터", () => {
   it("저장값이 깨져 있으면 기본값", () => {
     sessionStorage.setItem("postings.excludedCompanies", "{oops");
     sessionStorage.setItem("postings.minLevel", JSON.stringify("bogus"));
+    sessionStorage.setItem("postings.sort", JSON.stringify("bogus"));
     renderTab(posts());
     expect(titles()).toHaveLength(3);
     expect(screen.getByDisplayValue("전체 등급")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("적합도순")).toBeInTheDocument();
   });
 });
 

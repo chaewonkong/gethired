@@ -16,6 +16,7 @@ export interface Posting {
   deadline: string | null;
   category: string | null;
   scraped_at: string;
+  first_seen_at: string;
   bookmarked: boolean;
   hidden: boolean;
 }

@@ -19,7 +19,7 @@ sandbox에서 npm 설치는 `npm_config_cache=../.npm-cache`를 붙인다 (홈 �
 |---|---|
 | `src/api.ts` | 타입(`Posting`, `Company`, `Job`, `ProviderSetting`, `AuthStatus` …)과 fetch 래퍼 `api`. 스크래핑 401은 `LoginRequiredError`(`provider`, `message`), provider 변경·스크래핑 시작 409는 `JobRunningError`, 이력서 업로드 400은 `ResumeRejectedError`(message = 서버 detail). `putResume`는 파일 바이트를 그대로 PUT |
 | `src/App.tsx` | 최상위 상태: postings, companies, resume 파일, provider 설정(`setting`)·로그인 상태(`auth`), 진행 중 job(1.5초 폴링), 로그인/에러 배너, toast, 탭 전환. auth 폴링은 AI 선택 화면·AI 모달·로그인 배너가 보일 때만, 응답 후 3초 setTimeout 체인. 화면 단계(`phase`) 계산. 관심회사 기준으로 공고를 걸러 탭에 전달. 북마크·숨김 토글(`toggleFlag`: 낙관적 업데이트, 실패 시 롤백, 요청 중 중복 토글 무시), 관심회사 별 토글도 같은 방식 |
-| `components/PostingsTab.tsx` | 공고 탭: 스크래핑 버튼, 회사·등급 필터(sessionStorage 유지), 숨긴 공고 제외, score 정렬, infinite scroll(20건, `IntersectionObserver`), 스크래핑 진행·완료 요약. `formatTime` export |
+| `components/PostingsTab.tsx` | 공고 탭: 스크래핑 버튼, 회사·등급 필터(sessionStorage 유지), 숨긴 공고 제외, 정렬(적합도·최신·오래된순, 최신은 `first_seen_at` 기준, 동률은 score), infinite scroll(20건, `IntersectionObserver`), 스크래핑 진행·완료 요약. `formatTime` export |
 | `components/CompanyFilter.tsx` | 회사 Multi-select 드롭다운: 전체 켜기/끄기, 회사별 공고 수, 바깥 클릭·Esc로 닫힘. 선택은 "해제한 회사 목록"으로 다룸 |
 | `components/BookmarksTab.tsx` | 북마크 탭: `bookmarked`이고 숨기지 않은 공고만 score순. 해제 시 즉시 빠짐 |
 | `components/HiddenTab.tsx` | 숨김 탭: `hidden` 공고만 score순. 해제 시 공고 탭으로 복귀 |

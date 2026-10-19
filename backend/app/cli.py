@@ -381,7 +381,7 @@ def build_parser() -> argparse.ArgumentParser:
     ps = cmd("postings", _postings, "저장된 공고 (숨김 제외·관심회사만·score 내림차순)")
     ps.add_argument("--min-level", choices=list(LEVEL_RANK))
     ps.add_argument("--company", action="append", help="여러 번 지정 가능")
-    ps.add_argument("--since", type=_since_arg, help="scraped_at 기준 (24h, 7d)")
+    ps.add_argument("--since", type=_since_arg, help="처음 수집 시각 기준 (24h, 7d)")
     ps.add_argument("--limit", type=int)
     ps.add_argument("--full", action="store_true", help="summary, gaps 포함")
     return ap

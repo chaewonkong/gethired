@@ -73,7 +73,7 @@ export function PostingCard({ posting: p, companyName, onToggleBookmark, onToggl
         {p.fit_reason}
       </p>
       <div className="card-foot">
-        <span className="meta">수집 {p.scraped_at.slice(0, 10)}</span>
+        <span className="meta">수집 {p.first_seen_at.slice(0, 10)}</span>
         <a className="apply" href={p.apply_url} target="_blank" rel="noopener noreferrer">
           지원하기 →
         </a>
