@@ -36,8 +36,17 @@ artifacts = ["app/static/**"]
 dev = [
     "httpx>=0.28",
     "pytest>=9.1.1",
+    "ruff>=0.14",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "BLE"]
+ignore = ["B008"]  # FastAPI Query(default=...) 관용구

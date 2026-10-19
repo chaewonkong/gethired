@@ -32,7 +32,7 @@ async def _claude_status() -> bool:
     try:
         out, _ = await asyncio.wait_for(proc.communicate(), timeout=STATUS_TIMEOUT_S)
         return bool(json.loads(out.decode() or "{}").get("loggedIn"))
-    except asyncio.TimeoutError:
+    except TimeoutError:
         _kill(proc)
         return False
     except json.JSONDecodeError:
@@ -49,7 +49,7 @@ async def _codex_status() -> bool:
         return False
     try:
         return await asyncio.wait_for(proc.wait(), timeout=STATUS_TIMEOUT_S) == 0
-    except asyncio.TimeoutError:
+    except TimeoutError:
         _kill(proc)
         return False
 

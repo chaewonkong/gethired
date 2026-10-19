@@ -45,7 +45,7 @@ class FakeRunner:
         self.proc, self.out, self.calls = proc, out, []
 
     async def __call__(self, args, stdin):
-        opts = dict(zip(args, args[1:]))
+        opts = dict(zip(args, args[1:], strict=False))
         cwd, schema_path, out_path = Path(opts["-C"]), Path(opts["--output-schema"]), Path(opts["-o"])
         self.calls.append({"args": args, "stdin": stdin, "cwd_empty": cwd.is_dir() and not any(cwd.iterdir()),
                            "schema": json.loads(schema_path.read_text())})

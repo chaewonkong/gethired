@@ -1,6 +1,7 @@
 import json
 import re
-from typing import Any, Callable, ClassVar
+from collections.abc import Callable
+from typing import Any, ClassVar
 
 import httpx
 

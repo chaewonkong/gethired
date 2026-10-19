@@ -80,6 +80,7 @@ $ uvx gethired reset-db                # 공고·판정 이력 삭제
 $ just setup     # 의존성 설치 (uv sync + npm install)
 $ just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
 $ just dev       # 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행
+$ just lint      # ruff + tsc + eslint
 $ just test      # pytest + vitest
 $ just build-wheel  # 프론트 포함 휠 → backend/dist/
 ```

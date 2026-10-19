@@ -8,6 +8,7 @@ React 19 + Vite 6 + TypeScript. 상태 관리·라우팅 라이브러리 없이 
 npm run dev     # 5173, /api → localhost:8000
 npm run build   # tsc -b && vite build → ../backend/app/static/ (휠에 포함)
 npm test        # vitest run (jsdom, src/**/*.test.*)
+npm run typecheck && npm run lint  # tsc --noEmit + eslint (eslint.config.js, CI ci-frontend.yml과 동일)
 npm run test:e2e  # Playwright chromium 프로젝트 (build 선행, sandbox 밖). 최초 1회 just e2e-install
 E2E_DEMO=1 npm run demo:record  # demo 프로젝트: 데모 모드 백엔드 위에서 골든 패스 녹화 (루트: just screenshots)
 ```

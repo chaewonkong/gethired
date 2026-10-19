@@ -6,6 +6,7 @@ FastAPI + sqlite. 채용 사이트 스크래핑(httpx) → 이력서 프로필 �
 ## 명령 (backend/에서)
 ```bash
 UV_CACHE_DIR=../.uv-cache uv run pytest        # 단위·API 테스트, 네트워크/LLM 없음
+uv run ruff check app tests scripts           # 린트 (규칙: pyproject [tool.ruff.lint], CI ci-backend.yml과 동일)
 LIVE=1 uv run pytest tests/test_scrapers_live.py  # 실제 사이트 호출
 uv run uvicorn app.main:app --reload --port 8000
 uv run gethired [serve] [--port 8000] [--no-open] [--demo]   # 설치형 진입점 (= python -m app)

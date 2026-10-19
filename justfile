@@ -41,6 +41,15 @@ dev-api:
 dev-web:
     cd frontend && npm run dev
 
+# 린트: 백엔드(ruff) + 프론트엔드(tsc + eslint). CI와 동일
+lint: lint-api lint-web
+
+lint-api:
+    cd backend && uv run ruff check app tests scripts
+
+lint-web:
+    cd frontend && npm run typecheck && npm run lint
+
 # 단위·API 테스트 (네트워크/LLM 없음): 백엔드 + 프론트엔드
 test: test-api test-web
 

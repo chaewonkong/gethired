@@ -8,8 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
-from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, ResultMessage, query
-from claude_agent_sdk import ResultError
+from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, ResultError, ResultMessage, query
 
 from . import auth, config
 
@@ -96,7 +95,7 @@ async def _ask_claude(prompt: str, schema: dict[str, Any], system_prompt: str | 
 
     try:
         await asyncio.wait_for(consume(), timeout=config.LLM_TIMEOUT_S)
-    except asyncio.TimeoutError:
+    except TimeoutError:
         raise LLMError(f"claude timed out after {config.LLM_TIMEOUT_S:g}s") from None
     except ResultError as e:
         if auth_failed or _is_auth(str(e)):
@@ -242,7 +241,7 @@ async def _ask_codex(prompt: str, schema: dict[str, Any], system_prompt: str | N
 
         try:
             await asyncio.wait_for(consume(), timeout=config.LLM_TIMEOUT_S)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             proc.kill()
             await proc.wait()
             raise LLMError(f"codex timed out after {config.LLM_TIMEOUT_S:g}s") from None

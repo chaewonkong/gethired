@@ -24,7 +24,7 @@ class RawPosting(BaseModel):
     raw: dict[str, Any] = Field(default_factory=dict, exclude=True)
 
 
-REGISTRY: dict[str, type["Scraper"]] = {}
+REGISTRY: dict[str, type[Scraper]] = {}
 
 
 class Scraper(ABC):

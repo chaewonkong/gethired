@@ -185,5 +185,5 @@ def test_dunamu_parse_detail_picks_resolvable_ref():
 def test_dunamu_parse_detail_falls_back_to_empty_body():
     rsc = (FIX / "dunamu_detail.rsc").read_bytes()
     pid = int(re.search(rb'"positionId":(\d+)', rsc).group(1))
-    without_chunk = b"\n".join(l for l in rsc.split(b"\n") if not re.match(rb"^[0-9a-f]+:T", l))
+    without_chunk = b"\n".join(line for line in rsc.split(b"\n") if not re.match(rb"^[0-9a-f]+:T", line))
     assert dunamu.parse_detail(without_chunk, pid)["jobNoticeContent"] == ""

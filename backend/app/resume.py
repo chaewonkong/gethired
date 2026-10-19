@@ -1,6 +1,6 @@
 import os
 from collections.abc import AsyncIterator
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -45,7 +45,7 @@ def list_files(resume_dir: Path) -> list[dict[str, Any]]:
                    if f.is_file() and f.suffix in EXTENSIONS and not f.name.startswith("."))
     return [
         {"name": f.name, "size": f.stat().st_size,
-         "updated_at": datetime.fromtimestamp(f.stat().st_mtime, timezone.utc).isoformat(timespec="seconds")}
+         "updated_at": datetime.fromtimestamp(f.stat().st_mtime, UTC).isoformat(timespec="seconds")}
         for f in files
     ]
 

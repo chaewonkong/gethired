@@ -38,7 +38,7 @@ job-posting/
 |       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
 |-- .claude-plugin/          # marketplace.json (Claude Code 마켓플레이스, plugins[0] → ./plugin)
 |-- plugin/                   # Claude Code 플러그인 gethired: .claude-plugin/plugin.json, skills/jobs/SKILL.md (읽기 전용 CLI 호출)
-|-- .github/workflows/        # release.yml: v* 태그 → 프론트 빌드 → 휠 → PyPI + GitHub Release
+|-- .github/workflows/        # ci-backend.yml(ruff·pytest) · ci-frontend.yml(tsc·eslint·vitest) · release.yml(v* 태그 → 휠 → PyPI + Release)
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
 |   `-- plans/                # 실행 계획
@@ -51,6 +51,7 @@ job-posting/
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
 - `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
 - `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
+- `just lint`: ruff + tsc + eslint (CI와 동일. `lint-api`·`lint-web`로 분리 실행)
 - `just plugin-validate`: 마켓플레이스·플러그인 매니페스트 검증. SKILL.md의 JSON 키·code는 `backend/tests/test_cli.py`의 키 집합 테스트와 맞춘다
 - `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제 · `just build-wheel`: 휠 빌드(`backend/dist/`)
 - `just screenshots`: 데모 모드로 골든 패스를 녹화해 `docs/demo.gif` 갱신 (chromium·ffmpeg, sandbox 밖에서 사용자가)

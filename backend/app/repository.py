@@ -1,6 +1,6 @@
 import json
 import sqlite3
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -79,12 +79,12 @@ def set_fixed_now(iso: str | None) -> None:
 def now_iso() -> str:
     if _fixed_now is not None:
         return _fixed_now
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return datetime.now(UTC).isoformat(timespec="seconds")
 
 
 def _dt(iso: str) -> datetime:
     d = datetime.fromisoformat(iso)
-    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+    return d if d.tzinfo else d.replace(tzinfo=UTC)
 
 
 def _row(r: sqlite3.Row) -> dict[str, Any]:

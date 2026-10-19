@@ -50,7 +50,7 @@ def _fail(code: str, message: str, exit_code: int = 1, login_command: str | None
 def _table(rows: list[dict[str, Any]], cols: list[str]) -> str:
     cells = [[("" if r.get(c) is None else str(r.get(c))) for c in cols] for r in rows]
     widths = [max([len(c), *(len(row[i]) for row in cells)]) for i, c in enumerate(cols)]
-    return "\n".join("  ".join(v.ljust(w) for v, w in zip(row, widths)).rstrip() for row in [cols, *cells])
+    return "\n".join("  ".join(v.ljust(w) for v, w in zip(row, widths, strict=True)).rstrip() for row in [cols, *cells])
 
 
 def _emit(obj: Any, as_json: bool, human: str | None = None) -> None:
@@ -101,7 +101,7 @@ class Env:
 
 def _env() -> Env:
     if os.environ.get("GETHIRED_DEMO") == "1":
-        from .demo import demo_paths, set_fixed_now, FIXED_NOW
+        from .demo import FIXED_NOW, demo_paths, set_fixed_now
         db_path, resume_dir = demo_paths()
         if not db_path or not resume_dir:
             _fail("invalid_argument", "데모 모드(GETHIRED_DEMO=1)에서는 DB_PATH·RESUME_DIR을 지정해야 합니다.")

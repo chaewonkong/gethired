@@ -99,7 +99,7 @@ def create_app(repo: Repository, jobs: JobManager,
             return JSONResponse(status_code=401, content={"code": "login_required", "provider": e.provider,
                                                           "message": e.message, "login_command": e.login_command})
         except NoTargets as e:
-            raise HTTPException(status_code=400, detail=str(e))
+            raise HTTPException(status_code=400, detail=str(e)) from e
         try:
             job = jobs.start(targets)
         except JobRunning as e:
@@ -152,7 +152,7 @@ def create_app(repo: Repository, jobs: JobManager,
         try:
             await resume.save(resume_dir, name, request.stream())
         except ValueError as e:
-            raise HTTPException(status_code=400, detail=str(e))
+            raise HTTPException(status_code=400, detail=str(e)) from e
         return {}
 
     @api.delete("/resume/{name}")
@@ -160,7 +160,7 @@ def create_app(repo: Repository, jobs: JobManager,
         try:
             found = resume.delete(resume_dir, name)
         except ValueError as e:
-            raise HTTPException(status_code=400, detail=str(e))
+            raise HTTPException(status_code=400, detail=str(e)) from e
         if not found:
             raise HTTPException(status_code=404, detail="resume file not found")
         return {"name": name}
