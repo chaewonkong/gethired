@@ -1,4 +1,6 @@
 from . import (  # noqa: F401  (registers scrapers)
+    ably,
+    bucketplace,
     coupang,
     daangn,
     dunamu,
@@ -9,7 +11,11 @@ from . import (  # noqa: F401  (registers scrapers)
     kakaobank,
     kakaomobility,
     kakaopay,
+    krafton,
+    kurly,
+    lablup,
     line,
+    moloco,
     naver,
     nhn,
     samsung,

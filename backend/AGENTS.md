@@ -43,7 +43,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | jobs.py     |--------------+
 +-------------+
      |
-     +--> scrapers/   -- httpx ---------> career sites (15)
+     +--> scrapers/   -- httpx ---------> career sites (23)
      |
      +--> profile.py  -- read ----------> resume/*.md, *.pdf (pdf는 pypdf로 텍스트 추출)
      |                -- cache ---------> repository.py (profile_cache, key = resume hash)
@@ -85,8 +85,9 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/config.py` | 경로(`HOME`=platformdirs 또는 `GETHIRED_HOME`, `DB_PATH`=`HOME/app.db`, `RESUME_DIR`=`HOME/resume`, `FRONTEND_DIST`=`app/static`), 매칭 배치 크기·동시성. env override: `GETHIRED_HOME`, `DB_PATH`, `RESUME_DIR`, `LLM_PROVIDER`, `LLM_TIMEOUT_S`, `CLAUDE_MODEL`, `CODEX_BIN`, `CODEX_MODEL` |
 | `app/scrapers/base.py` | `RawPosting`(정규화된 공고), `Scraper` ABC, `REGISTRY`(서브클래스 정의 시 자동 등록), `html_to_text`, `parse_date` |
 | `app/scrapers/<company>.py` | 회사별 `fetch()`. 엔지니어링 직군 1차 필터는 여기서. 원본 분류는 `category`에 보존 |
-| `app/scrapers/greenhouse.py` | Greenhouse 계열 공통 베이스 (쿠팡·당근·토스) |
-| `app/scrapers/greetinghr.py` | GreetingHR 계열 공통 베이스 (업스테이지·카카오페이). 공개 API가 없어 목록은 첫 페이지, 본문은 공고 페이지의 `__NEXT_DATA__`에서 꺼낸다 |
+| `app/scrapers/greenhouse.py` | Greenhouse 계열 공통 베이스 (쿠팡·당근·토스·몰로코·크래프톤). `content`는 entity-escaped HTML이라 `description`에서 unescape 후 `html_to_text` |
+| `app/scrapers/ninehire.py` | Ninehire 계열 공통 베이스 (에이블리). 공개 JSON API(목록 `countPerPage=100` 페이징, 상세 `job-posting`) |
+| `app/scrapers/greetinghr.py` | GreetingHR 계열 공통 베이스 (업스테이지·카카오페이·카카오모빌리티·컬리; 오늘의집은 목록이 Gatsby page-data라 상세 파서만 재사용). 공개 API가 없어 목록은 첫 페이지, 본문은 공고 페이지의 `__NEXT_DATA__`에서 꺼낸다 |
 | `app/llm.py` | `ask_json()`: structured output 래퍼. `configure(provider)`로 모듈 상태를 두고 claude(Agent SDK) / codex(`codex exec` subprocess) 분기. 인증 실패는 `LLMAuthError`, 그 외 `LLMError`. codex는 호출 전 `is_logged_in` 선체크(미로그인 exec는 끝나지 않음), strict schema 변환(`to_strict_schema`), `-o` 파일로 결과, `--json`으로 usage·401 감지. runner는 `llm.codex_runner`로 주입 |
 | `app/auth.py` | `is_logged_in(provider)`: claude는 `claude auth status` JSON, codex는 `$CODEX_BIN login status` exit code. provider별 single-flight |
 | `app/profile.py` | `resume/*.md`·`*.pdf` → `Profile`. 본문은 `resume.extract_text`(문서당 50k자 상한). 파일 이름·내용 해시(1MB 청크)로 `profile_cache`에 캐시 |

@@ -1,0 +1,2072 @@
+{
+ "jobs": [
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7985823003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5882034003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7985823003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "313",
+   "title": "Data Scientist II, Product - Moloco Commerce Media",
+   "company_name": "Moloco",
+   "first_published": "2026-09-03T15:26:16-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058524003,
+     "name": "MCM DSA",
+     "child_ids": [],
+     "parent_id": 4013594003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7985823003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7997311003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5886848003,
+   "location": {
+    "name": "Menlo Park, California, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 7997311003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "2117",
+   "title": "Director, FP&A ",
+   "company_name": "Moloco",
+   "first_published": "2026-09-16T17:25:13-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4083917003,
+     "name": "FP&A",
+     "child_ids": [],
+     "parent_id": 4013596003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7997311003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7824490003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5804267003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7824490003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4208",
+   "title": "Director of Product Management, Ads Quality and Performance - Moloco Commerce Media",
+   "company_name": "Moloco",
+   "first_published": "2026-08-04T16:19:12-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4053869003,
+     "name": "MCM Product",
+     "child_ids": [],
+     "parent_id": 4045796003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7824490003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7489635003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5662743003,
+   "location": {
+    "name": "Menlo Park, California, United States; New York, New York, United States; Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7489635003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "1234",
+   "title": "Director of Product Management, Consumer",
+   "company_name": "Moloco",
+   "first_published": "2025-12-16T15:00:36-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4013595003,
+     "name": "Ads Product",
+     "child_ids": [],
+     "parent_id": 4045796003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    },
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7489635003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7655058003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5728160003,
+   "location": {
+    "name": "Menlo Park, California, United States; New York, New York, United States; Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7655058003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Expression of Interest: Machine Learning Engineer",
+   "company_name": "Moloco",
+   "first_published": "2026-03-06T12:06:23-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4045799003,
+     "name": "Engineering",
+     "child_ids": [
+      4053863003,
+      4031383003,
+      4099553003,
+      4099552003,
+      4053868003,
+      4058531003,
+      4091932003,
+      4014131003
+     ],
+     "parent_id": 4058520003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    },
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7655058003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/5687340003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 4825585003,
+   "location": {
+    "name": "Beijing, China"
+   },
+   "metadata": null,
+   "id": 5687340003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "0000",
+   "title": "Expression of Interest: Senior Growth Manager (Ad Sales)",
+   "company_name": "Moloco",
+   "first_published": "2023-07-19T21:08:12-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4090963003,
+     "name": "Ads Sales",
+     "child_ids": [],
+     "parent_id": 4045798003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4039052003,
+     "name": "China",
+     "location": "China",
+     "child_ids": [
+      4088364003,
+      4039053003,
+      4024442003
+     ],
+     "parent_id": 4031957003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/5687340003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7711666003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5754930003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 7711666003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "TBD",
+   "title": "Expression of Interest(채용관심등록): Software Engineer - Korea",
+   "company_name": "Moloco",
+   "first_published": "2026-04-23T00:41:21-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&lt;strong&gt;채용 관심 등록 / Expression of Interest:&lt;/strong&gt;&lt;/h4&gt;\n&lt;p&gt;We&#39;re always looking to connect with exceptional Software Engineers interested in joining Moloco&#39;s R&amp;amp;D team in Seoul. This posting allows you to share your profile for future opportunities, even if there isn&#39;t a currently open role aligned with your experience. Whether you specialize in backend systems, frontend development, or full-stack engineering, we encourage you to submit your resume — we&#39;d love to stay in touch.&lt;/p&gt;\n&lt;p&gt;Moloco 서울 R&amp;amp;D 팀에 합류하고 싶은 뛰어난 소프트웨어 엔지니어를 항상 찾고 있습니다. 현재 공개된 포지션이 없더라도, 이 등록 페이지를 통해 먼저 이력서를 제출해 주시면 향후 적합한 기회가 생겼을 때 연락드리겠습니다. 백엔드 시스템, 프론트엔드 개발, 혹은 풀스택 엔지니어링 등 전문 분야와 무관하게 지원을 환영합니다.&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;Experience:&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;4–15 years of software development experience across backend, frontend, or full-stack systems, with a track record of leading complex, large-scale projects as seniority grows&lt;/li&gt;\n&lt;li&gt;Bachelor&#39;s degree or above in Computer Science or equivalent&lt;/li&gt;\n&lt;li&gt;Strong problem-solving skills with solid fundamentals in data structures and algorithms&lt;/li&gt;\n&lt;li&gt;Experience designing and implementing scalable systems — whether server-side APIs and infrastructure, or user-facing web and mobile interfaces&lt;/li&gt;\n&lt;li&gt;Experience with large-scale distributed systems, high-throughput data pipelines, or performance-critical frontend applications&lt;/li&gt;\n&lt;li&gt;Hands-on experience with public cloud platforms such as GCP, AWS, or Azure&lt;/li&gt;\n&lt;li&gt;Proficiency working with AI coding tools as a force multiplier — you plan before prompting, provide architectural context, review generated code critically, and know when to write code yourself versus when AI adds genuine value&lt;/li&gt;\n&lt;li&gt;Fluency in both Korean and English (spoken and written)&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;Our Tech Stack:&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Backend: Go, Java, Python · GCP / AWS · Kubernetes · BigQuery · Dataflow / Apache Beam · Kafka · gRPC / REST APIs&lt;/li&gt;\n&lt;li&gt;Frontend: TypeScript / JavaScript · React · Web performance optimization · Mobile web&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;How You Work:&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Your ethos is ownership&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You thrive in ambiguity and enjoy partnering with others to shape vague requirements into clear roadmaps with pragmatic tradeoffs.&lt;/li&gt;\n&lt;li&gt;You take shared accountability for the end-to-end journey; communicating progress, surfacing risks early, and following through to ensure your work creates measurable value.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;li&gt;You demonstrate strong judgment under uncertainty.&amp;nbsp;&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You prioritize based on long-term impact, over short-term noise, making deliberate decisions when information is incomplete.&lt;/li&gt;\n&lt;li&gt;You explicitly weigh tradeoffs like speed vs. quality and remain agile enough to adjust your approach thoughtfully as new information/data emerges.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;li&gt;You lead through clarity and active listening.&amp;nbsp;&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You reduce ambiguity for the team by asking the right questions upfront, tailor your communication to your audience, document your decisions, and bring helpful structure to complex discussions.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;You provide thoughtful, evidence-based feedback when needed and align behind decisions once they are made.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;li&gt;You collaborate early, instead of solving in isolation.&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You build trust across the organization by listening first and navigate conflicting needs with empathy, creating buy-in around priorities and scope.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;You navigate technical tensions productively, disagreeing thoughtfully while maintaining momentum and strengthening professional relationships.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;li&gt;You fall in love with the problem, not the solution&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You build for the long run, looking beyond immediate tasks to understand root causes, second-order effects, and the long-term health of our ML ecosystem.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;When something breaks, you don’t just patch it; you seek structural improvements that prevent recurrence and elevate the technical bar for the entire organization.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;li&gt;You prioritize customer impact and take action to make it real.&lt;/li&gt;\n&lt;ul&gt;\n&lt;li&gt;You prioritize effective solutions that drive business impact over technical elegance, spotting opportunities that others might overlook.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;You have the initiative to turn ideas into outcomes and the agency to identify and fix gaps, even when they aren’t yet on the formal roadmap.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4045799003,
+     "name": "Engineering",
+     "child_ids": [
+      4053863003,
+      4031383003,
+      4099553003,
+      4099552003,
+      4053868003,
+      4058531003,
+      4091932003,
+      4014131003
+     ],
+     "parent_id": 4058520003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7711666003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8016859003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5894990003,
+   "location": {
+    "name": "Menlo Park, California, United States; New York, New York, United States; San Francisco, California, United States; Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 8016859003,
+   "updated_at": "2026-10-09T10:28:17-04:00",
+   "requisition_id": "4789",
+   "title": "Global Product Activation Lead (gPAL)",
+   "company_name": "Moloco",
+   "first_published": "2026-10-09T10:28:17-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058515003,
+     "name": "Ads GTM",
+     "child_ids": [],
+     "parent_id": 4050154003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8016859003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7805176003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5795593003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7805176003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "1173",
+   "title": "Group Product Manager, GenAI Creatives",
+   "company_name": "Moloco",
+   "first_published": "2026-07-15T11:22:57-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4013595003,
+     "name": "Ads Product",
+     "child_ids": [],
+     "parent_id": 4045796003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7805176003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7728195003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5762026003,
+   "location": {
+    "name": "Tokyo, Japan"
+   },
+   "metadata": null,
+   "id": 7728195003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "3537",
+   "title": "Growth Director",
+   "company_name": "Moloco",
+   "first_published": "2026-05-11T03:29:06-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4090963003,
+     "name": "Ads Sales",
+     "child_ids": [],
+     "parent_id": 4045798003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4039055003,
+     "name": "Tokyo - Office",
+     "location": "Tokyo, Japan",
+     "child_ids": [],
+     "parent_id": 4029283003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7728195003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/6021399003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 4969463003,
+   "location": {
+    "name": "New York, New York, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 6021399003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "227",
+   "title": "Growth Manager",
+   "company_name": "Moloco",
+   "first_published": "2024-06-12T10:39:48-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4090963003,
+     "name": "Ads Sales",
+     "child_ids": [],
+     "parent_id": 4045798003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/6021399003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7707404003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5753486003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 7707404003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4648",
+   "title": "Growth Manager - Advertiser & Agency (Commerce Media)",
+   "company_name": "Moloco",
+   "first_published": "2026-04-20T23:41:01-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;The Impact You’ll Be Contributing to Moloco:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;As a Growth Manager on Moloco Commerce Media&#39;s Advertiser &amp;amp; Agency team, you&#39;ll drive Commerce Media adoption among the market&#39;s most important advertisers and agencies. This is a hands-on role where account growth meets business development, at a senior level: you&#39;ll own the most strategic and complex advertiser/agency relationships, lead high-stakes negotiations independently, and be trusted to make judgment calls with minimal oversight.&lt;/p&gt;\n&lt;p&gt;You&#39;ll combine selective new-business development with deep expansion of existing advertiser and agency relationships, working closely with platform-side Growth, Product, Data, and Legal to grow Commerce Media&#39;s footprint.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;The Opportunity:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Pipeline &amp;amp; New Opportunity Development&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Proactively identify and engage the most strategic potential advertisers and agencies, introducing Commerce Media capabilities and driving platform adoption.&lt;/li&gt;\n&lt;li&gt;Independently build and manage a pipeline of growth opportunities (both new accounts and expansion within existing advertiser/agency relationships) from opportunity identification through to close.&lt;/li&gt;\n&lt;li&gt;Define and size target segments within the advertiser and agency landscape, shaping the go-to-market approach for the team.&lt;/li&gt;\n&lt;li&gt;Lead negotiation of commercial terms and manage contracting for complex, higher-value deals, in close collaboration with Legal and Finance.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Account Growth &amp;amp; Execution&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Own a portfolio of the most strategic advertiser and agency relationships, building trusted, senior-level relationships with key stakeholders.&lt;/li&gt;\n&lt;li&gt;Proactively identify expansion opportunities and develop tailored strategies for growing each account.&lt;/li&gt;\n&lt;li&gt;Own end-to-end campaign execution for advertisers and agencies, including onboarding, campaign setup, performance monitoring, and optimization.&lt;/li&gt;\n&lt;li&gt;Analyze account and campaign data to generate insights, identify upsell/cross-sell opportunities, and advise advertisers and agencies on optimizing ad spend and outcomes.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Cross-functional Collaboration &amp;amp; Team Contribution&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Partner closely with platform-side Growth Managers to align advertiser demand with commerce platform supply.&lt;/li&gt;\n&lt;li&gt;Represent the voice of advertisers and agencies internally, feeding market and client insights into product and go-to-market strategy discussions.&lt;/li&gt;\n&lt;li&gt;Build and share playbooks, sales narratives, and best practices that improve team efficiency and support scalable growth.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;How Do I Know if the Role is Right For Me?&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;4-7+ years of experience in ad tech, e-commerce, or media sales/business development, with a strong track record of developing new business and growing complex, high-value accounts independently.&lt;/li&gt;\n&lt;li&gt;Demonstrated ability to lead and close complex, multi-stakeholder negotiations with minimal oversight.&lt;/li&gt;\n&lt;li&gt;Strong commercial instincts, with the ability to identify, structure, and close new opportunities in ambiguous situations.&lt;/li&gt;\n&lt;li&gt;Excellent communication and relationship-building skills, with a track record of building trust at senior/executive levels with agency and advertiser stakeholders.&lt;/li&gt;\n&lt;li&gt;Strong analytical mindset; comfortable working with data, drawing insights, and translating numbers into clear strategic recommendations.&lt;/li&gt;\n&lt;li&gt;High ownership mentality, entrepreneurial drive, and comfort operating in a fast-moving, global company environment.&lt;/li&gt;\n&lt;li&gt;Fluency in English is required; proficiency in additional languages relevant to the local market is a plus.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4031381003,
+     "name": "MCM Business Development",
+     "child_ids": [],
+     "parent_id": 4045797003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7707404003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7820007003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5802054003,
+   "location": {
+    "name": "Singapore"
+   },
+   "metadata": null,
+   "id": 7820007003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "1115",
+   "title": "GTM Program Manager",
+   "company_name": "Moloco",
+   "first_published": "2026-08-17T07:26:52-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058515003,
+     "name": "Ads GTM",
+     "child_ids": [],
+     "parent_id": 4050154003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4039059003,
+     "name": "Singapore - Office",
+     "location": "Singapore",
+     "child_ids": [],
+     "parent_id": 4008012003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7820007003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8015066003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5816115003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 8015066003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "3034",
+   "title": "Head of People Technology",
+   "company_name": "Moloco",
+   "first_published": "2026-10-07T13:03:46-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4015116003,
+     "name": "People Operations",
+     "child_ids": [],
+     "parent_id": 4058512003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8015066003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7823866003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5804041003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 7823866003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "2003",
+   "title": "Head of Strategic Growth, APAC",
+   "company_name": "Moloco",
+   "first_published": "2026-08-04T04:26:08-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;The Impact You’ll Be Contributing to Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Reporting to the VP of Business Development, MCM, the Head of Strategic Growth, APAC will lead Moloco&#39;s Strategic Growth team across the region. While supporting retailers and marketplaces throughout APAC, the team is primarily based in Seoul and partners closely with regional Sales, Product, and Engineering leaders&lt;/p&gt;\n&lt;p&gt;This role is responsible for helping Moloco Commerce Media customers build, launch, and scale successful commerce media businesses. Acting as a trusted strategic advisor to senior customer executives, the team helps define commerce media strategy, operating models, advertiser growth initiatives, and long-term business success.&lt;/p&gt;\n&lt;p&gt;Beyond customer engagement, this leader will play a key role in shaping Moloco&#39;s MCM business in APAC by bringing together customer insights, market trends, and commercial priorities to influence product strategy, regional investments, and go-to-market execution.&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;The Opportunity:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;Lead and develop the APAC Strategic Growth team&lt;/span&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Lead, coach, and develop a team of Strategic Growth Managers and Directors across APAC.&lt;/li&gt;\n&lt;li&gt;Set clear priorities, operating rhythms, and standards for strategic customer engagement and delivery.&lt;/li&gt;\n&lt;li&gt;Foster a culture of high ownership, intellectual rigor, collaboration, and continuous development.&lt;/li&gt;\n&lt;li&gt;Support the team in navigating complex customer situations, executive relationships, and strategic decisions.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;Drive customer growth and business outcomes&lt;/span&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Enable retailers and marketplaces to build scalable commerce media businesses while accelerating advertising revenue growth.&lt;/li&gt;\n&lt;li&gt;Partner with customer executives to define commerce media strategies, business plans, operating models, and go-to-market priorities.&lt;/li&gt;\n&lt;li&gt;Help customers identify and execute the highest-impact growth levers across both advertiser demand and supply.&lt;/li&gt;\n&lt;li&gt;Lead strategic engagements, executive meetings, and business reviews for Moloco&#39;s most important APAC partnerships.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;Build trusted, long-term customer partnerships&lt;/span&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Develop enduring relationships with senior stakeholders across business and technology organizations.&lt;/li&gt;\n&lt;li&gt;Position Moloco and the Strategic Growth team as trusted advisors on commerce media strategy and business growth.&lt;/li&gt;\n&lt;li&gt;Develop a deep understanding of each customer&#39;s business model, market dynamics, organizational priorities, and growth strategy.&lt;/li&gt;\n&lt;li&gt;Anticipate customer needs, identify partnership risks early, and mobilize the right Moloco resources to address them.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;Shape the APAC MCM business&lt;/span&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Partner closely with cross-functional leaders across Moloco to deliver a cohesive customer experience.&lt;/li&gt;\n&lt;li&gt;Represent the voice of APAC customers, identifying recurring needs and influencing product and go-to-market priorities.&lt;/li&gt;\n&lt;li&gt;Monitor market developments, competitive dynamics, and customer trends to identify strategic opportunities and risks.&lt;/li&gt;\n&lt;li&gt;Establish scalable operating models and best practices that can be applied across APAC and Moloco&#39;s global MCM business.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4 class=&quot;PDq2pG_selectionAnchorContainer&quot; data-section-id=&quot;cubbob&quot; data-start=&quot;3394&quot; data-end=&quot;3414&quot;&gt;&amp;nbsp;&lt;/h4&gt;\n&lt;h4 class=&quot;PDq2pG_selectionAnchorContainer&quot; data-section-id=&quot;cubbob&quot; data-start=&quot;3394&quot; data-end=&quot;3414&quot;&gt;What You&#39;ll Bring&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;12+ years of relevant experience, including experience leading high-performing customer-facing teams and delivering measurable commercial or operational outcomes.&lt;/li&gt;\n&lt;li&gt;Experience spanning strategy consulting, ad tech, retail, commerce media, or enterprise technology businesses.&lt;/li&gt;\n&lt;li&gt;Strong commercial acumen with experience developing business strategies, go-to-market plans, and revenue growth initiatives.&lt;/li&gt;\n&lt;li&gt;Demonstrated success advising executive stakeholders and building trusted relationships with large, complex enterprise customers.&lt;/li&gt;\n&lt;li&gt;Deep understanding of digital advertising, performance advertising, retail media, or marketplace monetization.&lt;/li&gt;\n&lt;li&gt;Strong analytical rigor, with the ability to translate complex analysis into clear business decisions, executive recommendations, and communications.&lt;/li&gt;\n&lt;li&gt;Proven ability to influence and collaborate effectively across Product, Engineering, Sales, and other cross-functional teams.&lt;/li&gt;\n&lt;li&gt;Experience working with ML- and AI-enabled products and communicating their value to business stakeholders.&lt;/li&gt;\n&lt;li&gt;Ability to thrive in a fast-growing global environment, creating structure while navigating ambiguity.&lt;/li&gt;\n&lt;li&gt;Based in Seoul, with fluency in both Korean and English.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4031381003,
+     "name": "MCM Business Development",
+     "child_ids": [],
+     "parent_id": 4045797003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7823866003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/5820201003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 4880003003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 5820201003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "157",
+   "title": "Machine Learning Engineer (머신러닝 엔지니어)",
+   "company_name": "Moloco",
+   "first_published": "2023-11-30T03:58:43-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h3&gt;&lt;strong&gt;About the Role&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;We seek exceptional machine learning engineers to join us in building a state-of-the-art machine learning system. Moloco&#39;s ML system processes over 6 million bid requests per second at under 7ms prediction latency, and our deep learning models power CTR/CVR prediction, ranking, and bid price optimization for live auction decisions at planet scale. Moloco is an engineering company founded by top-tier engineers, and machine learning is the core of Moloco&#39;s engineering systems. We understand the value of a strong engineering team and strive to hire only the best engineers.&lt;/p&gt;\n&lt;p&gt;As a Machine Learning Engineer, you will contribute to the full machine learning lifecycle — from model development and experimentation to data pipeline maintenance and production deployment. This role is designed for engineers who have solid machine learning and software engineering fundamentals, can execute end-to-end tasks with increasing independence, and are eager to grow through hands-on work in one of the most technically demanding real-time ML environments in the industry.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;What You Will Do&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Develop and iterate on deep learning models for real-world prediction problems, including CTR/CVR estimation and ranking, with guidance on modeling choices and objective function design.&lt;/li&gt;\n&lt;li&gt;Build and maintain data pipelines for model training and serving using GCP products such as Dataflow, BigQuery, BigTable, and open-source frameworks such as Apache Beam, PySpark, and Iceberg.&lt;/li&gt;\n&lt;li&gt;Support production model serving, monitor model behavior in live environments, and contribute to debugging and improving model quality.&lt;/li&gt;\n&lt;li&gt;Design and run offline experiments — define evaluation metrics, test hypotheses, and document findings to contribute to team-level modeling decisions.&lt;/li&gt;\n&lt;li&gt;Collaborate with fellow Machine Learning Engineers, Applied Scientists, and Infrastructure engineers to deliver projects end-to-end within defined scopes.&lt;/li&gt;\n&lt;li&gt;Grow your understanding of Moloco&#39;s AdTech domain — including auction mechanics, bidding systems, and advertising outcome modeling — and apply that context to your work.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;strong&gt;Basic Qualifications (3 Titles)&lt;/strong&gt;&lt;/h3&gt;\n&lt;h4&gt;&lt;strong&gt;Machine Learning Engineer II&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Bachelor&#39;s degree or higher in Computer Science or a related technical field, or equivalent professional experience.&lt;/li&gt;\n&lt;li&gt;2+ years of hands-on software development experience in machine learning or deep learning, with at least some exposure to production systems beyond academic or personal projects.&lt;/li&gt;\n&lt;li&gt;Working knowledge of core machine learning modeling concepts, including classification and regression model selection, loss function design, bias/variance trade-offs, calibration, and offline evaluation.&lt;/li&gt;\n&lt;li&gt;Solid foundation in statistics and probability, including conditional probability, common distributions, maximum likelihood estimation, hypothesis testing, and basic A/B test interpretation.&lt;/li&gt;\n&lt;li&gt;Experience building or contributing to data pipelines or model serving systems, with an understanding of the engineering trade-offs involved.&lt;/li&gt;\n&lt;li&gt;Proficiency in at least one programming language such as Python, Java, or Go.&lt;/li&gt;\n&lt;li&gt;Fluent English communication skills.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;Senior Machine Learning Engineer&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Bachelor&#39;s degree or higher in Computer Science or a related technical field, or equivalent professional experience.&lt;/li&gt;\n&lt;li&gt;5+ years of hands-on software development experience in machine learning and deep learning, with a clear focus on production systems rather than research prototyping.&lt;/li&gt;\n&lt;li&gt;Strong machine learning modeling depth, including model selection for classification, regression, and ranking, loss function design, calibration, class imbalance handling, and bias/variance trade-off reasoning.&lt;/li&gt;\n&lt;li&gt;Solid foundation in statistics and probability, including Bayesian inference, maximum likelihood estimation, hypothesis testing, A/B experiment design and interpretation, and probabilistic reasoning under uncertainty.&lt;/li&gt;\n&lt;li&gt;Demonstrated experience designing and operating large-scale machine learning systems under real-world constraints, including model-serving architectures, feature stores, and training pipelines.&lt;/li&gt;\n&lt;li&gt;Proficiency in at least one programming language such as Python, Java, or Go, with the ability to write clean, robust, production-quality code.&lt;/li&gt;\n&lt;li&gt;Fluent English communication skills.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;Staff Machine Learning Engineer&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Bachelor&#39;s degree or higher in Computer Science or a related technical field, or equivalent professional experience.&lt;/li&gt;\n&lt;li&gt;8+ years of hands-on software development experience in machine learning and deep learning, with a demonstrated focus on large-scale production systems.&lt;/li&gt;\n&lt;li&gt;Proven track record of driving technical direction across teams or domains — not just executing projects, but defining the approach, resolving ambiguity, and influencing how others solve problems.&lt;/li&gt;\n&lt;li&gt;Expert-level machine learning modeling depth, including objective function design, calibration, multi-task learning, ranking, and the ability to reason about trade-offs across the full modeling lifecycle.&lt;/li&gt;\n&lt;li&gt;Strong foundation in statistics and probability, including Bayesian inference, causal reasoning, experiment design, and the ability to design and interpret complex A/B tests with confidence.&lt;/li&gt;\n&lt;li&gt;Deep experience designing and operating large-scale machine learning systems end-to-end under real-world constraints, including model serving architectures, feature pipelines, retraining strategies, and observability.&lt;/li&gt;\n&lt;li&gt;Proficiency in at least one programming language, such as Python, Java, or Go, with the ability to write and review production-quality code as part of a team.&lt;/li&gt;\n&lt;li&gt;Fluent English communication skills, including the ability to align technical and non-technical stakeholders at the leadership level.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;strong&gt;Preferred Qualifications&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;&lt;em&gt;(We sincerely encourage you to apply even if you don&#39;t meet all of the preferred qualifications.)&lt;/em&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Relevant experience in AdTech.&lt;/li&gt;\n&lt;li&gt;MS or Ph.D. degree in Computer Science or related technical field&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4014131003,
+     "name": "Ads Quality",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/5820201003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/6245366003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5066519003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 6245366003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Machine Learning Engineer-Technical Research Personnel (머신러닝 엔지니어-전문연구요원)",
+   "company_name": "Moloco",
+   "first_published": "2024-10-17T19:33:49-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h3&gt;&lt;strong&gt;About the Role&lt;/strong&gt;&lt;/h3&gt;\n&lt;p&gt;We seek exceptional machine learning engineers to join us in building a state-of-the-art machine learning system. Moloco&#39;s ML system processes over 6 million bid requests per second at under 7ms prediction latency, and our deep learning models power CTR/CVR prediction, ranking, and bid price optimization for live auction decisions at planet scale. Moloco is an engineering company founded by top-tier engineers, and machine learning is the core of Moloco&#39;s engineering systems. We understand the value of a strong engineering team and strive to hire only the best engineers.&lt;/p&gt;\n&lt;p&gt;As a Machine Learning Engineer, you will contribute to the full machine learning lifecycle — from model development and experimentation to data pipeline maintenance and production deployment. This role is designed for engineers who have solid machine learning and software engineering fundamentals, can execute end-to-end tasks with increasing independence, and are eager to grow through hands-on work in one of the most technically demanding real-time ML environments in the industry.&lt;/p&gt;\n&lt;h3&gt;&lt;strong&gt;What You Will Do&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Develop and iterate on deep learning models for real-world prediction problems including CTR/CVR estimation and ranking, with guidance on modeling choices and objective function design.&lt;/li&gt;\n&lt;li&gt;Build and maintain data pipelines for model training and serving using GCP products such as Dataflow, BigQuery, BigTable, and open-source frameworks such as Apache Beam, PySpark and Iceberg.&lt;/li&gt;\n&lt;li&gt;Support production model serving, monitor model behavior in live environments, and contribute to debugging and improving model quality.&lt;/li&gt;\n&lt;li&gt;Design and run offline experiments — define evaluation metrics, test hypotheses, and document findings to contribute to team-level modeling decisions.&lt;/li&gt;\n&lt;li&gt;Collaborate with fellow Machine Learning Engineers, Applied Scientists, and Infrastructure engineers to deliver projects end-to-end within defined scopes.&lt;/li&gt;\n&lt;li&gt;Grow your understanding of Moloco&#39;s AdTech domain — including auction mechanics, bidding systems, and advertising outcome modeling — and apply that context to your work.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;strong&gt;Basic Qualifications&lt;/strong&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;MS or Ph.D. degree in Computer Science or related technical field&lt;/li&gt;\n&lt;li&gt;Working knowledge of core machine learning modeling concepts, including classification and regression model selection, loss function design, bias/variance trade-offs, calibration, and offline evaluation.&lt;/li&gt;\n&lt;li&gt;Solid foundation in statistics and probability, including conditional probability, common distributions, maximum likelihood estimation, hypothesis testing, and basic A/B test interpretation.&lt;/li&gt;\n&lt;li&gt;Experience building or contributing to data pipelines or model serving systems, with an understanding of the engineering trade-offs involved.&lt;/li&gt;\n&lt;li&gt;Proficiency in at least one programming language such as Python, Java, or Go.&lt;/li&gt;\n&lt;li&gt;Fluent English communication skills.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4014131003,
+     "name": "Ads Quality",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/6245366003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8016196003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5894773003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 8016196003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4508",
+   "title": "Moloco Ads GTM Strategy Manager",
+   "company_name": "Moloco",
+   "first_published": "2026-10-08T09:44:24-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058515003,
+     "name": "Ads GTM",
+     "child_ids": [],
+     "parent_id": 4050154003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8016196003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7788201003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5787721003,
+   "location": {
+    "name": "Beijing, China"
+   },
+   "metadata": null,
+   "id": 7788201003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "2083",
+   "title": "New Business Account Manager (Implementation Manager)",
+   "company_name": "Moloco",
+   "first_published": "2026-06-29T23:12:49-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4152399003,
+     "name": "Ads COS",
+     "child_ids": [],
+     "parent_id": 4153502003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4024442003,
+     "name": "Beijing - Office",
+     "location": "Beijing, China",
+     "child_ids": [],
+     "parent_id": 4039052003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7788201003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7823169003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5803667003,
+   "location": {
+    "name": "Menlo Park, California, United States; New York, New York, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 7823169003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "3577",
+   "title": "Product Marketing Director, Consumer",
+   "company_name": "Moloco",
+   "first_published": "2026-07-31T16:23:06-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058517003,
+     "name": "Ads and Corporate Marketing",
+     "child_ids": [],
+     "parent_id": 4052432003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4039017003,
+     "name": "New York",
+     "location": "New York, United States",
+     "child_ids": [
+      4039018003,
+      4008009003
+     ],
+     "parent_id": 4039015003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7823169003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8003052003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5889203003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 8003052003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4787",
+   "title": "QA Engineer (1-Year Contract)",
+   "company_name": "Moloco",
+   "first_published": "2026-09-22T22:06:47-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&lt;strong&gt;Mission of the Role&lt;/strong&gt;&lt;/h4&gt;\n&lt;p&gt;Ensure the quality, stability, and reliability of Moloco’s services by conducting rigorous manual testing and building AI Agent-driven automated testing frameworks. The QA Engineer will balance hands-on exploratory testing with modern AI technologies to write test cases, analyze failures, and optimize testing pipelines. By working closely with Software Engineers, you will improve product quality, development efficiency, and release confidence.&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;What You will Do&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Conduct thorough manual testing for new features, complex edge cases, and user-centric scenarios to ensure high product quality before release.&lt;/li&gt;\n&lt;li&gt;Design, build, and scale an AI Agent-assisted test automation framework to transition repetitive manual tests into automated integration and end-to-end tests.&lt;/li&gt;\n&lt;li&gt;Utilize AI Agents for automated test generation, script maintenance (auto-healing), and enhancing exploratory testing.&lt;/li&gt;\n&lt;li&gt;Analyze bugs and errors found during both manual and automated testing, and communicate actionable findings (repro steps, root-cause insights) to Software Engineers.&lt;/li&gt;\n&lt;li&gt;Choose the appropriate testing strategy for each service or feature, balancing manual testing, automation, regression coverage, and release risk.&lt;/li&gt;\n&lt;li&gt;Integrate AI-driven QA tooling into CI/CD pipelines to identify quality risks early in the development lifecycle.&lt;/li&gt;\n&lt;li&gt;Improve development efficiency and performance by identifying quality risks early and integrating QA into the development process.&lt;/li&gt;\n&lt;li&gt;Work closely with Software Engineers to enhance and improve programs, testability, and release quality.&lt;/li&gt;\n&lt;li&gt;Maintain clear test documentation, defect records, and guidelines to ensure seamless QA operations.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;How Do I Know if the Role is Right For Me?&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Degree in Computer Science, Software Engineering, or a related field, with software-testing coursework or at least one year of software-testing experience.&lt;/li&gt;\n&lt;li&gt;Basic understanding of Agile/DevOps software development practices and continuous integration/continuous delivery (CI/CD).&lt;/li&gt;\n&lt;li&gt;Strong attention to detail with a proven ability to identify edge cases, negative scenarios, boundary conditions, and gaps in requirements through manual testing.&lt;/li&gt;\n&lt;li&gt;Familiarity with API testing, backend service verification, frontend testing.&lt;/li&gt;\n&lt;li&gt;Strong written and verbal communication skills in English and Korean.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;Preferred Skills&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience or strong interest in leveraging AI tools/LLM Agents for QA processes (e.g., automated test script generation, auto-healing, log analysis).&lt;/li&gt;\n&lt;li&gt;Familiarity with Jira or comparable test-management and issue-tracking tools.&lt;/li&gt;\n&lt;li&gt;Familiarity with security/penetration testing concepts.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4099552003,
+     "name": "Ads Platform",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8003052003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/6643909003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5237866003,
+   "location": {
+    "name": "Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 6643909003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "3652",
+   "title": "Senior Applied Scientist - Moloco Ads",
+   "company_name": "Moloco",
+   "first_published": "2025-07-14T15:22:17-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4014131003,
+     "name": "Ads Quality",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/6643909003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7798184003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5792270003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7798184003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4767",
+   "title": "Senior Compliance Manager, Analytics & Program Effectiveness",
+   "company_name": "Moloco",
+   "first_published": "2026-07-08T15:04:22-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4030805003,
+     "name": "Legal",
+     "child_ids": [],
+     "parent_id": 4031386003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7798184003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8009687003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5892108003,
+   "location": {
+    "name": "Menlo Park, California, United States; New York, United States"
+   },
+   "metadata": null,
+   "id": 8009687003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Senior Data Scientist, Growth Analytics",
+   "company_name": "Moloco",
+   "first_published": "2026-09-30T16:15:29-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058522003,
+     "name": "Ads Data Science",
+     "child_ids": [],
+     "parent_id": 4013594003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8009687003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7808604003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5797082003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7808604003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4784",
+   "title": "Senior Director, Business Integrity Lead ",
+   "company_name": "Moloco",
+   "first_published": "2026-07-20T13:05:04-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4030805003,
+     "name": "Legal",
+     "child_ids": [],
+     "parent_id": 4031386003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7808604003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7979503003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5879290003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7979503003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Senior Director, IT ",
+   "company_name": "Moloco",
+   "first_published": "2026-09-01T18:49:53-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4043643003,
+     "name": "Compliance, Security, and IT",
+     "child_ids": [],
+     "parent_id": 4153759003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7979503003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7609316003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5709657003,
+   "location": {
+    "name": "New York, New York, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 7609316003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4716",
+   "title": "Senior Growth Director - Moloco Ads",
+   "company_name": "Moloco",
+   "first_published": "2026-01-30T12:35:37-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4090963003,
+     "name": "Ads Sales",
+     "child_ids": [],
+     "parent_id": 4045798003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008009003,
+     "name": "New York - Office",
+     "location": "New York, New York, United States",
+     "child_ids": [],
+     "parent_id": 4039017003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7609316003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7655196003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5726425003,
+   "location": {
+    "name": "Menlo Park, California, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 7655196003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Senior Manager, GTM Strategy & Operations",
+   "company_name": "Moloco",
+   "first_published": "2026-03-05T19:47:08-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058515003,
+     "name": "Ads GTM",
+     "child_ids": [],
+     "parent_id": 4050154003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7655196003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8016125003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5894707003,
+   "location": {
+    "name": "Menlo Park, California, United States; San Francisco, California, United States"
+   },
+   "metadata": null,
+   "id": 8016125003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4618",
+   "title": "Senior Marketing Insights Analyst ",
+   "company_name": "Moloco",
+   "first_published": "2026-10-07T16:30:24-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058515003,
+     "name": "Ads GTM",
+     "child_ids": [],
+     "parent_id": 4050154003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8016125003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7790487003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5788570003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7790487003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "Senior Software Engineer, Ads Quality",
+   "company_name": "Moloco",
+   "first_published": "2026-07-02T09:59:43-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4014131003,
+     "name": "Ads Quality",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7790487003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7519526003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5675028003,
+   "location": {
+    "name": "Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7519526003,
+   "updated_at": "2026-10-14T18:00:17-04:00",
+   "requisition_id": "4267",
+   "title": "Senior Software Engineer - Applied Data",
+   "company_name": "Moloco",
+   "first_published": "2025-11-06T15:28:08-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4053863003,
+     "name": "Ads Infrastructure",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7519526003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7982204003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5880454003,
+   "location": {
+    "name": "Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7982204003,
+   "updated_at": "2026-10-12T16:21:44-04:00",
+   "requisition_id": "308",
+   "title": "Senior Software Engineer, Common Infrastructure",
+   "company_name": "Moloco",
+   "first_published": "2026-09-17T18:25:38-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4053863003,
+     "name": "Ads Infrastructure",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7982204003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7717799003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "education": "education_required",
+   "internal_job_id": 5756462003,
+   "location": {
+    "name": "Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7717799003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "291",
+   "title": "Senior Software Engineer - Experiment Platform",
+   "company_name": "Moloco",
+   "first_published": "2026-04-27T19:30:00-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4099552003,
+     "name": "Ads Platform",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7717799003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7452525003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5634091003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 7452525003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4497",
+   "title": "Senior/Staff Applied Scientist (시니어/스태프 응용 과학자)",
+   "company_name": "Moloco",
+   "first_published": "2025-10-01T19:44:32-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&lt;strong&gt;Please submit both your resume and cover letter.&lt;/strong&gt;&lt;/h4&gt;\n&lt;h4&gt;&lt;strong&gt;Why this role exists:&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Drive ambiguous signals to defensible root cause.&lt;/strong&gt; A KPI regression. A lift number that looks too good. An unexplained cost increase. A model that quietly degraded after an upstream data change. You will trace it across the model, the data pipeline, the auction, and the serving stack — and be right.&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Ship the fix.&lt;/strong&gt; A new feature, a reformulated objective, a recalibrated model, a changed bidding policy, or a correction upstream in the data. You own it through launch and through the readout afterward.&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Design evaluation that survives scrutiny.&lt;/strong&gt; Online experiments and offline evaluation in a setting where auctions are non-stationary, treatment and control interfere with each other, and conversions land days late.&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Leave behind methodology, not just results.&lt;/strong&gt; Tooling and frameworks that let other teams answer the next version of the question without you.&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Communicate to people who will act on it.&amp;nbsp;&lt;/strong&gt;ML engineers, infrastructure, product, and the account teams sitting across from advertisers.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;What we&#39;re looking for?&lt;/strong&gt;&lt;/h4&gt;\n&lt;p&gt;&lt;strong&gt;Required&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Ph.D. in computer science, statistics, operations research, economics, or a related quantitative field, plus 2+ years of industry experience — &lt;strong&gt;or&lt;/strong&gt; 5+ years of industry experience solving large-scale ML, optimization, or systems problems without one.&lt;/li&gt;\n&lt;li&gt;Strong applied statistics and causal reasoning: experiment design, working with confounded observational data, and the judgment to recognize when a result is not real.&lt;/li&gt;\n&lt;li&gt;Fluency in Python and SQL against large datasets (Spark, BigQuery, or equivalent). You can get your own data without waiting on anyone.&lt;/li&gt;\n&lt;li&gt;Experience owning a model or algorithm in production — including what happened to it after launch.&lt;/li&gt;\n&lt;li&gt;Clear written English. A large share of this role&#39;s impact takes the form of a document that changes what a team decides to do.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Strongly Preferred - any of&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Ads, recommendation, search ranking, marketplaces, or another domain with real-time auctions or bidding.&lt;/li&gt;\n&lt;li&gt;Probability calibration, delayed feedback, or selection bias in logged-bandit data.&lt;/li&gt;\n&lt;li&gt;CTV, attribution modeling, or incrementality measurement.&lt;/li&gt;\n&lt;li&gt;PyTorch or TensorFlow applied to tabular or sequential production data at scale.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;Senior vs. Staff&lt;/strong&gt;&lt;/h4&gt;\n&lt;p&gt;Both are individual-contributor roles. Level is decided at offer, based on demonstrated scope rather than years served.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Senior — in the last 12–18 months you have:&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Taken a project from an ambiguous problem statement to a shipped, measured change in production.&lt;/li&gt;\n&lt;li&gt;Made the calls yourself on what to investigate and, just as importantly, what to drop.&lt;/li&gt;\n&lt;li&gt;Made at least one teammate measurably better through review, pairing, or mentorship&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Staff — all of the above, plus:&lt;/strong&gt;&lt;/li&gt;\n&lt;li&gt;Led work that spanned multiple teams or systems, where no single team owned the problem.&lt;/li&gt;\n&lt;li&gt;Changed what your organization chose to work on, on the strength of analysis you produced.&lt;/li&gt;\n&lt;li&gt;Left behind a method, framework, or standard that other people now use by default.&lt;/li&gt;\n&lt;li&gt;Represented technical trade-offs directly to non-technical stakeholders, and been trusted to do it.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;This role is probably not for you if you are looking for a purely offline research position, or you prefer to hand a model to an engineer and move on to the next paper.&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4091932003,
+     "name": "Moloco Next",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7452525003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7985098003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5881754003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 7985098003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "TBU",
+   "title": "Senior Technical Program Manager - CTV",
+   "company_name": "Moloco",
+   "first_published": "2026-09-03T02:18:13-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h3&gt;The Impact You&#39;ll Be Contributing to Moloco&lt;/h3&gt;\n&lt;p&gt;Moloco helps businesses grow through machine learning-powered advertising and measurement. As a TPM supporting our CTV business, you will help shape how CTV products and platforms scale across app, web, and smart TV environments.&lt;/p&gt;\n&lt;p&gt;You will make an impact by:&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Connecting business goals to clear priorities, milestones, and execution plans.&lt;/li&gt;\n&lt;li&gt;Creating visibility into performance, investment, operational health, and progress against goals.&lt;/li&gt;\n&lt;li&gt;Aligning Product, Engineering, Data, Finance, and Go-to-Market teams around shared outcomes.&lt;/li&gt;\n&lt;li&gt;Coordinating identity, measurement, reporting, and platform initiatives that improve the CTV experience for customers and partners.&lt;/li&gt;\n&lt;li&gt;Helping global teams move with greater clarity and predictability across Seoul and other Moloco offices.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;The Opportunity&lt;/h3&gt;\n&lt;p&gt;As the TPM for CTV, you will lead complex, cross-functional programs from problem definition through launch and post-launch learning. You will partner with Product, Engineering, Infrastructure, Data Science and Machine Learning, Finance, Strategy, Go-to-Market, and customer-facing teams across Moloco.&lt;/p&gt;\n&lt;p&gt;You will:&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;Translate CTV strategy and customer needs into a focused roadmap, well-defined workstreams, milestones, and dependencies.&lt;/li&gt;\n&lt;li&gt;Establish clear planning and communication rhythms that keep teams aligned and leaders informed.&lt;/li&gt;\n&lt;li&gt;Drive execution across technical and business initiatives, bringing structure to ambiguity and momentum to high-priority work.&lt;/li&gt;\n&lt;li&gt;Identify risks, surface trade-offs, and guide decisions to resolution through influence and strong stakeholder partnership.&lt;/li&gt;\n&lt;li&gt;Connect launch plans with measurable outcomes, using data and feedback to improve products and operating practices.&lt;/li&gt;\n&lt;li&gt;Build effective collaboration across Seoul and Moloco’s global teams.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;How Do I Know if the Role is Right For Me?&lt;/h3&gt;\n&lt;p&gt;This role may be a strong fit if you enjoy turning complex problems into coordinated action and helping teams deliver meaningful outcomes together.&lt;/p&gt;\n&lt;h4&gt;What you bring&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience leading complex, cross-functional technical programs involving Product, Engineering, Data or Machine Learning, Infrastructure, Finance, and/or Go-to-Market teams.&lt;/li&gt;\n&lt;li&gt;Strong program-management fundamentals, including problem definition, scoping, planning, milestone and dependency management, risk mitigation, and concise progress communication.&lt;/li&gt;\n&lt;li&gt;Technical depth to understand system architecture, technical design documents, system components, and data flows, and to engage productively with technical leaders.&lt;/li&gt;\n&lt;li&gt;Comfort planning and communicating in environments where outcomes, priorities, or technical approaches evolve over time.&lt;/li&gt;\n&lt;li&gt;The judgment and influence to bring clarity to ambiguity, make trade-offs visible, and move decisions forward without relying on formal authority.&lt;/li&gt;\n&lt;li&gt;Excellent written and spoken English communication for collaboration with colleagues and leaders across global offices.&lt;/li&gt;\n&lt;li&gt;The ability to manage multiple workstreams while balancing strategic planning with hands-on execution.&lt;/li&gt;\n&lt;li&gt;3+ years of technical program management or engineering management experience.&lt;/li&gt;\n&lt;li&gt;5+ years of experience working directly with software, cloud, or data engineering teams.&lt;/li&gt;\n&lt;li&gt;Bachelor&#39;s degree in computer science, engineering, or a related technical discipline.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;Experience that will help you thrive&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Background as a TPM, Technical Program Manager, Engineering Program Manager, Product Manager, engineer, or in a comparable technical leadership role.&lt;/li&gt;\n&lt;li&gt;Experience in AdTech, advertising platforms, DSP or SSP, measurement, identity, CTV/OTT, streaming, commerce, or large-scale data platforms.&lt;/li&gt;\n&lt;li&gt;Experience connecting business outcomes such as revenue, cost, customer activation, quality, or reliability to technical execution.&lt;/li&gt;\n&lt;li&gt;Experience working across US and APAC teams or in a globally distributed organization.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;We welcome candidates from a range of technical domains. Experience with CTV or advertising is valuable, and strong program leadership, technical judgment, and the ability to learn a new domain quickly are equally important.&lt;/p&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4058534003,
+     "name": "Core TPM",
+     "child_ids": [],
+     "parent_id": 4053872003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7985098003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8007407003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5891133003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 8007407003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "I35005",
+   "title": "Software Engineer Intern (3 months)",
+   "company_name": "Moloco",
+   "first_published": "2026-09-28T20:56:51-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/h4&gt;\n&lt;h3&gt;&lt;strong&gt;We are currently hiring interns for our Winter Internship Program, with positions targeted for the upcoming winter break.&lt;/strong&gt;&lt;/h3&gt;\n&lt;h4&gt;&lt;strong&gt;The Impact You’ll Be Contributing to Moloco:&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Moloco seeks exceptional Software Engineers to join us in building a state-of-the-art mobile advertising platform. You will be building world-class infrastructure which combines machine learning and big data to help companies supercharge their growth. Many leading service owners and marketers worldwide already benefit from Moloco’s innovative technology to scale performance quickly and efficiently through battle tested prediction models.&lt;br&gt;As a company founded by Software Engineers, we understand the value of a strong engineering team and strive to hire only the best talent. You will be challenged to solve real-world problems with top-notch colleagues. Check out our case study published by Google https://cloud.google.com/customers/moloco/.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;The Opportunity:&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Write server-side code that handles millions of requests per second.&lt;/li&gt;\n&lt;li&gt;Implement advertising functionality and customer-facing features.&lt;/li&gt;\n&lt;li&gt;Learn and explore technologies to improve the services.&lt;/li&gt;\n&lt;li&gt;Collaborate with internal/external cross-functional teams to make the best advertising products.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;How Do I Know if the Role is Right For Me?&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Pursuing BS/MS/PhD degree in computer science or related majors.&lt;/li&gt;\n&lt;li&gt;Outstanding problem solving skills with proper data structures and algorithms.&lt;/li&gt;\n&lt;li&gt;Excellent software development skills at least in one programming language&lt;/li&gt;\n&lt;li&gt;Major/minor in Mathematics or relevant coursework/experience is a plus&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h4&gt;&lt;strong&gt;Preferred Skills&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;Expected to graduate within a year, OR already graduated within a year&lt;/li&gt;\n&lt;li&gt;Fluent in English and Korean (both verbal and written)&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;** Work-from-home is not available for this role&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4091932003,
+     "name": "Moloco Next",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8007407003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/8002090003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5888779003,
+   "location": {
+    "name": "Seoul, Korea"
+   },
+   "metadata": null,
+   "id": 8002090003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4788",
+   "title": "Staff Software Engineer (소프트웨어 엔지니어)",
+   "company_name": "Moloco",
+   "first_published": "2026-09-27T03:08:28-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;strong&gt;About Moloco:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Moloco is an AI-native performance advertising company, bringing the power of AI advertising to the open internet. Founded in 2013 by machine learning engineers who had built AI advertising systems inside the world&#39;s largest technology companies, Moloco began from a shared mission: to build that same engine for the open internet.&lt;/p&gt;\n&lt;p&gt;Today, Moloco is one company with two businesses, built on the same compound AI system. &lt;a href=&quot;https://www.moloco.com/moloco-ads&quot;&gt;&lt;strong&gt;Moloco Ads&lt;/strong&gt;&lt;/a&gt; is our AI-native performance advertising platform, helping mobile app marketers acquire, retain, and re-engage high-value users across the open internet. &lt;a href=&quot;https://www.moloco.com/moloco-commerce-media&quot;&gt;&lt;strong&gt;Moloco Commerce Media&lt;/strong&gt;&lt;/a&gt; is our AI-native retail media platform, enabling retailers and marketplaces to turn their platforms into thriving ad businesses. Both are powered by&lt;strong&gt; CARA (Compound Ad Recommendation Architecture)&lt;/strong&gt;, the AI system behind every Moloco product.&lt;/p&gt;\n&lt;p&gt;At Moloco, we bring together those who&#39;ve already solved hard problems and those with the drive to. Here, we work on some of the complex problems in AI advertising, at a scale and level of sophistication very few companies can offer. &lt;strong&gt;Come build what&#39;s next.&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;&lt;h3&gt;About the role&lt;/h3&gt;\n&lt;p&gt;As a Staff Software Engineer at Moloco, you will help build the systems and products that power intelligent advertising and machine learning solutions for customers around the world. You will work on complex, large-scale problems at the intersection of software engineering, data, machine learning, and product development, turning them into reliable and intuitive solutions for customers and internal partners.&lt;/p&gt;\n&lt;p&gt;This role is ideal for an experienced engineer who combines strong technical depth with broad organizational impact. You will contribute to technical direction, lead critical initiatives from concept to production, and partner with teams across Moloco to deliver products and platforms that are scalable, measurable, and trusted by our customers.&lt;/p&gt;\n&lt;h3&gt;Here’s what you’ll be working on:&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Set technical direction for key product and platform initiatives, influencing architecture, engineering standards, and long-term technical strategy.&lt;/li&gt;\n&lt;li&gt;Lead complex, cross-functional projects from problem framing and requirements definition through technical design, implementation, launch, and post-launch improvement.&lt;/li&gt;\n&lt;li&gt;Design, implement, and operate scalable backend services, APIs, data systems, and workflows that support Moloco’s products and customer experiences.&lt;/li&gt;\n&lt;li&gt;Translate ambiguous business and customer problems into clear technical solutions, balancing product impact, engineering quality, delivery timelines, and operational cost.&lt;/li&gt;\n&lt;li&gt;Partner closely with Product, Data, ML, UX, and other Engineering teams to define scope, align stakeholders, and make effective technical and product trade-offs.&lt;/li&gt;\n&lt;li&gt;Build and improve systems that help customers manage, deliver, measure, and optimize their business outcomes.&lt;/li&gt;\n&lt;li&gt;Improve system reliability, performance, scalability, and observability through strong engineering practices, including testing, metrics, logging, monitoring, incident response, and operational reviews.&lt;/li&gt;\n&lt;li&gt;Raise the engineering bar across the organization by driving design reviews, sharing best practices, and promoting thoughtful approaches to maintainability and technical excellence.&lt;/li&gt;\n&lt;li&gt;Mentor and support engineers across levels, helping them grow their technical judgment, project ownership, and ability to operate effectively in a global engineering organization.&lt;/li&gt;\n&lt;li&gt;Represent the team in broader technical discussions and help align near-term execution with Moloco’s longer-term product and engineering goals.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;Basic Qualifications&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Bachelor’s or Master’s degree in Computer Science, a related technical field, or equivalent practical experience.&lt;/li&gt;\n&lt;li&gt;15+ years of software engineering experience, including significant experience building and operating backend systems, platforms, or user-facing products at scale.&lt;/li&gt;\n&lt;li&gt;Strong proficiency in one or more modern programming languages such as Java, Go, Kotlin, C++, or Python.&lt;/li&gt;\n&lt;li&gt;Deep understanding of distributed systems, service-oriented architecture, data structures, algorithms, and system design.&lt;/li&gt;\n&lt;li&gt;Proven experience designing and operating reliable, high-throughput services and APIs in production environments.&lt;/li&gt;\n&lt;li&gt;Experience working with relational or NoSQL databases and large-scale data systems, such as BigQuery, Bigtable, MySQL, or PostgreSQL.&lt;/li&gt;\n&lt;li&gt;Track record of leading complex technical initiatives that span multiple components, teams, or disciplines, including aligning stakeholders and delivering high-quality results.&lt;/li&gt;\n&lt;li&gt;Demonstrated ability to make sound technical decisions in ambiguous situations and clearly communicate the rationale, trade-offs, and expected impact.&lt;/li&gt;\n&lt;li&gt;Experience collaborating closely with Product, Data, ML, UX, and Engineering partners to shape product direction and execution plans.&lt;/li&gt;\n&lt;li&gt;Strong ownership mindset, with experience driving projects end-to-end and remaining engaged through launch, operation, and continuous improvement.&lt;/li&gt;\n&lt;li&gt;Experience mentoring engineers and influencing engineering practices, team culture, or technical strategy beyond your immediate area.&lt;/li&gt;\n&lt;li&gt;Fluent verbal and written communication skills in English, with the ability to lead technical discussions with global and cross-functional stakeholders.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;Preferred Qualifications&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;Experience building products or platforms in digital advertising, machine learning, media, e-commerce, fintech, or other data-intensive domains.&lt;/li&gt;\n&lt;li&gt;Experience with large-scale distributed systems, real-time or near-real-time processing, high-volume data pipelines, or latency-sensitive services.&lt;/li&gt;\n&lt;li&gt;Familiarity with cloud platforms and big-data technologies such as GCP, BigQuery, Dataflow, Kafka, Beam, or Spark.&lt;/li&gt;\n&lt;li&gt;Experience integrating data pipelines, schemas, data contracts, analytics, and reporting capabilities into customer-facing products.&lt;/li&gt;\n&lt;li&gt;Experience defining or improving reliability practices, including SLIs/SLOs, capacity planning, backfill strategies, cost management, and incident response.&lt;/li&gt;\n&lt;li&gt;Ability to simplify complex technical or operational concepts into clear product experiences, APIs, and workflows.&lt;/li&gt;\n&lt;li&gt;Experience working in a global or multi-region environment, especially where customer needs, market dynamics, or regulations differ by region.&lt;/li&gt;\n&lt;li&gt;Demonstrated success influencing technical direction across organizational boundaries without relying on formal authority.&lt;/li&gt;\n&lt;li&gt;Experience building inclusive, collaborative teams and helping engineers develop their technical and leadership capabilities.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong id=&quot;docs-internal-guid-10b2a5c2-7fff-9123-b3ca-404b4268f3fb&quot;&gt;&lt;/strong&gt;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&lt;strong&gt;Supporting Your Best Work and Your Best Life:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our benefits are designed to support our people in doing their best work and living well, at work and beyond. Benefits vary by country, employment type, and eligibility. Connect with a recruiter to learn more about benefits in your region.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Moloco Values:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;strong&gt;Lead with Humility:&lt;/strong&gt; Everyone’s voice is respected, valued, and heard. We win, lose, and learn together. Accountability and feedback are essential to our success.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Uncapped Growth Mindset:&lt;/strong&gt; We see all situations as opportunities to learn, grow, and improve as individuals and as an organization. We seek diverse perspectives, encourage curiosity, and promote experimentation to push the boundaries of what’s possible.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Create Real Value: &lt;/strong&gt;We pursue the most impactful opportunities with intensity and rigor. We take intelligent risks and make disciplined trade-offs to maintain deep focus. We help our customers win by delivering durable value.&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;strong&gt;Go Further Together: &lt;/strong&gt;We’re one team working towards one vision. We collaborate proactively and inclusively, involving the right people at the right time and in the right way. We strive to create a more equitable workplace. We won’t let each other fail.&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;Additional Resources:&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/blogs&quot;&gt;Moloco Company Blog&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/company/leadership&quot;&gt;Moloco Leadership&lt;/a&gt;&lt;/li&gt;\n&lt;li&gt;&lt;a href=&quot;https://www.moloco.com/newsroom&quot;&gt;Moloco Newsroom&lt;/a&gt;&amp;nbsp;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;strong&gt;AI Use in Interviews&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Our interview process is designed to get to know the real you. Unless a round specifically includes AI as part of what&#39;s being assessed, we ask that candidates engage without AI assistance. Please review our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/AI%20Use%20in%20Interviews.pdf&quot;&gt;AI Use in Interviews Policy&lt;/a&gt; before your interview to understand what to expect. Failure to comply with this policy may impact your candidacy.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Candidate Privacy Notice:&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;Your privacy matters to us. By applying, you acknowledge that you’ve reviewed our &lt;a href=&quot;https://www.moloco.cloud/hubfs/careers/Candidate%20Privacy%20Notice.pdf&quot;&gt;Candidate Privacy Notice&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4091932003,
+     "name": "Moloco Next",
+     "child_ids": [],
+     "parent_id": 4045799003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008010003,
+     "name": "Seoul - Office",
+     "location": "Seoul, Korea",
+     "child_ids": [],
+     "parent_id": 4039057003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/8002090003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7983508003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5880945003,
+   "location": {
+    "name": "Menlo Park, California, United States"
+   },
+   "metadata": null,
+   "id": 7983508003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "311",
+   "title": "Staff Technical Program Manager - Creatives",
+   "company_name": "Moloco",
+   "first_published": "2026-09-09T10:09:35-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058534003,
+     "name": "Core TPM",
+     "child_ids": [],
+     "parent_id": 4053872003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7983508003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7650912003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5726357003,
+   "location": {
+    "name": "Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7650912003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "286",
+   "title": "Staff Technical Program Manager - RMG",
+   "company_name": "Moloco",
+   "first_published": "2026-03-03T10:17:22-05:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058534003,
+     "name": "Core TPM",
+     "child_ids": [],
+     "parent_id": 4053872003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7650912003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7822554003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5803429003,
+   "location": {
+    "name": "Singapore"
+   },
+   "metadata": null,
+   "id": 7822554003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": "4748",
+   "title": "Supply Growth Manager, Vietnam",
+   "company_name": "Moloco",
+   "first_published": "2026-07-31T04:38:31-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058519003,
+     "name": "Supply",
+     "child_ids": [],
+     "parent_id": 4058513003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4039059003,
+     "name": "Singapore - Office",
+     "location": "Singapore",
+     "child_ids": [],
+     "parent_id": 4008012003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7822554003/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/moloco/jobs/7981801003",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 5826335003,
+   "location": {
+    "name": "Menlo Park, California, United States; San Francisco, California, United States; Seattle, Washington, United States"
+   },
+   "metadata": null,
+   "id": 7981801003,
+   "updated_at": "2026-10-08T19:10:08-04:00",
+   "requisition_id": null,
+   "title": "VP, Product Marketing",
+   "company_name": "Moloco",
+   "first_published": "2026-08-31T16:28:30-04:00",
+   "language": "en",
+   "application_deadline": null,
+   "content": "&lt;p&gt;trimmed&lt;/p&gt;",
+   "departments": [
+    {
+     "id": 4058517003,
+     "name": "Ads and Corporate Marketing",
+     "child_ids": [],
+     "parent_id": 4052432003
+    }
+   ],
+   "offices": [
+    {
+     "id": 4008006003,
+     "name": "Menlo Park - Office",
+     "location": "Menlo Park, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008007003,
+     "name": "San Francisco - Office",
+     "location": "San Francisco, California, United States",
+     "child_ids": [],
+     "parent_id": 4039019003
+    },
+    {
+     "id": 4008008003,
+     "name": "Seattle - Office",
+     "location": "Seattle, Washington, United States",
+     "child_ids": [],
+     "parent_id": 4039021003
+    }
+   ],
+   "ai_disclaimer": null,
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app3.greenhouse.io/ai_opt_out_request/job_post/7981801003/ai_opt_out"
+  }
+ ],
+ "meta": {
+  "total": 41
+ }
+}

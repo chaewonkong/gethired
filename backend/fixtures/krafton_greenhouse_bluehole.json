@@ -1,0 +1,2491 @@
+{
+ "jobs": [
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517790002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395150002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "3D Character Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517790002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 3D Character Artists (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:33:55-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517790002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517791002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395160002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "3D Environment Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517791002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 3D Environment Artists (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:33:23-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517791002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517834002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395174002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "Animation",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517834002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Animator (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:32:49-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517834002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8660234002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6443929002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": "Project Management",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8660234002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 아트 프로젝트 매니저 (Art PM) - Project V (2년 이상)",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-07-31T00:26:47-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4061647002,
+     "name": "Development Management",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8660234002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517835002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395164002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "Character Concept Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517835002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Character Concept Artist (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:32:03-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517835002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8478565002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6386647002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": "Client Programming",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8478565002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 클라이언트 프로그래머 리드 (Client Programmer Lead) - TERA2",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-03-25T03:00:34-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;게임업계는 점점 더 빠르게 변화하면서 세계 모든 이용자들이 공감할 수 있는 &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;재미와 감동을 주기 위해 끊임없이 발전하고 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;이제 개인의 힘만으로 그 속도를 따라 잡는 데는 한계가 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;따라서, KRAFTON 내 인재 교류와 협력을 바탕으로 서로에게 자극이 되는 동시에 격려할 수 있는 조직으로, &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;시장의 변화에 신속히 대응하고 앞서 나아갈 수 있도록 블루홀스튜디오는 최선을 다하고 있습니다.&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;sup&gt;Bluehole Studio, as a game production studio which opened a new chapter in MMORPG, &lt;br&gt;aims to provide fun and impressed experience to global users. &lt;br&gt;The game industry has continuously grown, while changing faster than ever, &lt;br&gt;to present fun and impression which all global users can truly enjoy, &lt;br&gt;and there is a limit to keeping up with such a speed only with individual strength alone. &lt;br&gt;Therefore, Bluehole Studio, as an organization to motivate and at the same time to encourage each other based on talent exchange and cooperation, &lt;br&gt;is doing its utmost efforts to promptly react to the market changes and proactively take actions. &lt;/sup&gt;&lt;/span&gt;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p style=&quot;padding-left: 120px;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&amp;nbsp;&lt;/h4&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀(프로젝트)을 소개합니다.&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;TERA는 장르 최초의 논타겟팅 전투 시스템과 압도적인 그래픽으로 전 세계 게이머들의 사랑을 받으며 MMORPG의 새로운 기준을 세운 작품입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;TERA2는 이러한 혁신적 유산을 계승하는 동시에, 최신 기술과 디자인 철학을 바탕으로 한층 진화한 플레이 경험을 만들어가고 있습니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;특히, TERA만의 상징적인 재미였던 박진감 넘치는 중형 몬스터 전투는 TERA2에서 더욱 발전하여, 협동의 가치를 극대화하는 파티 플레이의 새로운 재미를 선보일 것입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀과 함께할 미션을 소개합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;[포지션 개요]&lt;/span&gt;&lt;/strong&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;Client Programmer Lead는 기술적 토대를 구축하고, 클라이언트의 시스템 아키텍처와 기술 품질에 대한 최종 책임을 집니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;방대한 온라인 세계를 최신 엔진 환경에서 끊김 없이 구현하기 위해, 대규모 MMORPG의 안정성과 차세대 액션의 정교함을 동시에 충족하는 기술적 기준을 수립합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게임 디자인과 아트의 비전을 기술적으로 어디까지, 어떻게 실현할 것인지 판단하며, 신작 프로젝트가 제공할 &#39;플레이 경험의 쾌적함&#39;과 &#39;액션의 깊이&#39;를 결정하는 테크니컬 오너십을 가집니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;[담당 업무]&lt;/span&gt;&lt;/strong&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li id=&quot;6&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;클라이언트 팀 리딩 및 매니지먼트&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 클라이언트 팀의 업무 분배, 일정 및 리소스 관리, 채용/평가/멘토링을 통한 팀 빌딩&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;7&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;핵심 시스템 설계 및 직접 구현&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 핵심 전투 및 멀티플레이 시스템의 기술적 구조를 설계하고, 난이도 높은 핵심 로직을 직접 구현&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;8&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;개발 파이프라인 및 프로세스 최적화&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 효율적인 협업을 위한 코드 리뷰 문화 정착, 코딩 컨벤션 수립, CI/CD 연동 등 개발 워크플로우 개선 주도&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;9&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;리스크 관리 및 이슈 해결&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 개발 단계에서 발생하는 기술적 난제에 대한 솔루션 제시 및 트러블 슈팅 총괄&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;10&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;유관 부서와의 기술 협의&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 타 직군 리드들과 커뮤니케이션을 통해 기술적 제약 사항을 조율하고 최적의 구현 스펙 결정&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-이런경험을가진분과함께성장하고싶습니다!-필요지식및역량&quot;&gt;&lt;strong&gt;이런 경험을 가진 분과 함께 성장하고 싶습니다!&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;&lt;sub&gt;Unreal Engine 기반의 C++ 프로그래밍 경력 10년 이상 (또는 그에 준하는 역량)&lt;/sub&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;최소 3년 이상의 파트장 또는 팀장급 리더십 경험 (5인 이상 조직 관리 경험)&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;Unreal Engine의 내부 동작 원리에 정통하며, 엔진 레벨의 문제 해결이 가능한 전문가&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;컴퓨터 공학에 대한 심도 깊은 이해를 바탕으로, 팀원들의 코드를 리뷰하고 기술적 성장을 견인할 수 있는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;일정 지연이나 기술적 이슈 발생 시, 우선순위를 조정하고 합리적인 대안을 제시할 수 있는 문제 해결능력&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;5&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;타 직군과의 갈등을 기술적/논리적으로 중재하고 원만하게 협의할 수 있는 탁월한 커뮤니케이션 스킬&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;6&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;AI 기반 개발 도구를 활용한 업무 방식 변화에 유연하게 적응할 수 있는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;7&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;해외여행에 결격사유가 없는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;sub&gt;&amp;nbsp;&lt;/sub&gt;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;이런 경험들이 있다면 저희가 찾는 그 분입니다!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;AAA급 콘솔 또는 PC MMORPG 프로젝트의 리드 경험&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;상용 게임 프로젝트의 초기 설계부터 런칭, 라이브 서비스까지 전체 사이클을 리드해 본 경험&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;UE5의 최신 기능 활용 경험 : World Partition, Lumen, Nanite, Substrate, Motion Matching, Control Rig, MetaSounds 등&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;글로벌 라이브 서비스 경험 및 대규모 동시 접속 환경에서의 클라이언트 성능 최적화 노하우&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;팀 내 기술 공유 문화를 정착시키고, 개발 조직의 전반적인 역량 강화를 주도할 수 있는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;h4 id=&quot;JobPostSetting-크래프톤의도전에함께하기위해아래의전형과정이필요합니다.-전형절차&quot;&gt;&lt;strong&gt;블루홀 스튜디오의 도전에 함께 하기 위해 아래의 전형 과정이 필요합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;서류 전형 &amp;gt; 실무면접 &amp;gt; 최종면접 &amp;gt; 입사&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;상시채용으로 우수 인재 채용 시 조기에 마감될 수 있습니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;전형별 합격자에 대해 지원서에 등록하신 이메일 혹은 유선으로 개별 안내 드립니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-필요서류를확인해주세요!-제출서류/포트폴리오(필수및선택서류꼭확인!)&quot;&gt;&lt;strong&gt;필요 서류를 확인해주세요!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오, 자기소개서 (자유 양식)&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;필요 시 추가 서류 혹은 테스트의 요청이 있을 수 있습니다.&amp;nbsp;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오 첨부 시, 하단 안내 사항을 확인해주시기를 바랍니다.&amp;nbsp;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;근무지&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;판교 GREITS PANGYO&lt;br&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-고용형태-채용구분&quot;&gt;&lt;strong&gt;고용형태&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;정규직 &lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;아래 안내 사항을 확인해주세요!&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;장애인 및 국가유공자 등 취업 보호 대상자는 관계 법령에 따라 우대합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;자격 요건이 충족된다면, 서로 다른 모집 공고에 대한 중복지원이 가능합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;지원서 내용 중 허위사실이 있는 경우에는 합격이 취소될 수 있습니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;기타 궁금하신 사항은 이메일(career@bluehole.com) 통해 문의 바랍니다.&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! 크래프톤의 성장과 도전의 스토리를 알아가고 싶다면?&amp;nbsp;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/studios/&quot; target=&quot;_blank&quot;&gt;크래프톤 제작 스튜디오&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/games/&quot; target=&quot;_blank&quot;&gt;크래프톤 게임&amp;nbsp;&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/about/about/&quot; target=&quot;_blank&quot;&gt;크래프톤 비전 &amp;amp; 핵심가치&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/careers/life/&quot; target=&quot;_blank&quot;&gt;크래프톤 라이프 &amp;amp; 복리후생&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;Please check the information below&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Those eligible for an affirmative action program such as individuals with disabilities or with distinguished service to the state will be given hiring preference according to relevant laws&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;If requirements are met, applicants can apply for multiple positions&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;False statements in your resume may lead to the withdrawal of the employment offer&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Please contact &lt;a href=&quot;mailto:career@bluehole.com&quot;&gt;career@bluehole.com&lt;/a&gt; for a 1:1 chat should you have other inquiries&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! &lt;strong&gt;Would you like to explore KRAFON’s growth and adventure stories? &lt;/strong&gt;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/studios/&quot; target=&quot;_blank&quot;&gt;KRAFTON Production Studios&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/games/&quot; target=&quot;_blank&quot;&gt;KRAFTON Games&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/about/about/&quot; target=&quot;_blank&quot;&gt;KRAFTON Vision and Core Values&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/careers/life/&quot; target=&quot;_blank&quot;&gt;KRAFTON Life &amp;amp; Welfare Benefits&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4061755002,
+     "name": "Tech",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8478565002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517836002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395163002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "Environment Concept Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517836002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Environment Concept Artist (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-22T02:18:45-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517836002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8771626002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6509533002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Contractor",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": "Human Resources",
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8771626002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] HR Operations (1년 이상 / 계약직)",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-09-02T02:26:59-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4027868002,
+     "name": "Management Supporting",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8771626002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8520212002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6386636002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "3D Character Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8520212002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 리드 캐릭터 아티스트 (Lead Character Artist) - TERA2",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T02:02:21-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8520212002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8540519002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6367637002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "VFX Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8540519002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Lead VFX Artist",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-05-08T04:00:56-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8540519002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517837002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395167002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "3D Environment Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517837002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Lighting Artist (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:30:32-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517837002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8511473002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6389736002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": "Server Programming",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8511473002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 서버 개발자 - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-16T22:23:17-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;게임업계는 점점 더 빠르게 변화하면서 세계 모든 이용자들이 공감할 수 있는 &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;재미와 감동을 주기 위해 끊임없이 발전하고 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;이제 개인의 힘만으로 그 속도를 따라 잡는 데는 한계가 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;따라서, KRAFTON 내 인재 교류와 협력을 바탕으로 서로에게 자극이 되는 동시에 격려할 수 있는 조직으로, &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;시장의 변화에 신속히 대응하고 앞서 나아갈 수 있도록 블루홀스튜디오는 최선을 다하고 있습니다.&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;sup&gt;Bluehole Studio, as a game production studio which opened a new chapter in MMORPG, &lt;br&gt;aims to provide fun and impressed experience to global users. &lt;br&gt;The game industry has continuously grown, while changing faster than ever, &lt;br&gt;to present fun and impression which all global users can truly enjoy, &lt;br&gt;and there is a limit to keeping up with such a speed only with individual strength alone. &lt;br&gt;Therefore, Bluehole Studio, as an organization to motivate and at the same time to encourage each other based on talent exchange and cooperation, &lt;br&gt;is doing its utmost efforts to promptly react to the market changes and proactively take actions. &lt;/sup&gt;&lt;/span&gt;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p style=&quot;padding-left: 120px;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&amp;nbsp;&lt;/h4&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀(프로젝트)을 소개합니다.&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;블루홀 스튜디오에서 제작하는 PUBG IP의 새로운 슈터 프로젝트 입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;크로스 플랫폼 서비스를 목표로 글로벌 슈터 팬들의 다양한 니즈를 만족시킬 수 있는 슈터 플랫폼 타이틀을 개발합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀과 함께할 미션을 소개합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;PC, 콘솔, 모바일 환경에서 슈팅 기반의 다양한 게임 룰을 안정적으로 지원하는 백엔드 서버를 개발합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;Unreal Engine 5 기반의 데디케이티드 서버와 연동되는 백엔드 서버 시스템을 개발합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게임 서비스 운영에 필요한 다양한 백엔드 서버 기능을 개발합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;개발 생산성과 라이브 서비스 품질 향상을 위한 기능, 툴, 파이프라인을 구축하고 개선합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;새로운 기술을 연구하고 프로젝트에 적합한 방식으로 적용합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;5&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;AI를 적극적으로 활용하되, 이에만 의존하지 않고 본질적인 문제 해결에 집중합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;이런 일을 하게 됩니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;게임 로직 개발: 매치, 진행, 보상, 인벤토리, 랭킹 등 게임 룰을 지원하는 백엔드 로직을 설계하고 개발합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;UE5 데디케이티드 서버와의 연동 규약을 정의하고 구현합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;관리툴 개발: 운영, QA, 기획 부서가 사용하는 관리툴과 대시보드를 개발합니다. 유저 조회, 재화·아이템 지급, 이벤트 설정, 운영 지표 확인 등 라이브 운영에 필요한 기능을 제공합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;API 설계 및 연동: 게임 클라이언트, 데디케이티드 서버, 외부 서비스와 통신하는 API를 설계하고 연동합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;플랫폼 API 연동: Steam, Xbox, PlayStation 등 플랫폼별 인증, 계정 연동, 친구, 업적, 엔타이틀먼트 API를 연동하고 플랫폼 인증(Certification) 요구사항을 대응합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;상점·결제 연동: 플랫폼별 인앱 결제 및 영수증 검증, 상품·재화 지급, 환불 처리, 정산 데이터 관리 등 상점 결제 관련 기능을 개발합니다. &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;라이브 서비스 안정화: 장애 대응, 성능 병목 분석 및 개선, 배포 파이프라인 개선에 참여합니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-이런경험을가진분과함께성장하고싶습니다!-필요지식및역량&quot;&gt;&lt;strong&gt;이런 경험을 가진 분과 함께 성장하고 싶습니다!&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게&lt;/span&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;임 백엔드 서버 개발 경력 3년 이상을 보유하신 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;Python, Go, .NET Core 등을 사용한 API 서버 개발 경험이 있으신 분&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;Django 등을 사용한 관리툴, 대시보드 개발 경험이 있으신 분 &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;PostgreSQL, Redis를 실제 서비스에 활용한 경험이 있으신 분 &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;외부 서비스 또는 플랫폼 API를 연동한 경험이 있으신 분 &lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;Linux 시스템 및 네트워크에 대한 기본적인 이해를 갖추신 분&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;성능 분석, 최적화, 디버깅, 버그 수정 역량을 갖추신 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;한국어 커뮤니케이션에 어려움이 없으신 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;문제를 스스로 발견하고 주도적으로 해결할 수 있으신 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;다양한 직군과 원활하게 협업할 수 있는 커뮤니케이션 역량을 보유하신 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;해외 출장에 결격 사유가 없는 분&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;div class=&quot;taskItemView-content-wrap&quot; data-task-local-id=&quot;eea9ada1-d8f0-4990-92ae-4eb2bb3713d9&quot; data-task-state=&quot;TODO&quot; data-prosemirror-content-type=&quot;node&quot; data-prosemirror-node-name=&quot;taskItem&quot; data-prosemirror-node-block=&quot;true&quot; data-pm-slice=&quot;1 1 [&amp;quot;layoutSection&amp;quot;,{&amp;quot;columnRuleStyle&amp;quot;:null,&amp;quot;localId&amp;quot;:&amp;quot;b07091b78740&amp;quot;},&amp;quot;layoutColumn&amp;quot;,{&amp;quot;width&amp;quot;:20,&amp;quot;localId&amp;quot;:&amp;quot;bff98ca5ea7a&amp;quot;},&amp;quot;taskList&amp;quot;,{&amp;quot;localId&amp;quot;:&amp;quot;b0081b82-eb2a-4d1d-afae-13df7251f101&amp;quot;},&amp;quot;taskList&amp;quot;,{&amp;quot;localId&amp;quot;:&amp;quot;50f02bd7-db11-46f4-a319-ccad393df66a&amp;quot;},&amp;quot;taskList&amp;quot;,{&amp;quot;localId&amp;quot;:&amp;quot;31c652b0-a247-4120-beb1-9e0531a87cec&amp;quot;}]&quot;&gt;\n&lt;div&gt;\n&lt;div data-component=&quot;content&quot;&gt;\n&lt;div class=&quot;task-item&quot;&gt;&amp;nbsp;&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;이런 경험들이 있다면 저희가 찾는 그 분입니다!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;Steam, Xbox, PlayStation 등 플랫폼 SDK·API 연동 및 플랫폼 인증 대응 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;상점, 결제, 영수증 검증, 정산 등 결제 관련 시스템 개발 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;Kubernetes, Agones 기반 게임 서버 운영 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;AWS, Azure 등 클라우드 인프라 구축 및 운영 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;에러 모니터링, 성능 모니터링, 로깅 시스템 구축 및 운영 경험 (예: Sentry, Prometheus, Grafana)&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;게임 로그 수집 파이프라인 구축 또는 데이터 분석을 통한 지표 설계·개선 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;게임 프로젝트의 초기 단계부터 라이브 서비스까지 참여한 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;AI를 게임 개발에 적극적으로 활용한 경험&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;h4 id=&quot;JobPostSetting-크래프톤의도전에함께하기위해아래의전형과정이필요합니다.-전형절차&quot;&gt;&lt;strong&gt;블루홀 스튜디오의 도전에 함께 하기 위해 아래의 전형 과정이 필요합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;서류 전형 &amp;gt; 실무면접 &amp;gt; 최종면접 &amp;gt; 평판조회 &amp;gt; 입사&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;상시채용으로 우수 인재 채용 시 조기에 마감될 수 있습니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;전형별 합격자에 대해 지원서에 등록하신 이메일 혹은 유선으로 개별 안내 드립니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-필요서류를확인해주세요!-제출서류/포트폴리오(필수및선택서류꼭확인!)&quot;&gt;&lt;strong&gt;필요 서류를 확인해주세요!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오, 자기소개서 (자유 양식)&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;필요 시 추가 서류의 요청이 있을 수 있습니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오 첨부 시, 하단 안내 사항을 확인해주시기를 바랍니다.&amp;nbsp;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;근무지&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;판교 GREITS PANGYO&lt;br&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-고용형태-채용구분&quot;&gt;&lt;strong&gt;고용형태&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;정규직&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;아래 안내 사항을 확인해주세요!&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;장애인 및 국가유공자 등 취업 보호 대상자는 관계 법령에 따라 우대합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;자격 요건이 충족된다면, 서로 다른 모집 공고에 대한 중복지원이 가능합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;지원서 내용 중 허위사실이 있는 경우에는 합격이 취소될 수 있습니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;기타 궁금하신 사항은 이메일(career@bluehole.com) 통해 문의 바랍니다.&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! 크래프톤의 성장과 도전의 스토리를 알아가고 싶다면?&amp;nbsp;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/studios/&quot; target=&quot;_blank&quot;&gt;크래프톤 제작 스튜디오&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/games/&quot; target=&quot;_blank&quot;&gt;크래프톤 게임&amp;nbsp;&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/about/about/&quot; target=&quot;_blank&quot;&gt;크래프톤 비전 &amp;amp; 핵심가치&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/careers/life/&quot; target=&quot;_blank&quot;&gt;크래프톤 라이프 &amp;amp; 복리후생&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;Please check the information below&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Those eligible for an affirmative action program such as individuals with disabilities or with distinguished service to the state will be given hiring preference according to relevant laws&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;If requirements are met, applicants can apply for multiple positions&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;False statements in your resume may lead to the withdrawal of the employment offer&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Please contact &lt;a href=&quot;mailto:career@bluehole.com&quot;&gt;career@bluehole.com&lt;/a&gt; for a 1:1 chat should you have other inquiries&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! &lt;strong&gt;Would you like to explore KRAFON’s growth and adventure stories? &lt;/strong&gt;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/studios/&quot; target=&quot;_blank&quot;&gt;KRAFTON Production Studios&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/games/&quot; target=&quot;_blank&quot;&gt;KRAFTON Games&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/about/about/&quot; target=&quot;_blank&quot;&gt;KRAFTON Vision and Core Values&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/careers/life/&quot; target=&quot;_blank&quot;&gt;KRAFTON Life &amp;amp; Welfare Benefits&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4061755002,
+     "name": "Tech",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8511473002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8509520002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6386634002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": "Client Programming",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8509520002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 시니어 클라이언트 프로그래머 (Senior Client Programmer) - TERA2",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-15T22:36:19-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;게임업계는 점점 더 빠르게 변화하면서 세계 모든 이용자들이 공감할 수 있는 &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;재미와 감동을 주기 위해 끊임없이 발전하고 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;이제 개인의 힘만으로 그 속도를 따라 잡는 데는 한계가 있습니다.&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;따라서, KRAFTON 내 인재 교류와 협력을 바탕으로 서로에게 자극이 되는 동시에 격려할 수 있는 조직으로, &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;시장의 변화에 신속히 대응하고 앞서 나아갈 수 있도록 블루홀스튜디오는 최선을 다하고 있습니다.&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;sup&gt;Bluehole Studio, as a game production studio which opened a new chapter in MMORPG, &lt;br&gt;aims to provide fun and impressed experience to global users. &lt;br&gt;The game industry has continuously grown, while changing faster than ever, &lt;br&gt;to present fun and impression which all global users can truly enjoy, &lt;br&gt;and there is a limit to keeping up with such a speed only with individual strength alone. &lt;br&gt;Therefore, Bluehole Studio, as an organization to motivate and at the same time to encourage each other based on talent exchange and cooperation, &lt;br&gt;is doing its utmost efforts to promptly react to the market changes and proactively take actions. &lt;/sup&gt;&lt;/span&gt;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p style=&quot;padding-left: 120px;&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;/div&gt;&lt;h4&gt;&amp;nbsp;&lt;/h4&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀(프로젝트)을 소개합니다.&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;TERA는 장르 최초의 논타겟팅 전투 시스템과 압도적인 그래픽으로 전 세계 게이머들의 사랑을 받으며 MMORPG의 새로운 기준을 세운 작품입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;TERA2는 이러한 혁신적 유산을 계승하는 동시에, 최신 기술과 디자인 철학을 바탕으로 한층 진화한 플레이 경험을 만들어가고 있습니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;특히, TERA만의 상징적인 재미였던 박진감 넘치는 중형 몬스터 전투는 TERA2에서 더욱 발전하여, 협동의 가치를 극대화하는 파티 플레이의 새로운 재미를 선보일 것입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;우리 팀과 함께할 미션을 소개합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;[포지션 개요]&lt;/span&gt;&lt;/strong&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;Senior Client Programmer는 TERA2의 핵심인 논타겟팅 전투의 정교함과 MMORPG의 대규모 시스템을 결합하여 실제 플레이 가능한 경험을 완성합니다.&amp;nbsp;&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;단순한 기능 구현을 넘어, 멀티 플레이 환경에서도 액션의 정교한 타격감과 반응성을 기술적으로 실현하고, 방대한 게임 콘텐츠들을 유기적으로 지탱하는 견고한 아키텍처를 설계합니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;복잡한 기술적 난제를 주도적으로 해결하며, 게임 디자인과 아트의 의도를 온전히 실현하여 플레이어에게 전달되는 최종적인 게임의 완성도를 책임지는 포지션입니다.&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;[담당 업무]&lt;/span&gt;&lt;/strong&gt;&lt;/sub&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li id=&quot;6&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;핵심 전투 및 액션 메커니즘 설계&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: TERA IP 의 아이덴티티인 논타겟팅 전투 시스템을 위해 타격/피격 판정 및 스킬 로직을 설계하고, 정교한 애니메이션 제어를 통해 직관적이고 반응성 높은 조작감을 구현&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;7&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;멀티플레이 액션 동기화 처리&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 언리얼 디케이티드 서버 환경에서 빠르고 정밀한 액션이 끊김 없이 구현되도록 이동 예측, 랙 보정, 리플리케이션 로직 최적화 및 동기화 이슈 해결&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;8&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;AI 및 행동 제어 시스템 고도화&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: NPC 및 몬스터의 복합적인 행동 트리 설계 및 대규모 전투 상황에서의 AI 로직 최적화&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;9&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게임 컨텐츠 시스템 설계 및 구현&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;: 로비, 파티, 아이템, 퀘스트 등 주요 게임 시스템의 클라이언트 구조를 설계하고 서버 연동 로직 구현&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;10&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;strong class=&quot;&quot;&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;협업을 통한 플레이 완성도 제고:&lt;/span&gt;&lt;/strong&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt; 기획/아트 등 타 직군과의 긴밀한 소통을 통해 기획 의도를 기술적으로 명확히 구현하고, 플레이 경험의 완성도 제고&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-이런경험을가진분과함께성장하고싶습니다!-필요지식및역량&quot;&gt;&lt;strong&gt;이런 경험을 가진 분과 함께 성장하고 싶습니다!&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;Unreal Engine 기반의 C++ 프로그래밍 경력 7년 이상 (또는 그에 준하는 역량)&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게임 개발 프로젝트에서 특정 시스템의 설계부터 구현, 유지보수까지 책임지고 주도한 경험&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;언리얼 프레임워크(Actor/Component 시스템, GC, Replication 등) 내부 동작 원리에 대한 깊은 이해&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;자료구조, 알고리즘, OS, 네트워크, 그래픽스 등 컴퓨터 공학에 대한 폭넓은 지식&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;4&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;원활한 커뮤니케이션 스킬로 기획 의도를 정확히 파악하고 기술적으로 더 나은 대안을 제시할 수 있는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;5&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;동료의 코드를 리뷰하고 건설적인 피드백을 주고받으며, 팀의 기술적 성장을 이끌어갈 수 있는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;6&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;해외여행에 결격사유가 없는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&lt;sub&gt;&amp;nbsp;&lt;/sub&gt;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;이런 경험들이 있다면 저희가 찾는 그 분입니다!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li id=&quot;0&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;MMORPG 또는 멀티플레이어 액션 게임의 상용화(라이브 서비스) 프로젝트 경험 보유자&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;1&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;UE5의 최신 기능 활용 경험 : World Partition, Lumen, Nanite, Substrate, Motion Matching, Control Rig, MetaSounds 등&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;2&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;게임 업계의 최신 기술 트렌드에 깊은 관심이 있고, 지속적인 성장을 추구하시는 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;li id=&quot;3&quot; class=&quot;paragraph--da25a3913a1dd210&quot; data-paragraph=&quot;true&quot; data-type=&quot;p&quot;&gt;&lt;sub&gt;&lt;span class=&quot;text--da25a3913a1dd210&quot;&gt;문서화 능력이 뛰어난 분&lt;/span&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;h4 id=&quot;JobPostSetting-크래프톤의도전에함께하기위해아래의전형과정이필요합니다.-전형절차&quot;&gt;&lt;strong&gt;블루홀 스튜디오의 도전에 함께 하기 위해 아래의 전형 과정이 필요합니다.&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;서류 전형 &amp;gt; 실무면접 &amp;gt; 최종면접 &amp;gt; 입사&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;상시채용으로 우수 인재 채용 시 조기에 마감될 수 있습니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;전형별 합격자에 대해 지원서에 등록하신 이메일 혹은 유선으로 개별 안내 드립니다.&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-필요서류를확인해주세요!-제출서류/포트폴리오(필수및선택서류꼭확인!)&quot;&gt;&lt;strong&gt;필요 서류를 확인해주세요!&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오, 자기소개서 (자유 양식)&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;필요 시 추가 서류 혹은 테스트의 요청이 있을 수 있습니다.&amp;nbsp;&lt;/sub&gt;&lt;/li&gt;\n&lt;li&gt;&lt;sub&gt;포트폴리오 첨부 시, 하단 안내 사항을 확인해주시기를 바랍니다.&amp;nbsp;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4&gt;&lt;strong&gt;근무지&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;판교 GREITS PANGYO&lt;br&gt;&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;h4 id=&quot;JobPostSetting-고용형태-채용구분&quot;&gt;&lt;strong&gt;고용형태&amp;nbsp;&lt;/strong&gt;&lt;/h4&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;sub&gt;정규직&lt;/sub&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;div class=&quot;content-conclusion&quot;&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;아래 안내 사항을 확인해주세요!&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;장애인 및 국가유공자 등 취업 보호 대상자는 관계 법령에 따라 우대합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;자격 요건이 충족된다면, 서로 다른 모집 공고에 대한 중복지원이 가능합니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;지원서 내용 중 허위사실이 있는 경우에는 합격이 취소될 수 있습니다.&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;기타 궁금하신 사항은 이메일(career@bluehole.com) 통해 문의 바랍니다.&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! 크래프톤의 성장과 도전의 스토리를 알아가고 싶다면?&amp;nbsp;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/studios/&quot; target=&quot;_blank&quot;&gt;크래프톤 제작 스튜디오&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/games/&quot; target=&quot;_blank&quot;&gt;크래프톤 게임&amp;nbsp;&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/about/about/&quot; target=&quot;_blank&quot;&gt;크래프톤 비전 &amp;amp; 핵심가치&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/careers/life/&quot; target=&quot;_blank&quot;&gt;크래프톤 라이프 &amp;amp; 복리후생&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;hr&gt;\n&lt;p&gt;&lt;strong&gt;Please check the information below&lt;/strong&gt;&lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Those eligible for an affirmative action program such as individuals with disabilities or with distinguished service to the state will be given hiring preference according to relevant laws&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;If requirements are met, applicants can apply for multiple positions&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;False statements in your resume may lead to the withdrawal of the employment offer&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;Please contact &lt;a href=&quot;mailto:career@bluehole.com&quot;&gt;career@bluehole.com&lt;/a&gt; for a 1:1 chat should you have other inquiries&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;&lt;sub&gt;BE BOLD, LEARN AND WIN! &lt;strong&gt;Would you like to explore KRAFON’s growth and adventure stories? &lt;/strong&gt;&lt;/sub&gt;&lt;/h3&gt;\n&lt;ul&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/studios/&quot; target=&quot;_blank&quot;&gt;KRAFTON Production Studios&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/games/&quot; target=&quot;_blank&quot;&gt;KRAFTON Games&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/about/about/&quot; target=&quot;_blank&quot;&gt;KRAFTON Vision and Core Values&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;li&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;&lt;a href=&quot;https://krafton.com/en/careers/life/&quot; target=&quot;_blank&quot;&gt;KRAFTON Life &amp;amp; Welfare Benefits&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;\n&lt;/ul&gt;&lt;/div&gt;",
+   "departments": [
+    {
+     "id": 4061755002,
+     "name": "Tech",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8509520002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8816009002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6393622002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": "Technical Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8816009002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] Technical Animator (12년 이상) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-09-17T00:08:53-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4061756002,
+     "name": "Technical Artist",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8816009002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8496021002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6393622002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": "Technical Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8496021002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio]  Technical Artist (5년 이상) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-07T01:14:42-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4061756002,
+     "name": "Technical Artist",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8496021002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8660235002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6443960002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": "Project Management",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8660235002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 테크니컬 프로젝트 매니저 (TPM) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-07-31T00:33:41-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4061647002,
+     "name": "Development Management",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8660235002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8517838002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6395168002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "VFX Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8517838002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] VFX Artist (Lead / Senior) - Project V",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-23T01:27:32-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8517838002/ai_opt_out"
+  },
+  {
+   "absolute_url": "https://job-boards.greenhouse.io/bluehole/jobs/8507680002",
+   "data_compliance": [
+    {
+     "type": "gdpr",
+     "requires_consent": false,
+     "requires_processing_consent": false,
+     "requires_retention_consent": false,
+     "retention_period": null,
+     "demographic_data_consent_applies": false
+    }
+   ],
+   "internal_job_id": 6386639002,
+   "location": {
+    "name": "Pangyo"
+   },
+   "metadata": [
+    {
+     "id": 4031285002,
+     "name": "Employment Type",
+     "value": "Regular",
+     "value_type": "single_select"
+    },
+    {
+     "id": 32641866002,
+     "name": "Sector",
+     "value": "KR Studios",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514260002,
+     "name": "Corp./Studios",
+     "value": "Bluehole Studio",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514261002,
+     "name": "Job Category - Art",
+     "value": "VFX Art",
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514262002,
+     "name": "Job Category - Business & Service",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514263002,
+     "name": "Job Category - Data",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13514264002,
+     "name": "Job Category - Development Management",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601005002,
+     "name": "Job Category - Game Design",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601006002,
+     "name": "Job Category - Tech",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601007002,
+     "name": "Job Category - TA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601008002,
+     "name": "Job Category - QA",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601009002,
+     "name": "Job Category - Sound",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601010002,
+     "name": "Job Category - UX/UI",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601011002,
+     "name": "Job Category - IT Infra",
+     "value": null,
+     "value_type": "single_select"
+    },
+    {
+     "id": 13601012002,
+     "name": "Job Category - Management Supporting",
+     "value": null,
+     "value_type": "single_select"
+    }
+   ],
+   "id": 8507680002,
+   "updated_at": "2026-10-14T22:19:52-04:00",
+   "requisition_id": null,
+   "title": "[Bluehole Studio] 시니어 VFX 아티스트 (Senior VFX Artist) - TERA2",
+   "company_name": "Bluehole Inc.",
+   "first_published": "2026-04-16T21:46:59-04:00",
+   "language": "ko",
+   "application_deadline": null,
+   "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;블루홀스튜디오는 MMORPG의 새로운 장을 연 게임 제작 스튜디오로서,&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10pt;&quot;&gt;전 세계 이용자들에게 재미와 감동을 주는 것을 목표로 합니다. &lt;/span&gt;&lt;br&gt;&lt;span style=&quot;fon",
+   "departments": [
+    {
+     "id": 4057130002,
+     "name": "Art",
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "offices": [
+    {
+     "id": 4043105002,
+     "name": "Pangyo",
+     "location": null,
+     "child_ids": [],
+     "parent_id": null
+    }
+   ],
+   "ai_disclaimer": "<p>We use Greenhouse’s AI-powered Talent Matching tool to compare your application against our job requirements.</p>",
+   "include_ai_disclaimer": false,
+   "ai_opt_out_request_url": "http://app2.greenhouse.io/ai_opt_out_request/job_post/8507680002/ai_opt_out"
+  }
+ ],
+ "meta": {
+  "total": 18
+ }
+}

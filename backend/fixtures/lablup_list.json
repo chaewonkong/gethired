@@ -1,0 +1,50 @@
+{
+ "meta": {
+  "total": 3,
+  "sliceNumber": 20
+ },
+ "contents": [
+  {
+   "id": 187,
+   "title": "풀스택 소프트웨어 엔지니어 (MLOps 플랫폼) ",
+   "positionId": "junior-software-engineer-MLops",
+   "experienced": {
+    "id": "무관",
+    "name": "무관"
+   },
+   "category": {
+    "id": 2,
+    "name": "소프트웨어 엔지니어",
+    "categoryId": "software-engineer"
+   }
+  },
+  {
+   "id": 189,
+   "title": "솔루션 아키텍트",
+   "positionId": "senior-SOLUTION-solution-architect",
+   "experienced": {
+    "id": "경력",
+    "name": "경력"
+   },
+   "category": {
+    "id": 32,
+    "name": "솔루션 (플랫폼 & 컨설턴트)",
+    "categoryId": "SOLUTION"
+   }
+  },
+  {
+   "id": 191,
+   "title": "솔루션 엔지니어",
+   "positionId": "junior-SOLUTION-solution-engineer",
+   "experienced": {
+    "id": "경력",
+    "name": "경력"
+   },
+   "category": {
+    "id": 32,
+    "name": "솔루션 (플랫폼 & 컨설턴트)",
+    "categoryId": "SOLUTION"
+   }
+  }
+ ]
+}

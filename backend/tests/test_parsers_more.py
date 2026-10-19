@@ -98,7 +98,7 @@ def test_kakaomobility_to_posting_without_due_date():
 
 def test_greetinghr_base_is_not_registered():
     assert "upstage" in REGISTRY and "kakaopay" in REGISTRY
-    assert all(not issubclass(c, greetinghr.GreetingHRScraper) or c.company in ("upstage", "kakaopay", "kakaomobility") for c in REGISTRY.values())
+    assert all(not issubclass(c, greetinghr.GreetingHRScraper) or c.company in ("upstage", "kakaopay", "kakaomobility", "kurly") for c in REGISTRY.values())
 
 
 # --- hyperconnect (Lever), 42dot (Ashby) ---
