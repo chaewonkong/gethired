@@ -27,6 +27,7 @@ def test_registry_has_all_companies():
     assert set(REGISTRY) == {
         "naver", "kakao", "coupang", "toss", "daangn", "line", "samsung", "hyundai",
         "upstage", "kakaopay", "hyperconnect", "42dot", "woowahan", "kakaobank", "dunamu", "kakaomobility", "nhn",
+        "kurly", "moloco", "krafton", "bucketplace", "ably", "lablup",
     }
 
 
@@ -58,6 +59,7 @@ def test_coupang_keeps_korea_engineering_only():
     postings = CoupangScraper().parse(data)
     assert_required(postings, "coupang")
     assert len(postings) < len(data["jobs"])
+    assert all(p.description and "<" not in p.description for p in postings)  # content는 entity-escaped
     raw_by_id = {str(j["id"]): j for j in data["jobs"]}
     assert all("Korea" in raw_by_id[p.external_id]["location"]["name"] for p in postings)
     assert all(p.description for p in postings)

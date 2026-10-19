@@ -1,3 +1,4 @@
+import html
 from datetime import date
 from typing import Any, ClassVar
 
@@ -27,7 +28,7 @@ class GreenhouseScraper(Scraper):
         return None
 
     def description(self, job: dict[str, Any]) -> str | None:
-        return html_to_text(job.get("content"))
+        return html_to_text(html.unescape(job.get("content") or ""))  # content는 entity-escaped HTML
 
     def deadline(self, job: dict[str, Any]) -> date | None:
         return None
