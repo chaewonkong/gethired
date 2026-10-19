@@ -1,3 +1,8 @@
+import os
+import sqlite3
+
+import pytest
+
 from app.repository import Repository
 
 
@@ -179,3 +184,77 @@ def test_settings_get_set_overwrite():
     assert repo.get_setting("provider") == "codex"
     assert repo.conn.execute("SELECT updated_at FROM settings WHERE key='provider'").fetchone()[0] == "T2"
     assert repo.get_setting("missing") is None
+
+
+def test_list_postings_hidden_interests_since():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a", score=90, scraped_at="2026-10-09T00:00:00+00:00"),
+                          row(eid="b", score=80, scraped_at="2026-10-10T00:00:00+00:00"),
+                          row(company="naver", eid="n", score=70, scraped_at="2026-10-10T09:00:00+09:00")])
+    ids = {p["external_id"]: p["id"] for p in repo.list_postings()}
+    repo.set_hidden(ids["b"], True, "T1")
+    repo.set_interests(["toss"], "T1")
+
+    assert [p["external_id"] for p in repo.list_postings()] == ["a", "b", "n"]
+    assert [p["external_id"] for p in repo.list_postings(include_hidden=False)] == ["a", "n"]
+    assert [p["external_id"] for p in repo.list_postings(interests_only=True)] == ["a", "b"]
+    # n은 +09:00 오프셋이지만 같은 순간(2026-10-10T00:00Z)
+    assert [p["external_id"] for p in repo.list_postings(since="2026-10-10T00:00:00+00:00")] == ["b", "n"]
+    assert [p["external_id"] for p in repo.list_postings(include_hidden=False, interests_only=True,
+                                                         since="2026-10-09T12:00:00+00:00")] == []
+
+
+def test_last_success_runs_and_stale():
+    repo = Repository()
+    r1 = repo.start_run("toss", "2026-10-09T00:00:00+00:00")
+    repo.finish_run(r1, "done", "2026-10-09T00:00:00+00:00", fetched_count=3)
+    r2 = repo.start_run("toss", "2026-10-09T06:00:00+00:00")
+    repo.finish_run(r2, "failed", "2026-10-09T06:00:00+00:00", error="boom")
+    r3 = repo.start_run("naver", "2026-10-09T01:00:00+00:00")
+    repo.finish_run(r3, "auth_required", "2026-10-09T01:00:00+00:00")
+
+    last = repo.last_success_runs()
+    assert set(last) == {"toss"} and last["toss"]["id"] == r1 and last["toss"]["fetched_count"] == 3
+    assert repo.last_runs()["toss"]["status"] == "failed"
+
+    assert repo.stale(["toss"], "2026-10-10T00:00:00+00:00") is False  # 정확히 24h
+    assert repo.stale(["toss"], "2026-10-10T00:00:01+00:00") is True
+    assert repo.stale(["toss"], "2026-10-10T09:00:00+09:00") is False
+    assert repo.stale(["toss"], "2026-10-09T12:00:00+00:00", hours=6) is True
+    assert repo.stale(["toss", "naver"], "2026-10-09T01:00:00+00:00") is True  # naver 성공 없음
+    assert repo.stale([], "2026-10-10T00:00:00+00:00") is False
+
+
+def test_readonly_reads_and_rejects_writes(tmp_path):
+    path = tmp_path / "app.db"
+    repo = Repository(path)
+    repo.upsert_postings([row(eid="a")])
+    repo.close()
+
+    ro = Repository(path, readonly=True)
+    assert [p["external_id"] for p in ro.list_postings()] == ["a"]
+    with pytest.raises(sqlite3.OperationalError):
+        ro.set_setting("provider", "codex", "T1")
+    with pytest.raises(FileNotFoundError):
+        Repository(tmp_path / "missing" / "app.db", readonly=True)
+    assert not (tmp_path / "missing").exists()
+
+
+@pytest.mark.skipif(os.geteuid() == 0, reason="root ignores directory permissions")
+def test_readonly_in_unwritable_dir(tmp_path):
+    d = tmp_path / "home"
+    repo = Repository(d / "app.db")
+    repo.upsert_postings([row(eid="a")])
+    run = repo.start_run("toss", "2026-10-09T00:00:00+00:00")
+    repo.finish_run(run, "done", "2026-10-09T00:00:00+00:00")
+    repo.close()
+    before = sorted(p.name for p in d.iterdir())
+    os.chmod(d, 0o555)
+    try:
+        ro = Repository(d / "app.db", readonly=True)
+        assert [p["external_id"] for p in ro.list_postings()] == ["a"]
+        assert set(ro.last_success_runs()) == {"toss"}
+        ro.close()
+        assert sorted(p.name for p in d.iterdir()) == before
+    finally:
+        os.chmod(d, 0o755)

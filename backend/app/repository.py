@@ -1,6 +1,6 @@
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -82,6 +82,11 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _dt(iso: str) -> datetime:
+    d = datetime.fromisoformat(iso)
+    return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+
+
 def _row(r: sqlite3.Row) -> dict[str, Any]:
     d = dict(r)
     for k in ("tech_stack", "gaps"):
@@ -94,8 +99,15 @@ def _row(r: sqlite3.Row) -> dict[str, Any]:
 
 
 class Repository:
-    def __init__(self, path: str | Path = ":memory:"):
+    def __init__(self, path: str | Path = ":memory:", readonly: bool = False):
         self.path = path
+        if readonly:
+            # 스키마를 만들지 않고 파일도 만들지 않는다 (쓰기 불가 디렉토리에서도 읽기)
+            if not Path(path).is_file():
+                raise FileNotFoundError(path)
+            self.conn = sqlite3.connect(Path(path).resolve().as_uri() + "?mode=ro", uri=True, check_same_thread=False)
+            self.conn.row_factory = sqlite3.Row
+            return
         if path != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(str(path), check_same_thread=False)
@@ -143,12 +155,17 @@ class Repository:
         return len(gone)
 
     def list_postings(self, company: str | None = None, min_level: str | None = None,
-                      include_deleted: bool = False) -> list[dict[str, Any]]:
+                      include_deleted: bool = False, include_hidden: bool = True, interests_only: bool = False,
+                      since: str | None = None) -> list[dict[str, Any]]:
         where, params = [], []
         if not include_deleted:
             where.append("p.deleted_at IS NULL")
+        if not include_hidden:
+            where.append("h.posting_id IS NULL")
+        if interests_only:
+            where.append("p.company IN (SELECT company FROM interests)")
         if company:
-            where.append("company=?")
+            where.append("p.company=?")
             params.append(company)
         if min_level:
             levels = [lv for lv, rank in LEVEL_RANK.items() if rank >= LEVEL_RANK[min_level]]
@@ -159,7 +176,10 @@ class Repository:
                " LEFT JOIN bookmarks b ON b.posting_id = p.id AND b.deleted_at IS NULL"
                " LEFT JOIN hides h ON h.posting_id = p.id AND h.deleted_at IS NULL"
                + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
-        return [_row(r) for r in self.conn.execute(sql, params).fetchall()]
+        rows = [_row(r) for r in self.conn.execute(sql, params).fetchall()]
+        if since:  # 오프셋이 섞일 수 있어 문자열 비교 대신 시각으로
+            rows = [r for r in rows if _dt(r["scraped_at"]) >= _dt(since)]
+        return rows
 
     # --- bookmarks ---
     # 공고 soft delete 시 북마크는 JOIN에서 공고와 함께 숨겨지고, 공고가 다시 나타나면 함께 복구된다.
@@ -254,6 +274,20 @@ class Repository:
                JOIN (SELECT company, MAX(id) AS id FROM scrape_runs GROUP BY company) m ON m.id = r.id"""
         ).fetchall()
         return {r["company"]: dict(r) for r in rows}
+
+    def last_success_runs(self) -> dict[str, dict[str, Any]]:
+        rows = self.conn.execute(
+            """SELECT r.* FROM scrape_runs r
+               JOIN (SELECT company, MAX(id) AS id FROM scrape_runs WHERE status='done' GROUP BY company) m
+                 ON m.id = r.id"""
+        ).fetchall()
+        return {r["company"]: dict(r) for r in rows}
+
+    def stale(self, companies: list[str], now: str, hours: float = 24) -> bool:
+        """하나라도 마지막 성공 실행이 없거나 hours 초과"""
+        last = self.last_success_runs()
+        limit = _dt(now) - timedelta(hours=hours)
+        return any(c not in last or _dt(last[c]["finished_at"]) < limit for c in companies)
 
     # --- profile cache ---
     def get_profile_cache(self, hash_: str) -> dict[str, Any] | None:
