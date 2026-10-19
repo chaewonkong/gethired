@@ -20,10 +20,10 @@
 | `companies` | 등록 회사 + 관심 여부 + 마지막 실행 |
 | `interest add\|rm <company...>` | 관심회사 설정 |
 | `scrape [company...]` | 관심회사(또는 지정 회사) 스크래핑·판정을 동기 실행. 진행은 stderr로 회사별 출력. 결과는 `/api/scrape/{id}`와 같은 필드 + `failed: [{company, error}]` |
-| `postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고. 숨김 제외·관심회사만·score 내림차순. `--min-level`은 API와 같은 "이상". `--since`는 `scraped_at`(처음 저장된 시각) 기준. 기본 필드 `id company title fit_level score fit_reason apply_url deadline scraped_at`, `description`·`gaps`는 `--full` |
+| `postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고. 숨김 제외·관심회사만·score 내림차순. `--min-level`은 API와 같은 "이상". `--since`는 `scraped_at`(처음 저장된 시각) 기준. 기본 필드 `id company title fit_level score fit_reason apply_url deadline scraped_at`, `summary`·`gaps`는 `--full` (공고 본문 컬럼은 없음) |
 
 - `--json`은 서브커맨드별 플래그. stdout에는 JSON만, 로그·진행은 stderr. 필드 이름은 기존 API 응답과 같다
-- 읽기 명령(`status`·`companies`·`postings`·`resume list`·`provider` 조회)은 DB를 `mode=ro`로 열고 스키마를 만들지 않는다. DB가 없으면 "온보딩 안 됨"
+- 읽기 명령(`status`·`companies`·`postings`·`resume list`·`provider` 조회)은 DB를 `mode=ro`로 열고 스키마를 만들지 않는다. DB가 없으면 `status`·`postings`는 "온보딩 안 됨", `companies`·`provider` 조회는 기본값(온보딩에 필요)
 - exit code
 
 | exit | 경우 |
