@@ -31,14 +31,14 @@
 | 0 | 성공. 일부 회사 실패는 `failed`에 담고 stderr 경고 |
 | 1 | 전체 실패(프로필 추출 실패·모든 회사 실패)·`job_running`·입력 오류·텍스트 없는 PDF |
 | 3 | 로그인 필요 (선체크 또는 도중 `auth_required`. 부분 결과 `job` 포함) |
-| 130 | Ctrl+C 중단. 락 해제, 진행 중 run은 실패로 마감 |
+| 130 | Ctrl+C 중단. `job.status`는 `interrupted`, 락 해제, 진행 중 run은 실패로 마감 |
 
 - exit≠0이면 JSON은 `{code, message, login_command?, job?}`. API 401에도 `login_command`를 추가해 이름을 맞춘다
 - CLI 진입점도 `main.py`처럼 `ANTHROPIC_API_KEY`·`OPENAI_API_KEY`를 제거한다
 - 기존 `serve`·`auth`·`reset-db`·`paths` 유지
 
 ### 공용 코드
-- `JobManager.run(companies) -> Job`: 끝날 때까지 기다리는 공개 API. `start()`는 이를 감싼다
+- `JobManager.prepare()`(선체크)·`start()`(락 획득 + job 생성, 동기)·`run()`(`start` 후 완료까지 대기) 공개 API. UI는 `start`, CLI는 `run`
 - 로그인 선체크·관심회사 0개 검사를 `api.py`에서 `JobManager`로 옮긴다. 타입 있는 예외 → API 401/400, CLI exit 3/1
 - `repository.list_postings`에 숨김 제외·관심회사만 옵션 추가. 기본값은 현행, 프론트는 그대로
 - 프로세스 간 배타: `filelock`(Unix `flock`, Windows `msvcrt.locking` — Windows는 미검증)으로 `DB_PATH` 옆 `app.lock`(같은 DB를 쓰는 프로세스끼리 배타). 락은 job 생성과 함께 동기로 잡아 `POST /scrape` 202 시점에 보유가 보장된다. UI job 시작·CLI `scrape`·provider 변경이 공통으로 잡는다. 보유 중이면 API 409 / CLI exit 1 `job_running`. 프로세스가 죽으면 OS가 해제
