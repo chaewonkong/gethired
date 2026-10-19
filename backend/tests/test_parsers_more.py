@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from app.scrapers import REGISTRY, dunamu, fortytwodot, greetinghr, hyperconnect, kakaobank, woowahan
+from app.scrapers.kakaomobility import KakaoMobilityScraper
 from app.scrapers.kakaopay import KakaoPayScraper
 from app.scrapers.upstage import UpstageScraper
 
@@ -26,7 +27,7 @@ def dehydrated(*queries: tuple[list, object]) -> dict:
     return {"dehydratedState": {"queries": [{"queryKey": k, "state": {"data": d}} for k, d in queries]}}
 
 
-# --- GreetingHR (upstage, kakaopay) ---
+# --- GreetingHR (upstage, kakaopay, kakaomobility) ---
 
 def test_greetinghr_parses_next_data_queries():
     openings = load("upstage_openings.json")
@@ -43,7 +44,11 @@ def test_greetinghr_parses_next_data_queries():
         greetinghr.parse_openings(next_data_html(dehydrated()))
 
 
-@pytest.mark.parametrize("cls, name, occupation", [(UpstageScraper, "upstage", "Tech"), (KakaoPayScraper, "kakaopay", "기술")])
+@pytest.mark.parametrize("cls, name, occupation", [
+    (UpstageScraper, "upstage", "Tech"),
+    (KakaoPayScraper, "kakaopay", "기술"),
+    (KakaoMobilityScraper, "kakaomobility", "기술"),
+])
 def test_greetinghr_keep_filters_by_occupation(cls, name, occupation):
     openings = load(f"{name}_openings.json")
     kept = [o for o in openings if cls().keep(o)]
@@ -81,9 +86,19 @@ def test_kakaopay_to_posting_with_due_date():
     assert "조직 소개" in p.description
 
 
+def test_kakaomobility_to_posting_without_due_date():
+    opening = next(o for o in load("kakaomobility_openings.json") if o["openingId"] == 236686)
+    p = KakaoMobilityScraper().to_posting(opening, load("kakaomobility_detail.json"))
+    assert p.company == "kakaomobility"
+    assert p.apply_url == "https://kakaomobility.career.greetinghr.com/ko/o/236686"
+    assert p.deadline is None
+    assert p.category == "기술"
+    assert "카카오내비" in p.description and "<" not in p.description
+
+
 def test_greetinghr_base_is_not_registered():
     assert "upstage" in REGISTRY and "kakaopay" in REGISTRY
-    assert all(not issubclass(c, greetinghr.GreetingHRScraper) or c.company in ("upstage", "kakaopay") for c in REGISTRY.values())
+    assert all(not issubclass(c, greetinghr.GreetingHRScraper) or c.company in ("upstage", "kakaopay", "kakaomobility") for c in REGISTRY.values())
 
 
 # --- hyperconnect (Lever), 42dot (Ashby) ---

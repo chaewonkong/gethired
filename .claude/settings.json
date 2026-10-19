@@ -52,7 +52,8 @@
                 "api.openai.com",
                 "auth.openai.com",
                 "cdn.playwright.dev",
-                "playwright.download.prss.microsoft.com"
+                "playwright.download.prss.microsoft.com",
+                "kakaomobility.career.greetinghr.com"
             ]
         }
     }

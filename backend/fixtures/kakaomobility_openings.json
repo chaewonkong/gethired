@@ -1,0 +1,1655 @@
+[
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 129432,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 145980,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 116605,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 120423,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 205613,
+  "title": "자율주행 AI 엔지니어 (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-03-10T01:52:34Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 145403,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 164808,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 132740,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": null
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 0
+  },
+  "openingId": 225964,
+  "title": "자율주행 AI Perception 엔지니어 (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-07-01T05:35:08Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 129437,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 145985,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 116610,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 120428,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 205618,
+  "title": "자율주행 SLAM 엔지니어 (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-03-10T02:02:13Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 149874,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 170453,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 137854,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 141814,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 230974,
+  "title": "자율주행 시스템 엔지니어 (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-07-29T08:09:16Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 124239,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 139713,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 111302,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 114948,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 199461,
+  "title": "SLAM research scientist (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-01-22T05:29:02Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": true,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 77799,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 81387,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 69661,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 71230,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 148119,
+  "title": "머신러닝 research scientist (R&D)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2025-02-26T05:18:56Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 148438,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 168705,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 222,
+      "occupation": "서비스사업",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 155,
+      "job": "사업기획및운영",
+      "sortOrder": 0
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 136164,
+      "careerFrom": 1,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 140145,
+      "employmentType": "CONTRACT_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 229410,
+  "title": "[Contract] 사업 운영지원 담당자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-07-23T08:26:02Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 157983,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 181173,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1017,
+      "job": "인사",
+      "sortOrder": 2
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 147159,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 150985,
+      "employmentType": "CONTRACT_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 240856,
+  "title": "[Contract] Recruiter",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-10-19T03:00:23Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 157863,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 181002,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1018,
+      "job": "Assistant",
+      "sortOrder": 3
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 147034,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 150874,
+      "employmentType": "INTERN_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 240708,
+  "title": "[Assistant] T충전사업파트 업무 보조",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-10-16T04:51:51Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 157841,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 180979,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1018,
+      "job": "Assistant",
+      "sortOrder": 3
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 147011,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 150851,
+      "employmentType": "INTERN_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 240681,
+  "title": "[Assistant] T주차시너지파트 업무 보조",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-10-16T03:03:14Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 156617,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 179341,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1018,
+      "job": "Assistant",
+      "sortOrder": 3
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 145577,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 149445,
+      "employmentType": "INTERN_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 239185,
+  "title": "[Assistant] 비즈사업파트 업무 보조",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-10-01T04:59:50Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 155192,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 177322,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1018,
+      "job": "Assistant",
+      "sortOrder": 3
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 143903,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 147816,
+      "employmentType": "INTERN_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 237328,
+  "title": "[Assistant] 공간정보기획팀 업무 보조",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-16T06:05:03Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 155041,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 177108,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 3541,
+      "job": "경영지원",
+      "sortOrder": 12
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 143711,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 147628,
+      "employmentType": "CONTRACT_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 237154,
+  "title": "[Contract] 사내 IT 운영 담당자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-15T05:19:50Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 154732,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 176697,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 143319,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 147256,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 236791,
+  "title": "백엔드 개발자(공간정보 시스템 개발)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-11T06:35:26Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 154709,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 176663,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 222,
+      "occupation": "서비스사업",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 2497,
+      "job": "서비스기획및운영",
+      "sortOrder": 8
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 143284,
+      "careerFrom": 4,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 147235,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 236755,
+  "title": "공간정보 기획자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-29T06:43:16Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 154647,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 176583,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 143203,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 147160,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 236686,
+  "title": "백엔드 개발자(내비 서비스)",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-10T09:47:33Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 150779,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 171554,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 222,
+      "occupation": "서비스사업",
+      "sortOrder": 0
+     },
+     "workspaceJob": {
+      "id": 155,
+      "job": "사업기획및운영",
+      "sortOrder": 0
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 138810,
+      "careerFrom": 5,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 142778,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 232118,
+  "title": "자율주행 인증/규제 대응 담당자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-08-06T05:07:56Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 147453,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 167449,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 134960,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 138958,
+      "employmentType": "CONTRACT_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 228360,
+  "title": "[Contract] 서버 개발자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-10-16T07:47:12Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 147107,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 166994,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 134583,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 138586,
+      "employmentType": "CONTRACT_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 227958,
+  "title": "[Contract] 자율주행 HW 테크니션",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-07-15T05:03:15Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 127669,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 143987,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 114957,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 118755,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 203492,
+  "title": "백엔드 개발자(주차 플랫폼 개발) ",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-05-11T01:56:00Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 127032,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 143275,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1892,
+      "job": "법무",
+      "sortOrder": 7
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 114340,
+      "careerFrom": 3,
+      "careerTo": 10,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 118151,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 202734,
+  "title": "사내 변호사",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-07-27T05:03:27Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 113090,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 125743,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 1260,
+      "job": "QA",
+      "sortOrder": 4
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 103098,
+      "careerFrom": 2,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 105398,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 187114,
+  "title": "QA 엔지니어",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2025-11-07T06:07:39Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 91826,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 97880,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1115,
+      "occupation": "스탭",
+      "sortOrder": 2
+     },
+     "workspaceJob": {
+      "id": 1018,
+      "job": "Assistant",
+      "sortOrder": 3
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 83499,
+      "careerFrom": null,
+      "careerTo": null,
+      "careerType": "NOT_MATTER"
+     },
+     "jobPositionEmployment": {
+      "id": 85151,
+      "employmentType": "INTERN_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 163951,
+  "title": "[Assistant] 컴플라이언스팀(자금세탁방지) 업무 보조",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2026-09-16T07:40:19Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ },
+ {
+  "deploy": true,
+  "fixed": false,
+  "openingJobPosition": {
+   "openingJobPositionSetting": {
+    "id": 89038,
+    "maxPriority": 1
+   },
+   "openingJobPositions": [
+    {
+     "id": 94694,
+     "workspaceField": null,
+     "workspaceOccupation": {
+      "id": 1041,
+      "occupation": "기술",
+      "sortOrder": 1
+     },
+     "workspaceJob": {
+      "id": 945,
+      "job": "개발",
+      "sortOrder": 1
+     },
+     "workspacePlace": {
+      "id": 215,
+      "location": "카카오모빌리티",
+      "place": "경기도 성남시 분당구 판교역로 152",
+      "detailPlace": "알파돔타워 카카오모빌리티",
+      "workFromHome": false,
+      "geo": null,
+      "mapApi": {
+       "placeId": "ChIJe0blWglYezURogVu_hDRyKA",
+       "provider": "GOOGLE"
+      },
+      "sortOrder": 0
+     },
+     "jobPositionCareer": {
+      "id": 80979,
+      "careerFrom": 3,
+      "careerTo": null,
+      "careerType": "EXPERIENCED"
+     },
+     "jobPositionEmployment": {
+      "id": 82608,
+      "employmentType": "FULL_TIME_WORKER"
+     }
+    }
+   ],
+   "openingJobPositionCount": 1,
+   "fieldCount": 0,
+   "occupationCount": 1,
+   "jobCount": 1,
+   "placeCount": 1,
+   "careerCount": 1,
+   "employmentCount": 1
+  },
+  "openingId": 160926,
+  "title": "물류 & 에이전트 개발실 백엔드 개발자",
+  "workspaceDivision": {
+   "id": 75,
+   "division": "수시채용"
+  },
+  "openDate": "2025-10-22T10:09:13Z",
+  "dueDate": null,
+  "deadlineDDay": null,
+  "group": {
+   "name": "카카오모빌리티",
+   "imageUrl": null
+  }
+ }
+]
