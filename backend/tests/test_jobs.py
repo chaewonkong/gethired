@@ -203,6 +203,21 @@ def test_cancel_marks_runs_interrupted_and_releases(tmp_path):
     assert not jobs.is_locked() and free(tmp_path / "app.lock")
 
 
+def test_cancel_before_first_step_releases(tmp_path):
+    jobs = make_jobs(tmp_path, judge=make_judge(30, []))
+
+    async def main():
+        job = jobs.start(["a", "b"])
+        jobs._task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await jobs._task
+        return job
+
+    job = asyncio.run(main())
+    assert job.status == "interrupted" and job.finished_at
+    assert not jobs.is_locked() and free(tmp_path / "app.lock")
+
+
 CHILD = """
 import sys, time
 from filelock import FileLock

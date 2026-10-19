@@ -111,6 +111,7 @@ class JobManager:
             names = [c for c in self.scrapers if c in targets]
             job = Job(id=uuid.uuid4().hex[:12], companies={c: CompanyState() for c in names})
             self._task = asyncio.create_task(self._run(job))
+            self._task.add_done_callback(lambda t: self._cancelled_before_run(t, job))
         except BaseException:
             self._lock.release()
             raise
@@ -146,6 +147,12 @@ class JobManager:
         finally:
             os.close(fd)
         return False
+
+    def _cancelled_before_run(self, task: asyncio.Task, job: Job) -> None:
+        # 첫 실행 전에 취소되면 _run의 except/finally가 돌지 않는다. 이 경우 락은 아직 이 job 것
+        if task.cancelled() and job.status == "running":
+            job.status, job.finished_at = "interrupted", now_iso()
+            self._lock.release()
 
     async def _run(self, job: Job) -> None:
         try:
