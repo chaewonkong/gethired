@@ -198,6 +198,7 @@ export default function App() {
       setJob(await api.job(job_id));
     } catch (e) {
       if (e instanceof LoginRequiredError) requireLogin(e.message);
+      else if (e instanceof JobRunningError) showToast("다른 곳에서 스크래핑 중입니다", "error");
       else setError(String(e));
     }
   };

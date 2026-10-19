@@ -218,6 +218,15 @@ describe("App", () => {
       expect(banner()).toHaveTextContent("로그인이 필요합니다. 터미널에서 로그인 후 다시 시도해주세요.");
     });
 
+    it("스크래핑 409면 toast를 띄우고 job 폴링을 하지 않는다", async () => {
+      const fetch = stubApi([], { "POST /api/scrape": () => json({ code: "job_running", message: "job running" }, 409) });
+      render(<App />);
+      await scrape();
+      expect(await screen.findByText("다른 곳에서 스크래핑 중입니다")).toBeInTheDocument();
+      expect(fetch.mock.calls.some(([path]) => String(path).startsWith("/api/scrape/"))).toBe(false);
+      expect(document.querySelector(".banner.error")).toBeNull();
+    });
+
     it("배너의 AI 변경으로 모달을 열고, 전환하면 배너 문구가 바뀐다", async () => {
       const fetch = stubApi([], {}, { provider: "codex", loggedIn: { claude: false, codex: false } });
       render(<App />);

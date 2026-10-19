@@ -75,7 +75,7 @@ export class LoginRequiredError extends Error {
   }
 }
 
-/** job 실행 중이라 provider를 바꿀 수 없음 (409) */
+/** job 실행 중이라 provider 변경·스크래핑 시작 불가 (409) */
 export class JobRunningError extends Error {}
 
 /** 이력서 업로드 400. message는 서버 detail (확장자·텍스트 없는 PDF 등) */
@@ -128,6 +128,7 @@ export const api = {
   async startScrape(): Promise<{ job_id: string }> {
     const r = await fetch("/api/scrape", { method: "POST" });
     if (r.status === 401) throw new LoginRequiredError(await readJson(r));
+    if (r.status === 409) throw new JobRunningError((await readJson(r))?.message ?? "job running");
     if (!r.ok) throw new Error(`scrape: ${r.status}`);
     return r.json();
   },
