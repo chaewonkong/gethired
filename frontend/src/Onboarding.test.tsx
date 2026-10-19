@@ -307,7 +307,7 @@ describe("provider step", () => {
       });
       render(<App />);
       await screen.findByRole("heading", { name: "AI 선택" });
-      expect(backend.authCalls()).toBe(1);
+      await waitFor(() => expect(backend.authCalls()).toBe(1)); // 폴링 effect는 렌더 뒤 비동기로 시작
       advance(10000);
       expect(backend.authCalls()).toBe(1);
 

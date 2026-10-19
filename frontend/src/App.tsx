@@ -269,7 +269,10 @@ export default function App() {
       try {
         const a = await api.authStatus();
         if (cancelled) return;
-        if (a.provider === providerRef.current) applyAuth(a);
+        if (a.provider === providerRef.current) {
+          applyAuth(a);
+          if (a.logged_in) return; // effect cleanup을 기다리지 않고 여기서 폴링을 멈춘다
+        }
       } catch (e) {
         if (cancelled) return;
         setError(String(e));
