@@ -49,7 +49,7 @@
 
 ### 플러그인
 - 저장소 루트 `.claude-plugin/marketplace.json` + `plugin/`(`.claude-plugin/plugin.json`, `skills/jobs/SKILL.md`). 설치: `claude plugin marketplace add chaewonkong/gethired` → `claude plugin install gethired@gethired`. 호출명 `/gethired:jobs`, 설명으로 자동 발동
-- 스킬은 `uvx --from "gethired>=0.2,<0.3" gethired <cmd> --json`으로 읽기 명령만 실행한다 (`status`·`postings`·`companies`). sandbox에 막히면(uv 캐시·PyPI) 사용자 승인을 받아 sandbox 밖에서 실행. README·SKILL.md에 "`Bash(uvx --from "gethired>=0.2,<0.3" gethired *)` 허용 또는 sandbox 쓰기 경로에 uv 캐시 추가" 안내
+- 스킬은 `uvx --from gethired~=0.2.0 gethired <cmd> --json`으로 읽기 명령만 실행한다 (`status`·`postings`·`companies`). sandbox에 막히면(uv 캐시·PyPI) 스킬이 따로 묻지 않고 에이전트의 기본 권한 절차(sandbox 밖 재실행 승인)에 맡긴다. README에 `Bash(uvx --from gethired~=0.2.0 gethired *)` 허용을 1순위로, sandbox `allowWrite`·`allowedDomains`는 대안(uv 캐시를 모든 sandbox 명령에 여는 위험 명시)으로 안내. 버전 범위는 `~=0.2.0`(= `>=0.2.0,<0.3`)으로 써서 따옴표·`<>` 없이 권한 규칙과 정확히 매칭
 - 절차: 트리거(구직·공고·이직·이력서 매칭) → `status` → 온보딩 부족(이력서 0·provider 미선택·관심회사 0)이면 필요한 CLI 명령 안내 → `stale`이거나 `job_running`이면 "터미널에서 `uvx gethired scrape` 실행" 안내, 사용자가 완료를 알리면 다시 읽음 → `postings`를 등급·회사·이유·링크로 요약
 - Codex 등 다른 에이전트는 같은 SKILL.md를 스킬 디렉토리에 복사해 쓴다 (README에 경로만)
 

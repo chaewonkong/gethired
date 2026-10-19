@@ -105,7 +105,8 @@ $ claude plugin install gethired@gethired
 ```
 - 호출: `/gethired:jobs`, 또는 구직·공고·이직 관련 질문이면 자동 발동
 - 읽기 전용이다 (`status`·`postings`·`companies`). 스크래핑이 필요하면 터미널에서 `uvx gethired scrape`를 직접 실행하라고 안내한다
-- sandbox에서는 uv 캐시·PyPI 접근이 막혀 매번 승인을 묻는다. 설정의 `permissions.allow`에 `Bash(uvx --from "gethired>=0.2,<0.3" gethired *)`를 추가하거나 sandbox 쓰기 경로에 uv 캐시(`~/.cache/uv`)를 넣는다
+- sandbox에서는 uv 캐시·PyPI 접근이 막혀 sandbox 밖 실행 승인을 매번 묻는다. `~/.claude/settings.json`의 `permissions.allow`에 `Bash(uvx --from gethired~=0.2.0 gethired *)`를 추가하면 이 명령만 승인 없이 sandbox 밖에서 실행된다
+  - sandbox 안에서 돌리려면 대신 `sandbox.filesystem.allowWrite`에 `~/.cache/uv`·`~/.local/share/uv`, `sandbox.network.allowedDomains`에 `pypi.org`·`files.pythonhosted.org`를 넣는다. 단 sandbox 안의 모든 명령이 uv 캐시를 쓸 수 있게 되므로 권장하지 않는다
 - Codex 등 다른 에이전트: [`plugin/skills/jobs/SKILL.md`](plugin/skills/jobs/SKILL.md)를 그 에이전트의 스킬 디렉토리(Codex: `~/.agents/skills/gethired-jobs/SKILL.md`)에 복사한다
 
 

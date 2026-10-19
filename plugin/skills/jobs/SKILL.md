@@ -8,9 +8,9 @@ description: gethired CLI로 내 이력서에 매칭된 채용 공고를 읽어 
 gethired가 수집·판정해 둔 공고를 읽어 요약한다. **읽기 전용**: 아래 세 명령만 실행한다.
 
 ```bash
-uvx --from "gethired>=0.2,<0.3" gethired status --json
-uvx --from "gethired>=0.2,<0.3" gethired postings --json [--min-level good] [--company <c>...] [--since 24h|7d] [--limit N] [--full]
-uvx --from "gethired>=0.2,<0.3" gethired companies --json
+uvx --from gethired~=0.2.0 gethired status --json
+uvx --from gethired~=0.2.0 gethired postings --json [--min-level good] [--company <c>...] [--since 24h|7d] [--limit N] [--full]
+uvx --from gethired~=0.2.0 gethired companies --json
 ```
 
 `scrape`·`resume`·`provider`·`interest`는 실행하지 않는다. 사용자에게 명령을 안내만 한다.
@@ -43,4 +43,4 @@ stdout은 JSON만. exit 0이면 결과, 아니면 `{code, message, login_command
 5. 요약: 등급순으로 `등급 · 회사 · 제목 — 이유(fit_reason 한 줄) · 링크(apply_url)`. 마감(`deadline`)이 가까우면 표시. 많으면 strong·good 위주로 자르고 남은 건수를 말한다. 0건이면 그렇게 말하고 `--min-level` 완화나 scrape를 제안
 
 ## sandbox
-sandbox에서 `uvx`가 막히면(uv 캐시 쓰기·PyPI 접근 실패) 사용자에게 "gethired 조회를 위해 sandbox 밖에서 실행해도 될까요?"라고 승인을 받아 sandbox 밖에서 실행한다. 반복 승인을 줄이려면 설정의 permissions allow에 `Bash(uvx --from "gethired>=0.2,<0.3" gethired *)`를 추가하거나 sandbox 쓰기 경로에 uv 캐시(`~/.cache/uv`)를 넣으라고 안내한다.
+sandbox에서 `uvx`가 막혀도(uv 캐시 쓰기·PyPI 접근) 사용자에게 따로 묻지 않는다. 에이전트의 기본 권한 절차대로 재실행하고, 승인은 그 절차에 맡긴다. 승인을 반복해서 물으면 README "에이전트에서 쓰기"의 권한 설정을 안내한다.
