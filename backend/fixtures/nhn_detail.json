@@ -1,0 +1,187 @@
+{
+ "header": {
+  "resultCode": 0,
+  "resultMessage": "",
+  "isSuccessful": true
+ },
+ "result": {
+  "id": "4413318345634587442",
+  "corporation": {
+   "id": "3647229949742220183",
+   "name": "NHN Cloud",
+   "orderNo": 1.3,
+   "useYn": "Y",
+   "hashtag": "#클라우드 #클라우드서비스",
+   "assetUseYn": "Y",
+   "cellNoUseYn": "Y",
+   "paycoidUseYn": "Y",
+   "emailDomain": "nhn.com",
+   "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+   "cd": null,
+   "regionCd": "KR",
+   "corporationPageUseYn": null
+  },
+  "name": "인프라 데브옵스 엔지니어",
+  "finishYn": "N",
+  "postingYn": "Y",
+  "postingStaDatetime": "2026-09-03T00:00:00",
+  "postingEndDatetime": "2999-12-31T23:59:00",
+  "careerType": {
+   "cd": "B003",
+   "cdKind": "career-type",
+   "name": "경력",
+   "orderNo": 1.0,
+   "useYn": "Y"
+  },
+  "employeeType": {
+   "cd": "ET001",
+   "cdKind": "employee-type-JP",
+   "name": "정규",
+   "orderNo": 1.0,
+   "useYn": "Y"
+  },
+  "applicationUseYn": "Y",
+  "hashtag": "",
+  "intensiveRecruitingOrderNo": 99.0,
+  "bookmarkId": null,
+  "application": null,
+  "jobSeries": [
+   {
+    "id": "3665304227941909431",
+    "name": "Infra Engineering",
+    "jobGroup": {
+     "id": "3645799730550663017",
+     "name": "Tech",
+     "orderNo": 1.0,
+     "useYn": "Y",
+     "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+    },
+    "orderNo": 8.0,
+    "useYn": "Y",
+    "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+   }
+  ],
+  "jobPostingContentsItems": [
+   {
+    "id": "4413318345693307705",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "NONE",
+    "title": "",
+    "contentsTypeEnum": "NONE",
+    "contents": [],
+    "footer": "<p><img src=\"/nstatic/he-image/2024/d65465f8-848f-40f0-9627-9d7e4b8b23811722390616553.png\" style=\"width: 806px;\" class=\"fr-fic fr-dib\"></p>",
+    "orderNo": 0.0
+   },
+   {
+    "id": "4413318345684919092",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "NHN Cloud",
+    "contentsTypeEnum": "SINGLE",
+    "contents": [
+     "NHN Cloud는 대한민국을 대표하는 클라우드 서비스로서 데이터 센터부터 플랫폼, 애플리케이션 서비스에 이르기까지 고객이 필요한 모든 클라우드 서비스를 제공 하는 클라우드 서비스 제공사(CSP)입니다. 탄탄한 기술력으로 폭발적인 성장을 이뤄온 NHN Cloud는 이제 국내를 넘어 글로벌 테크 기업으로의 성장을 목표로 하고 있습니다.\n"
+    ],
+    "footer": "",
+    "orderNo": 2.0
+   },
+   {
+    "id": "4413318345684919091",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "이 포지션은 이런 업무를 해요 (주요 업무)",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "OpenStack 기반 NHN Cloud IaaS 배포 및 운영",
+     "IaC 기반 인프라 형상 관리, 신규 리전 구축 및 배포",
+     "정기점검·작업 계획 수립, 무중단 운영 절차 설계, 장애 재발 방지 체계 개선",
+     "시스템 운영 모니터링 도구 구축 및 개발, 운영"
+    ],
+    "footer": "",
+    "orderNo": 7.0
+   },
+   {
+    "id": "4413318345693307701",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "이런 분들을 찾고 있어요 (자격 요건)",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "5년 이상의 시스템 엔지니어링 또는 데브옵스 엔지니어링 경력을 보유하신 분",
+     "IaC 도구(SaltStack, Ansible, Terraform 등)를 활용한 시스템 운영 자동화 경험이 있으신 분",
+     "옵저버빌리티 및 시스템 모니터링 도구 구축·운영 경험이 있으신 분",
+     "OpenStack 또는 가상화(KVM/Libvirt) 환경에 대한 이해와 운영 경험이 있으신 분",
+     "Kubernetes 등 컨테이너 오케스트레이션 환경에서의 업무 경험이 있으신 분",
+     "Bash, Python, JavaScript, Java 등을 활용한 개발 역량을 보유하신 분",
+     "AI를 활용한 시스템 운영 및 개발 경험을 보유하신 분",
+     "유관 부서와 원활하게 소통하고 협업하는 능력을 보유하신 분"
+    ],
+    "footer": "",
+    "orderNo": 8.0
+   },
+   {
+    "id": "4413318345693307704",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "이런 분이면 더 좋아요 (우대 사항)",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "OpenStack 기반 클라우드 구축 및 운영 경험이 있으신 분",
+     "대규모 시스템 운영 및 클라우드 운영 경험이 있으신 분",
+     "대용량 로그 모니터링 및 시스템 모니터링 구축·운영 경험이 있으신 분",
+     "RHCE, OpenStack, Kubernetes 등 관련 자격증을 보유하신 분",
+     "AIOps(AI를 활용한 시스템 운영 및 업무 자동화·효율화·최적화) 업무 경험이 있으신 분"
+    ],
+    "footer": "",
+    "orderNo": 9.0
+   },
+   {
+    "id": "4413318345693307702",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "지원서는 이렇게 작성하시면 좋아요",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "채용 공고에서 요구하는 경험과 역량을 중심으로 기재해주세요.",
+     "해오신 업무를 프로젝트 단위로 잘 정리해서 적어주세요.",
+     "포트폴리오, 노션, 깃허브 등 경험과 역량을 어필할 별도의 자료가 있다면 함께 제출해주세요.",
+     "일부 포지션에서는 포트폴리오 제출이 필수입니다. 확인하시고 꼭 제출해주세요.",
+     "자기소개는 직무 역량을 경험과 잘 연결지어 작성해주시면 좋아요."
+    ],
+    "footer": "",
+    "orderNo": 10.0
+   },
+   {
+    "id": "4413318345693307703",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "NHN Cloud로의 합류 여정",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "서류전형 > T인터뷰(Tech) > C인터뷰(Career) > 입사"
+    ],
+    "footer": "<p><a href=\"https://careers.nhn.com/guide\" target=\"_blank\" rel=\"noopener noreferrer\">합류가이드 확인하기</a></p><p><br></p><p><strong data-nodeid=\"1067\" style='font-weight: bold; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; box-sizing: content-box; margin: 0px; padding: 0px; border: 0px; vertical-align: baseline; line-height: 21px; color: rgb(184, 49, 47); font-family: 나눔고딕, \"Nanum Gothic\", \"Malgun Gothic\", Meiryo, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; letter-spacing: -0.3px; text-align: start; background-color: rgb(255, 255, 255);' id=\"isPasted\">* T인터뷰 시 사전과제가 진행됩니다. (서류합격자에 한해, 별도 안내 예정)</strong></p>",
+    "orderNo": 11.0
+   },
+   {
+    "id": "4413318345693307706",
+    "jobPostingId": "4413318345634587442",
+    "titleTypeEnum": "H3",
+    "title": "꼭 확인해주세요",
+    "contentsTypeEnum": "LIST",
+    "contents": [
+     "남자의 경우, 병역의무를 필하였거나 면제된 분만 지원 가능합니다.",
+     "해외여행에 결격 사유가 없어야 지원 가능합니다.",
+     "국가보훈해당자 및 장애인은 관련 법률에 의거 우대합니다.(증빙서류 제출자에 한함)",
+     "제출서류에 허위기재 또는 기재착오, 구비서류 미제출 등으로 인한 불이익은 응시자 본인의 책임으로 합니다.",
+     "제출서류나 각종 증명서의 기재내용이 허위일 경우, 응시를 무효로 하며 합격을 취소합니다.",
+     "근무지는 플레이뮤지엄 입니다. ",
+     "가지고 계신 경험을 충분히 보여주실 수 있도록 학력/경력은 빠짐없이 모두 작성 부탁드립니다."
+    ],
+    "footer": "",
+    "orderNo": 12.0
+   }
+  ],
+  "introduction": null,
+  "outerApplicationUrl": null
+ }
+}

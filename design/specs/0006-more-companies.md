@@ -13,3 +13,4 @@
 - 카카오페이
 - 하이퍼커넥트 (Match Group)
 - 카카오모빌리티 (GreetingHR, 추후 추가)
+- NHN (careers.nhn.com REST API, 계열사 포함, 추후 추가)

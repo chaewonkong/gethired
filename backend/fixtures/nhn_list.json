@@ -1,0 +1,1873 @@
+{
+ "header": {
+  "resultCode": 0,
+  "resultMessage": "",
+  "isSuccessful": true
+ },
+ "result": [
+  {
+   "id": "4438005506792978449",
+   "corporation": {
+    "id": "3671712459646992057",
+    "name": "NHN Service",
+    "orderNo": 2.0,
+    "useYn": "Y",
+    "hashtag": "#게임",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnservice.com",
+    "logoStorageFilePath": "corporation-logo/SERVICE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "[청주] 고객상담(정규직)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-09T00:00:00",
+   "postingEndDatetime": "2026-10-19T23:59:00",
+   "careerType": {
+    "cd": "B001",
+    "cdKind": "career-type",
+    "name": "무관",
+    "orderNo": 3.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227938846121",
+     "name": "Service",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 19.0,
+     "useYn": "Y",
+     "hashtag": "#CS#서비스#Service"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4444492401269912205",
+   "corporation": {
+    "id": "3671712459646992057",
+    "name": "NHN Service",
+    "orderNo": 2.0,
+    "useYn": "Y",
+    "hashtag": "#게임",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnservice.com",
+    "logoStorageFilePath": "corporation-logo/SERVICE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "[청주] 게임운영자(정규직)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-16T00:00:00",
+   "postingEndDatetime": "2026-10-26T23:59:00",
+   "careerType": {
+    "cd": "B001",
+    "cdKind": "career-type",
+    "name": "무관",
+    "orderNo": 3.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227945910793",
+     "name": "Game Business",
+     "jobGroup": {
+      "id": "3645799730924223196",
+      "name": "Game",
+      "orderNo": 4.0,
+      "useYn": "Y",
+      "hashtag": "#game#게임"
+     },
+     "orderNo": 22.0,
+     "useYn": "Y",
+     "hashtag": "#게임사업"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4421860377025436895",
+   "corporation": {
+    "id": "3672588848383880870",
+    "name": "NHN ACE",
+    "orderNo": 2.7,
+    "useYn": "Y",
+    "hashtag": "#NHNACE #ACE #AT #AX #광고플랫폼 #광고#광고운영#매체",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnace.com",
+    "logoStorageFilePath": "corporation-logo/ACE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "광고운영 신입사원 채용",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-15T09:07:00",
+   "postingEndDatetime": "2026-10-31T09:07:00",
+   "careerType": {
+    "cd": "B002",
+    "cdKind": "career-type",
+    "name": "신입",
+    "orderNo": 2.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#광고운영#AT#AX",
+   "intensiveRecruitingOrderNo": null,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227944561477",
+     "name": "Sales",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 18.0,
+     "useYn": "Y",
+     "hashtag": "#영업#세일즈#BD"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4433519176515675929",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "사업제안(클라우드 및 AX)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-13T12:00:00",
+   "postingEndDatetime": "2026-10-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227943102105",
+     "name": "Consulting",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 15.0,
+     "useYn": "Y",
+     "hashtag": "#consulting#컨설턴트#컨설팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4411957678048776334",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "메시지 플랫폼 및 API 세일즈",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-07T00:00:00",
+   "postingEndDatetime": "2026-10-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227944561477",
+     "name": "Sales",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 18.0,
+     "useYn": "Y",
+     "hashtag": "#영업#세일즈#BD"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4443061609033416712",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "국방 프리세일즈(클라우드 및 AX)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-14T12:00:00",
+   "postingEndDatetime": "2026-11-30T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227943102105",
+     "name": "Consulting",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 15.0,
+     "useYn": "Y",
+     "hashtag": "#consulting#컨설턴트#컨설팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4442910735141790178",
+   "corporation": {
+    "id": "3672588848383880870",
+    "name": "NHN ACE",
+    "orderNo": 2.7,
+    "useYn": "Y",
+    "hashtag": "#NHNACE #ACE #AT #AX #광고플랫폼 #광고#광고운영#매체",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnace.com",
+    "logoStorageFilePath": "corporation-logo/ACE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "모빌리티 서비스 운영 및 기획 신입사원 채용 (일본어 가능자)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-01T14:00:00",
+   "postingEndDatetime": "2999-12-31T00:00:00",
+   "careerType": {
+    "cd": "B002",
+    "cdKind": "career-type",
+    "name": "신입",
+    "orderNo": 2.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#기획#서비스#운영#모빌리티",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227942036108",
+     "name": "Tech Support",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 12.0,
+     "useYn": "Y",
+     "hashtag": "#기술지원#개발지원#개발기획#개발PM#테크지원#techsupport"
+    },
+    {
+     "id": "3665304227944561477",
+     "name": "Sales",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 18.0,
+     "useYn": "Y",
+     "hashtag": "#영업#세일즈#BD"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4417684515178654502",
+   "corporation": {
+    "id": "3672588848383880870",
+    "name": "NHN ACE",
+    "orderNo": 2.7,
+    "useYn": "Y",
+    "hashtag": "#NHNACE #ACE #AT #AX #광고플랫폼 #광고#광고운영#매체",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnace.com",
+    "logoStorageFilePath": "corporation-logo/ACE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "모빌리티·광고 서비스 모바일 앱 개발자(Android/iOS)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-09T14:50:00",
+   "postingEndDatetime": "2999-12-31T00:00:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#개발#안드로이드#ISO#Android",
+   "intensiveRecruitingOrderNo": null,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227945942915",
+     "name": "Android",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 2.0,
+     "useYn": "Y",
+     "hashtag": "#앱#앱개발#android#android앱#안드로이드#안드로이드앱#안드로이드앱개발#안드로이드개발"
+    },
+    {
+     "id": "3665304227942349230",
+     "name": "iOS",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 9.0,
+     "useYn": "Y",
+     "hashtag": "#iOS#앱#앱개발#ios앱#애플#아이폰#ios앱개발#ios개발"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4432032546045195596",
+   "corporation": {
+    "id": "3616135421038421042",
+    "name": "NHN",
+    "orderNo": 1.1,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔 #게임 #한게임",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/NHN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "AI전환백엔드개발",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-29T10:00:00",
+   "postingEndDatetime": "2999-12-31T10:00:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227946285882",
+     "name": "AI/ML",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 1.0,
+     "useYn": "Y",
+     "hashtag": "#AI#ML#머신러닝#딥러닝#에이아이#인공지능#Machinelearning#deeplearning"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4403799788741121942",
+   "corporation": {
+    "id": "3671913177753387909",
+    "name": "NHN Link",
+    "orderNo": 2.2,
+    "useYn": "Y",
+    "hashtag": "#NHN Link #공연/전시 #콘서트 #스포츠",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnlink.co.kr",
+    "logoStorageFilePath": "corporation-logo/LINK_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "콘서트 기획 담당",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-08-24T09:00:00",
+   "postingEndDatetime": "2999-12-31T10:00:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#티켓링크 #TICKETLINK  #콘서트기획 #콘서트제작",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227944561477",
+     "name": "Sales",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 18.0,
+     "useYn": "Y",
+     "hashtag": "#영업#세일즈#BD"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4370571654510106511",
+   "corporation": {
+    "id": "3671818399599190588",
+    "name": "NHN Bugs",
+    "orderNo": 2.3,
+    "useYn": "Y",
+    "hashtag": "#Music♬ #essential; #NHN Bugs",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "bugs.co.kr",
+    "logoStorageFilePath": "corporation-logo/BUGS_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "사업기획 담당자 채용",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-07-06T09:00:00",
+   "postingEndDatetime": "2999-12-31T11:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#벅스 #bugs #essential; #세이클럽 #sayclub #벅스 #사업기획 #제휴 #기획 #서비스",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941302550",
+     "name": "Business",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 14.0,
+     "useYn": "Y",
+     "hashtag": "#비즈니스#사업#사업개발#사업기획#business#biz"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4446696058778471650",
+   "corporation": {
+    "id": "3671768218789839408",
+    "name": "NHN AD",
+    "orderNo": 2.1,
+    "useYn": "Y",
+    "hashtag": "#NHNAD #NHN애드 #디지털마케팅 #마케팅 #광고 #광고AE #광고솔루션 #광고플랫폼",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnad.com",
+    "logoStorageFilePath": "corporation-logo/AD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "광고AE(인턴)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-19T15:30:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B001",
+    "cdKind": "career-type",
+    "name": "무관",
+    "orderNo": 3.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET003",
+    "cdKind": "employee-type-JP",
+    "name": "인턴",
+    "orderNo": 3.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227940163813",
+     "name": "Marketing",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 17.0,
+     "useYn": "Y",
+     "hashtag": "#마케팅#Marketing#마켓팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4446693502413218822",
+   "corporation": {
+    "id": "3671768218789839408",
+    "name": "NHN AD",
+    "orderNo": 2.1,
+    "useYn": "Y",
+    "hashtag": "#NHNAD #NHN애드 #디지털마케팅 #마케팅 #광고 #광고AE #광고솔루션 #광고플랫폼",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnad.com",
+    "logoStorageFilePath": "corporation-logo/AD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "퍼포먼스마케팅AE(경력)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-19T15:30:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227940163813",
+     "name": "Marketing",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 17.0,
+     "useYn": "Y",
+     "hashtag": "#마케팅#Marketing#마켓팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4446571456005845334",
+   "corporation": {
+    "id": "3616135421038421042",
+    "name": "NHN",
+    "orderNo": 1.1,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔 #게임 #한게임",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/NHN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "게임사운드(계약직)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-19T13:30:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET002",
+    "cdKind": "employee-type-JP",
+    "name": "계약",
+    "orderNo": 2.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227939019391",
+     "name": "Design",
+     "jobGroup": {
+      "id": "3645799730908454481",
+      "name": "Design",
+      "orderNo": 3.0,
+      "useYn": "Y",
+      "hashtag": "#디자인#design"
+     },
+     "orderNo": 20.0,
+     "useYn": "Y",
+     "hashtag": "#디자인"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4442959527668758638",
+   "corporation": {
+    "id": "3647229950139383682",
+    "name": "NHN Enterprise",
+    "orderNo": 1.4,
+    "useYn": "Y",
+    "hashtag": "#엔터프라이즈 #IDC #엔터",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnenter.com",
+    "logoStorageFilePath": "corporation-logo/ENTERPRISE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "IDC 운영자 (판교)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-14T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B002",
+    "cdKind": "career-type",
+    "name": "신입",
+    "orderNo": 2.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#IDC #IDC운영 #인프라",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941909431",
+     "name": "Infra Engineering",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 8.0,
+     "useYn": "Y",
+     "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4437132748736637352",
+   "corporation": {
+    "id": "3616135421038421042",
+    "name": "NHN",
+    "orderNo": 1.1,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔 #게임 #한게임",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/NHN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "AI 서비스 개발",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-10-06T11:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227944319351",
+     "name": "Backend",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 3.0,
+     "useYn": "Y",
+     "hashtag": "#서버#클라우드#BE#backend#백엔드#server#cloud#java"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4432058960011061428",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "보안관제 (주간)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-29T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227939325251",
+     "name": "IT Security",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 10.0,
+     "useYn": "Y",
+     "hashtag": "#IT보안#보안#보안개발#itsecurity#security"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4427161208440490997",
+   "corporation": {
+    "id": "3673339512358903254",
+    "name": "NHN COMMERCE",
+    "orderNo": 2.4,
+    "useYn": "Y",
+    "hashtag": "#커머스 #이커머스 #쇼핑몰 #호스팅 #전자상거래 #엔에이치엔커머스 #NHN커머스 #구축 #자사몰",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn-commerce.com",
+    "logoStorageFilePath": "corporation-logo/COMMERCE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "QA 담당자",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-22T08:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#개발#QA#테스터#큐에이#엔지니어",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227939663172",
+     "name": "QA",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 11.0,
+     "useYn": "Y",
+     "hashtag": "#QA#QC#테스트#test#큐에이#QA개발"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4422731208948210729",
+   "corporation": {
+    "id": "3918911201706103411",
+    "name": "NHN 여행박사",
+    "orderNo": 99.0,
+    "useYn": "Y",
+    "hashtag": "#여행박사 #drtour #여박",
+    "assetUseYn": "N",
+    "cellNoUseYn": "N",
+    "paycoidUseYn": "N",
+    "emailDomain": "drtour.com",
+    "logoStorageFilePath": "corporation-logo/DR_TOUR_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "호텔 안테룸 서울 Revenue&Reservation 팀",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-16T14:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#안테룸서울 #호텔 #마케팅",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227940163813",
+     "name": "Marketing",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 17.0,
+     "useYn": "Y",
+     "hashtag": "#마케팅#Marketing#마켓팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4422734342168796475",
+   "corporation": {
+    "id": "3673339512358903254",
+    "name": "NHN COMMERCE",
+    "orderNo": 2.4,
+    "useYn": "Y",
+    "hashtag": "#커머스 #이커머스 #쇼핑몰 #호스팅 #전자상거래 #엔에이치엔커머스 #NHN커머스 #구축 #자사몰",
+    "assetUseYn": "N",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn-commerce.com",
+    "logoStorageFilePath": "corporation-logo/COMMERCE_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "개인정보보호 담당자",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-16T08:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "#보안#엔지니어#정보보호#보호",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227939325251",
+     "name": "IT Security",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 10.0,
+     "useYn": "Y",
+     "hashtag": "#IT보안#보안#보안개발#itsecurity#security"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4414094745711006862",
+   "corporation": {
+    "id": "3645826469474749271",
+    "name": "NHN PAYCO",
+    "orderNo": 1.2,
+    "useYn": "Y",
+    "hashtag": "#페이코 #금융 #핀테크",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "N",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnpayco.com",
+    "logoStorageFilePath": "corporation-logo/PAYCO_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "페이코 서비스 기획",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-07T14:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227938846121",
+     "name": "Service",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 19.0,
+     "useYn": "Y",
+     "hashtag": "#CS#서비스#Service"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4413318345634587442",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "인프라 데브옵스 엔지니어",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-03T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941909431",
+     "name": "Infra Engineering",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 8.0,
+     "useYn": "Y",
+     "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4413318011717657332",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "클라우드 시스템 엔지니어(컴퓨팅)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-03T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941909431",
+     "name": "Infra Engineering",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 8.0,
+     "useYn": "Y",
+     "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4413185974344171318",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "클라우드 시스템 엔지니어(네트워크)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-03T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941909431",
+     "name": "Infra Engineering",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 8.0,
+     "useYn": "Y",
+     "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4408387626892347377",
+   "corporation": {
+    "id": "3616135421038421042",
+    "name": "NHN",
+    "orderNo": 1.1,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔 #게임 #한게임",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/NHN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "게임 서비스 마케터(Senior)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-02T10:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227940163813",
+     "name": "Marketing",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 17.0,
+     "useYn": "Y",
+     "hashtag": "#마케팅#Marketing#마켓팅"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4412653394431636377",
+   "corporation": {
+    "id": "3616135421038421042",
+    "name": "NHN",
+    "orderNo": 1.1,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔 #게임 #한게임",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/NHN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "내부감사",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-02T10:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227942056755",
+     "name": "Legal",
+     "jobGroup": {
+      "id": "3645799730926240304",
+      "name": "Corporate",
+      "orderNo": 5.0,
+      "useYn": "Y",
+      "hashtag": "#corporate#staff#경영지원#지원#스탭"
+     },
+     "orderNo": 28.0,
+     "useYn": "Y",
+     "hashtag": "#법무#변호사#법률"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4412429663707058264",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "데이터센터 구축 (기계/자동제어 설비)",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-02T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941926308",
+     "name": "Data",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 4.0,
+     "useYn": "Y",
+     "hashtag": "#data#데이터#데이터엔지니어링#데이터엔지니어#DE#DA#데이터애널리스트#데이터분석#데이터가공"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4412703212378063000",
+   "corporation": {
+    "id": "3647229949742220183",
+    "name": "NHN Cloud",
+    "orderNo": 1.3,
+    "useYn": "Y",
+    "hashtag": "#클라우드 #클라우드서비스",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn.com",
+    "logoStorageFilePath": "corporation-logo/CLOUD_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "데이터센터 및 AI컴퓨팅 네트워크 구축",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-09-02T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227941909431",
+     "name": "Infra Engineering",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 8.0,
+     "useYn": "Y",
+     "hashtag": "#인프라#인프라개발#infra#infraengineering#인프라엔지니어링"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4405971125983240936",
+   "corporation": {
+    "id": "4122815870211096673",
+    "name": "NHN Cloud Japan",
+    "orderNo": 99.0,
+    "useYn": "Y",
+    "hashtag": "#엔에이치엔#클라우드#재팬",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "Y",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhn-japan.com",
+    "logoStorageFilePath": "corporation-logo/JAPAN_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "[NHN Japan] 보안 엔지니어",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-08-24T00:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "N",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227939325251",
+     "name": "IT Security",
+     "jobGroup": {
+      "id": "3645799730550663017",
+      "name": "Tech",
+      "orderNo": 1.0,
+      "useYn": "Y",
+      "hashtag": "#tech테크#tech#테크#기술#개발#개발자#엔지니어#engineer#develop#development#developer"
+     },
+     "orderNo": 10.0,
+     "useYn": "Y",
+     "hashtag": "#IT보안#보안#보안개발#itsecurity#security"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  },
+  {
+   "id": "4403891035250586475",
+   "corporation": {
+    "id": "3645826469474749271",
+    "name": "NHN PAYCO",
+    "orderNo": 1.2,
+    "useYn": "Y",
+    "hashtag": "#페이코 #금융 #핀테크",
+    "assetUseYn": "Y",
+    "cellNoUseYn": "N",
+    "paycoidUseYn": "Y",
+    "emailDomain": "nhnpayco.com",
+    "logoStorageFilePath": "corporation-logo/PAYCO_24.svg",
+    "cd": null,
+    "regionCd": "KR",
+    "corporationPageUseYn": null
+   },
+   "name": "기업복지 서비스 B2B 영업",
+   "finishYn": "N",
+   "postingYn": "Y",
+   "postingStaDatetime": "2026-08-21T09:00:00",
+   "postingEndDatetime": "2999-12-31T23:59:00",
+   "careerType": {
+    "cd": "B003",
+    "cdKind": "career-type",
+    "name": "경력",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "employeeType": {
+    "cd": "ET001",
+    "cdKind": "employee-type-JP",
+    "name": "정규",
+    "orderNo": 1.0,
+    "useYn": "Y"
+   },
+   "applicationUseYn": "Y",
+   "hashtag": "",
+   "intensiveRecruitingOrderNo": 99.0,
+   "bookmarkId": null,
+   "application": null,
+   "jobSeries": [
+    {
+     "id": "3665304227944561477",
+     "name": "Sales",
+     "jobGroup": {
+      "id": "3645799730895408146",
+      "name": "Business",
+      "orderNo": 2.0,
+      "useYn": "Y",
+      "hashtag": "#business#biz#사업#비즈니스#영업#마케팅#기획#사업개발"
+     },
+     "orderNo": 18.0,
+     "useYn": "Y",
+     "hashtag": "#영업#세일즈#BD"
+    }
+   ],
+   "jobPostingContentsItems": null,
+   "introduction": null,
+   "outerApplicationUrl": null
+  }
+ ],
+ "totalCount": 30,
+ "paging": {
+  "totalSize": "71",
+  "page": 0,
+  "size": 30
+ }
+}

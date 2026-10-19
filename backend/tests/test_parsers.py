@@ -26,7 +26,7 @@ def assert_required(postings: list[RawPosting], company: str):
 def test_registry_has_all_companies():
     assert set(REGISTRY) == {
         "naver", "kakao", "coupang", "toss", "daangn", "line", "samsung", "hyundai",
-        "upstage", "kakaopay", "hyperconnect", "42dot", "woowahan", "kakaobank", "dunamu", "kakaomobility",
+        "upstage", "kakaopay", "hyperconnect", "42dot", "woowahan", "kakaobank", "dunamu", "kakaomobility", "nhn",
     }
 
 

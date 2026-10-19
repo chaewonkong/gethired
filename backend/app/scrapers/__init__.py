@@ -11,6 +11,7 @@ from . import (  # noqa: F401  (registers scrapers)
     kakaopay,
     line,
     naver,
+    nhn,
     samsung,
     toss,
     upstage,

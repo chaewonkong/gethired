@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from app.scrapers import REGISTRY, dunamu, fortytwodot, greetinghr, hyperconnect, kakaobank, woowahan
+from app.scrapers import REGISTRY, dunamu, fortytwodot, greetinghr, hyperconnect, kakaobank, nhn, woowahan
 from app.scrapers.kakaomobility import KakaoMobilityScraper
 from app.scrapers.kakaopay import KakaoPayScraper
 from app.scrapers.upstage import UpstageScraper
@@ -202,3 +202,33 @@ def test_dunamu_parse_detail_falls_back_to_empty_body():
     pid = int(re.search(rb'"positionId":(\d+)', rsc).group(1))
     without_chunk = b"\n".join(line for line in rsc.split(b"\n") if not re.match(rb"^[0-9a-f]+:T", line))
     assert dunamu.parse_detail(without_chunk, pid)["jobNoticeContent"] == ""
+
+
+# --- nhn (REST API) ---
+
+def test_nhn_keep_and_to_posting():
+    jobs = load("nhn_list.json")["result"]
+    kept = [j for j in jobs if nhn.keep(j)]
+    assert kept and len(kept) < len(jobs)
+    job = next(j for j in jobs if j["id"] == "4413318345634587442")
+    p = nhn.to_posting(job, load("nhn_detail.json")["result"])
+    assert p.company == "nhn" and p.external_id == job["id"]
+    assert p.apply_url == f"https://careers.nhn.com/recruits/{job['id']}"
+    assert p.deadline is None
+    assert p.category.startswith(f"{job['corporation']['name']}/")
+    assert p.description and "<" not in p.description and len(p.description) > 300
+
+
+def test_nhn_deadline_and_description_edge_cases():
+    assert nhn.deadline("2999-12-31T23:59:00") is None
+    assert nhn.deadline("2026-10-19T23:59:00") == date(2026, 10, 19)
+    assert nhn.deadline(None) is None
+    assert nhn.description({"jobPostingContentsItems": None}) is None
+    assert not nhn.keep({"jobSeries": None})
+
+
+def test_nhn_category_dedupes_job_series():
+    job = dict(load("nhn_list.json")["result"][0])
+    tech = {"name": "Backend", "jobGroup": {"name": "Tech"}}
+    job["jobSeries"] = [tech, tech, {"name": "Sales", "jobGroup": {"name": "Business"}}]
+    assert nhn.to_posting(job, {}).category == f"{job['corporation']['name']}/Backend"
