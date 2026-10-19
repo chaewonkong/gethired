@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/chaewonkong/job-posting"
+Homepage = "https://github.com/chaewonkong/gethired"
 
 [project.scripts]
 gethired = "app.__main__:main"
