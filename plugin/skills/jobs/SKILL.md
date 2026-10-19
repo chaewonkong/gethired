@@ -18,9 +18,10 @@ uvx --from "gethired>=0.2,<0.3" gethired companies --json
 ## 출력
 stdout은 JSON만. exit 0이면 결과, 아니면 `{code, message, login_command?, job?}`.
 
-- `status` → `{resume_count, provider, chosen, interests: [...], last_success: {company: {finished_at, ...}}, stale, job_running}`
-- `postings` → `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]` (`--full`이면 `description`, `gaps` 추가). 숨김 제외·관심회사만·score 내림차순. `fit_level`은 `strong` > `good` > `stretch`
-- `companies` → `[{company, display_name, careers_url, last_run, interested}]`
+- `status` → `{resume_count, provider, chosen, interests: [...], last_success: {company: run}, stale, job_running}`
+  - run = `{id, company, started_at, finished_at, status, error, fetched_count}`. 관심회사가 0이면 `stale`은 true
+- `postings` → `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]` (`--full`이면 `summary`(공고 요약), `gaps` 추가). 숨김 제외·관심회사만·score 내림차순. `fit_level`은 `strong` > `good` > `stretch`
+- `companies` → `[{company, display_name, careers_url, last_run: run | null, interested}]`. DB가 없어도(온보딩 전) 목록은 나온다
 - 오류 `code`
   - `not_onboarded` (exit 1): DB 없음. 온보딩 안내로
   - `job_running` (exit 1): 다른 곳에서 스크래핑 중. 끝나면 다시 읽는다

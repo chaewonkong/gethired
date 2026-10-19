@@ -96,7 +96,7 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 | `app/api.py` | `create_app(repo, jobs, logged_in: (provider) -> bool, resume_dir)`: `/api/{settings/provider, auth/status, companies, companies/{c}/interest, interests, scrape, scrape/{id}, postings, postings/{id}/bookmark, postings/{id}/hide, resume, resume/{name}}`. `GET settings/provider`는 DB만(`{provider, chosen}`), `auth/status`는 CLI 실행. `PUT settings/provider`는 `is_locked()`면 409, 저장 후 auth status 반환. `POST scrape`: 자기 프로세스 job이 running이면 그 job 202 → `prepare()` → `LoginRequired` 401 `{code: "login_required", provider, message, login_command}` / `NoTargets` 400 → `start()` → `JobRunning` 409 `{code: "job_running", message}` |
 | `app/main.py` | 앱 조립 + `app/static` 정적 서빙. `ANTHROPIC_API_KEY`·`OPENAI_API_KEY` 제거 |
 | `app/__main__.py` | 콘솔 진입점 `gethired` → `cli.main` |
-| `app/cli.py` | argparse 서브커맨드 전부(아래 "CLI"). `serve`(기본, 브라우저 오픈, `--no-open`·`--demo`, `uvicorn.run`에 app 객체)·`auth`·`reset-db`·`paths` + 헤드리스 명령. `_emit`(stdout JSON / 사람용 표)·`_fail(code, message, exit_code, login_command=None)`. 진입 시 `ANTHROPIC_API_KEY`·`OPENAI_API_KEY` 제거. 읽기 명령은 `Repository(readonly=True)`, DB 없으면 `not_onboarded` |
+| `app/cli.py` | argparse 서브커맨드 전부(아래 "CLI"). `serve`(기본, 브라우저 오픈, `--no-open`·`--demo`, `uvicorn.run`에 app 객체)·`auth`·`reset-db`·`paths` + 헤드리스 명령. `_emit`(stdout JSON / 사람용 표)·`_fail(code, message, exit_code, login_command=None)`. 진입 시 `ANTHROPIC_API_KEY`·`OPENAI_API_KEY` 제거. 읽기 명령은 `Repository(readonly=True)`, DB 없으면 `status`·`postings`는 `not_onboarded`(`companies`·`provider` 조회는 기본값) |
 | `app/demo.py` | 데모 모드(`python -m app --demo`, README GIF 녹화용). 토스·당근·카카오·네이버 가짜 스크래퍼(`register=False`, 공고 8건) + 고정 프로필·판정(strong 2 · good 3 · stretch 3), `logged_in` 항상 True, `set_fixed_now("2026-10-18T09:00:00+09:00")`. `make_jobs(repo, lock_path)`·`demo_paths()`를 `make_app`과 CLI(`GETHIRED_DEMO=1`)가 같이 쓴다. `make_app`은 `DB_PATH`/`RESUME_DIR` env가 없으면 임시 디렉토리, CLI는 exit 1. `DEMO_JUDGE_DELAY_S`(기본 0.7)로 진행 상태 노출. `GETHIRED_DEMO=1`일 때만 모듈 수준 `app` 생성 |
 | `scripts/` | 디버그용, 결과는 `out/`에 파일로. `run_scrape.py`(`just scrape`): 스크래퍼만 실행 + 건수·중복·본문 확보율 경고. `match.py`(`just match`): `out/*.json`을 판정해 `out/fit.md` 생성, `--planted`로 정답 공고 검증, `--provider`로 하네스 선택. DB는 `profile_cache`만 사용. `resume_text.py`(`just resume-text`): 이력서 텍스트 추출 결과를 `out/resume_text/`에 저장. `auth_check.py`: Agent SDK 세션 인증 확인 (PoC용) |
 
@@ -105,11 +105,11 @@ fetch → `mark_seen` / `soft_delete_missing` → 미판정 공고만 `judge` �
 
 | 명령 | JSON |
 |---|---|
-| `status` | `{resume_count, provider, chosen, interests, last_success: {company: {finished_at, ...}}, stale, job_running}` |
-| `postings [--min-level] [--company ...] [--since 24h\|7d] [--limit N] [--full]` | `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]`, `--full`이면 `+description, gaps`. 숨김 제외·관심회사만 |
-| `companies` | `/api/companies`와 동일 |
-| `scrape [company...]` | `Job.to_dict()`(+`error`) + `failed: [{company, error}]`. `prepare()` → `run()` |
-| `resume add\|list\|rm` · `provider [name]` · `interest add\|rm` | 온보딩 |
+| `status` | `{resume_count, provider, chosen, interests, last_success: {company: run}, stale, job_running}`. run = `{id, company, started_at, finished_at, status, error, fetched_count}`. 관심회사 0이면 `stale` true |
+| `postings [--min-level] [--company ...] [--since 24h\|7d] [--limit N] [--full]` | `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]`, `--full`이면 `+summary, gaps`(본문은 저장 안 함). 숨김 제외·관심회사만 |
+| `companies` | `/api/companies`와 동일 `[{company, display_name, careers_url, last_run: run\|null, interested}]`. DB 없으면 관심·실행 없이 목록만 |
+| `scrape [company...]` | `{job_id, status, provider, started_at, finished_at, cost_usd, error, companies: {c: {status, fetched, new, stored, excluded, deleted, error}}, failed: [{company, error}]}`. `prepare()` → `run()`, 진행은 stderr에 바뀐 회사만 1초 폴링 |
+| `resume add\|list\|rm` · `provider [name]` · `interest add\|rm` | 온보딩. `provider <name>`은 락 보유 중이면 `job_running` |
 | 오류 | `{code, message, login_command?, job?}` (`job`은 scrape 시작 뒤 실패·중단 시 부분 결과) |
 
 exit: 0 성공(일부 회사 실패는 `failed`) · 1 `all_failed`·`profile_failed`·`no_targets`·`job_running`·`invalid_resume`·`not_onboarded`·`invalid_argument` · 3 `login_required`(선체크 또는 도중 `auth_required`) · 130 `interrupted`(Ctrl+C: `asyncio.run`의 cancel이 `run()`→`_run`→`_run_company`로 전파, 락 해제)

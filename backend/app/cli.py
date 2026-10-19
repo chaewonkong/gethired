@@ -1,40 +1,50 @@
 """`gethired <command> [--json]` — 서버(serve)와 헤드리스 명령. 서브커맨드 생략 = serve.
---json이면 stdout에는 JSON만, 로그·진행은 stderr. 오류는 {code, message, login_command?} + exit code."""
+--json이면 stdout에는 JSON만, 로그·진행은 stderr. 오류는 {code, message, login_command?, job?} + exit code."""
 import argparse
 import asyncio
 import json
 import os
+import re
 import sys
 import threading
 import webbrowser
 from collections.abc import AsyncIterator
 from contextlib import closing
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
 import uvicorn
 
 from . import auth, config, resume
+from .jobs import Job, JobManager, JobRunning, LoginRequired, NoTargets
 from .llm import PROVIDERS, resolve_provider
-from .repository import Repository, now_iso
+from .repository import LEVEL_RANK, Repository, now_iso
 
-COMMANDS = ("serve", "auth", "reset-db", "paths", "resume", "provider", "companies", "interest")
+COMMANDS = ("serve", "auth", "reset-db", "paths", "resume", "provider", "companies", "interest",
+            "status", "scrape", "postings")
 LOGIN_COMMAND = {"claude": "claude login", "codex": f"{config.CODEX_BIN} login"}
 CHUNK = 1 << 20
+PROGRESS_S = 1.0
+POSTING_FIELDS = ("id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at")
+FULL_FIELDS = (*POSTING_FIELDS, "summary", "gaps")  # 본문은 저장하지 않는다. summary는 LLM 요약
 
 
 class Fail(Exception):
-    def __init__(self, code: str, message: str, exit_code: int = 1, login_command: str | None = None):
+    def __init__(self, code: str, message: str, exit_code: int = 1, login_command: str | None = None,
+                 job: dict | None = None):
         super().__init__(message)
-        self.body = {"code": code, "message": message}
+        self.body: dict[str, Any] = {"code": code, "message": message}
         if login_command:
             self.body["login_command"] = login_command
+        if job is not None:
+            self.body["job"] = job
         self.exit_code = exit_code
 
 
-def _fail(code: str, message: str, exit_code: int = 1, login_command: str | None = None):
-    raise Fail(code, message, exit_code, login_command)
+def _fail(code: str, message: str, exit_code: int = 1, login_command: str | None = None, job: dict | None = None):
+    raise Fail(code, message, exit_code, login_command, job)
 
 
 def _table(rows: list[dict[str, Any]], cols: list[str]) -> str:
@@ -64,6 +74,22 @@ class Env:
 
     def repo(self) -> Repository:
         return Repository(self.db_path)
+
+    def read_repo(self, required: bool = True) -> Repository | None:
+        """mode=ro. DB가 없으면 not_onboarded (required=False면 None)"""
+        try:
+            return Repository(self.db_path, readonly=True)
+        except FileNotFoundError:
+            if required:
+                _fail("not_onboarded", f"DB가 없습니다({self.db_path}). resume add·provider·interest add로 온보딩하세요.")
+            return None
+
+    def jobs(self, repo: Repository) -> JobManager:
+        lock_path = self.db_path.with_suffix(".lock")
+        if self.demo:
+            from .demo import make_jobs
+            return make_jobs(repo, lock_path)
+        return JobManager(repo, lock_path=lock_path)
 
     def scrapers(self) -> dict:
         if self.demo:
@@ -161,18 +187,27 @@ def _resume(args: argparse.Namespace) -> None:
 
 def _provider(args: argparse.Namespace) -> None:
     env = _env()
-    with closing(env.repo()) as repo:
-        if args.name:
+    if args.name:
+        with closing(env.repo()) as repo:
+            if env.jobs(repo).is_locked():
+                _fail("job_running", "스크래핑 중에는 AI를 바꿀 수 없습니다.")
             repo.set_setting("provider", args.name, now_iso())
-        stored = repo.get_setting("provider")
+            stored = repo.get_setting("provider")
+    else:
+        stored = None
+        if repo := env.read_repo(required=False):
+            with closing(repo):
+                stored = repo.get_setting("provider")
     _emit({"provider": resolve_provider(stored), "chosen": stored is not None}, args.json)
 
 
 def _companies(args: argparse.Namespace) -> None:
     env = _env()
-    with closing(env.repo()) as repo:
-        last = repo.last_runs()
-        interests = set(repo.list_interests())
+    last, interests = {}, set()
+    if repo := env.read_repo(required=False):  # 온보딩 전에도 목록은 보여준다
+        with closing(repo):
+            last = repo.last_runs()
+            interests = set(repo.list_interests())
     rows = [{"company": name, "display_name": cls.display_name, "careers_url": cls.careers_url,
              "last_run": last.get(name), "interested": name in interests}
             for name, cls in env.scrapers().items()]
@@ -192,6 +227,110 @@ def _interest(args: argparse.Namespace) -> None:
             repo.set_interest(c, args.action == "add", now_iso())
         interests = repo.list_interests()
     _emit({"companies": interests}, args.json, " ".join(interests) or "(no interests)")
+
+
+# --- 조회·스크래핑 ---
+def _status(args: argparse.Namespace) -> None:
+    env = _env()
+    with closing(env.read_repo()) as repo:
+        stored = repo.get_setting("provider")
+        interests = repo.list_interests()
+        body = {"resume_count": len(resume.list_files(env.resume_dir)), "provider": resolve_provider(stored),
+                "chosen": stored is not None, "interests": interests, "last_success": repo.last_success_runs(),
+                # 관심회사가 없으면 읽을 데이터도 없다
+                "stale": not interests or repo.stale(interests, now_iso()),
+                "job_running": env.jobs(repo).is_locked()}
+    last = ", ".join(f"{c} {r['finished_at']}" for c, r in body["last_success"].items()) or "-"
+    _emit(body, args.json, "\n".join(f"{k}: {last if k == 'last_success' else v}" for k, v in body.items()))
+
+
+def _since_arg(value: str) -> str:
+    if not re.fullmatch(r"\d+[hd]", value):
+        raise argparse.ArgumentTypeError(f"invalid value {value!r} (예: 24h, 7d)")
+    return value
+
+
+def _since(value: str) -> str:
+    n, unit = int(value[:-1]), value[-1]
+    delta = timedelta(hours=n) if unit == "h" else timedelta(days=n)
+    return (datetime.fromisoformat(now_iso()) - delta).isoformat(timespec="seconds")
+
+
+def _postings(args: argparse.Namespace) -> None:
+    env = _env()
+    since = args.since and _since(args.since)  # _env()가 데모 고정 시각을 건 뒤에 계산
+    with closing(env.read_repo()) as repo:
+        rows = repo.list_postings(min_level=args.min_level, include_hidden=False, interests_only=True, since=since)
+    if args.company:
+        rows = [r for r in rows if r["company"] in args.company]
+    fields = FULL_FIELDS if args.full else POSTING_FIELDS
+    rows = [{k: r[k] for k in fields} for r in rows[:args.limit]]
+    _emit(rows, args.json, _table(rows, ["fit_level", "score", "company", "title", "deadline", "apply_url"])
+          if rows else "(no postings)")
+
+
+def _progress_line(company: str, s) -> str:
+    if s.status == "done":
+        return f"{company}: done fetched={s.fetched} new={s.new} stored={s.stored}"
+    return f"{company}: {s.status}" + (f" {s.error}" if s.error else "")
+
+
+def _report(job: Job, seen: dict[str, str]) -> None:
+    for c, s in job.companies.items():
+        line = _progress_line(c, s)
+        if s.status != "pending" and seen.get(c) != line:
+            seen[c] = line
+            print(line, file=sys.stderr, flush=True)
+
+
+async def _progress(jobs: JobManager, seen: dict[str, str]) -> None:
+    while True:
+        if jobs.current:
+            _report(jobs.current, seen)
+        await asyncio.sleep(PROGRESS_S)
+
+
+async def _run_scrape(jobs: JobManager, companies: list[str] | None) -> Job:
+    targets = await jobs.prepare(companies)
+    seen: dict[str, str] = {}
+    progress = asyncio.create_task(_progress(jobs, seen))
+    try:
+        job = await jobs.run(targets)
+    finally:
+        progress.cancel()
+    _report(job, seen)
+    return job
+
+
+def _scrape(args: argparse.Namespace) -> None:
+    env = _env()
+    with closing(env.repo()) as repo:
+        jobs = env.jobs(repo)
+        try:
+            job = asyncio.run(_run_scrape(jobs, args.companies or None))
+        except KeyboardInterrupt:
+            job = jobs.current
+            if job and job.status == "running":  # _run이 시작되기 전에 취소된 경우
+                job.status, job.finished_at = "interrupted", now_iso()
+            _fail("interrupted", "중단됨 (Ctrl+C)", 130, job=job and job.to_dict())
+        except LoginRequired as e:
+            _fail("login_required", e.message, 3, login_command=e.login_command)
+        except NoTargets as e:
+            _fail("no_targets", str(e))
+        except JobRunning as e:
+            _fail("job_running", str(e))
+    failed = [{"company": c, "error": s.error} for c, s in job.companies.items() if s.status == "failed"]
+    if job.error:
+        _fail("profile_failed", job.error, job=job.to_dict())
+    if job.status == "auth_required":
+        e = LoginRequired(job.provider)  # 선체크와 같은 message·login_command
+        _fail("login_required", e.message, 3, login_command=e.login_command, job=job.to_dict())
+    if len(failed) == len(job.companies):
+        _fail("all_failed", "모든 회사가 실패했습니다.", job=job.to_dict())
+    for f in failed:
+        print(f"warning: {f['company']} failed: {f['error']}", file=sys.stderr)
+    _emit({**job.to_dict(), "failed": failed}, args.json, "\n".join(
+        _progress_line(c, s) for c, s in job.companies.items()))
 
 
 class _Parser(argparse.ArgumentParser):
@@ -235,6 +374,16 @@ def build_parser() -> argparse.ArgumentParser:
     it = cmd("interest", _interest, "관심회사 추가·해제")
     it.add_argument("action", choices=("add", "rm"))
     it.add_argument("companies", nargs="+")
+
+    cmd("status", _status, "온보딩·마지막 성공 실행·stale·job_running")
+    cmd("scrape", _scrape, "관심회사(또는 지정 회사) 스크래핑·판정 (동기, 진행은 stderr)").add_argument(
+        "companies", nargs="*")
+    ps = cmd("postings", _postings, "저장된 공고 (숨김 제외·관심회사만·score 내림차순)")
+    ps.add_argument("--min-level", choices=list(LEVEL_RANK))
+    ps.add_argument("--company", action="append", help="여러 번 지정 가능")
+    ps.add_argument("--since", type=_since_arg, help="scraped_at 기준 (24h, 7d)")
+    ps.add_argument("--limit", type=int)
+    ps.add_argument("--full", action="store_true", help="summary, gaps 포함")
     return ap
 
 

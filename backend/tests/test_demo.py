@@ -159,6 +159,7 @@ def test_make_jobs_uses_demo_fixtures(tmp_path):
     jobs = demo.make_jobs(repository.Repository(tmp_path / "app.db"), tmp_path / "app.lock")
     assert set(jobs.scrapers) == set(demo.COMPANIES)
     assert jobs.judge_fn is demo.judge and jobs.profile_loader is demo.load_profile
+    assert jobs.logged_in is demo.logged_in and jobs.lock_path == tmp_path / "app.lock"
     assert repository.now_iso() == demo.FIXED_NOW
 
 

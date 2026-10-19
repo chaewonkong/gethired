@@ -1,7 +1,6 @@
 """데모 모드: 스크래퍼·프로필·판정을 고정 데이터로 바꾼 백엔드. 네트워크·LLM·CLI·실제 경로를 쓰지 않는다.
 모든 텍스트는 가상이다."""
 import asyncio
-import inspect
 import os
 import sys
 import tempfile
@@ -184,9 +183,8 @@ def demo_paths() -> tuple[Path | None, Path | None]:
 
 def make_jobs(repo: Repository, lock_path: Path | None = None) -> JobManager:
     set_fixed_now(FIXED_NOW)
-    # TODO(plan-0012 A1 머지 후): 조건 없이 lock_path=lock_path 전달
-    kw = {"lock_path": lock_path} if "lock_path" in inspect.signature(JobManager).parameters else {}
-    return JobManager(repo, scrapers=dict(SCRAPERS), profile_loader=load_profile, judge_fn=judge, **kw)
+    return JobManager(repo, scrapers=dict(SCRAPERS), profile_loader=load_profile, judge_fn=judge,
+                      lock_path=lock_path, logged_in=logged_in)
 
 
 def make_app() -> FastAPI:
