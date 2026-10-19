@@ -6,6 +6,7 @@ from typing import ClassVar
 import httpx
 import pytest
 from fastapi.testclient import TestClient
+from filelock import FileLock, Timeout
 
 from app import config, llm, resume
 from app.api import create_app
@@ -72,16 +73,18 @@ async def load_profile(repo):
 auth_calls: list[str] = []
 
 
-def make_client(judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b")):
+def make_client(tmp_path: Path, judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b")):
     repo = Repository()
     repo.set_interests(list(interests), "T0")
-    jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge)
+    jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge,
+                      lock_path=tmp_path / "app.lock")
 
     async def is_logged_in(provider: str):
         auth_calls.append(provider)
         return logged_in if isinstance(logged_in, bool) else logged_in[provider]
 
     app = create_app(repo, jobs, logged_in=is_logged_in, resume_dir=resume_dir or Path("/nonexistent"))
+    app.state.jobs = jobs
     return TestClient(app), repo
 
 
@@ -103,8 +106,8 @@ def reset():
     auth_calls.clear()
 
 
-def test_scrape_stores_graded_and_skips_excluded_then_incremental():
-    client, repo = make_client()
+def test_scrape_stores_graded_and_skips_excluded_then_incremental(tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         r = client.post("/api/scrape")
         assert r.status_code == 202
@@ -125,8 +128,8 @@ def test_scrape_stores_graded_and_skips_excluded_then_incremental():
         assert companies["a"]["last_run"]["status"] == "done" and companies["a"]["last_run"]["fetched_count"] == 3
 
 
-def test_soft_delete_when_posting_disappears_and_failed_company_isolated():
-    client, repo = make_client()
+def test_soft_delete_when_posting_disappears_and_failed_company_isolated(tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         wait_job(client, client.post("/api/scrape").json()["job_id"])
         FakeScraper.data["b"] = []  # 0건은 실패로 간주 → soft delete 안 함
@@ -145,17 +148,18 @@ def test_soft_delete_when_posting_disappears_and_failed_company_isolated():
         assert [p["external_id"] for p in client.get("/api/postings").json()] == ["3"]
 
 
-def test_scrape_requires_login_and_running_job_is_reused():
-    client, _ = make_client(logged_in=False)
+def test_scrape_requires_login_and_running_job_is_reused(tmp_path):
+    client, _ = make_client(tmp_path, logged_in=False)
     with client:
         r = client.post("/api/scrape")
         assert r.status_code == 401
-        assert r.json() == {"code": "login_required", "provider": "claude", "message": llm.auth_message("claude")}
+        assert r.json() == {"code": "login_required", "provider": "claude", "message": llm.auth_message("claude"),
+                            "login_command": "claude login"}
         assert "`claude login`" in r.json()["message"]
         assert client.get("/api/auth/status").json() == {"provider": "claude", "logged_in": False,
                                                          "login_command": "claude login"}
 
-    client, _ = make_client()
+    client, _ = make_client(tmp_path)
     with client:
         first = client.post("/api/scrape").json()["job_id"]
         second = client.post("/api/scrape").json()["job_id"]
@@ -165,8 +169,8 @@ def test_scrape_requires_login_and_running_job_is_reused():
         assert client.post("/api/scrape", params={"companies": ["zzz"]}).status_code == 400
 
 
-def test_provider_setting_reads_db_only_and_env_default(monkeypatch):
-    client, repo = make_client()
+def test_provider_setting_reads_db_only_and_env_default(monkeypatch, tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         assert client.get("/api/settings/provider").json() == {"provider": "claude", "chosen": False}
         assert auth_calls == []
@@ -185,8 +189,8 @@ def test_provider_setting_reads_db_only_and_env_default(monkeypatch):
         assert client.get("/api/settings/provider").json() == {"provider": "codex", "chosen": True}
 
 
-def test_put_provider_contract():
-    client, repo = make_client(logged_in={"claude": True, "codex": False})
+def test_put_provider_contract(tmp_path):
+    client, repo = make_client(tmp_path, logged_in={"claude": True, "codex": False})
     with client:
         r = client.put("/api/settings/provider", json={"provider": "gpt"})
         assert r.status_code == 400 and r.json() == {"detail": "unknown provider: gpt"}
@@ -201,14 +205,15 @@ def test_put_provider_contract():
 
         r = client.post("/api/scrape")
         assert r.status_code == 401
-        assert r.json() == {"code": "login_required", "provider": "codex", "message": llm.auth_message("codex")}
+        assert r.json() == {"code": "login_required", "provider": "codex", "message": llm.auth_message("codex"),
+                            "login_command": "codex login"}
 
         r = client.put("/api/settings/provider", json={"provider": "claude"})
         assert r.json() == {"provider": "claude", "logged_in": True, "login_command": "claude login"}
 
 
-def test_put_provider_blocked_while_job_running():
-    client, repo = make_client()
+def test_put_provider_blocked_while_job_running(tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         job_id = client.post("/api/scrape").json()["job_id"]
         r = client.put("/api/settings/provider", json={"provider": "codex"})
@@ -220,10 +225,37 @@ def test_put_provider_blocked_while_job_running():
         assert client.put("/api/settings/provider", json={"provider": "codex"}).status_code == 200
 
 
-def test_job_configures_llm_with_resolved_provider(monkeypatch):
+def test_lock_held_synchronously_on_202(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        r = client.post("/api/scrape")
+        assert r.status_code == 202
+        assert client.put("/api/settings/provider", json={"provider": "codex"}).status_code == 409
+        with pytest.raises(Timeout):
+            FileLock(tmp_path / "app.lock").acquire(timeout=0)
+        wait_job(client, r.json()["job_id"])
+        assert not client.app.state.jobs.is_locked()
+
+
+def test_scrape_409_when_other_holder_has_lock(tmp_path):
+    client, repo = make_client(tmp_path)
+    other = FileLock(tmp_path / "app.lock")
+    with client, other:
+        r = client.post("/api/scrape")
+        assert r.status_code == 409
+        assert r.json()["code"] == "job_running" and r.json()["message"]
+        assert client.app.state.jobs.jobs == {}
+        assert client.put("/api/settings/provider", json={"provider": "codex"}).status_code == 409
+    with client:
+        r = client.post("/api/scrape")
+        assert r.status_code == 202
+        wait_job(client, r.json()["job_id"])
+
+
+def test_job_configures_llm_with_resolved_provider(monkeypatch, tmp_path):
     configured: list[str] = []
     monkeypatch.setattr(llm, "configure", configured.append)
-    client, repo = make_client()
+    client, repo = make_client(tmp_path)
     with client:
         job = wait_job(client, client.post("/api/scrape").json()["job_id"])
         assert configured == ["claude"] and job["provider"] == "claude"
@@ -233,8 +265,8 @@ def test_job_configures_llm_with_resolved_provider(monkeypatch):
         assert configured == ["claude", "codex"] and job["provider"] == "codex"
 
 
-def test_auth_error_during_judging_marks_job_auth_required():
-    client, repo = make_client(judge=auth_failing_judge)
+def test_auth_error_during_judging_marks_job_auth_required(tmp_path):
+    client, repo = make_client(tmp_path, judge=auth_failing_judge)
     with client:
         job = wait_job(client, client.post("/api/scrape").json()["job_id"])
         assert job["status"] == "auth_required"
@@ -243,8 +275,8 @@ def test_auth_error_during_judging_marks_job_auth_required():
         assert repo.judged_ids("a") == set()  # 재로그인 후 재판정 대상
 
 
-def test_bookmark_put_delete():
-    client, repo = make_client()
+def test_bookmark_put_delete(tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         wait_job(client, client.post("/api/scrape").json()["job_id"])
         first = client.get("/api/postings").json()[0]
@@ -262,8 +294,8 @@ def test_bookmark_put_delete():
         assert client.put("/api/postings/9999/bookmark").status_code == 404
 
 
-def test_hide_put_delete():
-    client, repo = make_client()
+def test_hide_put_delete(tmp_path):
+    client, repo = make_client(tmp_path)
     with client:
         wait_job(client, client.post("/api/scrape").json()["job_id"])
         first = client.get("/api/postings").json()[0]
@@ -287,7 +319,7 @@ FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 
 def test_resume_upload_overwrite_and_coexist(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         assert client.get("/api/resume").json() == []
         res = client.put("/api/resume/resume.md", content=b"v1")
@@ -304,7 +336,7 @@ def test_resume_upload_overwrite_and_coexist(tmp_path):
 def test_resume_pdf_upload_list_delete(tmp_path):
     d = tmp_path / "resume"
     pdf = (FIXTURES / "resume_sample.pdf").read_bytes()
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         res = client.put("/api/resume/cv.pdf", content=pdf, headers={"content-type": "application/octet-stream"})
         assert res.status_code == 200 and res.json() == {}
@@ -320,7 +352,7 @@ def test_resume_pdf_upload_list_delete(tmp_path):
 
 def test_resume_blank_pdf_rejected_and_not_saved(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         res = client.put("/api/resume/scan.pdf", content=(FIXTURES / "resume_blank.pdf").read_bytes())
         assert res.status_code == 400
@@ -332,7 +364,7 @@ def test_resume_blank_pdf_rejected_and_not_saved(tmp_path):
 
 def test_resume_rejects_invalid_files(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         res = client.put("/api/resume/resume.txt", content=b"x")
         assert res.status_code == 400
@@ -349,7 +381,7 @@ def test_resume_rejects_invalid_files(tmp_path):
 
 def test_resume_large_body_streams_to_disk(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     body = b"x" * (5 * 1024 * 1024)
     with client:
         assert client.put("/api/resume/big.md", content=body).status_code == 200
@@ -359,7 +391,7 @@ def test_resume_large_body_streams_to_disk(tmp_path):
 
 def test_resume_temp_file_hidden_from_list(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         client.put("/api/resume/a.md", content=b"a")
         (d / ".a.md.tmp").write_bytes(b"partial")
@@ -382,7 +414,7 @@ def test_resume_save_failure_removes_temp(tmp_path):
 
 def test_resume_delete(tmp_path):
     d = tmp_path / "resume"
-    client, _ = make_client(resume_dir=d)
+    client, _ = make_client(tmp_path, resume_dir=d)
     with client:
         client.put("/api/resume/a.md", content=b"a")
         assert client.delete("/api/resume/a.md").status_code == 200
@@ -391,8 +423,8 @@ def test_resume_delete(tmp_path):
         assert client.delete("/api/resume/a.txt").status_code == 400
 
 
-def test_interests_put_and_toggle():
-    client, repo = make_client(interests=())
+def test_interests_put_and_toggle(tmp_path):
+    client, repo = make_client(tmp_path, interests=())
     with client:
         assert [c["interested"] for c in client.get("/api/companies").json()] == [False, False]
         assert client.put("/api/interests", json={"companies": []}).status_code == 400
@@ -409,8 +441,8 @@ def test_interests_put_and_toggle():
         assert repo.list_interests() == []
 
 
-def test_scrape_targets_only_interest_companies_and_keeps_postings_on_unstar():
-    client, repo = make_client(interests=())
+def test_scrape_targets_only_interest_companies_and_keeps_postings_on_unstar(tmp_path):
+    client, repo = make_client(tmp_path, interests=())
     with client:
         assert client.post("/api/scrape").status_code == 400
 

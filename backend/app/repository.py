@@ -95,6 +95,7 @@ def _row(r: sqlite3.Row) -> dict[str, Any]:
 
 class Repository:
     def __init__(self, path: str | Path = ":memory:"):
+        self.path = path
         if path != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(str(path), check_same_thread=False)
