@@ -59,7 +59,7 @@ uvx gethired reset-db                # 공고·판정 이력 삭제
 - 파일은 로컬 데이터 디렉토리(`uvx gethired paths`로 확인)의 `resume/`에 저장된다. 외부로는 선택한 AI 하네스에만 전달된다
 
 <details>
-<summary><b>개발</b> ([just](https://github.com/casey/just) · uv · Node 20+)</summary>
+<summary><b>개발</b> [just](https://github.com/casey/just) · uv · Node 20+</summary>
 
 ```bash
 just setup     # 의존성 설치 (uv sync + npm install)
