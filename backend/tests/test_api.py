@@ -117,12 +117,16 @@ def test_scrape_stores_graded_and_skips_excluded_then_incremental(tmp_path):
         postings = client.get("/api/postings").json()
         assert [p["external_id"] for p in postings] == ["1", "3"]
         assert postings[0]["fit_level"] == "strong" and postings[0]["tech_stack"] == ["Go"]
+        first_seen = {p["external_id"]: p["first_seen_at"] for p in postings}
+        assert all(first_seen.values())
 
         # 2회차: 같은 공고 → 재판정 없음 (excluded 포함)
         FakeScraper.data["a"].append(posting("a", "9", "New Backend"))
         job2 = wait_job(client, client.post("/api/scrape").json()["job_id"])
         assert job2["companies"]["a"]["new"] == 1
         assert sum(len(c) for c in judge_calls) == 4  # 3 + 1
+        again = {p["external_id"]: p["first_seen_at"] for p in client.get("/api/postings").json()}
+        assert {k: again[k] for k in first_seen} == first_seen
 
         companies = {c["company"]: c for c in client.get("/api/companies").json()}
         assert companies["a"]["last_run"]["status"] == "done" and companies["a"]["last_run"]["fetched_count"] == 3

@@ -57,6 +57,16 @@ describe("PostingsTab 목록", () => {
     expect(sessionStorage.getItem("postings.sort")).toBe(JSON.stringify("oldest"));
   });
 
+  it("저장된 정렬로 시작한다", () => {
+    sessionStorage.setItem("postings.sort", JSON.stringify("newest"));
+    renderTab([
+      makePosting({ title: "old", score: 90, first_seen_at: "2026-10-01T00:00:00+00:00" }),
+      makePosting({ title: "new", score: 50, first_seen_at: "2026-10-05T00:00:00+00:00" }),
+    ]);
+    expect(titles()).toEqual(["new", "old"]);
+    expect(screen.getByDisplayValue("최신순")).toBeInTheDocument();
+  });
+
   it("공고가 없으면 빈 상태 안내", () => {
     renderTab([]);
     expect(screen.getByText(/저장된 공고가 없습니다/)).toBeInTheDocument();
@@ -242,6 +252,16 @@ describe("PostingsTab infinite scroll", () => {
 
     await openCompanyFilter();
     await userEvent.click(companyBox(/네이버/));
+    expect(titles()).toHaveLength(20);
+  });
+
+  it("정렬을 바꿔도 처음 20건으로 돌아간다", async () => {
+    const io = stubIntersectionObserver();
+    renderTab(many(45));
+    act(() => io.intersect());
+    expect(titles()).toHaveLength(40);
+
+    await userEvent.selectOptions(screen.getByRole("combobox", { name: "정렬" }), "newest");
     expect(titles()).toHaveLength(20);
   });
 

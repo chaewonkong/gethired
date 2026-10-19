@@ -16,6 +16,11 @@ describe("PostingCard", () => {
     vi.setSystemTime(new Date("2026-10-09T23:30:00+09:00"));
   });
 
+  it("수집일은 처음 수집 시각", () => {
+    renderCard({ first_seen_at: "2026-10-01T00:00:00+00:00", scraped_at: "2026-10-09T00:00:00+00:00" });
+    expect(screen.getByText("수집 2026-10-01")).toBeInTheDocument();
+  });
+
   it("마감일이 없으면 상시 채용", () => {
     renderCard({ deadline: null });
     expect(screen.getByText("상시 채용")).toBeInTheDocument();
