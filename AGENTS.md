@@ -51,6 +51,6 @@ job-posting/
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
 - `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
 - `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
-- `claude plugin validate . && claude plugin validate ./plugin`: 마켓플레이스·플러그인 매니페스트 검증. SKILL.md의 JSON 키·code는 `backend/tests/test_cli.py`의 키 집합 테스트와 맞춘다
+- `just plugin-validate`: 마켓플레이스·플러그인 매니페스트 검증. SKILL.md의 JSON 키·code는 `backend/tests/test_cli.py`의 키 집합 테스트와 맞춘다
 - `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제 · `just build-wheel`: 휠 빌드(`backend/dist/`)
 - `just screenshots`: 데모 모드로 골든 패스를 녹화해 `docs/demo.gif` 갱신 (chromium·ffmpeg, sandbox 밖에서 사용자가)

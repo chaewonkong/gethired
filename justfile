@@ -60,6 +60,10 @@ test-live:
 test-e2e: build
     cd frontend && npm run test:e2e
 
+# Claude Code 플러그인·marketplace 매니페스트 검사 (claude CLI 필요, test에는 포함 안 함)
+plugin-validate:
+    claude plugin validate --strict . && claude plugin validate --strict ./plugin
+
 # e2e 최초 1회: chromium 설치 (frontend/.playwright/)
 e2e-install:
     cd frontend && PLAYWRIGHT_BROWSERS_PATH=$PWD/.playwright npx playwright install chromium
