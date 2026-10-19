@@ -21,14 +21,14 @@
 - Codex/ClaudeCode
 
 ```bash
-uvx gethired                                      # 서버 실행 + 브라우저 열기 → http://127.0.0.1:8000
+$ uvx gethired                       # 서버 실행 + 브라우저 열기 → http://127.0.0.1:8000
 ```
 
 <details>
 <summary><b>uv가 없다면</b></summary>
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh   # uv 설치 (Windows: powershell -c "irm https://astral.sh/uv/install.ps1 | iex")
+$ curl -LsSf https://astral.sh/uv/install.sh | sh   # uv 설치 (Windows: powershell -c "irm https://astral.sh/uv/install.ps1 | iex")
 ```
 
 AI 하네스는 Claude Code와 Codex를 지원.
@@ -40,10 +40,10 @@ AI 하네스는 Claude Code와 Codex를 지원.
 <summary><b>고급 사용법</b></summary>
 
 ```bash
-uvx gethired --port 9000 --no-open   # 포트 변경, 브라우저 안 열기
-uvx gethired auth [claude|codex]     # 로그인 상태 확인
-uvx gethired paths                   # 데이터(DB·이력서) 위치
-uvx gethired reset-db                # 공고·판정 이력 삭제
+$ uvx gethired --port 9000 --no-open   # 포트 변경, 브라우저 안 열기
+$ uvx gethired auth [claude|codex]     # 로그인 상태 확인
+$ uvx gethired paths                   # 데이터(DB·이력서) 위치
+$ uvx gethired reset-db                # 공고·판정 이력 삭제
 ```
 데이터는 OS 표준 사용자 디렉토리(macOS `~/Library/Application Support/gethired/`)에 저장된다. `GETHIRED_HOME`으로 바꿀 수 있다.
 
@@ -62,11 +62,11 @@ uvx gethired reset-db                # 공고·판정 이력 삭제
 <summary><b>개발</b> [just](https://github.com/casey/just) · uv · Node 20+</summary>
 
 ```bash
-just setup     # 의존성 설치 (uv sync + npm install)
-just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
-just dev       # 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행
-just test      # pytest + vitest
-just build-wheel  # 프론트 포함 휠 → backend/dist/
+$ just setup     # 의존성 설치 (uv sync + npm install)
+$ just run       # 프론트 빌드 + 백엔드 실행 → http://localhost:8000
+$ just dev       # 백엔드(reload, 8000) + 프론트 Vite(5173, /api 프록시) 동시 실행
+$ just test      # pytest + vitest
+$ just build-wheel  # 프론트 포함 휠 → backend/dist/
 ```
 개발 중 데이터는 저장소 안 `backend/data/app.db`, `resume/`를 쓴다 (justfile이 `DB_PATH`·`RESUME_DIR`로 지정). 전체 명령은 `just`.
 
