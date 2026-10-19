@@ -1,6 +1,7 @@
 """데모 모드: 스크래퍼·프로필·판정을 고정 데이터로 바꾼 백엔드. 네트워크·LLM·CLI·실제 경로를 쓰지 않는다.
 모든 텍스트는 가상이다."""
 import asyncio
+import inspect
 import os
 import sys
 import tempfile
@@ -175,8 +176,20 @@ async def logged_in(provider: str) -> bool:
     return True
 
 
-def make_app() -> FastAPI:
+def demo_paths() -> tuple[Path | None, Path | None]:
+    """env의 DB_PATH·RESUME_DIR. 없으면 None (make_app은 임시 경로, CLI는 exit 1)"""
+    db, resume_dir = os.environ.get("DB_PATH"), os.environ.get("RESUME_DIR")
+    return (Path(db) if db else None), (Path(resume_dir) if resume_dir else None)
+
+
+def make_jobs(repo: Repository, lock_path: Path | None = None) -> JobManager:
     set_fixed_now(FIXED_NOW)
+    # TODO(plan-0012 A1 머지 후): 조건 없이 lock_path=lock_path 전달
+    kw = {"lock_path": lock_path} if "lock_path" in inspect.signature(JobManager).parameters else {}
+    return JobManager(repo, scrapers=dict(SCRAPERS), profile_loader=load_profile, judge_fn=judge, **kw)
+
+
+def make_app() -> FastAPI:
     tmp: Path | None = None
 
     def temp_path(name: str) -> Path:
@@ -184,11 +197,12 @@ def make_app() -> FastAPI:
         tmp = tmp or Path(tempfile.mkdtemp(prefix="gethired-demo-"))
         return tmp / name
 
-    db_path = Path(os.environ.get("DB_PATH") or temp_path("app.db"))
-    resume_dir = Path(os.environ.get("RESUME_DIR") or temp_path("resume"))
+    db_path, resume_dir = demo_paths()
+    db_path = db_path or temp_path("app.db")
+    resume_dir = resume_dir or temp_path("resume")
 
     repo = Repository(db_path)
-    jobs = JobManager(repo, scrapers=dict(SCRAPERS), profile_loader=load_profile, judge_fn=judge)
+    jobs = make_jobs(repo, db_path.with_suffix(".lock"))
     app = create_app(repo, jobs, logged_in=logged_in, resume_dir=resume_dir)
     app.state.db_path, app.state.resume_dir = db_path, resume_dir
     print(f"demo mode: DB_PATH={db_path} RESUME_DIR={resume_dir}", file=sys.stderr)
@@ -197,5 +211,10 @@ def make_app() -> FastAPI:
     return app
 
 
-if os.environ.get("GETHIRED_DEMO") == "1":
-    app = make_app()
+def __getattr__(name: str) -> Any:
+    # `uvicorn app.demo:app`용. import만으로 만들지 않는다 (CLI가 GETHIRED_DEMO=1로 이 모듈을 import)
+    global app
+    if name == "app" and os.environ.get("GETHIRED_DEMO") == "1":
+        app = make_app()
+        return app
+    raise AttributeError(name)

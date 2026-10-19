@@ -228,12 +228,22 @@ wheels = [
 ]
 
 [[package]]
+name = "filelock"
+version = "4.2.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/28/3893324bcadf8f89b1616637468d766af3f625008c0735bf704fdfa86617/filelock-4.2.4.tar.gz", hash = "sha256:c6d8663535e1650ee430507b4ffbac7b464dd64b7647ea0112a9f406499d163d", size = 652444, upload-time = "2026-10-19T01:57:51.001Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/1b/5e74289a1878e666bb4b65fe5805a04cafcac2aa5f519ef1ead67ef91c56/filelock-4.2.4-py3-none-any.whl", hash = "sha256:301241438c57936ef93f4243a94f2559022268bfcf9b375a9a72eb0f8db8358e", size = 162475, upload-time = "2026-10-19T01:57:49.419Z" },
+]
+
+[[package]]
 name = "gethired"
-version = "0.1.0"
+version = "0.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "claude-agent-sdk" },
     { name = "fastapi" },
+    { name = "filelock" },
     { name = "httpx" },
     { name = "platformdirs" },
     { name = "pydantic" },
@@ -251,6 +261,7 @@ dev = [
 requires-dist = [
     { name = "claude-agent-sdk", specifier = ">=0.2.165" },
     { name = "fastapi", specifier = ">=0.115" },
+    { name = "filelock", specifier = ">=3.12" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "platformdirs", specifier = ">=4.3" },
     { name = "pydantic", specifier = ">=2.14.0" },

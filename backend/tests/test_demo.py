@@ -122,7 +122,7 @@ def test_demo_app_not_created_on_import():
 
 
 def test_main_demo_flag(monkeypatch, tmp_path):
-    from app import __main__ as entry
+    from app import cli as entry
 
     calls = []
     monkeypatch.setattr(entry.uvicorn, "run", lambda app, **kw: calls.append((app, kw)))
@@ -141,15 +141,39 @@ def test_main_demo_flag(monkeypatch, tmp_path):
 
 
 def test_main_reset_db_and_paths(monkeypatch, tmp_path, capsys):
-    from app import __main__ as entry
+    from app import cli as entry
 
     db = tmp_path / "app.db"
     db.write_bytes(b"")
     monkeypatch.setattr(config, "DB_PATH", db)
-    entry.main(["reset-db"])
+    assert entry.main(["reset-db"]) == 0
     assert not db.exists()
     entry.main(["reset-db"])
     assert "no db" in capsys.readouterr().out
 
     entry.main(["paths"])
     assert str(db) in capsys.readouterr().out
+
+
+def test_make_jobs_uses_demo_fixtures(tmp_path):
+    jobs = demo.make_jobs(repository.Repository(tmp_path / "app.db"), tmp_path / "app.lock")
+    assert set(jobs.scrapers) == set(demo.COMPANIES)
+    assert jobs.judge_fn is demo.judge and jobs.profile_loader is demo.load_profile
+    assert repository.now_iso() == demo.FIXED_NOW
+
+
+def test_demo_paths(monkeypatch, tmp_path):
+    monkeypatch.delenv("DB_PATH", raising=False)
+    monkeypatch.setenv("RESUME_DIR", str(tmp_path / "resume"))
+    assert demo.demo_paths() == (None, tmp_path / "resume")
+
+
+def test_demo_app_lazy_with_env(monkeypatch, tmp_path):
+    import importlib
+    monkeypatch.setenv("GETHIRED_DEMO", "1")
+    monkeypatch.setenv("DB_PATH", str(tmp_path / "app.db"))
+    monkeypatch.setenv("RESUME_DIR", str(tmp_path / "resume"))
+    mod = importlib.reload(demo)
+    assert "app" not in vars(mod)
+    assert mod.app.state.db_path == tmp_path / "app.db"
+    del mod.app
