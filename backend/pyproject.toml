@@ -1,6 +1,6 @@
 [project]
 name = "gethired"
-version = "0.2.0"
+version = "0.2.1"
 description = "내 이력서에 맞는 채용 공고만 모아 보여주는 로컬 앱"
 requires-python = ">=3.14"
 dependencies = [
