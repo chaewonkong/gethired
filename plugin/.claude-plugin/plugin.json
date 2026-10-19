@@ -1,0 +1,11 @@
+{
+  "name": "gethired",
+  "version": "0.2.0",
+  "description": "gethired CLI로 내 이력서에 맞는 채용 공고를 읽어 요약한다 (읽기 전용)",
+  "author": {
+    "name": "chaewonkong"
+  },
+  "homepage": "https://github.com/chaewonkong/gethired",
+  "repository": "https://github.com/chaewonkong/gethired",
+  "keywords": ["jobs", "resume", "matching", "gethired"]
+}

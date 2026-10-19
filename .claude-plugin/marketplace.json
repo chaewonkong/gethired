@@ -1,0 +1,16 @@
+{
+  "name": "gethired",
+  "owner": {
+    "name": "chaewonkong"
+  },
+  "metadata": {
+    "description": "gethired: 내 이력서에 맞는 채용 공고를 에이전트에서 조회"
+  },
+  "plugins": [
+    {
+      "name": "gethired",
+      "source": "./plugin",
+      "description": "gethired CLI로 매칭된 채용 공고를 읽어 요약하는 스킬"
+    }
+  ]
+}
