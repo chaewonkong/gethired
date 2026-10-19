@@ -11,11 +11,12 @@
 job-posting/
 |-- backend/                  # FastAPI + sqlite
 |   |-- app/
-|   |   |-- __main__.py       # 콘솔 진입점 gethired (serve·auth·reset-db·paths)
+|   |   |-- __main__.py       # 콘솔 진입점 gethired → cli.main
+|   |   |-- cli.py            # 서브커맨드 (serve·auth·reset-db·paths·status·resume·provider·companies·interest·scrape·postings), --json
 |   |   |-- static/           # 프론트 빌드 산출물 (gitignore, 휠에 포함)
 |   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
 |   |   |-- api.py            # REST API
-|   |   |-- jobs.py           # 스크래핑 job 실행
+|   |   |-- jobs.py           # 스크래핑 job 실행 + 프로세스 간 락(filelock)
 |   |   |-- profile.py        # 이력서 -> 프로필
 |   |   |-- resume.py         # resume/ 파일 목록·저장·삭제, md·pdf 텍스트 추출
 |   |   |-- matcher.py        # LLM 판정
@@ -35,6 +36,8 @@ job-posting/
 |       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
 |       |-- test/             # vitest 설정 · 픽스처
 |       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
+|-- .claude-plugin/          # marketplace.json (Claude Code 마켓플레이스, plugins[0] → ./plugin)
+|-- plugin/                   # Claude Code 플러그인 gethired: .claude-plugin/plugin.json, skills/jobs/SKILL.md (읽기 전용 CLI 호출)
 |-- .github/workflows/        # release.yml: v* 태그 → 프론트 빌드 → 휠 → PyPI + GitHub Release
 |-- design/
 |   |-- specs/                # 기능 명세 (0001-*.md ...)
@@ -48,5 +51,6 @@ job-posting/
 - `just scrape [company...]`: 스크래퍼만 실행, `backend/out/<company>.json`
 - `just match [company] [--limit N] [--planted] [--provider codex]`: 파일 기반 매칭, `backend/out/fit.md`
 - `just resume-text [file...]`: 이력서 텍스트 추출 결과, `backend/out/resume_text/`
+- `claude plugin validate . && claude plugin validate ./plugin`: 마켓플레이스·플러그인 매니페스트 검증. SKILL.md의 JSON 키·code는 `backend/tests/test_cli.py`의 키 집합 테스트와 맞춘다
 - `just auth [claude|codex]`: provider CLI 로그인 확인 · `just reset-db`: 공고·판정 이력 삭제 · `just build-wheel`: 휠 빌드(`backend/dist/`)
 - `just screenshots`: 데모 모드로 골든 패스를 녹화해 `docs/demo.gif` 갱신 (chromium·ffmpeg, sandbox 밖에서 사용자가)

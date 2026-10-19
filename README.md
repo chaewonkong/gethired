@@ -47,6 +47,21 @@ $ uvx gethired reset-db                # 공고·판정 이력 삭제
 ```
 데이터는 OS 표준 사용자 디렉토리(macOS `~/Library/Application Support/gethired/`)에 저장된다. `GETHIRED_HOME`으로 바꿀 수 있다.
 
+**CLI**: 브라우저 없이 온보딩 → 스크래핑 → 조회. 서브커맨드마다 `--json`을 붙이면 stdout에 JSON만 나온다 (진행·로그는 stderr)
+
+| 명령 | 동작 |
+|---|---|
+| `uvx gethired status` | 이력서 수, AI, 관심회사, 회사별 마지막 성공 실행, `stale`(24h 초과), 실행 중 여부 |
+| `uvx gethired resume add <file...>` · `resume list` · `resume rm <name>` | 이력서 등록(같은 이름 교체)·목록·삭제 |
+| `uvx gethired provider [claude\|codex]` | AI 조회·변경 |
+| `uvx gethired companies` | 등록 회사 + 관심 여부 + 마지막 실행 |
+| `uvx gethired interest add\|rm <company...>` | 관심회사 설정 |
+| `uvx gethired scrape [company...]` | 스크래핑·판정을 끝까지 실행. 진행은 회사별로 stderr |
+| `uvx gethired postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고 (숨김 제외·관심회사만·score순) |
+
+- exit code: 0 성공(일부 회사 실패는 `failed`) · 1 실패·입력 오류·다른 곳에서 실행 중(`job_running`) · 3 로그인 필요(`login_command`) · 130 Ctrl+C
+- UI와 CLI는 같은 DB를 쓴다. 스크래핑은 한 번에 하나만 (파일 락. Windows는 **미검증**)
+
 </details>
 
 ### 이력서 준비
@@ -80,6 +95,18 @@ $ just build-wheel  # 프론트 포함 휠 → backend/dist/
 3. 관심회사가 아닌 회사의 공고는 모든 탭에서 보이지 않는다 (DB에는 남아 있어 다시 별을 켜면 돌아온다)
 4. 첫 실행은 15개사 기준 약 400건을 판정하므로 수 분 / 구독 사용량 $5 상당. 이후 실행은 신규 공고만
 5. 세션이 만료되면 배너가 뜸 → 터미널에서 `claude login` 후 다시 시도
+
+## 에이전트에서 쓰기
+Claude Code 플러그인으로 설치하면 "요즘 나한테 맞는 공고 있어?" 같은 질문에 에이전트가 CLI로 상태·공고를 읽어 요약한다.
+
+```bash
+$ claude plugin marketplace add chaewonkong/gethired
+$ claude plugin install gethired@gethired
+```
+- 호출: `/gethired:jobs`, 또는 구직·공고·이직 관련 질문이면 자동 발동
+- 읽기 전용이다 (`status`·`postings`·`companies`). 스크래핑이 필요하면 터미널에서 `uvx gethired scrape`를 직접 실행하라고 안내한다
+- sandbox에서는 uv 캐시·PyPI 접근이 막혀 매번 승인을 묻는다. 설정의 `permissions.allow`에 `Bash(uvx gethired *)`를 추가하거나 sandbox 쓰기 경로에 uv 캐시(`~/.cache/uv`)를 넣는다
+- Codex 등 다른 에이전트: [`plugin/skills/jobs/SKILL.md`](plugin/skills/jobs/SKILL.md)를 그 에이전트의 스킬 디렉토리(Codex: `~/.codex/skills/gethired-jobs/SKILL.md`)에 복사한다
 
 
 <details>
