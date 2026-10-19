@@ -10,6 +10,7 @@
   --accent-soft: #f0f9ff;
   --accent-line: #bae6fd;
   --accent-text: #0c4a6e;
+  --brand: #0284c7;
   --sunrise: linear-gradient(135deg, #7dd3fc 0%, #a5f3fc 55%, #fef3c7 100%);
   --ok: #15803d;
   --warn: #b45309;
@@ -35,6 +36,8 @@ header { display: flex; align-items: center; gap: 12px; padding: 20px 0 16px; }
 }
 .logo svg { width: 24px; height: 24px; }
 header h1 { margin: 0; font-size: 18px; font-weight: 700; color: var(--accent-text); letter-spacing: -.2px; }
+header h1.brand { color: var(--brand); text-transform: uppercase; letter-spacing: .04em; }
+header h1 .brand-get { font-weight: 400; }
 header p { margin: 0; color: var(--muted); font-size: 13px; }
 
 .tabs { display: flex; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 2; }
@@ -180,7 +183,6 @@ select {
 
 /* 640+: 툴바 1줄, 회사 테이블 */
 @media (min-width: 640px) {
-  header h1 { font-size: 22px; }
   .toolbar { display: flex; flex-direction: row; align-items: center; }
   .toolbar .btn { width: auto; }
   .toolbar select, .toolbar .company-filter { width: 150px; }
@@ -242,8 +244,8 @@ select {
 
 .header-actions { margin-left: auto; flex: none; display: flex; gap: 8px; }
 .header-btn {
-  flex: none; padding: 7px 14px; border: 1px solid var(--accent-line); border-radius: 10px;
-  background: var(--accent-soft); color: var(--accent-text); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  flex: none; padding: 6px 12px; border: 1px solid var(--accent-line); border-radius: 10px;
+  background: var(--accent-soft); color: var(--accent-text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
 }
 .header-btn:hover { background: #e0f2fe; }
 .modal-backdrop {

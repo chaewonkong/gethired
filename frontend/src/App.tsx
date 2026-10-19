@@ -291,7 +291,9 @@ export default function App() {
       <header>
         <Logo />
         <div>
-          <h1>gethired</h1>
+          <h1 className="brand" aria-label="get-hired">
+            <span className="brand-get">get</span>hired
+          </h1>
           <p>등록 회사 채용 공고 중 나에게 맞는 포지션</p>
         </div>
         {phase === "main" && (
