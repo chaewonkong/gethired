@@ -8,7 +8,7 @@
 
 ## 서비스 소개
 
-등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차, 업스테이지, 우아한형제들, 두나무, 42dot, 카카오뱅크, 카카오페이, 하이퍼커넥트)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
+등록된 회사(네이버, 카카오, 쿠팡, 토스, 당근, 라인, 삼성전자, 현대자동차, 업스테이지, 우아한형제들, 두나무, 42dot, 카카오뱅크, 카카오페이, 하이퍼커넥트, 카카오모빌리티, NHN, 컬리, 몰로코, 크래프톤, 오늘의집, 에이블리, 래블업)의 채용 사이트를 읽어 내 이력서에 맞는 엔지니어링 포지션을 등급(strong / good / stretch)과 함께 보여주는 로컬 앱.
 
 ![데모: 이력서 업로드부터 매칭 결과까지](docs/demo.gif)
 
@@ -94,7 +94,7 @@ $ just build-wheel  # 프론트 포함 휠 → backend/dist/
 1. 첫 실행: 이력서 업로드 → 관심회사 선택. 관심회사는 회사 탭의 별로 언제든 바꿀 수 있다
 2. 공고 탭에서 **스크래핑 하기** → 관심회사만 병렬 수집 → 신규 공고만 LLM 판정 → 등급이 매겨진 공고 저장
 3. 관심회사가 아닌 회사의 공고는 모든 탭에서 보이지 않는다 (DB에는 남아 있어 다시 별을 켜면 돌아온다)
-4. 첫 실행은 15개사 기준 약 400건을 판정하므로 수 분 / 구독 사용량 $5 상당. 이후 실행은 신규 공고만
+4. 첫 실행은 23개사 기준 약 600건을 판정하므로 수 분 / 구독 사용량 $7 상당. 이후 실행은 신규 공고만
 5. 세션이 만료되면 배너가 뜸 → 터미널에서 `claude login` 후 다시 시도
 
 ## 에이전트에서 쓰기
@@ -106,7 +106,7 @@ $ claude plugin install gethired@gethired
 ```
 - 호출: `/gethired:jobs`, 또는 구직·공고·이직 관련 질문이면 자동 발동
 - 읽기 전용이다 (`status`·`postings`·`companies`). 스크래핑이 필요하면 터미널에서 `uvx gethired scrape`를 직접 실행하라고 안내한다
-- sandbox에서는 uv 캐시·PyPI 접근이 막혀 sandbox 밖 실행 승인을 매번 묻는다. `~/.claude/settings.json`의 `permissions.allow`에 `Bash(uvx --from gethired~=0.2.0 gethired *)`를 추가하면 이 명령만 승인 없이 sandbox 밖에서 실행된다
+- sandbox에서는 uv 캐시·PyPI 접근이 막혀 sandbox 밖 실행 승인을 매번 묻는다. `~/.claude/settings.json`의 `permissions.allow`에 `Bash(uvx --from gethired~=0.3.0 gethired *)`를 추가하면 이 명령만 승인 없이 sandbox 밖에서 실행된다
   - sandbox 안에서 돌리려면 대신 `sandbox.filesystem.allowWrite`에 `~/.cache/uv`·`~/.local/share/uv`, `sandbox.network.allowedDomains`에 `pypi.org`·`files.pythonhosted.org`를 넣는다. 단 sandbox 안의 모든 명령이 uv 캐시를 쓸 수 있게 되므로 권장하지 않는다
 - Codex 등 다른 에이전트: [`plugin/skills/jobs/SKILL.md`](plugin/skills/jobs/SKILL.md)를 그 에이전트의 스킬 디렉토리(Codex: `~/.agents/skills/gethired-jobs/SKILL.md`)에 복사한다
 
@@ -120,7 +120,7 @@ $ claude plugin install gethired@gethired
      [스크래핑 하기] 클릭 |  백그라운드 job, 진행 상황은 화면에 실시간 표시
                           |
                           +-> 1. 프로필   resume/*.md를 읽어 바뀌었으면 Claude가 프로필 추출 (안 바뀌었으면 저장된 프로필 사용)
-                          +-> 2. 수집     15개사 채용 사이트를 병렬로 읽음 (한 곳이 실패해도 나머지는 계속)
+                          +-> 2. 수집     23개사 채용 사이트를 병렬로 읽음 (한 곳이 실패해도 나머지는 계속)
                           +-> 3. 판정     새로 나온 공고만 Claude가 strong / good / stretch로 판정해 저장
 ```
 - 수집은 사이트별로 짠 일반 코드, LLM은 프로필 추출과 판정에만 쓴다
