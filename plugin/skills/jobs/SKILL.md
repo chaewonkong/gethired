@@ -42,4 +42,4 @@ stdout은 JSON만. exit 0이면 결과, 아니면 `{code, message, login_command
 5. 요약: 등급순으로 `등급 · 회사 · 제목 — 이유(fit_reason 한 줄) · 링크(apply_url)`. 마감(`deadline`)이 가까우면 표시. 많으면 strong·good 위주로 자르고 남은 건수를 말한다. 0건이면 그렇게 말하고 `--min-level` 완화나 scrape를 제안
 
 ## sandbox
-sandbox에서 `uvx`가 막히면(uv 캐시 쓰기·PyPI 접근 실패) 사용자에게 "gethired 조회를 위해 sandbox 밖에서 실행해도 될까요?"라고 승인을 받아 sandbox 밖에서 실행한다. 반복 승인을 줄이려면 설정의 permissions allow에 `Bash(uvx gethired *)`(이 스킬 명령 형태면 `Bash(uvx --from "gethired>=0.2,<0.3" gethired *)`)를 추가하거나 sandbox 쓰기 경로에 uv 캐시(`~/.cache/uv`)를 넣으라고 안내한다.
+sandbox에서 `uvx`가 막히면(uv 캐시 쓰기·PyPI 접근 실패) 사용자에게 "gethired 조회를 위해 sandbox 밖에서 실행해도 될까요?"라고 승인을 받아 sandbox 밖에서 실행한다. 반복 승인을 줄이려면 설정의 permissions allow에 `Bash(uvx --from "gethired>=0.2,<0.3" gethired *)`를 추가하거나 sandbox 쓰기 경로에 uv 캐시(`~/.cache/uv`)를 넣으라고 안내한다.
