@@ -24,7 +24,18 @@ CREATE TABLE IF NOT EXISTS postings (
     scraped_at TEXT NOT NULL,
     first_seen_at TEXT,
     deleted_at TEXT,
+    description TEXT,
+    requirements TEXT,
+    preferred TEXT,
+    breakdown TEXT,
     UNIQUE (company, external_id)
+);
+CREATE TABLE IF NOT EXISTS feedbacks (
+    posting_id INTEGER NOT NULL REFERENCES postings(id),
+    profile_hash TEXT NOT NULL,
+    items TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    PRIMARY KEY (posting_id, profile_hash)
 );
 CREATE TABLE IF NOT EXISTS judgments (
     company TEXT NOT NULL,
@@ -69,6 +80,11 @@ CREATE TABLE IF NOT EXISTS settings (
 """
 
 
+_SELECT_POSTINGS = ("SELECT p.*, b.posting_id IS NOT NULL AS bookmarked, h.posting_id IS NOT NULL AS hidden"
+                    " FROM postings p"
+                    " LEFT JOIN bookmarks b ON b.posting_id = p.id AND b.deleted_at IS NULL"
+                    " LEFT JOIN hides h ON h.posting_id = p.id AND h.deleted_at IS NULL")
+
 _fixed_now: str | None = None
 
 
@@ -88,15 +104,30 @@ def _dt(iso: str) -> datetime:
     return d if d.tzinfo else d.replace(tzinfo=UTC)
 
 
-def _row(r: sqlite3.Row) -> dict[str, Any]:
+POSTING_COLUMNS_0014 = ("description", "requirements", "preferred", "breakdown")  # spec 0014에서 추가. 기존 행은 NULL
+JSON_COLUMNS = ("tech_stack", "gaps", "requirements", "preferred", "breakdown")
+
+
+def _row(r: sqlite3.Row, keep_description: bool = False) -> dict[str, Any]:
+    """readonly 옛 DB에는 0014 컬럼이 없을 수 있다. 키가 없으면 건드리지 않고, 소비자는 .get()으로 읽는다"""
     d = dict(r)
-    for k in ("tech_stack", "gaps"):
-        if k in d:
+    for k in JSON_COLUMNS:
+        if d.get(k) is not None:
             d[k] = json.loads(d[k])
     for k in ("bookmarked", "hidden"):
         if k in d:
             d[k] = bool(d[k])
+    if not keep_description:
+        d.pop("description", None)  # 목록 응답 크기. SELECT는 p.*를 유지한다 (명시 컬럼은 옛 DB에서 no such column)
     return d
+
+
+def _dump(r: dict[str, Any]) -> dict[str, Any]:
+    out = {**{k: None for k in POSTING_COLUMNS_0014}, **r}
+    for k in JSON_COLUMNS:
+        if out.get(k) is not None:
+            out[k] = json.dumps(out[k], ensure_ascii=False)
+    return out
 
 
 class Repository:
@@ -121,7 +152,10 @@ class Repository:
         if "first_seen_at" not in cols:
             self.conn.execute("ALTER TABLE postings ADD COLUMN first_seen_at TEXT")
             self.conn.execute("UPDATE postings SET first_seen_at=scraped_at")
-            self.conn.commit()
+        for col in POSTING_COLUMNS_0014:
+            if col not in cols:
+                self.conn.execute(f"ALTER TABLE postings ADD COLUMN {col} TEXT")  # 기존 행은 NULL → 다음 스크래핑에서 재판정
+        self.conn.commit()
 
     def close(self) -> None:
         self.conn.close()
@@ -130,16 +164,19 @@ class Repository:
     def upsert_postings(self, rows: list[dict[str, Any]]) -> None:
         self.conn.executemany(
             """INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
-                                     fit_reason, apply_url, deadline, category, scraped_at, first_seen_at, deleted_at)
+                                     fit_reason, apply_url, deadline, category, scraped_at, first_seen_at, deleted_at,
+                                     description, requirements, preferred, breakdown)
                VALUES (:company, :external_id, :title, :summary, :tech_stack, :fit_level, :score, :gaps,
-                       :fit_reason, :apply_url, :deadline, :category, :scraped_at, :scraped_at, NULL)
+                       :fit_reason, :apply_url, :deadline, :category, :scraped_at, :scraped_at, NULL,
+                       :description, :requirements, :preferred, :breakdown)
                ON CONFLICT (company, external_id) DO UPDATE SET
                  title=excluded.title, summary=excluded.summary, tech_stack=excluded.tech_stack,
                  fit_level=excluded.fit_level, score=excluded.score, gaps=excluded.gaps,
                  fit_reason=excluded.fit_reason, apply_url=excluded.apply_url, deadline=excluded.deadline,
-                 category=excluded.category, scraped_at=excluded.scraped_at, deleted_at=NULL""",
-            [{**r, "tech_stack": json.dumps(r["tech_stack"], ensure_ascii=False),
-              "gaps": json.dumps(r["gaps"], ensure_ascii=False)} for r in rows],
+                 category=excluded.category, scraped_at=excluded.scraped_at, deleted_at=NULL,
+                 description=excluded.description, requirements=excluded.requirements,
+                 preferred=excluded.preferred, breakdown=excluded.breakdown""",
+            [_dump(r) for r in rows],
         )
         self.conn.commit()
 
@@ -180,16 +217,33 @@ class Repository:
             levels = [lv for lv, rank in LEVEL_RANK.items() if rank >= LEVEL_RANK[min_level]]
             where.append(f"fit_level IN ({','.join('?' * len(levels))})")
             params += levels
-        sql = ("SELECT p.*, b.posting_id IS NOT NULL AS bookmarked, h.posting_id IS NOT NULL AS hidden"
-               " FROM postings p"
-               " LEFT JOIN bookmarks b ON b.posting_id = p.id AND b.deleted_at IS NULL"
-               " LEFT JOIN hides h ON h.posting_id = p.id AND h.deleted_at IS NULL"
-               + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
+        sql = (_SELECT_POSTINGS + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
         rows = [_row(r) for r in self.conn.execute(sql, params).fetchall()]
         if since:  # 오프셋이 섞일 수 있어 문자열 비교 대신 시각으로
             # readonly는 마이그레이션 전 DB일 수 있어 scraped_at으로 대체
             rows = [r for r in rows if _dt(r.get("first_seen_at") or r["scraped_at"]) >= _dt(since)]
         return rows
+
+    def get_posting(self, posting_id: int) -> dict[str, Any] | None:
+        """상세 1건. description 포함. 삭제된 공고는 None, 숨김은 반환"""
+        r = self.conn.execute(_SELECT_POSTINGS + " WHERE p.id=? AND p.deleted_at IS NULL", (posting_id,)).fetchone()
+        return _row(r, keep_description=True) if r else None
+
+    def delete_postings(self, company: str, external_ids: set[str]) -> int:
+        """hard delete. 재판정에서 exclude로 바뀐 공고용 (soft delete는 mark_seen이 되살린다). 북마크·숨김·피드백도 함께"""
+        if not external_ids:
+            return 0
+        marks = ",".join("?" * len(external_ids))
+        ids = [r["id"] for r in self.conn.execute(
+            f"SELECT id FROM postings WHERE company=? AND external_id IN ({marks})", (company, *external_ids))]
+        if not ids:
+            return 0
+        id_marks = ",".join("?" * len(ids))
+        for table in ("bookmarks", "hides", "feedbacks"):
+            self.conn.execute(f"DELETE FROM {table} WHERE posting_id IN ({id_marks})", ids)
+        self.conn.execute(f"DELETE FROM postings WHERE id IN ({id_marks})", ids)
+        self.conn.commit()
+        return len(ids)
 
     # --- bookmarks ---
     # 공고 soft delete 시 북마크는 JOIN에서 공고와 함께 숨겨지고, 공고가 다시 나타나면 함께 복구된다.
@@ -254,8 +308,12 @@ class Repository:
 
     # --- judgments ---
     def judged_ids(self, company: str) -> set[str]:
+        """저장됐는데 breakdown이 없는(0014 이전) 공고는 제외 → 다음 스크래핑에서 재판정. exclude는 그대로 judged"""
         return {r["external_id"] for r in self.conn.execute(
-            "SELECT external_id FROM judgments WHERE company=?", (company,)).fetchall()}
+            """SELECT j.external_id FROM judgments j
+               LEFT JOIN postings p ON p.company = j.company AND p.external_id = j.external_id
+               WHERE j.company=? AND NOT (j.stored = 1 AND p.id IS NOT NULL AND p.breakdown IS NULL)""",
+            (company,)).fetchall()}
 
     def record_judgments(self, company: str, external_ids: list[str], stored_ids: set[str], now: str) -> None:
         self.conn.executemany(
@@ -308,6 +366,23 @@ class Repository:
         self.conn.execute("INSERT OR REPLACE INTO profile_cache (hash, profile, created_at) VALUES (?, ?, ?)",
                           (hash_, json.dumps(profile, ensure_ascii=False), now))
         self.conn.commit()
+
+    # --- feedbacks ---
+    def set_feedback(self, posting_id: int, profile_hash: str, items: list[str], now: str) -> None:
+        self.conn.execute(
+            "INSERT OR REPLACE INTO feedbacks (posting_id, profile_hash, items, created_at) VALUES (?, ?, ?, ?)",
+            (posting_id, profile_hash, json.dumps(items, ensure_ascii=False), now))
+        self.conn.commit()
+
+    def feedback_for(self, posting_id: int, current_hash: str) -> dict[str, Any] | None:
+        """현재 프로필 피드백이 있으면 current=True. 없고 이전 프로필 것이 있으면 최근 것에 current=False. readonly 옛 DB(테이블 없음)는 None"""
+        if not self.conn.execute(
+                "SELECT 1 FROM sqlite_master WHERE type='table' AND name='feedbacks'").fetchone():
+            return None
+        r = self.conn.execute(
+            """SELECT items, created_at, profile_hash = ? AS current FROM feedbacks WHERE posting_id=?
+               ORDER BY current DESC, created_at DESC LIMIT 1""", (current_hash, posting_id)).fetchone()
+        return {"items": json.loads(r["items"]), "created_at": r["created_at"], "current": bool(r["current"])} if r else None
 
     # --- settings ---
     def get_setting(self, key: str) -> str | None:

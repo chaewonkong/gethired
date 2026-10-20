@@ -15,7 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from .api import create_app
 from .config import FRONTEND_DIST
 from .jobs import JobManager
-from .matcher import Match
+from .matcher import BREAKDOWN_MAX, Breakdown, Match
 from .profile import Preferences, Profile
 from .repository import Repository, set_fixed_now
 from .scrapers import RawPosting, Scraper
@@ -122,9 +122,18 @@ PROFILE = Profile(
 )
 
 
+def _breakdown(score: int) -> Breakdown:
+    # plan-0014 A1 임시: score를 축 만점 순서로 채운다. B 레인이 공고별 실제 값으로 바꾼다
+    rest, parts = score, {}
+    for k, mx in BREAKDOWN_MAX.items():
+        parts[k] = min(rest, mx)
+        rest -= parts[k]
+    return Breakdown(**parts)
+
+
 def _match(eid: str, level: str, score: int, summary: str, tech: list[str], gaps: list[str], reason: str) -> Match:
     return Match(external_id=eid, fit_level=level, score=score, gaps=gaps, summary=summary, tech_stack=tech,
-                 fit_reason=reason)
+                 fit_reason=reason, requirements=[], preferred=[], breakdown=_breakdown(score))
 
 
 MATCHES: dict[str, Match] = {m.external_id: m for m in [

@@ -9,7 +9,8 @@ from pydantic import BaseModel
 from . import auth, resume
 from .config import RESUME_DIR
 from .jobs import JobManager, JobRunning, LoginRequired, NoTargets
-from .llm import LOGIN_COMMAND, PROVIDERS, resolve_provider
+from .llm import LOGIN_COMMAND, PROVIDERS, LLMResult, resolve_provider
+from .profile import Profile
 from .repository import Repository, now_iso
 
 
@@ -21,10 +22,18 @@ class ProviderBody(BaseModel):
     provider: str
 
 
+FeedbackFn = Callable[[Profile, dict], Awaitable[tuple[list[str], LLMResult]]]
+
+
 def create_app(repo: Repository, jobs: JobManager,
                logged_in: Callable[[str], Awaitable[bool]] = auth.is_logged_in,
-               resume_dir: Path = RESUME_DIR) -> FastAPI:
+               resume_dir: Path = RESUME_DIR,
+               feedback_fn: FeedbackFn | None = None,
+               profile_loader: Callable[[Repository], Awaitable[Profile]] | None = None,
+               profile_hash: Callable[[], str] | None = None) -> FastAPI:
+    # feedback_fn·profile_loader·profile_hash: spec 0014 상세·피드백 엔드포인트용 주입 (plan-0014 A2에서 사용)
     app = FastAPI(title="gethired")
+    app.state.feedback_fn, app.state.profile_loader, app.state.profile_hash = feedback_fn, profile_loader, profile_hash
     api = APIRouter(prefix="/api")
 
     def provider_setting() -> dict:

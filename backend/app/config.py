@@ -11,7 +11,7 @@ HOME = Path(os.environ.get("GETHIRED_HOME") or user_data_dir("gethired"))
 DB_PATH = Path(os.environ.get("DB_PATH") or HOME / "app.db")
 RESUME_DIR = Path(os.environ.get("RESUME_DIR") or HOME / "resume")
 
-MATCH_BATCH_SIZE = 20
+MATCH_BATCH_SIZE = 10  # 본문 한도 6000자 + requirements·preferred 출력에 맞춰 20 → 10
 MATCH_CONCURRENCY = 4
 
 LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "claude")

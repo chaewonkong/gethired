@@ -255,3 +255,14 @@ def test_subprocess_runner_nonzero_exit_reports_stderr(tmp_path, monkeypatch):
     monkeypatch.setattr(config, "CODEX_BIN", str(script))
     with pytest.raises(llm.LLMError, match="exited 2: bad flag"):
         ask()
+
+
+def test_strict_batch_breakdown_nested_def_is_strict():
+    strict = llm.to_strict_schema(Batch.model_json_schema())
+    bd = strict["$defs"]["Breakdown"]
+    assert bd["additionalProperties"] is False
+    assert bd["required"] == ["skills", "domain", "seniority", "preferred"]
+    assert all(bd["properties"][k] == {"type": "integer"} for k in bd["required"])  # 범위는 스키마로 강제하지 않는다
+    match = strict["$defs"]["Match"]
+    assert match["properties"]["breakdown"] == {"$ref": "#/$defs/Breakdown"}
+    assert set(match["required"]) >= {"breakdown", "requirements", "preferred"}

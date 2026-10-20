@@ -12,7 +12,7 @@ from app import config, llm, resume
 from app.api import create_app
 from app.jobs import JobManager
 from app.llm import LLMAuthError
-from app.matcher import Match
+from app.matcher import Breakdown, Match
 from app.profile import Preferences, Profile
 from app.repository import Repository
 from app.scrapers import RawPosting, Scraper
@@ -57,8 +57,12 @@ async def fake_judge(profile, postings):
     out = []
     for p in postings:
         level = "exclude" if "ios" in p.title.lower() else "strong"
-        out.append(Match(external_id=p.external_id, fit_level=level, score=10 if level == "exclude" else 90,
-                         gaps=[], summary="summary text", tech_stack=["Go"], fit_reason="reason " * 5))
+        score = 10 if level == "exclude" else 90
+        out.append(Match(external_id=p.external_id, fit_level=level, score=score,
+                         gaps=[], summary="summary text", tech_stack=["Go"], fit_reason="reason " * 5,
+                         requirements=[], preferred=[],
+                         breakdown=Breakdown(skills=score if score < 35 else 35, domain=35 if score >= 70 else 0,
+                                             seniority=15 if score >= 85 else 0, preferred=5 if score >= 90 else 0)))
     return out, []
 
 

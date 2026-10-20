@@ -1,4 +1,5 @@
 import os
+import re
 import sqlite3
 
 import pytest
@@ -300,3 +301,110 @@ def test_readonly_in_unwritable_dir(tmp_path):
         assert sorted(p.name for p in d.iterdir()) == before
     finally:
         os.chmod(d, 0o755)
+
+
+# --- spec 0014: 본문·breakdown·requirements·preferred, feedbacks, 재판정 ---
+def old_db_0013(path):
+    """0014 컬럼·feedbacks 테이블이 없는 0.4.0 스키마의 DB. readonly로 열면 마이그레이션이 돌지 않는다"""
+    schema = SCHEMA
+    for col in ("description", "requirements", "preferred", "breakdown"):
+        assert f"    {col} TEXT,\n" in schema
+        schema = schema.replace(f"    {col} TEXT,\n", "")
+    schema, n = re.subn(r"CREATE TABLE IF NOT EXISTS feedbacks \(.*?\);\n", "", schema, flags=re.S)
+    assert n == 1
+    conn = sqlite3.connect(path)
+    conn.executescript(schema)
+    conn.execute("""INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
+                                          fit_reason, apply_url, scraped_at, first_seen_at)
+                    VALUES ('toss', 'a', 't', 's', '[]', 'good', 70, '[]', 'r', 'u', 'T1', 'T1')""")
+    conn.execute("INSERT INTO judgments (company, external_id, judged_at, stored) VALUES ('toss', 'a', 'T1', 1)")
+    conn.commit()
+    conn.close()
+
+
+def test_migrate_adds_0014_columns_with_null(tmp_path):
+    db = tmp_path / "old.db"
+    old_db_0013(db)
+    repo = Repository(db)
+    cols = {r["name"] for r in repo.conn.execute("PRAGMA table_info(postings)")}
+    assert {"description", "requirements", "preferred", "breakdown"} <= cols
+    got = repo.list_postings()[0]
+    assert got["breakdown"] is None and got["requirements"] is None and "description" not in got
+    assert repo.get_posting(got["id"])["description"] is None
+    assert repo.feedback_for(got["id"], "h") is None
+
+
+def test_readonly_old_db_tolerates_missing_columns_and_table(tmp_path):
+    db = tmp_path / "old.db"
+    old_db_0013(db)
+    ro = Repository(db, readonly=True)
+    rows = ro.list_postings()
+    assert len(rows) == 1 and "breakdown" not in rows[0] and "description" not in rows[0]
+    detail = ro.get_posting(rows[0]["id"])
+    assert detail["external_id"] == "a" and "breakdown" not in detail
+    assert ro.feedback_for(rows[0]["id"], "h") is None
+
+
+def test_upsert_stores_and_reads_0014_fields():
+    repo = Repository()
+    bd = {"skills": 30, "domain": 25, "seniority": 10, "preferred": 5}
+    repo.upsert_postings([row(eid="a", description="본문", requirements=["Go 3년"], preferred=["k8s"], breakdown=bd)])
+    listed = repo.list_postings()[0]
+    assert listed["requirements"] == ["Go 3년"] and listed["preferred"] == ["k8s"] and listed["breakdown"] == bd
+    assert "description" not in listed
+    detail = repo.get_posting(listed["id"])
+    assert detail["description"] == "본문" and detail["bookmarked"] is False and detail["hidden"] is False
+    repo.upsert_postings([row(eid="a", description="수정", requirements=[], preferred=[], breakdown=bd)])
+    assert repo.get_posting(listed["id"])["description"] == "수정"
+    repo.upsert_postings([row(eid="legacy")])  # 0014 키 없는 행도 저장된다 (None)
+    assert repo.list_postings(company="toss")[1]["breakdown"] is None
+
+
+def test_get_posting_none_for_deleted_but_returns_hidden():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b")])
+    a, b = (p["id"] for p in repo.list_postings())
+    repo.set_hidden(b, True, "T1")
+    assert repo.get_posting(b)["hidden"] is True
+    repo.soft_delete_missing("toss", {"b"}, "T2")
+    assert repo.get_posting(a) is None
+    assert repo.get_posting(9999) is None
+
+
+def test_judged_ids_excludes_stored_without_breakdown():
+    repo = Repository()
+    bd = {"skills": 30, "domain": 25, "seniority": 10, "preferred": 5}
+    repo.upsert_postings([row(eid="legacy"), row(eid="fresh", breakdown=bd)])
+    repo.record_judgments("toss", ["legacy", "fresh", "excluded"], {"legacy", "fresh"}, "T1")
+    assert repo.judged_ids("toss") == {"fresh", "excluded"}
+    repo.upsert_postings([row(eid="legacy", breakdown=bd)])
+    assert repo.judged_ids("toss") == {"legacy", "fresh", "excluded"}
+
+
+def test_delete_postings_removes_bookmark_hide_feedback():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b"), row(company="naver", eid="a")])
+    a = next(p["id"] for p in repo.list_postings() if p["company"] == "toss" and p["external_id"] == "a")
+    repo.set_bookmark(a, True, "T1")
+    repo.set_hidden(a, True, "T1")
+    repo.set_feedback(a, "h", ["x: y"], "T1")
+    assert repo.delete_postings("toss", {"a", "missing"}) == 1
+    assert repo.get_posting(a) is None and repo.get_bookmark(a) is None and repo.get_hidden(a) is None
+    assert repo.conn.execute("SELECT count(*) FROM feedbacks").fetchone()[0] == 0
+    assert {(p["company"], p["external_id"]) for p in repo.list_postings()} == {("toss", "b"), ("naver", "a")}
+    assert repo.delete_postings("toss", set()) == 0
+
+
+def test_feedback_for_current_previous_none():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a")])
+    a = repo.list_postings()[0]["id"]
+    assert repo.feedback_for(a, "h1") is None
+    repo.set_feedback(a, "h0", ["old: 1"], "T0")
+    assert repo.feedback_for(a, "h1") == {"items": ["old: 1"], "created_at": "T0", "current": False}
+    repo.set_feedback(a, "h1", ["new: 1"], "T1")
+    assert repo.feedback_for(a, "h1") == {"items": ["new: 1"], "created_at": "T1", "current": True}
+    assert repo.feedback_for(a, "h2")["created_at"] == "T1"  # 다른 해시: 가장 최근 것, current False
+    assert repo.feedback_for(a, "h2")["current"] is False
+    repo.set_feedback(a, "h1", ["new: 2"], "T2")  # 같은 해시 덮어쓰기
+    assert repo.feedback_for(a, "h1")["items"] == ["new: 2"]

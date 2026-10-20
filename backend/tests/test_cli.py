@@ -16,7 +16,7 @@ from filelock import FileLock
 from app import cli, config, demo
 from app.jobs import JobManager
 from app.llm import LLMAuthError
-from app.matcher import Match
+from app.matcher import Breakdown, Match
 from app.repository import Repository, set_fixed_now
 from app.scrapers import REGISTRY, RawPosting, Scraper
 
@@ -194,7 +194,8 @@ class BrokenB(Broken, register=False):
 
 async def fake_judge(profile, postings):
     return [Match(external_id=p.external_id, fit_level="strong", score=90, gaps=["g"], summary="summary text",
-                  tech_stack=[], fit_reason="reason " * 5) for p in postings], []
+                  tech_stack=[], fit_reason="reason " * 5, requirements=[], preferred=[],
+                  breakdown=Breakdown(skills=35, domain=35, seniority=15, preferred=5)) for p in postings], []
 
 
 async def fake_profile(repo):

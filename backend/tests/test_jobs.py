@@ -10,7 +10,7 @@ import pytest
 from filelock import FileLock, Timeout
 
 from app.jobs import JobManager, JobRunning, LoginRequired, NoTargets
-from app.matcher import Match
+from app.matcher import Breakdown, Match
 from app.profile import Preferences, Profile
 from app.repository import Repository
 from app.scrapers import RawPosting, Scraper
@@ -45,7 +45,8 @@ def make_judge(delay: float = 0.0, started: list | None = None):
             started.append(postings[0].company)
         await asyncio.sleep(delay)
         return [Match(external_id=p.external_id, fit_level="strong", score=90, gaps=[], summary="summary text",
-                      tech_stack=[], fit_reason="reason " * 5) for p in postings], []
+                      tech_stack=[], fit_reason="reason " * 5, requirements=[], preferred=[],
+                      breakdown=Breakdown(skills=35, domain=35, seniority=15, preferred=5)) for p in postings], []
     return judge
 
 
