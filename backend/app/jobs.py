@@ -212,6 +212,8 @@ class JobManager:
             by_id = {p.external_id: p for p in new}
             rows = [to_row(by_id[m.external_id], m, now) for m in matches if m.stored]
             self.repo.upsert_postings(rows)
+            # 재판정에서 exclude가 된 기존 행 (soft delete는 mark_seen이 되살린다)
+            self.repo.delete_postings(company, {m.external_id for m in matches if not m.stored})
             self.repo.record_judgments(company, [m.external_id for m in matches], {r["external_id"] for r in rows}, now)
             state.stored, state.excluded = len(rows), sum(1 for m in matches if not m.stored)
             state.status = "done"
