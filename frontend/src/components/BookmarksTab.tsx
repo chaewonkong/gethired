@@ -1,4 +1,5 @@
 import { Company, Posting } from "../api";
+import { useListPosition } from "../sessionState";
 import { PostingCard } from "./PostingCard";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 
 export function BookmarksTab({ postings, byId, onToggleBookmark, onToggleHidden }: Props) {
   const items = postings.filter((p) => p.bookmarked && !p.hidden).sort((a, b) => b.score - a.score);
+  useListPosition("/bookmarks", items.length > 0);
 
   return (
     <section className="panel">

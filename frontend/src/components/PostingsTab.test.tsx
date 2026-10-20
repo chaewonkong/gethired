@@ -1,7 +1,9 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import { Job, Posting } from "../api";
+import { renderInRouter } from "../test/renderApp";
 import { makeCompany, makePosting, stubIntersectionObserver } from "../test/fixtures";
 import { formatTime, PostingsTab } from "./PostingsTab";
 
@@ -12,7 +14,7 @@ function renderTab(postings: Posting[], props: Partial<Parameters<typeof Posting
   const onScrape = vi.fn();
   const onToggleBookmark = vi.fn();
   const onToggleHidden = vi.fn();
-  const utils = render(
+  const utils = renderInRouter(
     <PostingsTab postings={postings} companies={companies} byId={byId} job={null} scraping={false}
                  onScrape={onScrape} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} {...props} />,
   );
@@ -269,6 +271,53 @@ describe("PostingsTab infinite scroll", () => {
     stubIntersectionObserver();
     renderTab(many(20));
     expect(screen.queryByText(/더 불러오는 중/)).not.toBeInTheDocument();
+  });
+});
+
+describe("PostingsTab 위치 복원", () => {
+  const many = (n: number) => Array.from({ length: n }, (_, i) => makePosting({ title: `p${i}`, score: 1000 - i }));
+  const savePosition = () => sessionStorage.setItem("listPosition:/", JSON.stringify({ scrollY: 900, visible: 40 }));
+
+  it("뒤로가기(POP)로 들어오면 불러온 건수를 mount 직후 리셋하지 않고 저장 위치로 스크롤한다", () => {
+    stubIntersectionObserver();
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    savePosition();
+    renderTab(many(45));
+    expect(titles()).toHaveLength(40);
+    expect(scrollTo).toHaveBeenCalledWith(0, 900);
+  });
+
+  it("복원 뒤 필터를 바꾸면 처음 20건으로 돌아간다", async () => {
+    stubIntersectionObserver();
+    savePosition();
+    renderTab(many(45));
+    expect(titles()).toHaveLength(40);
+    await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "good");
+    expect(titles()).toHaveLength(20);
+  });
+
+  it("탭 버튼 등 POP이 아닌 진입은 저장값을 무시하고 맨 위", async () => {
+    stubIntersectionObserver();
+    const scrollTo = vi.spyOn(window, "scrollTo");
+    savePosition();
+    function Go() {
+      const navigate = useNavigate();
+      return <button onClick={() => navigate("/")}>go</button>;
+    }
+    render(
+      <MemoryRouter initialEntries={["/companies"]}>
+        <Routes>
+          <Route path="/companies" element={<Go />} />
+          <Route path="/" element={
+            <PostingsTab postings={many(45)} companies={companies} byId={byId} job={null} scraping={false}
+                         onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />
+          } />
+        </Routes>
+      </MemoryRouter>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "go" }));
+    expect(titles()).toHaveLength(20);
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
   });
 });
 

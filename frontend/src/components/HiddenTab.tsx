@@ -1,4 +1,5 @@
 import { Company, Posting } from "../api";
+import { useListPosition } from "../sessionState";
 import { PostingCard } from "./PostingCard";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 
 export function HiddenTab({ postings, byId, onToggleBookmark, onToggleHidden }: Props) {
   const items = postings.filter((p) => p.hidden).sort((a, b) => b.score - a.score);
+  useListPosition("/hidden", items.length > 0);
 
   return (
     <section className="panel">

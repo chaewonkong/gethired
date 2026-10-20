@@ -1,9 +1,9 @@
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import App from "./App";
 import { Job, Posting, Provider } from "./api";
-import { makeCompany, makePosting, stubIntersectionObserver } from "./test/fixtures";
+import { renderApp } from "./test/renderApp";
+import { makeCompany, makeDetail, makePosting, stubIntersectionObserver } from "./test/fixtures";
 
 type Handler = (init?: RequestInit) => Response | Promise<Response>;
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
@@ -59,14 +59,14 @@ describe("App", () => {
 
   it("공고를 불러오고 북마크 개수를 탭에 표시", async () => {
     stubApi([makePosting({ title: "a", bookmarked: true }), makePosting({ title: "b" })]);
-    render(<App />);
+    renderApp();
     expect(await screen.findByRole("heading", { name: "a" })).toBeInTheDocument();
     expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
   });
 
   it("별을 누르면 PUT 후 북마크 탭에 나타난다", async () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a" })]);
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getByRole("button", { name: "북마크" }));
@@ -79,7 +79,7 @@ describe("App", () => {
 
   it("북마크 탭에서 해제하면 DELETE 후 즉시 목록에서 빠진다", async () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a", bookmarked: true }), makePosting({ id: 2, title: "b", bookmarked: true, score: 10 })]);
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
     await userEvent.click(tab(/북마크/));
     expect(titles()).toEqual(["a", "b"]);
@@ -93,7 +93,7 @@ describe("App", () => {
     stubApi([makePosting({ id: 1, title: "a" })], {
       "PUT /api/postings/1/bookmark": () => new Response("", { status: 500 }),
     });
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getByRole("button", { name: "북마크" }));
@@ -103,7 +103,7 @@ describe("App", () => {
 
   it("숨김 버튼을 누르면 PUT 후 공고 탭에서 사라지고 숨김 탭에 나타난다", async () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a" }), makePosting({ id: 2, title: "b", score: 10 })]);
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getAllByRole("button", { name: "숨김" })[0]);
@@ -117,7 +117,7 @@ describe("App", () => {
 
   it("숨김 탭에서 해제하면 DELETE 후 숨김 탭에서 빠지고 공고 탭으로 돌아온다", async () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a", hidden: true }), makePosting({ id: 2, title: "b", score: 10 })]);
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "b" });
     expect(titles()).toEqual(["b"]);
 
@@ -132,7 +132,7 @@ describe("App", () => {
 
   it("숨긴 공고는 북마크 탭과 북마크 개수에서 빠진다", async () => {
     stubApi([makePosting({ title: "a", bookmarked: true, hidden: true }), makePosting({ title: "b", bookmarked: true })]);
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "b" });
     expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
 
@@ -144,7 +144,7 @@ describe("App", () => {
     stubApi([makePosting({ id: 1, title: "a" })], {
       "PUT /api/postings/1/hide": () => new Response("", { status: 500 }),
     });
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getByRole("button", { name: "숨김" }));
@@ -157,7 +157,7 @@ describe("App", () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a" })], {
       "PUT /api/postings/1/bookmark": () => new Promise((r) => (release = () => r(new Response("{}")))),
     });
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getByRole("button", { name: "북마크" }));
@@ -177,7 +177,7 @@ describe("App", () => {
     const fetch = stubApi([makePosting({ id: 1, title: "a" })], {
       "PUT /api/postings/1/bookmark": () => new Promise(() => {}),
     });
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
 
     await userEvent.click(screen.getByRole("button", { name: "북마크" }));
@@ -195,7 +195,7 @@ describe("App", () => {
 
     it("스크래핑 401이면 provider별 배너: 이름과 로그인 명령", async () => {
       stubApi([], {}, { provider: "codex", loggedIn: { codex: false } });
-      render(<App />);
+      renderApp();
       await scrape();
       expect(await screen.findByText("Codex 로그인이 필요합니다.")).toBeInTheDocument();
       await waitFor(() => expect(banner().querySelector("code")).toHaveTextContent("codex login"));
@@ -204,7 +204,7 @@ describe("App", () => {
 
     it("claude면 Claude Code 배너", async () => {
       stubApi([], {}, { loggedIn: { claude: false } });
-      render(<App />);
+      renderApp();
       await scrape();
       expect(await screen.findByText("Claude Code 로그인이 필요합니다.")).toBeInTheDocument();
       await waitFor(() => expect(banner().querySelector("code")).toHaveTextContent("claude login"));
@@ -212,7 +212,7 @@ describe("App", () => {
 
     it("401 body가 없고 auth 응답 전이면 기본 문구", async () => {
       stubApi([], { "POST /api/scrape": () => new Response("", { status: 401 }), "GET /api/auth/status": () => new Promise(() => {}) });
-      render(<App />);
+      renderApp();
       await scrape();
       expect(await screen.findByText("Claude Code 로그인이 필요합니다.")).toBeInTheDocument();
       expect(banner()).toHaveTextContent("로그인이 필요합니다. 터미널에서 로그인 후 다시 시도해주세요.");
@@ -220,7 +220,7 @@ describe("App", () => {
 
     it("스크래핑 409면 toast를 띄우고 job 폴링을 하지 않는다", async () => {
       const fetch = stubApi([], { "POST /api/scrape": () => json({ code: "job_running", message: "job running" }, 409) });
-      render(<App />);
+      renderApp();
       await scrape();
       expect(await screen.findByText("다른 곳에서 스크래핑 중입니다")).toBeInTheDocument();
       expect(fetch.mock.calls.some(([path]) => String(path).startsWith("/api/scrape/"))).toBe(false);
@@ -229,7 +229,7 @@ describe("App", () => {
 
     it("배너의 AI 변경으로 모달을 열고, 전환하면 배너 문구가 바뀐다", async () => {
       const fetch = stubApi([], {}, { provider: "codex", loggedIn: { claude: false, codex: false } });
-      render(<App />);
+      renderApp();
       await scrape();
       await screen.findByText("Codex 로그인이 필요합니다.");
       await userEvent.click(screen.getByRole("button", { name: "AI 변경" }));
@@ -246,7 +246,7 @@ describe("App", () => {
     it("로그인되면 배너가 사라지고 폴링이 멈춘다", async () => {
       vi.useFakeTimers({ shouldAdvanceTime: true });
       const fetch = stubApi([], {}, { provider: "codex", loggedIn: { codex: false } });
-      render(<App />);
+      renderApp();
       await scrape();
       await screen.findByText("Codex 로그인이 필요합니다.");
       await waitFor(() => expect(banner().querySelector("code")).toHaveTextContent("codex login"));
@@ -265,7 +265,7 @@ describe("App", () => {
 
     it("헤더 AI 버튼 → 모달. 전환은 PUT, 닫았다 다시 열어도 유지. Esc·바깥 클릭으로 닫힌다", async () => {
       const fetch = stubApi([]);
-      render(<App />);
+      renderApp();
       await screen.findByRole("button", { name: "스크래핑 하기" });
       let dialog = await openAi();
       expect(within(dialog).getByRole("radio", { name: "Claude Code" })).toHaveAttribute("aria-checked", "true");
@@ -290,7 +290,7 @@ describe("App", () => {
 
     it("스크래핑 중에는 안내만 보이고 카드를 눌러도 바뀌지 않는다", async () => {
       const fetch = stubApi([]);
-      render(<App />);
+      renderApp();
       await scrape();
       await waitFor(() => expect(screen.getByRole("button", { name: /스크래핑/ })).toBeDisabled());
       const dialog = await openAi();
@@ -302,7 +302,7 @@ describe("App", () => {
 
     it("PUT 409면 toast를 띄우고 선택을 되돌린다", async () => {
       const fetch = stubApi([], { "PUT /api/settings/provider": () => json({ code: "job_running", message: "스크래핑 중에는 바꿀 수 없습니다" }, 409) });
-      render(<App />);
+      renderApp();
       await screen.findByRole("button", { name: "스크래핑 하기" });
       const dialog = await openAi();
       await userEvent.click(within(dialog).getByRole("radio", { name: "Codex" }));
@@ -313,7 +313,7 @@ describe("App", () => {
 
     it("PUT이 그 외로 실패하면 에러 배너와 함께 되돌린다", async () => {
       stubApi([], { "PUT /api/settings/provider": () => new Response("", { status: 500 }) });
-      render(<App />);
+      renderApp();
       await screen.findByRole("button", { name: "스크래핑 하기" });
       const dialog = await openAi();
       await userEvent.click(within(dialog).getByRole("radio", { name: "Codex" }));
@@ -323,7 +323,7 @@ describe("App", () => {
 
     it("메인 화면에서는 모달·배너가 없으면 auth를 조회하지 않는다", async () => {
       const fetch = stubApi([]);
-      render(<App />);
+      renderApp();
       await screen.findByRole("button", { name: "스크래핑 하기" });
       expect(fetch.authCalls()).toBe(0);
       await openAi();
@@ -335,7 +335,7 @@ describe("App", () => {
     stubApi([makePosting({ title: "a", company: "toss" }), makePosting({ title: "b", company: "naver", score: 10 })], {
       "GET /api/companies": () => new Response(JSON.stringify([makeCompany(), makeCompany({ company: "naver", display_name: "네이버" })])),
     });
-    render(<App />);
+    renderApp();
     await screen.findByRole("heading", { name: "a" });
     await userEvent.click(screen.getByRole("button", { name: /^회사 필터/ }));
     await userEvent.click(screen.getByRole("checkbox", { name: /토스/ }));
@@ -346,9 +346,84 @@ describe("App", () => {
     expect(titles()).toEqual(["b"]);
   });
 
+  describe("라우팅", () => {
+    it("탭을 누르면 경로가 바뀌고 aria-selected가 따라간다", async () => {
+      stubApi([makePosting({ title: "a", bookmarked: true })]);
+      const { location } = renderApp();
+      await screen.findByRole("heading", { name: "a" });
+      expect(tab(/공고/)).toHaveAttribute("aria-selected", "true");
+
+      for (const [name, path] of [[/북마크/, "/bookmarks"], [/숨김/, "/hidden"], [/회사/, "/companies"], [/공고/, "/"]] as const) {
+        await userEvent.click(tab(name));
+        expect(location().pathname).toBe(path);
+        expect(tab(name)).toHaveAttribute("aria-selected", "true");
+      }
+    });
+
+    it("/bookmarks로 시작하면 북마크 탭", async () => {
+      stubApi([makePosting({ title: "a", bookmarked: true }), makePosting({ title: "b" })]);
+      renderApp("/bookmarks");
+      await screen.findByRole("heading", { name: "a" });
+      expect(tab(/북마크/)).toHaveAttribute("aria-selected", "true");
+      expect(tab(/공고/)).toHaveAttribute("aria-selected", "false");
+      expect(titles()).toEqual(["a"]);
+    });
+
+    it("모르는 경로는 /로", async () => {
+      stubApi([]);
+      const { location } = renderApp("/nope");
+      await screen.findByRole("button", { name: "스크래핑 하기" });
+      expect(location().pathname).toBe("/");
+    });
+
+    it("관심회사를 저장하면 / 로 간다", async () => {
+      let interested = false;
+      stubApi([], {
+        "GET /api/companies": () => json([makeCompany({ interested })]),
+        "PUT /api/interests": () => ((interested = true), json({})),
+      });
+      const { location } = renderApp("/companies");
+      await userEvent.click(await screen.findByRole("checkbox", { name: /토스/ }));
+      await userEvent.click(screen.getByRole("button", { name: /^확인/ }));
+      await screen.findByRole("button", { name: "스크래핑 하기" });
+      expect(location().pathname).toBe("/");
+    });
+
+    it("카드를 누르면 상세, 목록으로를 누르면 탭·필터·불러온 건수가 그대로", async () => {
+      const posts = Array.from({ length: 45 }, (_, i) => makePosting({ id: i + 1, title: `p${i}`, score: 100 - i, fit_level: i < 30 ? "good" : "stretch" }));
+      stubApi(posts, { "GET /api/postings/3": () => json(makeDetail({ ...posts[2] })) });
+      const io = stubIntersectionObserver();
+      const { location } = renderApp();
+      await screen.findByRole("heading", { name: "p0" });
+      await userEvent.selectOptions(screen.getByDisplayValue("전체 등급"), "good");
+      act(() => io.intersect());
+      expect(titles()).toHaveLength(30);
+
+      await userEvent.click(screen.getByRole("heading", { name: "p2" }));
+      expect(location().pathname).toBe("/postings/3");
+      expect(await screen.findByRole("heading", { level: 2, name: "p2" })).toBeInTheDocument();
+      expect(screen.getAllByRole("tab").every((t) => t.getAttribute("aria-selected") === "false")).toBe(true);
+
+      await userEvent.click(screen.getByRole("button", { name: /목록으로/ }));
+      expect(location().pathname).toBe("/");
+      expect(titles()).toHaveLength(30);
+      expect(screen.getByDisplayValue("good 이상")).toBeInTheDocument();
+    });
+
+    it("상세에서 북마크하면 목록 상태와 탭 배지에 반영된다", async () => {
+      const p = makePosting({ id: 5, title: "a" });
+      const fetch = stubApi([p], { "GET /api/postings/5": () => json(makeDetail({ ...p })) });
+      renderApp("/postings/5");
+      await userEvent.click(await screen.findByRole("button", { name: "북마크" }));
+      expect(fetch).toHaveBeenCalledWith("/api/postings/5/bookmark", { method: "PUT" });
+      expect(screen.getByRole("button", { name: "북마크 해제" })).toHaveClass("on");
+      expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
+    });
+  });
+
   it("회사 탭으로 전환", async () => {
     stubApi([]);
-    render(<App />);
+    renderApp();
     await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
     expect(await screen.findByRole("table")).toHaveTextContent("토스");
   });
@@ -363,7 +438,7 @@ describe("App", () => {
         makePosting({ title: "n", company: "naver", bookmarked: true }),
         makePosting({ title: "nh", company: "naver", hidden: true }),
       ], companiesRoute);
-      render(<App />);
+      renderApp();
       await screen.findByRole("heading", { name: "a" });
       expect(titles()).toEqual(["a"]);
       expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
@@ -384,7 +459,7 @@ describe("App", () => {
         ...companiesRoute,
         "PUT /api/companies/naver/interest": () => new Response("{}"),
       });
-      render(<App />);
+      renderApp();
       await screen.findByRole("heading", { name: "a" });
       await userEvent.click(tab(/회사/));
       await userEvent.click(screen.getByRole("button", { name: "네이버 관심회사 추가" }));
@@ -397,7 +472,7 @@ describe("App", () => {
 
     it("별 요청이 실패하면 되돌리고 에러를 띄운다", async () => {
       stubApi([], { ...companiesRoute, "PUT /api/companies/naver/interest": () => new Response("", { status: 500 }) });
-      render(<App />);
+      renderApp();
       await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
       await userEvent.click(screen.getByRole("button", { name: "네이버 관심회사 추가" }));
       await waitFor(() => expect(screen.getByRole("button", { name: "네이버 관심회사 추가" })).not.toHaveClass("on"));
@@ -406,7 +481,7 @@ describe("App", () => {
 
     it("마지막 관심회사를 해제하면 DELETE 후 회사 선택 화면", async () => {
       const fetch = stubApi([], { ...companiesRoute, "DELETE /api/companies/toss/interest": () => new Response("{}") });
-      render(<App />);
+      renderApp();
       await userEvent.click(await screen.findByRole("tab", { name: /회사/ }));
       await userEvent.click(screen.getByRole("button", { name: "토스 관심회사 해제" }));
       expect(fetch).toHaveBeenCalledWith("/api/companies/toss/interest", { method: "DELETE" });

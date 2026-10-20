@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { Company, Posting } from "../api";
+import { Company, Posting, PostingDetail } from "../api";
 
 let seq = 0;
 
@@ -23,6 +23,19 @@ export function makePosting(over: Partial<Posting> = {}): Posting {
     first_seen_at: "2026-10-09T00:00:00+00:00",
     bookmarked: false,
     hidden: false,
+    breakdown: null,
+    ...over,
+  };
+}
+
+export function makeDetail(over: Partial<PostingDetail> = {}): PostingDetail {
+  return {
+    ...makePosting(over),
+    description: "본문",
+    requirements: ["Go 3년 이상"],
+    preferred: ["Kubernetes 운영 경험"],
+    breakdown: { skills: 30, domain: 20, seniority: 15, preferred: 5 },
+    feedback: null,
     ...over,
   };
 }

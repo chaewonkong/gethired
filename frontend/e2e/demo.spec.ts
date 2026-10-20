@@ -59,4 +59,18 @@ test("골든 패스: 업로드 → AI 선택 → 관심회사 → 스크래핑 �
   await expect(page.locator(".progress").filter({ hasText: "스크래핑 중…" })).toBeVisible();
   await expect(page.locator("article")).toHaveCount(8, { timeout: 20_000 });
   await page.waitForTimeout(2_000);
+
+  const first = page.locator("article").first();
+  const title = (await first.getByRole("heading", { level: 3 }).textContent())!;
+  await first.click();
+  await expect(page.getByRole("heading", { level: 2, name: title })).toBeVisible();
+  await pause(page);
+  await page.getByRole("button", { name: "피드백 생성" }).click();
+  await expect(page.locator(".feedback li")).toHaveCount(3, { timeout: 10_000 });
+  await page.locator(".feedback").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1_500);
+
+  await page.getByRole("button", { name: /목록으로/ }).click();
+  await expect(page.locator("article")).toHaveCount(8);
+  await page.waitForTimeout(1_000);
 });

@@ -1,12 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { renderInRouter } from "../test/renderApp";
 import { makePosting } from "../test/fixtures";
 import { PostingCard } from "./PostingCard";
 
 function renderCard(over = {}, onToggleBookmark = vi.fn(), onToggleHidden = vi.fn()) {
   const posting = makePosting(over);
-  render(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />);
+  renderInRouter(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />);
   return { posting, onToggleBookmark, onToggleHidden };
 }
 
@@ -55,7 +56,7 @@ describe("PostingCard", () => {
   });
 
   it("gaps·tech_stack이 비면 해당 영역을 그리지 않는다", () => {
-    const { container } = render(
+    const { container } = renderInRouter(
       <PostingCard posting={makePosting({ gaps: [], tech_stack: [] })} companyName="토스" onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />,
     );
     expect(container.querySelector(".gaps")).toBeNull();
@@ -96,5 +97,50 @@ describe("PostingCard 숨김 버튼", () => {
     const eye = screen.getByRole("button", { name: "숨김 해제" });
     expect(eye).toHaveAttribute("aria-pressed", "true");
     expect(eye).toHaveClass("on");
+  });
+});
+
+describe("PostingCard 상세 이동", () => {
+  const setup = (over = {}) => {
+    const posting = makePosting(over);
+    const onToggleBookmark = vi.fn();
+    const onToggleHidden = vi.fn();
+    const utils = renderInRouter(
+      <PostingCard posting={posting} companyName="토스" visible={40} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />,
+      { entries: ["/bookmarks"] },
+    );
+    return { ...utils, posting, onToggleBookmark, onToggleHidden };
+  };
+
+  it("카드를 누르면 위치를 저장하고 /postings/:id로 이동한다", async () => {
+    window.scrollY = 1234;
+    const { location, posting } = setup({ id: 7 });
+    await userEvent.click(screen.getByText(posting.summary));
+    expect(location().pathname).toBe("/postings/7");
+    expect(JSON.parse(sessionStorage.getItem("listPosition:/bookmarks")!)).toEqual({ scrollY: 1234, visible: 40 });
+    window.scrollY = 0;
+  });
+
+  it("제목을 눌러도 이동한다", async () => {
+    const { location, posting } = setup({ id: 8 });
+    await userEvent.click(screen.getByRole("heading", { name: posting.title }));
+    expect(location().pathname).toBe("/postings/8");
+  });
+
+  it("카드에 포커스하고 Enter를 누르면 이동한다", async () => {
+    const { location, posting } = setup({ id: 9 });
+    screen.getByRole("link", { name: posting.title }).focus();
+    await userEvent.keyboard("{Enter}");
+    expect(location().pathname).toBe("/postings/9");
+  });
+
+  it("별·숨김 클릭은 이동하지 않고 콜백만 호출한다", async () => {
+    const { location, posting, onToggleBookmark, onToggleHidden } = setup();
+    await userEvent.click(screen.getByRole("button", { name: "북마크" }));
+    await userEvent.click(screen.getByRole("button", { name: "숨김" }));
+    expect(onToggleBookmark).toHaveBeenCalledWith(posting);
+    expect(onToggleHidden).toHaveBeenCalledWith(posting);
+    expect(location().pathname).toBe("/bookmarks");
+    expect(sessionStorage.getItem("listPosition:/bookmarks")).toBeNull();
   });
 });

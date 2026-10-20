@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { api, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile, ResumeRejectedError } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
 import { HiddenTab } from "./components/HiddenTab";
 import { CompaniesTab } from "./components/CompaniesTab";
+import { PostingDetail } from "./components/PostingDetail";
 import { ScrollTopButton } from "./components/ScrollTopButton";
 import { CompanySelect } from "./components/CompanySelect";
 import { ProviderSelect } from "./components/ProviderSelect";
@@ -17,6 +19,8 @@ import { Toast, ToastMessage } from "./components/Toast";
 type Tab = "postings" | "bookmarks" | "hidden" | "companies";
 
 const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", hidden: "숨김", companies: "회사" };
+const TAB_PATH: Record<Tab, string> = { postings: "/", bookmarks: "/bookmarks", hidden: "/hidden", companies: "/companies" };
+const TABS = Object.keys(TAB_PATH) as Tab[];
 export const AUTH_POLL_MS = 3000;
 
 // 낙관적 업데이트로 토글하는 공고 플래그와 그 저장 API
@@ -24,7 +28,9 @@ const FLAG_API = { bookmarked: api.setBookmark, hidden: api.setHidden } satisfie
 type Flag = keyof typeof FLAG_API;
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>("postings");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const tab = TABS.find((t) => TAB_PATH[t] === pathname);
   const [postings, setPostings] = useState<Posting[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [job, setJob] = useState<Job | null>(null);
@@ -131,7 +137,7 @@ export default function App() {
     try {
       await api.setInterests(selected);
       setCompanies(await api.companies());
-      setTab("postings");
+      navigate("/");
     } catch (e) {
       setError(String(e));
     }
@@ -203,19 +209,21 @@ export default function App() {
     }
   };
 
-  // 같은 공고·플래그는 요청이 끝날 때까지 다시 토글하지 않는다 (중복 요청·롤백 경합 방지)
-  const toggleFlag = async (p: Posting, flag: Flag) => {
+  // 같은 공고·플래그는 요청이 끝날 때까지 다시 토글하지 않는다 (중복 요청·롤백 경합 방지). 저장됐으면 true
+  const toggleFlag = async (p: Posting, flag: Flag): Promise<boolean> => {
     const key = `${flag}:${p.id}`;
-    if (pending.current.has(key)) return;
+    if (pending.current.has(key)) return false;
     pending.current.add(key);
     const on = !p[flag];
     const set = (v: boolean) => setPostings((ps) => ps.map((x) => (x.id === p.id ? { ...x, [flag]: v } : x)));
     set(on);
     try {
       await FLAG_API[flag](p.id, on);
+      return true;
     } catch (e) {
       set(!on);
       setError(String(e));
+      return false;
     } finally {
       pending.current.delete(key);
     }
@@ -326,8 +334,8 @@ export default function App() {
       {phase === "main" && (
         <>
           <nav className="tabs" role="tablist">
-            {(["postings", "bookmarks", "hidden", "companies"] as Tab[]).map((t) => (
-              <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => setTab(t)}>
+            {TABS.map((t) => (
+              <button key={t} className="tab" role="tab" aria-selected={tab === t} onClick={() => navigate(TAB_PATH[t])}>
                 {TAB_LABEL[t]}
                 {!!count[t] && <span className="tab-count">{count[t]}</span>}
               </button>
@@ -349,17 +357,20 @@ export default function App() {
           )}
           {error && <div className="banner error">{error}</div>}
 
-          {tab === "postings" && (
-            <PostingsTab postings={shown} companies={interested} byId={byId} job={job} scraping={!!scraping}
-                         onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-          )}
-          {tab === "bookmarks" && (
-            <BookmarksTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-          )}
-          {tab === "hidden" && (
-            <HiddenTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
-          )}
-          {tab === "companies" && <CompaniesTab companies={companies} onToggleInterest={toggleInterest} />}
+          <Routes>
+            <Route path="/" element={
+              <PostingsTab postings={shown} companies={interested} byId={byId} job={job} scraping={!!scraping}
+                           onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+            } />
+            <Route path="/bookmarks" element={<BookmarksTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />} />
+            <Route path="/hidden" element={<HiddenTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />} />
+            <Route path="/companies" element={<CompaniesTab companies={companies} onToggleInterest={toggleInterest} />} />
+            <Route path="/postings/:id" element={
+              <PostingDetail postings={postings} byId={byId} loginRequired={!!loginRequired} onToggleBookmark={toggleBookmark}
+                             onToggleHidden={toggleHidden} onRequireLogin={requireLogin} onToast={showToast} />
+            } />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
 
           <ScrollTopButton />
           {resumeOpen && resumeFiles && (
