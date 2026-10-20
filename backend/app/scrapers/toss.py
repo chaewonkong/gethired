@@ -5,7 +5,7 @@ from .base import parse_date
 from .greenhouse import GreenhouseScraper, metadata
 
 ENGINEERING_CATEGORIES = {
-    "Backend", "Infra", "Data Engineering", "ML", "Security Engineering", "Frontend", "QA",
+    "Backend", "Infra", "Data Engineering", "ML", "Security Engineering", "Frontend", "QA", "App", "Device",
 }
 
 
@@ -21,7 +21,7 @@ class TossScraper(GreenhouseScraper):
     display_name = "토스"
     careers_url = "https://toss.im/career/jobs"
     board = "toss"
-    expected_count = 144
+    expected_count = 152
 
     @property
     def list_url(self) -> str:

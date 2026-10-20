@@ -69,6 +69,7 @@ def test_toss_categories_and_description_from_metadata():
     postings = TossScraper().parse(load("toss.json"))
     assert_required(postings, "toss")
     assert {p.category for p in postings} <= ENGINEERING_CATEGORIES
+    assert sum(p.category == "App" for p in postings) == 2  # iOS·Android
     assert all(p.description and len(p.description) > 100 for p in postings)
 
 
