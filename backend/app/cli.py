@@ -20,15 +20,18 @@ import uvicorn
 from . import auth, config, resume
 from .jobs import Job, JobManager, JobRunning, LoginRequired, NoTargets
 from .llm import PROVIDERS, resolve_provider
+from .matcher import BREAKDOWN_MAX
+from .profile import source_hash
 from .repository import LEVEL_RANK, Repository, now_iso
 
 COMMANDS = ("serve", "auth", "reset-db", "paths", "resume", "provider", "companies", "interest",
-            "status", "scrape", "postings")
+            "status", "scrape", "postings", "posting")
 LOGIN_COMMAND = {"claude": "claude login", "codex": f"{config.CODEX_BIN} login"}
 CHUNK = 1 << 20
 PROGRESS_S = 1.0
 POSTING_FIELDS = ("id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at")
-FULL_FIELDS = (*POSTING_FIELDS, "summary", "gaps")  # 본문은 저장하지 않는다. summary는 LLM 요약
+FULL_FIELDS = (*POSTING_FIELDS, "summary", "gaps", "breakdown")  # 본문은 posting --body로만
+DETAIL_FIELDS = (*FULL_FIELDS, "tech_stack", "requirements", "preferred", "feedback")
 
 
 class Fail(Exception):
@@ -264,9 +267,53 @@ def _postings(args: argparse.Namespace) -> None:
     if args.company:
         rows = [r for r in rows if r["company"] in args.company]
     fields = FULL_FIELDS if args.full else POSTING_FIELDS
-    rows = [{k: r[k] for k in fields} for r in rows[:args.limit]]
+    rows = [{k: r.get(k) for k in fields} for r in rows[:args.limit]]
     _emit(rows, args.json, _table(rows, ["fit_level", "score", "company", "title", "deadline", "apply_url"])
           if rows else "(no postings)")
+
+
+def _resume_hash(env: Env) -> str:
+    """서버의 profile_hash와 같은 값. 파일 0개면 빈 해시 (캐시 미적중 → 이전 피드백이 current=False)"""
+    if env.demo:
+        return "demo"
+    files = [env.resume_dir / f["name"] for f in resume.list_files(env.resume_dir)]
+    return source_hash(files) if files else ""
+
+
+def _posting_text(p: dict[str, Any]) -> str:
+    def items(title: str, xs: list[str] | None) -> list[str]:
+        return [f"{title}:", *(f"  - {x}" for x in xs)] if xs else [f"{title}: -"]
+
+    lines = [f"[{p['company']}] {p['title']}", f"{p['fit_level']} · {p['score']}  {p['apply_url']}"]
+    if p.get("deadline"):
+        lines.append(f"마감: {p['deadline']}")
+    lines += ["", f"요약: {p.get('summary') or '-'}", *items("자격요건", p.get("requirements")),
+              *items("우대사항", p.get("preferred")), *items("기술", p.get("tech_stack")), ""]
+    if bd := p.get("breakdown"):
+        lines += ["점수:", *(f"  {k:<10}{bd.get(k)}/{mx}" for k, mx in BREAKDOWN_MAX.items())]
+    else:
+        lines.append("점수: 항목별 판정 없음 (다음 스크래핑 때 재판정)")
+    lines += [*items("부족한 점", p.get("gaps")), f"이유: {p.get('fit_reason') or '-'}", ""]
+    if fb := p.get("feedback"):
+        lines += items(f"피드백 ({fb['created_at']}{'' if fb['current'] else ', 이전 이력서 기준'})", fb["items"])
+    else:
+        lines.append("피드백: 없음 (UI 상세 화면에서 생성)")
+    if "description" in p:
+        lines += ["", "본문:", p["description"] or "-"]
+    return "\n".join(lines)
+
+
+def _posting(args: argparse.Namespace) -> None:
+    env = _env()
+    with closing(env.read_repo()) as repo:
+        p = repo.get_posting(args.id)
+        if not p:
+            _fail("not_found", f"공고가 없거나 삭제되었습니다: {args.id}")
+        p["feedback"] = repo.feedback_for(args.id, _resume_hash(env))
+    body = {k: p.get(k) for k in DETAIL_FIELDS}
+    if args.body:
+        body["description"] = p.get("description")
+    _emit(body, args.json, _posting_text(body))
 
 
 def _progress_line(company: str, s) -> str:
@@ -383,7 +430,10 @@ def build_parser() -> argparse.ArgumentParser:
     ps.add_argument("--company", action="append", help="여러 번 지정 가능")
     ps.add_argument("--since", type=_since_arg, help="처음 수집 시각 기준 (24h, 7d)")
     ps.add_argument("--limit", type=int)
-    ps.add_argument("--full", action="store_true", help="summary, gaps 포함")
+    ps.add_argument("--full", action="store_true", help="summary, gaps, breakdown 포함")
+    pd = cmd("posting", _posting, "공고 상세 1건 (캐시된 피드백 포함)")
+    pd.add_argument("id", type=int)
+    pd.add_argument("--body", action="store_true", help="공고 본문(description) 포함")
     return ap
 
 

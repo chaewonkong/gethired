@@ -10,15 +10,16 @@ from typing import Any, ClassVar
 
 import httpx
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 
 from .api import create_app
 from .config import FRONTEND_DIST
 from .jobs import JobManager
-from .matcher import BREAKDOWN_MAX, Breakdown, Match
+from .llm import LLMResult
+from .matcher import Breakdown, Match
 from .profile import Preferences, Profile
 from .repository import Repository, set_fixed_now
 from .scrapers import RawPosting, Scraper
+from .static import SPAStaticFiles
 
 FIXED_NOW = "2026-10-18T09:00:00+09:00"
 DEMO_JUDGE_DELAY_S = 0.7
@@ -30,46 +31,78 @@ def _url(company: str, n: int) -> str:
     return f"https://example.com/demo/{company}/{n}"
 
 
+def _desc(*paragraphs: str) -> str:
+    return "\n\n".join(paragraphs)
+
+
 POSTINGS: dict[str, list[RawPosting]] = {
     "toss": [
         RawPosting(company="toss", external_id="demo-toss-1", title="서버 개발자 (Go)", apply_url=_url("toss", 1),
                    category="Engineering",
-                   description="Go로 대규모 트래픽을 처리하는 코어 서버를 개발합니다. Redis·Kubernetes 기반 운영 경험과 "
-                               "분산 시스템 설계 경험을 우대합니다. 5년 이상의 백엔드 경력을 기대합니다."),
+                   description=_desc(
+                       "Go로 대규모 트래픽을 처리하는 코어 서버를 개발합니다. 초당 수만 건의 요청을 안정적으로 처리하는 "
+                       "API와 내부 서비스를 설계하고 운영합니다.",
+                       "자격요건: Go 기반 백엔드 개발 5년 이상, Redis·Kubernetes 환경 운영 경험, "
+                       "장애 대응과 성능 개선을 직접 주도한 경험.",
+                       "우대사항: 분산 시스템 설계 경험, 관측 스택(메트릭·트레이싱) 구축 경험.")),
         RawPosting(company="toss", external_id="demo-toss-2", title="결제 플랫폼 백엔드", apply_url=_url("toss", 2),
                    category="Engineering",
-                   description="결제 승인·정산 파이프라인을 설계하고 운영합니다. Kotlin 또는 Go, PostgreSQL, "
-                               "메시지 큐 경험을 요구하며 금융 도메인 경험은 우대입니다."),
+                   description=_desc(
+                       "결제 승인·정산 파이프라인을 설계하고 운영합니다. 하루 수백만 건의 거래가 정확하게 처리되도록 "
+                       "멱등성과 정합성을 보장하는 시스템을 만듭니다.",
+                       "자격요건: Kotlin 또는 Go 백엔드 개발 경험, PostgreSQL 등 RDBMS 트랜잭션 설계 경험, "
+                       "Kafka 등 메시지 큐 운영 경험.",
+                       "우대사항: 금융·결제 도메인 경험, 정산 배치 설계 경험.")),
     ],
     "daangn": [
         RawPosting(company="daangn", external_id="demo-daangn-1", title="매칭 플랫폼 백엔드 엔지니어",
                    apply_url=_url("daangn", 1), category="Software Engineer", deadline=date(2026, 10, 22),
-                   description="이웃 간 거래·모임을 연결하는 매칭 플랫폼의 백엔드를 만듭니다. Go, Redis, Kubernetes 환경에서 "
-                               "지연과 공정성을 함께 다루는 매칭 로직을 설계·운영한 경험을 찾습니다."),
+                   description=_desc(
+                       "이웃 간 거래·모임을 연결하는 매칭 플랫폼의 백엔드를 만듭니다. 지연과 공정성을 함께 다루는 "
+                       "매칭 로직을 설계하고 실험을 통해 개선합니다.",
+                       "자격요건: Go 백엔드 개발 경험, Redis 기반 큐·캐시 설계 경험, Kubernetes 환경 운영 경험.",
+                       "우대사항: 매칭·추천 시스템 운영 경험, 실시간 대기열 설계 경험, A/B 실험 설계 경험.")),
         RawPosting(company="daangn", external_id="demo-daangn-2", title="데이터 플랫폼 엔지니어",
                    apply_url=_url("daangn", 2), category="Software Engineer",
-                   description="이벤트 수집 파이프라인과 분석용 저장소를 운영합니다. Spark·Airflow·ClickHouse 등 "
-                               "데이터 인프라 경험과 Python 기반 배치 개발 경험을 요구합니다."),
+                   description=_desc(
+                       "이벤트 수집 파이프라인과 분석용 저장소를 운영합니다. 서비스 전반의 로그를 모아 분석가와 "
+                       "엔지니어가 쓰는 데이터 기반을 만듭니다.",
+                       "자격요건: Spark·Airflow 기반 파이프라인 운영 경험, Python 배치 개발 경험, "
+                       "ClickHouse 등 컬럼형 저장소 이해.",
+                       "우대사항: 스트리밍 처리(Kafka·Flink) 경험, 데이터 품질 관리 경험.")),
     ],
     "kakao": [
         RawPosting(company="kakao", external_id="demo-kakao-1", title="게임 서버 백엔드 (Kotlin)",
                    apply_url=_url("kakao", 1), category="서버",
-                   description="모바일 게임의 매치메이킹·랭킹·보상 서버를 개발합니다. Kotlin/Spring 필수, "
-                               "실시간 트래픽 처리와 Redis 기반 세션 관리 경험을 우대합니다."),
+                   description=_desc(
+                       "모바일 게임의 매치메이킹·랭킹·보상 서버를 개발합니다. 시즌 이벤트마다 몰리는 트래픽을 견디는 "
+                       "서버 구조를 함께 설계합니다.",
+                       "자격요건: Kotlin/Spring 기반 서버 개발 경험, 실시간 트래픽 처리 경험, RDBMS 설계 경험.",
+                       "우대사항: Redis 기반 세션 관리 경험, 게임 매치메이킹 개발 경험.")),
         RawPosting(company="kakao", external_id="demo-kakao-2", title="인프라 엔지니어", apply_url=_url("kakao", 2),
                    category="인프라",
-                   description="사내 Kubernetes 플랫폼과 관측 스택을 운영합니다. Terraform·Ansible 기반 프로비저닝, "
-                               "네트워크·스토리지 운영 경험을 요구합니다."),
+                   description=_desc(
+                       "사내 Kubernetes 플랫폼과 관측 스택을 운영합니다. 여러 서비스 팀이 쓰는 클러스터의 안정성과 "
+                       "비용을 관리합니다.",
+                       "자격요건: Kubernetes 클러스터 운영 경험, Terraform·Ansible 기반 프로비저닝 경험, "
+                       "네트워크·스토리지 운영 경험.",
+                       "우대사항: 대규모 멀티 클러스터 운영 경험, 관측 스택 구축 경험.")),
     ],
     "naver": [
         RawPosting(company="naver", external_id="demo-naver-1", title="검색 플랫폼 백엔드 (Java)",
                    apply_url=_url("naver", 1), category="Tech",
-                   description="검색 색인·질의 서빙 플랫폼을 개발합니다. Java/Spring 필수, 대용량 분산 저장소 운영 경험과 "
-                               "검색 품질 개선 경험을 우대합니다."),
+                   description=_desc(
+                       "검색 색인·질의 서빙 플랫폼을 개발합니다. 수십억 건 문서의 색인 파이프라인과 저지연 질의 서빙을 "
+                       "담당합니다.",
+                       "자격요건: Java/Spring 기반 서버 개발 경험, 대용량 분산 저장소 운영 경험, 성능 튜닝 경험.",
+                       "우대사항: 검색 품질 개선 경험, Elasticsearch·Lucene 경험.")),
         RawPosting(company="naver", external_id="demo-naver-2", title="실시간 메시징 서버", apply_url=_url("naver", 2),
                    category="Tech",
-                   description="수천만 사용자가 쓰는 실시간 메시징 서버를 개발합니다. Go 또는 Java, 분산 시스템과 "
-                               "WebSocket·pub/sub 설계 경험을 요구합니다."),
+                   description=_desc(
+                       "수천만 사용자가 쓰는 실시간 메시징 서버를 개발합니다. 연결 유지와 메시지 전달 지연을 "
+                       "줄이는 구조를 설계합니다.",
+                       "자격요건: Go 또는 Java 서버 개발 경험, 분산 시스템 설계 경험, WebSocket·pub/sub 설계 경험.",
+                       "우대사항: 메시징 서비스 운영 경험, 대규모 동시 연결 처리 경험.")),
     ],
 }
 
@@ -122,53 +155,63 @@ PROFILE = Profile(
 )
 
 
-def _breakdown(score: int) -> Breakdown:
-    # plan-0014 A1 임시: score를 축 만점 순서로 채운다. B 레인이 공고별 실제 값으로 바꾼다
-    rest, parts = score, {}
-    for k, mx in BREAKDOWN_MAX.items():
-        parts[k] = min(rest, mx)
-        rest -= parts[k]
-    return Breakdown(**parts)
-
-
-def _match(eid: str, level: str, score: int, summary: str, tech: list[str], gaps: list[str], reason: str) -> Match:
+def _match(eid: str, level: str, score: int, summary: str, tech: list[str], gaps: list[str], reason: str,
+           requirements: list[str], preferred: list[str], breakdown: tuple[int, int, int, int]) -> Match:
+    skills, domain, seniority, pref = breakdown
     return Match(external_id=eid, fit_level=level, score=score, gaps=gaps, summary=summary, tech_stack=tech,
-                 fit_reason=reason, requirements=[], preferred=[], breakdown=_breakdown(score))
+                 fit_reason=reason, requirements=requirements, preferred=preferred,
+                 breakdown=Breakdown(skills=skills, domain=domain, seniority=seniority, preferred=pref))
 
 
 MATCHES: dict[str, Match] = {m.external_id: m for m in [
     _match("demo-toss-1", "strong", 90, "Go로 코어 서버를 개발하는 백엔드 포지션.", ["Go", "Redis", "Kubernetes"], [],
            "주력 스택인 Go·Redis·Kubernetes가 공고 요구와 그대로 겹치고, 대규모 매칭 서버 무중단 운영 경험이 "
-           "대규모 트래픽 처리 요구에 직접 대응합니다. 연차도 5년 이상 조건에 맞습니다."),
+           "대규모 트래픽 처리 요구에 직접 대응합니다. 연차도 5년 이상 조건에 맞습니다.",
+           ["Go 기반 백엔드 개발 5년 이상", "Redis·Kubernetes 환경 운영 경험", "장애 대응·성능 개선 주도 경험"],
+           ["분산 시스템 설계 경험", "관측 스택(메트릭·트레이싱) 구축 경험"], (35, 33, 17, 5)),
     _match("demo-toss-2", "good", 74, "결제 승인·정산 파이프라인을 만드는 백엔드 포지션.", ["Kotlin", "Go", "PostgreSQL"],
            ["domain: 금융·결제 도메인 경험 없음"],
            "Go와 PostgreSQL 경험이 핵심 요구와 맞고 분산 시스템 운영 경험도 유효하지만, 결제·정산 도메인 경험이 없어 "
-           "우대 요건에서 점수를 잃습니다."),
+           "우대 요건에서 점수를 잃습니다.",
+           ["Kotlin 또는 Go 백엔드 개발 경험", "PostgreSQL 등 RDBMS 트랜잭션 설계 경험", "Kafka 등 메시지 큐 운영 경험"],
+           ["금융·결제 도메인 경험", "정산 배치 설계 경험"], (30, 22, 18, 4)),
     _match("demo-daangn-1", "strong", 92, "이웃 매칭 플랫폼의 백엔드를 설계·운영하는 포지션.", ["Go", "Redis", "Kubernetes"], [],
            "매칭 로직의 지연과 공정성을 다루는 포지션으로, 매칭 대기 시간을 40% 줄인 큐 재설계 경험이 그대로 들어맞습니다. "
-           "Go·Redis·Kubernetes 스택도 동일합니다."),
+           "Go·Redis·Kubernetes 스택도 동일합니다.",
+           ["Go 백엔드 개발 경험", "Redis 기반 큐·캐시 설계 경험", "Kubernetes 환경 운영 경험"],
+           ["매칭·추천 시스템 운영 경험", "실시간 대기열 설계 경험", "A/B 실험 설계 경험"], (34, 35, 17, 6)),
     _match("demo-daangn-2", "stretch", 56, "이벤트 파이프라인과 분석 저장소를 운영하는 데이터 플랫폼 포지션.",
            ["Spark", "Airflow", "ClickHouse", "Python"],
            ["framework: Spark·Airflow 경험 없음", "language: Python 배치 개발이 주력이 아님"],
            "ClickHouse 운영 경험이 있어 저장소 쪽은 접점이 있지만, Spark·Airflow 기반 파이프라인과 Python 배치 개발이 "
-           "주력이 아니라 서류 리스크가 있습니다."),
+           "주력이 아니라 서류 리스크가 있습니다.",
+           ["Spark·Airflow 기반 파이프라인 운영 경험", "Python 배치 개발 경험", "ClickHouse 등 컬럼형 저장소 이해"],
+           ["스트리밍 처리(Kafka·Flink) 경험", "데이터 품질 관리 경험"], (14, 22, 16, 4)),
     _match("demo-kakao-1", "good", 70, "모바일 게임의 매치메이킹·랭킹 서버를 만드는 포지션.", ["Kotlin", "Spring", "Redis"],
            ["language: Kotlin/Spring 필수, 지원자는 Go 주력"],
            "게임 매치메이킹 도메인과 Redis 세션 관리 경험이 공고와 정확히 겹칩니다. 다만 Kotlin/Spring이 필수라 "
-           "언어 전환이 필요해 한 단계 낮췄습니다."),
+           "언어 전환이 필요해 한 단계 낮췄습니다.",
+           ["Kotlin/Spring 기반 서버 개발 경험", "실시간 트래픽 처리 경험", "RDBMS 설계 경험"],
+           ["Redis 기반 세션 관리 경험", "게임 매치메이킹 개발 경험"], (14, 33, 15, 8)),
     _match("demo-kakao-2", "stretch", 52, "사내 Kubernetes 플랫폼과 관측 스택을 운영하는 인프라 포지션.",
            ["Kubernetes", "Terraform", "Ansible"],
            ["other: 애플리케이션 개발이 아닌 인프라 운영 중심", "framework: Terraform·Ansible 경험 없음"],
            "Kubernetes 운영 경험은 맞지만 역할이 인프라 프로비저닝과 네트워크·스토리지 운영에 치우쳐 있어 "
-           "백엔드 개발 경력과는 거리가 있습니다."),
+           "백엔드 개발 경력과는 거리가 있습니다.",
+           ["Kubernetes 클러스터 운영 경험", "Terraform·Ansible 기반 프로비저닝 경험", "네트워크·스토리지 운영 경험"],
+           ["대규모 멀티 클러스터 운영 경험", "관측 스택 구축 경험"], (16, 13, 18, 5)),
     _match("demo-naver-1", "stretch", 58, "검색 색인·질의 서빙 플랫폼을 개발하는 백엔드 포지션.", ["Java", "Spring"],
            ["language: Java/Spring 필수, 지원자는 Go 주력", "domain: 검색 도메인 경험 없음"],
            "대용량 분산 저장소 운영 경험은 유효하지만 Java/Spring이 필수이고 검색 도메인 경험이 없어 "
-           "역할은 맞되 서류 통과 리스크가 큽니다."),
+           "역할은 맞되 서류 통과 리스크가 큽니다.",
+           ["Java/Spring 기반 서버 개발 경험", "대용량 분산 저장소 운영 경험", "성능 튜닝 경험"],
+           ["검색 품질 개선 경험", "Elasticsearch·Lucene 경험"], (18, 20, 18, 2)),
     _match("demo-naver-2", "good", 72, "대규모 실시간 메시징 서버를 개발하는 백엔드 포지션.", ["Go", "Java", "WebSocket"],
            ["domain: 메시징 서비스 경험 없음"],
            "Go와 분산 시스템 설계 경험이 요구와 맞고, 실시간 게임 서버 운영 경험이 실시간 메시징 트래픽 처리에 "
-           "전이됩니다. 메시징 도메인 자체는 처음이라 good에 둡니다."),
+           "전이됩니다. 메시징 도메인 자체는 처음이라 good에 둡니다.",
+           ["Go 또는 Java 서버 개발 경험", "분산 시스템 설계 경험", "WebSocket·pub/sub 설계 경험"],
+           ["메시징 서비스 운영 경험", "대규모 동시 연결 처리 경험"], (30, 19, 18, 5)),
 ]}
 
 
@@ -176,9 +219,25 @@ async def load_profile(repo: Repository) -> Profile:
     return PROFILE
 
 
+def _delay() -> float:
+    return float(os.environ.get("DEMO_JUDGE_DELAY_S", DEMO_JUDGE_DELAY_S))
+
+
 async def judge(profile: Profile, postings: list[RawPosting]) -> tuple[list[Match], list[Any]]:
-    await asyncio.sleep(float(os.environ.get("DEMO_JUDGE_DELAY_S", DEMO_JUDGE_DELAY_S)))
+    await asyncio.sleep(_delay())
     return [MATCHES[p.external_id].model_copy() for p in postings], []
+
+
+FEEDBACK = [
+    "매칭 큐 재설계: 대기 시간 40% 단축을 만든 병목 분석과 측정 방법을 수치와 함께 앞쪽에 배치",
+    "무중단 운영: 피크 동시접속 50만 환경의 배포·장애 대응 절차를 공고의 운영 요구와 연결해 서술",
+    "Kubernetes·Redis: 직접 설계한 구성(샤딩·오토스케일 기준)을 적어 사용 경험이 아닌 설계 경험으로 표현",
+]
+
+
+async def feedback(profile: Profile, posting: dict) -> tuple[list[str], LLMResult]:
+    await asyncio.sleep(_delay())
+    return list(FEEDBACK), LLMResult(data=None, cost_usd=0, duration_ms=0, input_tokens=0, output_tokens=0)
 
 
 async def logged_in(provider: str) -> bool:
@@ -211,11 +270,12 @@ def make_app() -> FastAPI:
 
     repo = Repository(db_path)
     jobs = make_jobs(repo, db_path.with_suffix(".lock"))
-    app = create_app(repo, jobs, logged_in=logged_in, resume_dir=resume_dir)
+    app = create_app(repo, jobs, logged_in=logged_in, resume_dir=resume_dir, feedback_fn=feedback,
+                     profile_loader=load_profile, profile_hash=lambda: "demo")
     app.state.db_path, app.state.resume_dir = db_path, resume_dir
     print(f"demo mode: DB_PATH={db_path} RESUME_DIR={resume_dir}", file=sys.stderr)
     if FRONTEND_DIST.exists():
-        app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+        app.mount("/", SPAStaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
     return app
 
 
