@@ -6,7 +6,7 @@ from datetime import date
 import pytest
 from fastapi.testclient import TestClient
 
-from app import config, demo, profile, repository
+from app import config, demo, matcher, profile, repository
 from app.matcher import level_for
 from app.repository import now_iso, set_fixed_now
 from app.scrapers import REGISTRY
@@ -51,7 +51,7 @@ def test_demo_matches_have_breakdown_and_lists():
     assert all(m.breakdown.total == m.score for m in demo.MATCHES.values())
     for m in demo.MATCHES.values():
         assert 3 <= len(m.requirements) <= 6 and 1 <= len(m.preferred) <= 4
-        assert all(len(x) <= 80 for x in m.requirements + m.preferred)
+        assert all(len(x.text) <= 80 and x.fit in matcher.FIT_MARKS for x in m.requirements + m.preferred)
     assert all(2 <= len(p.description.split("\n\n")) <= 3 for p in all_postings())
 
 

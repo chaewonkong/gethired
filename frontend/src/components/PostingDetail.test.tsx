@@ -45,13 +45,30 @@ const button = () => screen.queryByRole("button", { name: /피드백 생성|생�
 
 describe("PostingDetail", () => {
   it("헤더·공고·정합성을 그리고 본문은 접혀 있다", async () => {
-    stubApi(makeDetail({ id: 1, title: "Matchmaking Engineer", fit_level: "strong", score: 70, requirements: ["Go 3년"], preferred: ["Redis"], description: "원문 본문" }));
+    stubApi(makeDetail({
+      id: 1, title: "Matchmaking Engineer", fit_level: "strong", score: 70, description: "원문 본문",
+      requirements: [{ text: "Go 3년", fit: "met" }, { text: "Kotlin", fit: "unmet" }, { text: "옛 행", fit: null }],
+      preferred: [{ text: "Redis", fit: "partial" }],
+    }));
     renderDetail();
     expect(await screen.findByRole("heading", { level: 2, name: "Matchmaking Engineer" })).toBeInTheDocument();
     expect(screen.getByText("strong · 70")).toBeInTheDocument();
     expect(screen.getByText("토스")).toBeInTheDocument();
-    expect(screen.getByText("Go 3년")).toBeInTheDocument();
-    expect(screen.getByText("Redis")).toBeInTheDocument();
+
+    // 요건 표는 정합성 섹션에, 항목마다 충족 표시
+    const reqs = screen.getByRole("table", { name: "자격요건" });
+    expect(reqs.closest("section")).toHaveTextContent("정합성");
+    const rows = within(reqs).getAllByRole("row");
+    expect(rows).toHaveLength(3);
+    expect(within(rows[0]).getByText("Go 3년")).toBeInTheDocument();
+    expect(within(rows[0]).getByLabelText("충족")).toHaveTextContent("✓");
+    expect(within(rows[0]).getByLabelText("충족")).toHaveClass("met");
+    expect(within(rows[1]).getByLabelText("미충족")).toHaveTextContent("✗");
+    expect(within(rows[1]).getByLabelText("미충족")).toHaveClass("unmet");
+    expect(within(rows[2]).getByLabelText("판정 없음")).toHaveTextContent("–");
+    const pref = screen.getByRole("table", { name: "우대사항" });
+    expect(within(pref).getByText("Redis")).toBeInTheDocument();
+    expect(within(pref).getByLabelText("부분 충족")).toHaveClass("partial");
     expect(screen.getByRole("link", { name: /지원하기/ })).toHaveAttribute("target", "_blank");
 
     const bars = screen.getAllByRole("meter");

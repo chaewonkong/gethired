@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { api, Breakdown, Company, Feedback, JobRunningError, LlmError, LoginRequiredError, NotFoundError, Posting, PostingDetail as Detail } from "../api";
+import { api, Breakdown, Company, Feedback, FitMark, JobRunningError, LlmError, LoginRequiredError, NotFoundError, Posting, PostingDetail as Detail, Requirement } from "../api";
 import { ToastMessage } from "./Toast";
 import { Deadline, HideButton, StarButton } from "./PostingCard";
 
@@ -93,8 +93,6 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
       <section>
         <h3>공고</h3>
         <p className="summary">{detail.summary}</p>
-        <List title="자격요건" items={detail.requirements} />
-        <List title="우대사항" items={detail.preferred} />
         {detail.tech_stack.length > 0 && (
           <div className="chips">
             {detail.tech_stack.map((s) => (
@@ -112,6 +110,8 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
 
       <section>
         <h3>정합성</h3>
+        <FitTable title="자격요건" items={detail.requirements} />
+        <FitTable title="우대사항" items={detail.preferred} />
         <BreakdownBars breakdown={detail.breakdown} />
         <p className="reason">
           <strong>추천 이유</strong>
@@ -138,17 +138,30 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
   );
 }
 
-function List({ title, items }: { title: string; items: string[] | null }) {
+const FIT: Record<FitMark, { mark: string; label: string }> = {
+  met: { mark: "✓", label: "충족" },
+  partial: { mark: "△", label: "부분 충족" },
+  unmet: { mark: "✗", label: "미충족" },
+};
+
+/** 요건별 충족 표: ✓ 초록 · △ 주황 · ✗ 빨강. fit null(판정 전 저장 행)은 회색 – */
+export function FitTable({ title, items }: { title: string; items: Requirement[] | null }) {
   if (!items?.length) return null;
   return (
-    <>
-      <h4>{title}</h4>
-      <ul>
-        {items.map((x) => (
-          <li key={x}>{x}</li>
-        ))}
-      </ul>
-    </>
+    <table className="fit-table" aria-label={title}>
+      <caption>{title}</caption>
+      <tbody>
+        {items.map((r) => {
+          const f = r.fit ? FIT[r.fit] : { mark: "–", label: "판정 없음" };
+          return (
+            <tr key={r.text}>
+              <td className={`fit-mark ${r.fit ?? "none"}`} aria-label={f.label} title={f.label}>{f.mark}</td>
+              <td>{r.text}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
 

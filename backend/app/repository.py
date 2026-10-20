@@ -114,6 +114,9 @@ def _row(r: sqlite3.Row, keep_description: bool = False) -> dict[str, Any]:
     for k in JSON_COLUMNS:
         if d.get(k) is not None:
             d[k] = json.loads(d[k])
+    for k in ("requirements", "preferred"):  # 0.5.0 개발 중 문자열로 저장된 행 → {text, fit: None}
+        if d.get(k):
+            d[k] = [{"text": x, "fit": None} if isinstance(x, str) else x for x in d[k]]
     for k in ("bookmarked", "hidden"):
         if k in d:
             d[k] = bool(d[k])

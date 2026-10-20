@@ -15,7 +15,7 @@ from .api import create_app
 from .config import FRONTEND_DIST
 from .jobs import JobManager
 from .llm import LLMResult
-from .matcher import Breakdown, Match
+from .matcher import Breakdown, Match, Requirement
 from .profile import Preferences, Profile
 from .repository import Repository, set_fixed_now
 from .scrapers import RawPosting, Scraper
@@ -155,11 +155,15 @@ PROFILE = Profile(
 )
 
 
+Req = tuple[str, str]  # (요건, met | partial | unmet)
+
+
 def _match(eid: str, level: str, score: int, summary: str, tech: list[str], gaps: list[str], reason: str,
-           requirements: list[str], preferred: list[str], breakdown: tuple[int, int, int, int]) -> Match:
+           requirements: list[Req], preferred: list[Req], breakdown: tuple[int, int, int, int]) -> Match:
     skills, domain, seniority, pref = breakdown
     return Match(external_id=eid, fit_level=level, score=score, gaps=gaps, summary=summary, tech_stack=tech,
-                 fit_reason=reason, requirements=requirements, preferred=preferred,
+                 fit_reason=reason, requirements=[Requirement(text=t, fit=f) for t, f in requirements],
+                 preferred=[Requirement(text=t, fit=f) for t, f in preferred],
                  breakdown=Breakdown(skills=skills, domain=domain, seniority=seniority, preferred=pref))
 
 
@@ -167,51 +171,51 @@ MATCHES: dict[str, Match] = {m.external_id: m for m in [
     _match("demo-toss-1", "strong", 90, "Go로 코어 서버를 개발하는 백엔드 포지션.", ["Go", "Redis", "Kubernetes"], [],
            "주력 스택인 Go·Redis·Kubernetes가 공고 요구와 그대로 겹치고, 대규모 매칭 서버 무중단 운영 경험이 "
            "대규모 트래픽 처리 요구에 직접 대응합니다. 연차도 5년 이상 조건에 맞습니다.",
-           ["Go 기반 백엔드 개발 5년 이상", "Redis·Kubernetes 환경 운영 경험", "장애 대응·성능 개선 주도 경험"],
-           ["분산 시스템 설계 경험", "관측 스택(메트릭·트레이싱) 구축 경험"], (35, 33, 17, 5)),
+           [("Go 기반 백엔드 개발 5년 이상", "met"), ("Redis·Kubernetes 환경 운영 경험", "met"), ("장애 대응·성능 개선 주도 경험", "met")],
+           [("분산 시스템 설계 경험", "met"), ("관측 스택(메트릭·트레이싱) 구축 경험", "partial")], (35, 33, 17, 5)),
     _match("demo-toss-2", "good", 74, "결제 승인·정산 파이프라인을 만드는 백엔드 포지션.", ["Kotlin", "Go", "PostgreSQL"],
            ["domain: 금융·결제 도메인 경험 없음"],
            "Go와 PostgreSQL 경험이 핵심 요구와 맞고 분산 시스템 운영 경험도 유효하지만, 결제·정산 도메인 경험이 없어 "
            "우대 요건에서 점수를 잃습니다.",
-           ["Kotlin 또는 Go 백엔드 개발 경험", "PostgreSQL 등 RDBMS 트랜잭션 설계 경험", "Kafka 등 메시지 큐 운영 경험"],
-           ["금융·결제 도메인 경험", "정산 배치 설계 경험"], (30, 22, 18, 4)),
+           [("Kotlin 또는 Go 백엔드 개발 경험", "met"), ("PostgreSQL 등 RDBMS 트랜잭션 설계 경험", "met"), ("Kafka 등 메시지 큐 운영 경험", "partial")],
+           [("금융·결제 도메인 경험", "unmet"), ("정산 배치 설계 경험", "unmet")], (30, 22, 18, 4)),
     _match("demo-daangn-1", "strong", 92, "이웃 매칭 플랫폼의 백엔드를 설계·운영하는 포지션.", ["Go", "Redis", "Kubernetes"], [],
            "매칭 로직의 지연과 공정성을 다루는 포지션으로, 매칭 대기 시간을 40% 줄인 큐 재설계 경험이 그대로 들어맞습니다. "
            "Go·Redis·Kubernetes 스택도 동일합니다.",
-           ["Go 백엔드 개발 경험", "Redis 기반 큐·캐시 설계 경험", "Kubernetes 환경 운영 경험"],
-           ["매칭·추천 시스템 운영 경험", "실시간 대기열 설계 경험", "A/B 실험 설계 경험"], (34, 35, 17, 6)),
+           [("Go 백엔드 개발 경험", "met"), ("Redis 기반 큐·캐시 설계 경험", "met"), ("Kubernetes 환경 운영 경험", "met")],
+           [("매칭·추천 시스템 운영 경험", "met"), ("실시간 대기열 설계 경험", "met"), ("A/B 실험 설계 경험", "partial")], (34, 35, 17, 6)),
     _match("demo-daangn-2", "stretch", 56, "이벤트 파이프라인과 분석 저장소를 운영하는 데이터 플랫폼 포지션.",
            ["Spark", "Airflow", "ClickHouse", "Python"],
            ["framework: Spark·Airflow 경험 없음", "language: Python 배치 개발이 주력이 아님"],
            "ClickHouse 운영 경험이 있어 저장소 쪽은 접점이 있지만, Spark·Airflow 기반 파이프라인과 Python 배치 개발이 "
            "주력이 아니라 서류 리스크가 있습니다.",
-           ["Spark·Airflow 기반 파이프라인 운영 경험", "Python 배치 개발 경험", "ClickHouse 등 컬럼형 저장소 이해"],
-           ["스트리밍 처리(Kafka·Flink) 경험", "데이터 품질 관리 경험"], (14, 22, 16, 4)),
+           [("Spark·Airflow 기반 파이프라인 운영 경험", "unmet"), ("Python 배치 개발 경험", "partial"), ("ClickHouse 등 컬럼형 저장소 이해", "met")],
+           [("스트리밍 처리(Kafka·Flink) 경험", "unmet"), ("데이터 품질 관리 경험", "partial")], (14, 22, 16, 4)),
     _match("demo-kakao-1", "good", 70, "모바일 게임의 매치메이킹·랭킹 서버를 만드는 포지션.", ["Kotlin", "Spring", "Redis"],
            ["language: Kotlin/Spring 필수, 지원자는 Go 주력"],
            "게임 매치메이킹 도메인과 Redis 세션 관리 경험이 공고와 정확히 겹칩니다. 다만 Kotlin/Spring이 필수라 "
            "언어 전환이 필요해 한 단계 낮췄습니다.",
-           ["Kotlin/Spring 기반 서버 개발 경험", "실시간 트래픽 처리 경험", "RDBMS 설계 경험"],
-           ["Redis 기반 세션 관리 경험", "게임 매치메이킹 개발 경험"], (14, 33, 15, 8)),
+           [("Kotlin/Spring 기반 서버 개발 경험", "unmet"), ("실시간 트래픽 처리 경험", "met"), ("RDBMS 설계 경험", "met")],
+           [("Redis 기반 세션 관리 경험", "met"), ("게임 매치메이킹 개발 경험", "met")], (14, 33, 15, 8)),
     _match("demo-kakao-2", "stretch", 52, "사내 Kubernetes 플랫폼과 관측 스택을 운영하는 인프라 포지션.",
            ["Kubernetes", "Terraform", "Ansible"],
            ["other: 애플리케이션 개발이 아닌 인프라 운영 중심", "framework: Terraform·Ansible 경험 없음"],
            "Kubernetes 운영 경험은 맞지만 역할이 인프라 프로비저닝과 네트워크·스토리지 운영에 치우쳐 있어 "
            "백엔드 개발 경력과는 거리가 있습니다.",
-           ["Kubernetes 클러스터 운영 경험", "Terraform·Ansible 기반 프로비저닝 경험", "네트워크·스토리지 운영 경험"],
-           ["대규모 멀티 클러스터 운영 경험", "관측 스택 구축 경험"], (16, 13, 18, 5)),
+           [("Kubernetes 클러스터 운영 경험", "met"), ("Terraform·Ansible 기반 프로비저닝 경험", "unmet"), ("네트워크·스토리지 운영 경험", "partial")],
+           [("대규모 멀티 클러스터 운영 경험", "partial"), ("관측 스택 구축 경험", "partial")], (16, 13, 18, 5)),
     _match("demo-naver-1", "stretch", 58, "검색 색인·질의 서빙 플랫폼을 개발하는 백엔드 포지션.", ["Java", "Spring"],
            ["language: Java/Spring 필수, 지원자는 Go 주력", "domain: 검색 도메인 경험 없음"],
            "대용량 분산 저장소 운영 경험은 유효하지만 Java/Spring이 필수이고 검색 도메인 경험이 없어 "
            "역할은 맞되 서류 통과 리스크가 큽니다.",
-           ["Java/Spring 기반 서버 개발 경험", "대용량 분산 저장소 운영 경험", "성능 튜닝 경험"],
-           ["검색 품질 개선 경험", "Elasticsearch·Lucene 경험"], (18, 20, 18, 2)),
+           [("Java/Spring 기반 서버 개발 경험", "unmet"), ("대용량 분산 저장소 운영 경험", "met"), ("성능 튜닝 경험", "met")],
+           [("검색 품질 개선 경험", "unmet"), ("Elasticsearch·Lucene 경험", "unmet")], (18, 20, 18, 2)),
     _match("demo-naver-2", "good", 72, "대규모 실시간 메시징 서버를 개발하는 백엔드 포지션.", ["Go", "Java", "WebSocket"],
            ["domain: 메시징 서비스 경험 없음"],
            "Go와 분산 시스템 설계 경험이 요구와 맞고, 실시간 게임 서버 운영 경험이 실시간 메시징 트래픽 처리에 "
            "전이됩니다. 메시징 도메인 자체는 처음이라 good에 둡니다.",
-           ["Go 또는 Java 서버 개발 경험", "분산 시스템 설계 경험", "WebSocket·pub/sub 설계 경험"],
-           ["메시징 서비스 운영 경험", "대규모 동시 연결 처리 경험"], (30, 19, 18, 5)),
+           [("Go 또는 Java 서버 개발 경험", "met"), ("분산 시스템 설계 경험", "met"), ("WebSocket·pub/sub 설계 경험", "partial")],
+           [("메시징 서비스 운영 경험", "unmet"), ("대규모 동시 연결 처리 경험", "met")], (30, 19, 18, 5)),
 ]}
 
 

@@ -16,6 +16,7 @@ GAP_KINDS = ("role", "language", "framework", "seniority", "domain", "other")
 DESC_LIMIT = 6000  # 우대사항은 본문 뒤쪽에 있어 2500자로는 토스·당근·크래프톤 공고 절반 이상이 잘렸다
 LIST_MAX_ITEMS, LIST_MAX_CHARS = 8, 80  # requirements·preferred. 스키마로 강제하지 않고 judge_batch가 자른다
 BREAKDOWN_MAX = {"skills": 35, "domain": 35, "seniority": 20, "preferred": 10}
+FIT_MARKS = ("met", "partial", "unmet")  # 요건 항목별 충족: V / △ / X
 
 # 인접 직군: 서로 대체 지원이 현실적인 쌍만. exclude 금지, stretch 이상. 대칭 (test_matcher가 고정)
 ADJACENT: dict[str, tuple[str, ...]] = {
@@ -57,6 +58,12 @@ class Breakdown(BaseModel):
         return sum(getattr(self, k) for k in BREAKDOWN_MAX)
 
 
+class Requirement(BaseModel):
+    """공고의 요건 한 줄과 지원자 충족 여부"""
+    text: str
+    fit: Literal["met", "partial", "unmet"]
+
+
 class Match(BaseModel):
     external_id: str
     fit_level: Literal["strong", "good", "stretch", "exclude"]
@@ -65,8 +72,8 @@ class Match(BaseModel):
     gaps: list[str]
     summary: str = Field(min_length=10)
     tech_stack: list[str]
-    requirements: list[str]
-    preferred: list[str]
+    requirements: list[Requirement]
+    preferred: list[Requirement]
     fit_reason: str = Field(min_length=20)
 
     @property
@@ -75,8 +82,10 @@ class Match(BaseModel):
 
     def normalize(self) -> None:
         """목록 상한·축 범위·합계를 코드에서 맞춘다. score 구간이 fit_level보다 우선"""
-        self.requirements = [s[:LIST_MAX_CHARS] for s in self.requirements[:LIST_MAX_ITEMS]]
-        self.preferred = [s[:LIST_MAX_CHARS] for s in self.preferred[:LIST_MAX_ITEMS]]
+        for xs in (self.requirements, self.preferred):
+            del xs[LIST_MAX_ITEMS:]
+            for r in xs:
+                r.text = r.text[:LIST_MAX_CHARS]
         self.breakdown.clamp()
         if self.breakdown.total != self.score:
             self.score = self.breakdown.total
@@ -116,7 +125,8 @@ score 배점: 핵심 기술 일치(35), 도메인/업무 성격 일치(35), 연�
 - gaps: 부족한 점을 "종류: 설명" 형식으로. 종류는 {", ".join(GAP_KINDS)} 중 하나. 예: "role: iOS 전담, 지원자는 웹 프론트엔드", "language: Kotlin/Spring 필수, 지원자는 Go 주력". 없으면 빈 리스트.
 - summary: 공고가 요구하는 역할을 한국어 1~2문장으로.
 - tech_stack: 공고에 명시된 기술만. 추측 금지. 없으면 빈 리스트.
-- requirements: 공고의 자격요건(필수)을 한국어 한 줄씩, 최대 {LIST_MAX_ITEMS}개, 각 {LIST_MAX_CHARS}자 이내. 공고에 없으면 빈 리스트. 추측 금지.
+- requirements: 공고의 자격요건(필수)을 항목마다 {{text, fit}}으로. text는 한국어 한 줄({LIST_MAX_CHARS}자 이내), 최대 {LIST_MAX_ITEMS}개. 공고에 없으면 빈 리스트. 추측 금지.
+  fit은 지원자 프로필 기준 충족 여부: met(프로필에 직접 근거가 있음) / partial(유사·인접 경험이거나 일부만 충족, 연차 근접 포함) / unmet(근거 없음).
 - preferred: 우대사항을 같은 형식으로. 없으면 빈 리스트.
 - fit_reason: 왜 맞는지/안 맞는지를 지원자 프로필의 구체 경험(프로젝트, 기술, 성과)을 인용해 한국어 2~3문장으로. 일반론 금지. exclude는 1문장으로 짧게.
 - 입력된 모든 공고에 대해 정확히 하나씩, external_id를 그대로 써서 응답합니다. 누락·추가 금지."""
@@ -167,6 +177,6 @@ def to_row(p: RawPosting, m: Match, now: str) -> dict:
         "tech_stack": m.tech_stack, "fit_level": m.fit_level, "score": m.score, "gaps": m.gaps,
         "fit_reason": m.fit_reason, "apply_url": p.apply_url,
         "deadline": p.deadline.isoformat() if p.deadline else None, "category": p.category, "scraped_at": now,
-        "description": p.description, "requirements": m.requirements, "preferred": m.preferred,
-        "breakdown": m.breakdown.model_dump(),
+        "description": p.description, "requirements": [r.model_dump() for r in m.requirements],
+        "preferred": [r.model_dump() for r in m.preferred], "breakdown": m.breakdown.model_dump(),
     }

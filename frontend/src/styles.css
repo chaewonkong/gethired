@@ -173,6 +173,15 @@ select {
 details.body { margin-top: 12px; font-size: 14px; }
 details summary { cursor: pointer; color: var(--accent-strong); font-size: 13px; font-weight: 600; }
 details.body .body-text { white-space: pre-wrap; margin-top: 8px; padding: 12px; background: #f9fafb; border-radius: 6px; color: var(--text); line-height: 1.55; }
+.fit-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 14px; }
+.fit-table caption { text-align: left; margin-bottom: 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.fit-table td { padding: 5px 0; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.4; }
+.fit-table tr:first-child td { border-top: 0; }
+.fit-table .fit-mark { width: 24px; padding-right: 8px; font-weight: 700; text-align: center; }
+.fit-mark.met { color: #16a34a; }
+.fit-mark.partial { color: #d97706; }
+.fit-mark.unmet { color: #dc2626; }
+.fit-mark.none { color: var(--muted); }
 .bars { display: grid; gap: 8px; margin-bottom: 12px; }
 .bar-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; font-size: 13px; }
 .bar-value { color: var(--muted); font-variant-numeric: tabular-nums; }

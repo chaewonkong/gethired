@@ -32,8 +32,8 @@ export function makeDetail(over: Partial<PostingDetail> = {}): PostingDetail {
   return {
     ...makePosting(over),
     description: "본문",
-    requirements: ["Go 3년 이상"],
-    preferred: ["Kubernetes 운영 경험"],
+    requirements: [{ text: "Go 3년 이상", fit: "met" }],
+    preferred: [{ text: "Kubernetes 운영 경험", fit: "partial" }],
     breakdown: { skills: 30, domain: 20, seniority: 15, preferred: 5 },
     feedback: null,
     ...over,

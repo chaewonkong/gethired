@@ -266,3 +266,11 @@ def test_strict_batch_breakdown_nested_def_is_strict():
     match = strict["$defs"]["Match"]
     assert match["properties"]["breakdown"] == {"$ref": "#/$defs/Breakdown"}
     assert set(match["required"]) >= {"breakdown", "requirements", "preferred"}
+
+
+def test_strict_batch_requirement_def_is_strict():
+    strict = llm.to_strict_schema(Batch.model_json_schema())
+    req = strict["$defs"]["Requirement"]
+    assert req["additionalProperties"] is False and req["required"] == ["text", "fit"]
+    assert req["properties"]["fit"] == {"enum": ["met", "partial", "unmet"], "type": "string"}
+    assert strict["$defs"]["Match"]["properties"]["requirements"] == {"items": {"$ref": "#/$defs/Requirement"}, "type": "array"}

@@ -2,6 +2,7 @@ import asyncio
 import json
 
 import pytest
+from pydantic import ValidationError
 
 from app import matcher
 from app.llm import LLMResult
@@ -47,8 +48,8 @@ def test_batch_accepts_role_gap():
 def match_data(**kw) -> dict:
     base = {"external_id": "p1", "fit_level": "strong", "score": 90,
             "breakdown": {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}, "gaps": [],
-            "summary": "웹 프론트엔드 포지션", "tech_stack": ["React"], "requirements": ["React 3년 이상"],
-            "preferred": ["TypeScript"], "fit_reason": "React 4년 경력이 공고의 핵심 요건과 정확히 맞는다."}
+            "summary": "웹 프론트엔드 포지션", "tech_stack": ["React"], "requirements": [{"text": "React 3년 이상", "fit": "met"}],
+            "preferred": [{"text": "TypeScript", "fit": "partial"}], "fit_reason": "React 4년 경력이 공고의 핵심 요건과 정확히 맞는다."}
     return {**base, **kw}
 
 
@@ -73,15 +74,22 @@ def test_normalize_clamps_out_of_range_axes_without_validation_error():
 
 
 def test_normalize_truncates_lists():
-    m = Match.model_validate(match_data(requirements=[f"요건 {i} " + "x" * 100 for i in range(10)],
-                                        preferred=["a"] * 9))
+    m = Match.model_validate(match_data(requirements=[{"text": f"요건 {i} " + "x" * 100, "fit": "met"} for i in range(10)],
+                                        preferred=[{"text": "a", "fit": "unmet"}] * 9))
     m.normalize()
-    assert len(m.requirements) == 8 and all(len(s) == 80 for s in m.requirements)
+    assert len(m.requirements) == 8 and all(len(r.text) == 80 and r.fit == "met" for r in m.requirements)
     assert len(m.preferred) == 8
 
 
+def test_requirement_fit_is_enum():
+    with pytest.raises(ValidationError):
+        Match.model_validate(match_data(requirements=[{"text": "x", "fit": "maybe"}]))
+    with pytest.raises(ValidationError):
+        Match.model_validate(match_data(requirements=["문자열만"]))
+
+
 def test_system_prompt_mentions_new_outputs():
-    for needle in ("breakdown", "requirements", "preferred", "80자", "8개", "합계 = score"):
+    for needle in ("breakdown", "requirements", "preferred", "80자", "8개", "합계 = score", "met", "partial", "unmet"):
         assert needle in SYSTEM
 
 
@@ -94,7 +102,8 @@ def test_render_uses_6000_char_limit():
 def test_to_row_includes_description_and_new_fields():
     p = RawPosting(company="toss", external_id="p1", title="t", apply_url="https://x", description="본문")
     row = matcher.to_row(p, Match.model_validate(match_data()), "T1")
-    assert row["description"] == "본문" and row["requirements"] == ["React 3년 이상"] and row["preferred"] == ["TypeScript"]
+    assert row["description"] == "본문" and row["requirements"] == [{"text": "React 3년 이상", "fit": "met"}]
+    assert row["preferred"] == [{"text": "TypeScript", "fit": "partial"}]
     assert row["breakdown"] == {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}
     p2 = RawPosting(company="toss", external_id="p2", title="t", apply_url="https://x")
     assert matcher.to_row(p2, Match.model_validate(match_data()), "T1")["description"] is None

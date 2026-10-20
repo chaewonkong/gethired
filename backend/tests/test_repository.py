@@ -348,9 +348,10 @@ def test_readonly_old_db_tolerates_missing_columns_and_table(tmp_path):
 def test_upsert_stores_and_reads_0014_fields():
     repo = Repository()
     bd = {"skills": 30, "domain": 25, "seniority": 10, "preferred": 5}
-    repo.upsert_postings([row(eid="a", description="본문", requirements=["Go 3년"], preferred=["k8s"], breakdown=bd)])
+    req, pref = [{"text": "Go 3년", "fit": "met"}], [{"text": "k8s", "fit": "partial"}]
+    repo.upsert_postings([row(eid="a", description="본문", requirements=req, preferred=pref, breakdown=bd)])
     listed = repo.list_postings()[0]
-    assert listed["requirements"] == ["Go 3년"] and listed["preferred"] == ["k8s"] and listed["breakdown"] == bd
+    assert listed["requirements"] == req and listed["preferred"] == pref and listed["breakdown"] == bd
     assert "description" not in listed
     detail = repo.get_posting(listed["id"])
     assert detail["description"] == "본문" and detail["bookmarked"] is False and detail["hidden"] is False
@@ -408,3 +409,10 @@ def test_feedback_for_current_previous_none():
     assert repo.feedback_for(a, "h2")["current"] is False
     repo.set_feedback(a, "h1", ["new: 2"], "T2")  # 같은 해시 덮어쓰기
     assert repo.feedback_for(a, "h1")["items"] == ["new: 2"]
+
+
+def test_row_normalizes_string_requirements_to_objects():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a", requirements=["문자열 요건"], preferred=[])])
+    got = repo.list_postings()[0]
+    assert got["requirements"] == [{"text": "문자열 요건", "fit": None}] and got["preferred"] == []

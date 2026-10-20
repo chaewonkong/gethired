@@ -29,6 +29,13 @@ export interface Breakdown {
   preferred: number;
 }
 
+/** 요건 한 줄과 판정 시 충족 여부. 0.5.0 개발 중 문자열로 저장된 행은 fit null */
+export type FitMark = "met" | "partial" | "unmet";
+export interface Requirement {
+  text: string;
+  fit: FitMark | null;
+}
+
 export interface Feedback {
   items: string[];
   created_at: string;
@@ -37,8 +44,8 @@ export interface Feedback {
 
 export interface PostingDetail extends Posting {
   description: string | null;
-  requirements: string[] | null;
-  preferred: string[] | null;
+  requirements: Requirement[] | null;
+  preferred: Requirement[] | null;
   feedback: Feedback | null;
 }
 

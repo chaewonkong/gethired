@@ -36,7 +36,8 @@ def render(posting: dict) -> str:
         lines.append(f"요약: {posting['summary']}")
     for key, label in (("requirements", "자격요건"), ("preferred", "우대사항")):
         if posting.get(key):
-            lines.append(f"{label}:\n" + "\n".join(f"- {s}" for s in posting[key]))
+            lines.append(f"{label} (판정 시 충족 여부):\n" + "\n".join(
+                f"- {r['text']} [{r.get('fit') or '?'}]" if isinstance(r, dict) else f"- {r}" for r in posting[key]))
     lines.append("gaps:\n" + "\n".join(f"- {g}" for g in posting.get("gaps") or []))
     return "<posting>\n" + "\n".join(lines) + "\n</posting>"
 

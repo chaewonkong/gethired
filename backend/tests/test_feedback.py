@@ -13,7 +13,7 @@ PROFILE = Profile(name="t", seniority="senior", years_experience=5, core_skills=
                   dealbreakers=[], summary="s")
 
 POSTING = {"id": 1, "company": "a", "title": "Backend", "summary": "요약문", "gaps": ["Kafka 경험 없음"],
-           "requirements": ["Go 3년 이상"], "preferred": ["Kafka 운영 경험"], "description": "본문" * 4000}
+           "requirements": [{"text": "Go 3년 이상", "fit": "met"}], "preferred": [{"text": "Kafka 운영 경험", "fit": "unmet"}], "description": "본문" * 4000}
 
 
 def fake_ask(items: list[str], calls: list):
@@ -37,7 +37,7 @@ def test_prompt_has_profile_full_body_gaps_and_system(monkeypatch):
     assert schema == feedback.Feedback.model_json_schema()
     assert "ClickHouse 마이그레이션" in prompt
     assert POSTING["description"] in prompt  # DESC_LIMIT 없이 전부
-    assert "Kafka 경험 없음" in prompt and "Go 3년 이상" in prompt and "Kafka 운영 경험" in prompt
+    assert "Kafka 경험 없음" in prompt and "Go 3년 이상 [met]" in prompt and "Kafka 운영 경험 [unmet]" in prompt
 
 
 def test_legacy_posting_without_description_uses_summary_and_requirements(monkeypatch):

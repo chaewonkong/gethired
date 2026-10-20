@@ -30,6 +30,7 @@ LOGIN_COMMAND = {"claude": "claude login", "codex": f"{config.CODEX_BIN} login"}
 CHUNK = 1 << 20
 PROGRESS_S = 1.0
 POSTING_FIELDS = ("id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at")
+FIT_MARK = {"met": "V", "partial": "△", "unmet": "X"}  # 요건 충족 표시 (사람용 출력)
 FULL_FIELDS = (*POSTING_FIELDS, "summary", "gaps", "breakdown")  # 본문은 posting --body로만
 DETAIL_FIELDS = (*FULL_FIELDS, "tech_stack", "requirements", "preferred", "feedback")
 
@@ -284,11 +285,15 @@ def _posting_text(p: dict[str, Any]) -> str:
     def items(title: str, xs: list[str] | None) -> list[str]:
         return [f"{title}:", *(f"  - {x}" for x in xs)] if xs else [f"{title}: -"]
 
+    def reqs(title: str, xs: list[dict] | None) -> list[str]:
+        return [f"{title}:", *(f"  {FIT_MARK.get(r.get('fit'), '?')} {r['text']}" for r in xs)] if xs else [f"{title}: -"]
+
     lines = [f"[{p['company']}] {p['title']}", f"{p['fit_level']} · {p['score']}  {p['apply_url']}"]
     if p.get("deadline"):
         lines.append(f"마감: {p['deadline']}")
-    lines += ["", f"요약: {p.get('summary') or '-'}", *items("자격요건", p.get("requirements")),
-              *items("우대사항", p.get("preferred")), *items("기술", p.get("tech_stack")), ""]
+    lines += ["", f"요약: {p.get('summary') or '-'}", *items("기술", p.get("tech_stack")), "",
+              *reqs("자격요건 (V 충족 · △ 부분 · X 미충족)", p.get("requirements")),
+              *reqs("우대사항", p.get("preferred")), ""]
     if bd := p.get("breakdown"):
         lines += ["점수:", *(f"  {k:<10}{bd.get(k)}/{mx}" for k, mx in BREAKDOWN_MAX.items())]
     else:
