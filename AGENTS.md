@@ -12,7 +12,7 @@ job-posting/
 |-- backend/                  # FastAPI + sqlite
 |   |-- app/
 |   |   |-- __main__.py       # 콘솔 진입점 gethired → cli.main
-|   |   |-- cli.py            # 서브커맨드 (serve·auth·reset-db·paths·status·resume·provider·companies·interest·scrape·postings), --json
+|   |   |-- cli.py            # 서브커맨드 (serve·auth·reset-db·paths·status·resume·provider·companies·interest·scrape·postings·posting), --json
 |   |   |-- static/           # 프론트 빌드 산출물 (gitignore, 휠에 포함)
 |   |   |-- scrapers/         # 회사별 수집기 (+ base.py, greenhouse.py)
 |   |   |-- api.py            # REST API
@@ -20,10 +20,12 @@ job-posting/
 |   |   |-- profile.py        # 이력서 -> 프로필
 |   |   |-- resume.py         # resume/ 파일 목록·저장·삭제, md·pdf 텍스트 추출
 |   |   |-- matcher.py        # LLM 판정
+|   |   |-- feedback.py       # 피드백 LLM 호출 (공고 기준 이력서 보강점)
 |   |   |-- llm.py            # LLM 호출 (Claude Agent SDK / Codex CLI)
 |   |   |-- auth.py           # provider CLI 로그인 확인
 |   |   |-- repository.py     # sqlite 접근
 |   |   |-- demo.py           # 데모 모드 (가짜 스크래퍼·판정, 고정 시각) — README GIF 녹화용
+|   |   |-- static.py         # SPA fallback (클라이언트 경로 → index.html)
 |   |   `-- main.py           # 앱 조립 + 프론트 정적 서빙
 |   |-- scripts/              # 디버그용 단독 실행 (just scrape / just match)
 |   |-- tests/                # pytest
@@ -31,9 +33,9 @@ job-posting/
 |   `-- data/app.db           # 개발용 DB (gitignore). 설치형은 platformdirs 사용자 디렉토리
 |-- frontend/                 # React + Vite
 |   `-- src/
-|       |-- App.tsx           # 상태 · 탭 · 폴링
+|       |-- App.tsx           # 상태 · 라우트(탭·상세) · 폴링
 |       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
+|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 상세(PostingDetail), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
 |       |-- test/             # vitest 설정 · 픽스처
 |       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
 |-- .claude-plugin/          # marketplace.json (Claude Code 마켓플레이스, plugins[0] → ./plugin)

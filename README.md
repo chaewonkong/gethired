@@ -14,6 +14,8 @@
 
 지원 직군: 백엔드·프론트엔드·모바일·데이터·ML·인프라·보안·QA·임베디드·게임 클라이언트 등 소프트웨어 엔지니어링 전반. 직군은 이력서에서 읽고, 디자인·PM 등 비개발 직군 공고는 판정에서 제외된다.
 
+카드를 누르면 공고 상세 화면으로 간다. 자격요건·우대사항·기술 스택과 함께 이력서와의 정합성을 축별 막대(핵심 기술 35 · 도메인 35 · 연차 20 · 우대사항 10, 합계 = score)로 보여주고, 공고 원문은 맨 아래에 접어 둔다. **피드백 생성** 버튼을 누르면 그때 LLM이 이 공고 기준으로 이력서에서 보강·강조할 점 3~5개를 만들어 준다. 결과는 이력서별로 저장돼 다시 열면 바로 보이고, 이력서가 바뀌면 이전 피드백은 접히고 버튼이 다시 나타난다.
+
 ![데모: 이력서 업로드부터 매칭 결과까지](docs/demo.gif)
 
 - LLM은 Claude Agent SDK + 로컬 Claude Code 로그인 세션(`claude login`)을 사용. API key 불필요. 개인 로컬 용도 전용
@@ -62,6 +64,7 @@ $ uvx gethired reset-db                # 공고·판정 이력 삭제
 | `uvx gethired interest add\|rm <company...>` | 관심회사 설정 |
 | `uvx gethired scrape [company...]` | 스크래핑·판정을 끝까지 실행. 진행은 회사별로 stderr |
 | `uvx gethired postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고 (숨김 제외·관심회사만·score순) |
+| `uvx gethired posting <id> [--body]` | 공고 상세 1건: 요건·우대사항·축별 점수·캐시된 피드백. `--body`면 공고 원문 포함 (피드백 생성은 UI에서만) |
 
 - exit code: 0 성공(일부 회사 실패는 `failed`) · 1 실패·입력 오류·다른 곳에서 실행 중(`job_running`) · 3 로그인 필요(`login_command`) · 130 Ctrl+C
 - UI와 CLI는 같은 DB를 쓴다. 스크래핑은 한 번에 하나만 (파일 락. Windows는 **미검증**)
@@ -109,7 +112,7 @@ $ claude plugin marketplace add chaewonkong/gethired
 $ claude plugin install gethired@gethired
 ```
 - 호출: `/gethired:jobs`, 또는 구직·공고·이직 관련 질문이면 자동 발동
-- 읽기 전용이다 (`status`·`postings`·`companies`). 스크래핑이 필요하면 터미널에서 `uvx gethired scrape`를 직접 실행하라고 안내한다
+- 읽기 전용이다 (`status`·`postings`·`companies`·`posting`). 스크래핑이 필요하면 터미널에서 `uvx gethired scrape`를 직접 실행하라고 안내한다
 - sandbox에서는 uv 캐시·PyPI 접근이 막혀 sandbox 밖 실행 승인을 매번 묻는다. `~/.claude/settings.json`의 `permissions.allow`에 `Bash(uvx --from gethired~=0.4.0 gethired *)`를 추가하면 이 명령만 승인 없이 sandbox 밖에서 실행된다
   - sandbox 안에서 돌리려면 대신 `sandbox.filesystem.allowWrite`에 `~/.cache/uv`·`~/.local/share/uv`, `sandbox.network.allowedDomains`에 `pypi.org`·`files.pythonhosted.org`를 넣는다. 단 sandbox 안의 모든 명령이 uv 캐시를 쓸 수 있게 되므로 권장하지 않는다
 - Codex 등 다른 에이전트: [`plugin/skills/jobs/SKILL.md`](plugin/skills/jobs/SKILL.md)를 그 에이전트의 스킬 디렉토리(Codex: `~/.agents/skills/gethired-jobs/SKILL.md`)에 복사한다
@@ -129,7 +132,7 @@ $ claude plugin install gethired@gethired
 ```
 - 수집은 사이트별로 짠 일반 코드, LLM은 프로필 추출과 판정에만 쓴다
 - LLM은 API key 없이 로컬 `claude login` 세션으로 호출한다
-- 한 번 판정한 공고는 다시 판정하지 않아 두 번째 실행부터 빠르고 저렴하다
+- 한 번 판정한 공고는 다시 판정하지 않아 두 번째 실행부터 빠르고 저렴하다 (축별 점수가 없는 이전 버전 판정만 1회 재판정)
 - 채용 사이트에서 내려간 공고는 목록에서 사라지고, 다시 올라오면 북마크와 함께 돌아온다
 - 세션이 만료되면 중단되고, 다음 실행에서 판정 못 한 공고만 이어서 판정한다
 
