@@ -6,7 +6,7 @@ from datetime import date
 import pytest
 from fastapi.testclient import TestClient
 
-from app import config, demo, repository
+from app import config, demo, profile, repository
 from app.matcher import level_for
 from app.repository import now_iso, set_fixed_now
 from app.scrapers import REGISTRY
@@ -47,6 +47,20 @@ def test_demo_postings_and_judgments():
     assert [p.title for p in soon] == ["매칭 플랫폼 백엔드 엔지니어"]
 
 
+def test_demo_matches_have_breakdown_and_lists():
+    assert all(m.breakdown.total == m.score for m in demo.MATCHES.values())
+    for m in demo.MATCHES.values():
+        assert 3 <= len(m.requirements) <= 6 and 1 <= len(m.preferred) <= 4
+        assert all(len(x) <= 80 for x in m.requirements + m.preferred)
+    assert all(2 <= len(p.description.split("\n\n")) <= 3 for p in all_postings())
+
+
+def test_demo_feedback(monkeypatch):
+    monkeypatch.setenv("DEMO_JUDGE_DELAY_S", "0")
+    items, result = asyncio.run(demo.feedback(demo.PROFILE, {}))
+    assert len(items) == 3 and result.cost_usd == 0 and result.data is None
+
+
 def test_demo_profile_is_fictional():
     assert demo.PROFILE.name == "홍길동"
 
@@ -68,6 +82,9 @@ def wait_job(client: TestClient, job_id: str) -> dict:
 
 
 def test_make_app_golden_path(tmp_path, monkeypatch):
+    async def boom(files):
+        raise AssertionError("profile.extract called in demo")
+    monkeypatch.setattr(profile, "extract", boom)
     monkeypatch.setenv("DEMO_JUDGE_DELAY_S", "0")
     monkeypatch.setenv("DB_PATH", str(tmp_path / "db" / "app.db"))
     monkeypatch.setenv("RESUME_DIR", str(tmp_path / "resume"))
@@ -94,6 +111,18 @@ def test_make_app_golden_path(tmp_path, monkeypatch):
         assert len(postings) == 8
         assert Counter(p["fit_level"] for p in postings) == {"strong": 2, "good": 3, "stretch": 3}
         assert all(p["scraped_at"] == demo.FIXED_NOW for p in postings)
+
+        pid = postings[0]["id"]
+        detail = client.get(f"/api/postings/{pid}").json()
+        assert detail["description"] and detail["breakdown"] and detail["requirements"] and detail["feedback"] is None
+        monkeypatch.setenv("DEMO_JUDGE_DELAY_S", "0.3")
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 200 and len(r.json()["feedback"]["items"]) == 3
+        start = time.monotonic()
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 200 and r.json()["feedback"]["current"] is True
+        assert time.monotonic() - start < 0.3  # 캐시 적중: 지연 없이 반환
+        assert client.get(f"/api/postings/{pid}").json()["feedback"]["items"] == r.json()["feedback"]["items"]
 
         for c in client.get("/api/companies").json():
             assert c["last_run"]["status"] == "done"

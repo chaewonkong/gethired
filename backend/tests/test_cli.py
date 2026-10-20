@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import select
 import signal
 import sqlite3
@@ -17,7 +18,7 @@ from app import cli, config, demo
 from app.jobs import JobManager
 from app.llm import LLMAuthError
 from app.matcher import Breakdown, Match
-from app.repository import Repository, set_fixed_now
+from app.repository import SCHEMA, Repository, set_fixed_now
 from app.scrapers import REGISTRY, RawPosting, Scraper
 
 BACKEND = Path(__file__).parent.parent
@@ -26,7 +27,8 @@ FIXTURES = BACKEND / "fixtures"
 STATUS_KEYS = {"resume_count", "provider", "chosen", "interests", "last_success", "stale", "job_running"}
 RUN_KEYS = {"id", "company", "started_at", "finished_at", "status", "error", "fetched_count"}
 POSTING_KEYS = {"id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at"}
-FULL_KEYS = POSTING_KEYS | {"summary", "gaps"}
+FULL_KEYS = POSTING_KEYS | {"summary", "gaps", "breakdown"}
+DETAIL_KEYS = FULL_KEYS | {"tech_stack", "requirements", "preferred", "feedback"}
 COMPANY_KEYS = {"company", "display_name", "careers_url", "last_run", "interested"}
 JOB_KEYS = {"job_id", "status", "provider", "started_at", "finished_at", "cost_usd", "error", "companies"}
 STATE_KEYS = {"status", "fetched", "new", "stored", "excluded", "deleted", "error"}
@@ -274,6 +276,12 @@ def test_json_key_sets(capfd, fake, tmp_path):
     assert len(rows) == 2 and all(set(r) == POSTING_KEYS for r in rows)
     _, rows = run(capfd, "postings", "--json", "--full")
     assert all(set(r) == FULL_KEYS for r in rows) and rows[0]["gaps"] == ["g"]
+    assert rows[0]["breakdown"] == {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}
+
+    code, detail = run(capfd, "posting", str(rows[0]["id"]), "--json")
+    assert code == 0 and set(detail) == DETAIL_KEYS and detail["feedback"] is None
+    code, detail = run(capfd, "posting", str(rows[0]["id"]), "--json", "--body")
+    assert code == 0 and set(detail) == DETAIL_KEYS | {"description"} and detail["description"] == "d" * 200
 
     _, rows = run(capfd, "companies", "--json")
     assert all(set(r) == COMPANY_KEYS and set(r["last_run"]) == RUN_KEYS for r in rows)
@@ -333,10 +341,75 @@ def test_job_running(capfd, fake, tmp_path):
 
 
 def test_not_onboarded(capfd, tmp_path):
-    for argv in (["status"], ["postings"]):
+    for argv in (["status"], ["postings"], ["posting", "1"]):
         code, err = run(capfd, *argv, "--json")
         assert code == 1 and err == {"code": "not_onboarded", "message": err["message"]}
     assert not (tmp_path / "app.db").exists()
+
+
+def test_posting_not_found(capfd, fake, tmp_path):
+    onboard(capfd, "a", "b")
+    run(capfd, "scrape", "--json")
+    _, rows = run(capfd, "postings", "--json")
+    repo = Repository(tmp_path / "app.db")
+    repo.soft_delete_missing("a", set(), "T")
+    repo.close()
+    deleted = next(r["id"] for r in rows if r["company"] == "a")
+    for pid in (9999, deleted):
+        code, err = run(capfd, "posting", str(pid), "--json")
+        assert code == 1 and err == {"code": "not_found", "message": err["message"]}
+
+
+def test_posting_feedback_and_human_output(capfd, fake, tmp_path):
+    onboard(capfd, "a")
+    run(capfd, "scrape", "--json")
+    pid = run(capfd, "postings", "--json")[1][0]["id"]
+    repo = Repository(tmp_path / "app.db")
+    repo.set_feedback(pid, "old-hash", ["항목: 설명"], "T1")
+    repo.close()
+    _, detail = run(capfd, "posting", str(pid), "--json")
+    assert detail["feedback"] == {"items": ["항목: 설명"], "created_at": "T1", "current": False}
+
+    (tmp_path / "resume").mkdir()
+    (tmp_path / "resume" / "me.md").write_text("# 이력서")
+    repo = Repository(tmp_path / "app.db")
+    repo.set_feedback(pid, cli.source_hash([tmp_path / "resume" / "me.md"]), ["현재: 설명"], "T2")
+    repo.close()
+    assert run(capfd, "posting", str(pid), "--json")[1]["feedback"]["current"] is True
+
+    assert cli.main(["posting", str(pid), "--body"]) == 0
+    out = capfd.readouterr().out
+    assert "Backend a" in out and "skills" in out and "35/35" in out and "현재: 설명" in out
+    assert out.rstrip().endswith("d" * 200)
+
+
+def old_db_0013(path: Path) -> None:
+    """0014 컬럼·feedbacks 테이블이 없는 0.4.0 스키마의 DB"""
+    schema = SCHEMA
+    for col in ("description", "requirements", "preferred", "breakdown"):
+        schema = schema.replace(f"    {col} TEXT,\n", "")
+    schema = re.sub(r"CREATE TABLE IF NOT EXISTS feedbacks \(.*?\);\n", "", schema, flags=re.S)
+    assert "feedbacks" not in schema and "breakdown" not in schema
+    conn = sqlite3.connect(path)
+    conn.executescript(schema)
+    conn.execute("""INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
+                                          fit_reason, apply_url, scraped_at, first_seen_at)
+                    VALUES ('a', '1', 't', 's', '["Go"]', 'good', 70, '[]', 'r', 'u', 'T1', 'T1')""")
+    conn.execute("INSERT INTO interests (company, created_at) VALUES ('a', 'T1')")
+    conn.commit()
+    conn.close()
+
+
+def test_posting_legacy_db(capfd, tmp_path):
+    old_db_0013(tmp_path / "app.db")
+    code, detail = run(capfd, "posting", "1", "--json", "--body")
+    assert code == 0 and set(detail) == DETAIL_KEYS | {"description"}
+    assert detail["feedback"] is None and detail["breakdown"] is None and detail["requirements"] is None
+    assert detail["description"] is None and detail["tech_stack"] == ["Go"]
+    code, rows = run(capfd, "postings", "--json", "--full")
+    assert code == 0 and rows[0]["breakdown"] is None
+    assert cli.main(["posting", "1"]) == 0
+    assert "재판정" in capfd.readouterr().out
 
 
 def test_postings_invalid_since(capfd, fake):
@@ -395,10 +468,11 @@ def test_read_commands_in_unwritable_home(capfd, fake, tmp_path):
     onboard(capfd, "a", "b")
     assert run(capfd, "scrape", "--json")[0] == 0
     assert (tmp_path / "app.lock").exists()
+    pid = run(capfd, "postings", "--json")[1][0]["id"]
     before = sorted(os.listdir(tmp_path))
     tmp_path.chmod(0o555)
     try:
-        for argv in (["status"], ["postings"], ["companies"]):
+        for argv in (["status"], ["postings"], ["companies"], ["posting", str(pid)]):
             assert run(capfd, *argv, "--json")[0] == 0, argv
     finally:
         tmp_path.chmod(0o755)
