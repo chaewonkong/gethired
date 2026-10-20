@@ -19,6 +19,27 @@ export interface Posting {
   first_seen_at: string;
   bookmarked: boolean;
   hidden: boolean;
+  breakdown: Breakdown | null;
+}
+
+export interface Breakdown {
+  skills: number;
+  domain: number;
+  seniority: number;
+  preferred: number;
+}
+
+export interface Feedback {
+  items: string[];
+  created_at: string;
+  current: boolean;
+}
+
+export interface PostingDetail extends Posting {
+  description: string | null;
+  requirements: string[] | null;
+  preferred: string[] | null;
+  feedback: Feedback | null;
 }
 
 export interface ScrapeRun {
@@ -67,7 +88,7 @@ export interface AuthStatus {
   login_command: string;
 }
 
-/** 스크래핑 401. body가 있으면 provider·message를 담는다 */
+/** 스크래핑·피드백 401. body가 있으면 provider·message를 담는다 */
 export class LoginRequiredError extends Error {
   provider: Provider | null;
   constructor(body?: { provider?: Provider; message?: string } | null) {
@@ -78,6 +99,12 @@ export class LoginRequiredError extends Error {
 
 /** job 실행 중이라 provider 변경·스크래핑 시작 불가 (409) */
 export class JobRunningError extends Error {}
+
+/** 공고 상세·피드백 404 (없음·삭제) */
+export class NotFoundError extends Error {}
+
+/** 피드백 생성 502·400. message는 서버 message */
+export class LlmError extends Error {}
 
 /** 이력서 업로드 400. message는 서버 detail (확장자·텍스트 없는 PDF 등) */
 export class ResumeRejectedError extends Error {}
@@ -106,6 +133,21 @@ export const api = {
   },
   companies: () => get<Company[]>("/api/companies"),
   postings: () => get<Posting[]>("/api/postings"),
+  async posting(id: number): Promise<PostingDetail> {
+    const r = await fetch(`/api/postings/${id}`);
+    if (r.status === 404) throw new NotFoundError("posting not found");
+    if (!r.ok) throw new Error(`posting: ${r.status}`);
+    return r.json();
+  },
+  async generateFeedback(id: number): Promise<{ posting_id: number; feedback: Feedback }> {
+    const r = await fetch(`/api/postings/${id}/feedback`, { method: "POST" });
+    if (r.ok) return r.json();
+    if (r.status === 404) throw new NotFoundError("posting not found");
+    if (r.status === 401) throw new LoginRequiredError(await readJson(r));
+    if (r.status === 409) throw new JobRunningError((await readJson(r))?.message ?? "job running");
+    if (r.status === 400 || r.status === 502) throw new LlmError((await readJson(r))?.message ?? `feedback: ${r.status}`);
+    throw new Error(`feedback: ${r.status}`);
+  },
   job: (id: string) => get<Job>(`/api/scrape/${id}`),
   resumeFiles: () => get<ResumeFile[]>("/api/resume"),
   async putResume(name: string, file: Blob): Promise<void> {

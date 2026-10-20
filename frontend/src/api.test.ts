@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { api, JobRunningError, LoginRequiredError, ResumeRejectedError } from "./api";
+import { api, JobRunningError, LlmError, LoginRequiredError, NotFoundError, ResumeRejectedError } from "./api";
 
 function stubFetch(status = 200, body: unknown = {}) {
   const fetch = vi.fn(async () => new Response(JSON.stringify(body), { status }));
@@ -126,5 +126,32 @@ describe("api", () => {
     const fetch = stubFetch(202, { job_id: "j1", status: "running" });
     expect(await api.startScrape()).toMatchObject({ job_id: "j1" });
     expect(fetch).toHaveBeenCalledWith("/api/scrape", { method: "POST" });
+  });
+
+  it("posting: 404는 NotFoundError", async () => {
+    stubFetch(404, { detail: "posting not found" });
+    await expect(api.posting(1)).rejects.toBeInstanceOf(NotFoundError);
+  });
+
+  it("generateFeedback: 상태코드별 오류 클래스", async () => {
+    const cases: [number, unknown, new (...a: never[]) => Error, string?][] = [
+      [404, { detail: "posting not found" }, NotFoundError],
+      [401, { code: "login_required", provider: "codex", message: "codex 로그인" }, LoginRequiredError, "codex 로그인"],
+      [409, { code: "job_running", message: "job running" }, JobRunningError],
+      [400, { code: "no_resume", message: "이력서가 없습니다" }, LlmError, "이력서가 없습니다"],
+      [502, { code: "llm_error", message: "LLM 실패" }, LlmError, "LLM 실패"],
+    ];
+    for (const [status, body, cls, message] of cases) {
+      stubFetch(status, body);
+      const err = await api.generateFeedback(1).catch((e) => e);
+      expect(err).toBeInstanceOf(cls);
+      if (message) expect(err.message).toBe(message);
+    }
+  });
+
+  it("generateFeedback 성공 시 POST 후 feedback", async () => {
+    const fetch = stubFetch(200, { posting_id: 1, feedback: { items: ["a"], created_at: "t", current: true } });
+    expect((await api.generateFeedback(1)).feedback.items).toEqual(["a"]);
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/feedback", { method: "POST" });
   });
 });

@@ -117,7 +117,8 @@ select {
 @keyframes pulse { 50% { opacity: .3; } }
 
 .list { display: flex; flex-direction: column; gap: 12px; }
-.card { background: var(--surface); border-radius: 8px; box-shadow: var(--shadow); padding: 16px; transition: box-shadow .15s; }
+.card { background: var(--surface); border-radius: 8px; box-shadow: var(--shadow); padding: 16px; transition: box-shadow .15s; cursor: pointer; }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .card:hover { box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.1); }
 .card-head { display: flex; align-items: center; gap: 10px; }
 .co-logo {
@@ -158,6 +159,30 @@ select {
 }
 .apply:hover { background: #bae6fd; }
 .empty { text-align: center; color: var(--muted); padding: 48px 16px; border-radius: 8px; box-shadow: var(--shadow); }
+.empty a { color: var(--accent-strong); }
+
+/* 공고 상세 */
+.detail .back { border: 0; background: none; padding: 4px 0; margin-bottom: 12px; color: var(--accent-strong); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.detail h2 { margin: 14px 0 10px; font-size: 21px; font-weight: 700; color: var(--accent-strong); line-height: 1.35; }
+.detail > .apply { display: inline-block; margin-bottom: 8px; }
+.detail section { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.detail h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; color: var(--accent-text); }
+.detail h4 { margin: 12px 0 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.detail section ul { margin: 0 0 10px; padding-left: 18px; font-size: 14px; }
+.detail section ul.gaps { font-size: 13px; }
+details.body { margin-top: 12px; font-size: 14px; }
+details summary { cursor: pointer; color: var(--accent-strong); font-size: 13px; font-weight: 600; }
+details.body .body-text { white-space: pre-wrap; margin-top: 8px; padding: 12px; background: #f9fafb; border-radius: 6px; color: var(--text); line-height: 1.55; }
+.bars { display: grid; gap: 8px; margin-bottom: 12px; }
+.bar-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; font-size: 13px; }
+.bar-value { color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: var(--chip); overflow: hidden; }
+.bar > div { height: 100%; background: var(--accent); border-radius: 4px; }
+.feedback .btn { display: inline-flex; align-items: center; gap: 8px; width: auto; }
+.feedback details { margin-bottom: 12px; }
+.feedback details ul { margin-top: 8px; color: var(--muted); }
+.spinner { width: 14px; height: 14px; border: 2px solid var(--accent-line); border-top-color: var(--accent-text); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .company-table { width: 100%; border-collapse: separate; border-spacing: 0; }
 .company-table thead { display: none; }

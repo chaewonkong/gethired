@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Company, Job, Level, LEVEL_RANK, Posting } from "../api";
-import { useSessionState } from "../sessionState";
+import { useListPosition, useSessionState } from "../sessionState";
 import { CompanyFilter } from "./CompanyFilter";
 import { PostingCard } from "./PostingCard";
 import { ScrapeProgress } from "./ScrapeProgress";
@@ -43,7 +43,6 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
   const [excluded, setExcluded] = useSessionState<string[]>("postings.excludedCompanies", [], parseCompanies);
   const [minLevel, setMinLevel] = useSessionState<Level>("postings.minLevel", "stretch", parseLevel);
   const [sort, setSort] = useSessionState<Sort>("postings.sort", "score", parseSort);
-  const [visible, setVisible] = useState(PAGE_SIZE);
   const sentinel = useRef<HTMLDivElement>(null);
 
   const leveled = postings.filter((p) => !p.hidden && LEVEL_RANK[p.fit_level] >= LEVEL_RANK[minLevel]);
@@ -53,10 +52,16 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
   const items = leveled.filter((p) => selected.has(p.company)).sort(COMPARE[sort]);
   const noneSelected = companies.length > 0 && selected.size === 0;
   const last = lastScrapedAt(companies);
+  const restored = useListPosition("/", items.length > 0);
+  const [visible, setVisible] = useState(restored?.visible ?? PAGE_SIZE);
   const hasMore = visible < items.length;
 
-  // 필터가 바뀌면 처음부터. 북마크·숨김 토글로 postings가 바뀔 때는 스크롤 위치 유지
+  // 필터가 바뀌면 처음부터. 북마크·숨김 토글로 postings가 바뀔 때는 스크롤 위치 유지. mount 때는 복원값을 지킨다
+  const filters = useRef({ excluded, minLevel, sort });
   useEffect(() => {
+    const prev = filters.current;
+    if (prev.excluded === excluded && prev.minLevel === minLevel && prev.sort === sort) return;
+    filters.current = { excluded, minLevel, sort };
     setVisible(PAGE_SIZE);
   }, [excluded, minLevel, sort]);
 
@@ -102,7 +107,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
       <div className="list">
         {items.length ? (
           items.slice(0, visible).map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} visible={visible} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
           ))
         ) : noneSelected ? (
           <div className="empty">
