@@ -15,22 +15,22 @@ LEVEL_MIN = {"strong": 80, "good": 65, "stretch": 45, "exclude": 0}
 GAP_KINDS = ("role", "language", "framework", "seniority", "domain", "other")
 DESC_LIMIT = 2500
 
-# 인접 직군: exclude 금지, stretch 이상. 대칭 (test_matcher가 고정)
+# 인접 직군: 서로 대체 지원이 현실적인 쌍만. exclude 금지, stretch 이상. 대칭 (test_matcher가 고정)
 ADJACENT: dict[str, tuple[str, ...]] = {
-    "backend": ("fullstack", "data-engineering", "ml-engineering", "infra-sre", "security-engineering", "qa", "embedded"),
-    "frontend": ("fullstack", "cross-platform-mobile", "qa"),
+    "backend": ("fullstack", "data-engineering", "infra-sre"),
+    "frontend": ("fullstack", "cross-platform-mobile"),
     "fullstack": ("backend", "frontend"),
-    "ios": ("android", "cross-platform-mobile", "qa"),
-    "android": ("ios", "cross-platform-mobile", "qa", "embedded"),
+    "ios": ("android", "cross-platform-mobile"),
+    "android": ("ios", "cross-platform-mobile", "embedded"),
     "cross-platform-mobile": ("ios", "android", "frontend"),
     "data-engineering": ("backend", "ml-engineering", "data-science"),
     "data-science": ("data-engineering", "ml-engineering"),
-    "ml-engineering": ("backend", "data-engineering", "data-science", "ml-research"),
+    "ml-engineering": ("data-engineering", "data-science", "ml-research"),
     "ml-research": ("ml-engineering",),
     "infra-sre": ("backend", "security-engineering"),
-    "security-engineering": ("backend", "infra-sre"),
-    "qa": ("backend", "frontend", "ios", "android"),
-    "embedded": ("backend", "android", "game-client"),
+    "security-engineering": ("infra-sre",),
+    "qa": (),
+    "embedded": ("android", "game-client"),
     "game-client": ("embedded",),
 }
 
@@ -58,7 +58,7 @@ class Batch(BaseModel):
 
 
 def render_adjacent() -> str:
-    return "\n".join(f"  - {role}: {', '.join(adj)}" for role, adj in ADJACENT.items())
+    return "\n".join(f"  - {role}: {', '.join(adj) or '(없음)'}" for role, adj in ADJACENT.items())
 
 
 SYSTEM = f"""당신은 시니어 테크 리크루터입니다. 지원자 프로필과 채용 공고 목록을 보고 각 공고의 적합도를 판정합니다. 지원자는 어떤 소프트웨어 엔지니어링 직군이든 될 수 있습니다. 판정의 역할 기준은 프로필의 roles이며, 특정 직군을 가정하지 않습니다.

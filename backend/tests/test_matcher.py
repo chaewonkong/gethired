@@ -30,7 +30,7 @@ def test_system_prompt_is_role_neutral():
     assert "프론트엔드 전담" not in SYSTEM
     assert "백엔드/서버/플랫폼/데이터 엔지니어링이면 exclude로 보내지 않습니다" not in SYSTEM
     for role, adj in ADJACENT.items():
-        assert f"- {role}: {', '.join(adj)}" in SYSTEM
+        assert f"- {role}: {', '.join(adj) or '(없음)'}" in SYSTEM
     for role in ROLES:
         assert role in SYSTEM
     assert "role" in GAP_KINDS

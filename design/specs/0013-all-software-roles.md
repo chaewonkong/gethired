@@ -48,20 +48,20 @@
 
 | 직군 | 인접 |
 |---|---|
-| backend | fullstack, data-engineering, ml-engineering, infra-sre, security-engineering, qa, embedded |
-| frontend | fullstack, cross-platform-mobile, qa |
+| backend | fullstack, data-engineering, infra-sre |
+| frontend | fullstack, cross-platform-mobile |
 | fullstack | backend, frontend |
-| ios | android, cross-platform-mobile, qa |
-| android | ios, cross-platform-mobile, qa, embedded |
+| ios | android, cross-platform-mobile |
+| android | ios, cross-platform-mobile, embedded |
 | cross-platform-mobile | ios, android, frontend |
 | data-engineering | backend, ml-engineering, data-science |
 | data-science | data-engineering, ml-engineering |
-| ml-engineering | backend, data-engineering, data-science, ml-research |
+| ml-engineering | data-engineering, data-science, ml-research |
 | ml-research | ml-engineering |
 | infra-sre | backend, security-engineering |
-| security-engineering | backend, infra-sre |
-| qa | backend, frontend, ios, android (자동화 스택이 맞는 쪽) |
-| embedded | backend, android, game-client |
+| security-engineering | infra-sre |
+| qa | (없음. 자동화 스택이 겹치면 핵심 기술 겹침 규칙으로 통과) |
+| embedded | android, game-client |
 | game-client | embedded |
 
    - `roles`가 비어 있으면 `core_skills`·`domains`·`summary`로 직군을 추정해 같은 규칙을 적용한다
@@ -96,6 +96,7 @@
 - 직군은 자유 텍스트가 아닌 고정 어휘(enum). 프롬프트의 인접 표와 1:1로 맞추기 위해서이고, LLM이 "Platform Engineer" 같은 표현을 임의로 만들면 표가 무력화된다
 - `roles`는 `preferences.target_roles`와 분리한다. 전자는 "해온 일", 후자는 "하고 싶은 일". 판정의 exclude 기준은 전자, 희망은 우대사항 10점 안의 가점에만 쓴다
 - 인접 표는 대칭으로 둔다. 비대칭이면 LLM이 지원자·공고 어느 쪽에서 읽느냐에 따라 결과가 갈린다
+- 인접은 "서로 대체 지원이 현실적인 쌍"으로 좁힌다 (2026-10-20 수동 검증 후 재조정). 처음 표는 backend ↔ ml-engineering·security-engineering·qa·embedded까지 인접으로 뒀는데, 실제 백엔드 이력서로 토스·당근을 판정하자 stretch가 68 → 133건으로 늘고 QA 팀장·모의해킹 연구원까지 stretch 45로 들어왔다. LLM 사유도 "인접이라 제외하지 않았지만 서류 통과 가능성은 낮다"였다. 인접이 보장하는 것은 exclude 금지뿐이라, 표가 넓을수록 stretch가 노이즈가 된다. 다른 직군 간 교차 지원은 핵심 기술 겹침 규칙이 담당한다
 - 컬리 `보안` 직군은 수집하지 않는다. fixture 4건이 전부 개인정보보호·정보보호 정책·보안 솔루션 운영 담당자로 소프트웨어 엔지니어링이 아니고, 수집하면 매 스크래핑마다 exclude용 LLM 비용만 든다
 - 캐시 프로필에 `roles`가 없으면 재추출한다. 호출 1회 비용이고, 직군 앵커 없이 판정하면 이 spec의 목적이 무너진다. 필드 유무로 무효화하는 방식은 이번 한 번용이고, 다음 프로필 스키마 변경 때 `profile_cache`에 `schema_version` 도입을 검토한다 (범위 밖)
 - 데이터 분석가·정책성 보안직은 소프트웨어 엔지니어링으로 보지 않는다. 이력서가 SQL·통계 중심이면 `data-science`로 흡수한다
