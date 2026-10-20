@@ -109,6 +109,7 @@ SCRAPERS: dict[str, type[Scraper]] = {"toss": DemoToss, "daangn": DemoDaangn, "k
 
 PROFILE = Profile(
     name="홍길동", seniority="senior", years_experience=5,
+    roles=["backend"],
     core_skills=["Go", "Redis", "Kubernetes", "PostgreSQL"],
     familiar_skills=["TypeScript", "gRPC", "ClickHouse"],
     weak_or_learning=["Kotlin", "Java"],
@@ -116,7 +117,7 @@ PROFILE = Profile(
     notable_achievements=["매칭 대기 시간을 40% 줄인 큐 재설계", "피크 동시접속 50만 매칭 서버 무중단 운영"],
     preferences=Preferences(locations=["서울"], visa_or_work_authorization=None,
                             target_domains=["매치메이킹", "실시간 플랫폼"], target_roles=["백엔드 엔지니어"]),
-    dealbreakers=["프론트엔드 전담", "주니어 포지션"],
+    dealbreakers=["주니어 포지션"],
     summary="Go 기반 매치메이킹 서버를 5년간 설계·운영한 백엔드 엔지니어. Redis·Kubernetes·PostgreSQL이 주력이다.",
 )
 
