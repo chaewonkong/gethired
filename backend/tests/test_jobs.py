@@ -84,6 +84,59 @@ def test_run_waits_for_completion(tmp_path):
     assert not jobs.is_locked() and free(tmp_path / "app.lock")
 
 
+def strip_to_legacy(repo: Repository) -> int:
+    repo.conn.execute("UPDATE postings SET description=NULL, requirements=NULL, preferred=NULL, breakdown=NULL")
+    repo.conn.commit()
+    return repo.conn.execute("SELECT id FROM postings WHERE company='a'").fetchone()[0]
+
+
+def test_legacy_posting_is_rejudged_and_filled(tmp_path):
+    jobs = make_jobs(tmp_path)
+    asyncio.run(jobs.run(["a"]))
+    pid = strip_to_legacy(jobs.repo)
+
+    seen: list[str] = []
+    inner = make_judge()
+
+    async def judge(profile, postings):
+        seen.extend(p.external_id for p in postings)
+        return await inner(profile, postings)
+
+    jobs.judge_fn = judge
+    asyncio.run(jobs.run(["a"]))
+    assert seen == ["1"]
+    p = jobs.repo.get_posting(pid)
+    assert p["breakdown"] == {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}
+    assert p["description"] == "d" * 200
+
+    seen.clear()
+    asyncio.run(jobs.run(["a"]))
+    assert seen == []
+
+
+def test_rejudged_exclude_hard_deletes_with_bookmark_and_feedback(tmp_path):
+    jobs = make_jobs(tmp_path)
+    asyncio.run(jobs.run(["a"]))
+    pid = strip_to_legacy(jobs.repo)
+    jobs.repo.set_bookmark(pid, True, "T1")
+    jobs.repo.set_hidden(pid, True, "T1")
+    jobs.repo.set_feedback(pid, "h", ["a: b"], "T1")
+
+    async def exclude(profile, postings):
+        return [Match(external_id=p.external_id, fit_level="exclude", score=10, gaps=[], summary="summary text",
+                      tech_stack=[], fit_reason="reason " * 5, requirements=[], preferred=[],
+                      breakdown=Breakdown(skills=10, domain=0, seniority=0, preferred=0)) for p in postings], []
+
+    jobs.judge_fn = exclude
+    job = asyncio.run(jobs.run(["a"]))
+    assert job.companies["a"].excluded == 1 and job.companies["a"].stored == 0
+    conn = jobs.repo.conn
+    assert conn.execute("SELECT count(*) FROM postings WHERE id=?", (pid,)).fetchone()[0] == 0
+    for table in ("bookmarks", "hides", "feedbacks"):
+        assert conn.execute(f"SELECT count(*) FROM {table} WHERE posting_id=?", (pid,)).fetchone()[0] == 0, table
+    assert jobs.repo.judged_ids("a") == {"1"}
+
+
 def test_profile_failure_sets_job_error(tmp_path):
     jobs = make_jobs(tmp_path)
 

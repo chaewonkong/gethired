@@ -6,11 +6,11 @@ from fastapi import APIRouter, FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from . import auth, resume
+from . import auth, feedback, llm, resume
 from .config import RESUME_DIR
 from .jobs import JobManager, JobRunning, LoginRequired, NoTargets
-from .llm import LOGIN_COMMAND, PROVIDERS, LLMResult, resolve_provider
-from .profile import Profile
+from .llm import LOGIN_COMMAND, PROVIDERS, LLMAuthError, LLMError, LLMResult, resolve_provider
+from .profile import Profile, get_profile, source_hash
 from .repository import Repository, now_iso
 
 
@@ -28,12 +28,10 @@ FeedbackFn = Callable[[Profile, dict], Awaitable[tuple[list[str], LLMResult]]]
 def create_app(repo: Repository, jobs: JobManager,
                logged_in: Callable[[str], Awaitable[bool]] = auth.is_logged_in,
                resume_dir: Path = RESUME_DIR,
-               feedback_fn: FeedbackFn | None = None,
-               profile_loader: Callable[[Repository], Awaitable[Profile]] | None = None,
-               profile_hash: Callable[[], str] | None = None) -> FastAPI:
-    # feedback_fn·profile_loader·profile_hash: spec 0014 상세·피드백 엔드포인트용 주입 (plan-0014 A2에서 사용)
+               feedback_fn: FeedbackFn = feedback.generate,
+               profile_loader: Callable[[Repository], Awaitable[Profile]] = get_profile,
+               profile_hash: Callable[[], str] = source_hash) -> FastAPI:
     app = FastAPI(title="gethired")
-    app.state.feedback_fn, app.state.profile_loader, app.state.profile_hash = feedback_fn, profile_loader, profile_hash
     api = APIRouter(prefix="/api")
 
     def provider_setting() -> dict:
@@ -125,6 +123,50 @@ def create_app(repo: Repository, jobs: JobManager,
     @api.get("/postings")
     def postings(company: str | None = None, min_level: Literal["stretch", "good", "strong"] | None = None):
         return repo.list_postings(company=company, min_level=min_level)
+
+    def found(posting_id: int) -> dict:
+        p = repo.get_posting(posting_id)
+        if not p:
+            raise HTTPException(status_code=404, detail="posting not found")
+        return p
+
+    def login_required(provider: str) -> JSONResponse:
+        e = LoginRequired(provider)
+        return JSONResponse(status_code=401, content={"code": "login_required", "provider": e.provider,
+                                                      "message": e.message, "login_command": e.login_command})
+
+    @api.get("/postings/{posting_id}")
+    def posting_detail(posting_id: int):
+        p = found(posting_id)
+        return {**p, "feedback": repo.feedback_for(posting_id, profile_hash())}
+
+    @api.post("/postings/{posting_id}/feedback")
+    async def create_feedback(posting_id: int):
+        p = found(posting_id)
+        if jobs.is_locked():
+            return JSONResponse(status_code=409, content={"code": "job_running",
+                                                          "message": "스크래핑이 끝난 뒤 다시 시도하세요."})
+        h = profile_hash()
+        cached = repo.feedback_for(posting_id, h)
+        if cached and cached["current"]:
+            return {"posting_id": posting_id, "feedback": cached}
+        provider = resolve_provider(repo.get_setting("provider"))
+        llm.configure(provider)
+        if not await logged_in(provider):
+            return login_required(provider)
+        try:
+            profile = await profile_loader(repo)
+        except FileNotFoundError:
+            return JSONResponse(status_code=400, content={"code": "no_resume", "message": "이력서 파일이 없습니다."})
+        try:
+            items, _ = await feedback_fn(profile, p)
+        except LLMAuthError:
+            return login_required(provider)
+        except LLMError as e:
+            return JSONResponse(status_code=502, content={"code": "llm_error", "message": f"피드백 생성 실패: {e}"})
+        now = now_iso()
+        repo.set_feedback(posting_id, h, items, now)
+        return {"posting_id": posting_id, "feedback": {"items": items, "created_at": now, "current": True}}
 
     def bookmark(posting_id: int, on: bool):
         if not repo.set_bookmark(posting_id, on, now_iso()):

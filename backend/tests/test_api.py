@@ -77,7 +77,16 @@ async def load_profile(repo):
 auth_calls: list[str] = []
 
 
-def make_client(tmp_path: Path, judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b")):
+feedback_calls: list[tuple[Profile, dict]] = []
+
+
+async def fake_feedback(profile, posting):
+    feedback_calls.append((profile, posting))
+    return ["항목: 설명 1", "항목: 설명 2", "항목: 설명 3"], None
+
+
+def make_client(tmp_path: Path, judge=fake_judge, logged_in=True, resume_dir=None, interests=("a", "b"),
+                feedback_fn=fake_feedback, profile_loader=load_profile, profile_hash=lambda: "h1"):
     repo = Repository()
     repo.set_interests(list(interests), "T0")
     jobs = JobManager(repo, scrapers={"a": A, "b": B}, profile_loader=load_profile, judge_fn=judge,
@@ -87,7 +96,8 @@ def make_client(tmp_path: Path, judge=fake_judge, logged_in=True, resume_dir=Non
         auth_calls.append(provider)
         return logged_in if isinstance(logged_in, bool) else logged_in[provider]
 
-    app = create_app(repo, jobs, logged_in=is_logged_in, resume_dir=resume_dir or Path("/nonexistent"))
+    app = create_app(repo, jobs, logged_in=is_logged_in, resume_dir=resume_dir or Path("/nonexistent"),
+                     feedback_fn=feedback_fn, profile_loader=profile_loader, profile_hash=profile_hash)
     app.state.jobs = jobs
     return TestClient(app), repo
 
@@ -108,6 +118,7 @@ def reset():
     FakeScraper.fail = set()
     judge_calls.clear()
     auth_calls.clear()
+    feedback_calls.clear()
 
 
 def test_scrape_stores_graded_and_skips_excluded_then_incremental(tmp_path):
@@ -467,3 +478,135 @@ def test_scrape_targets_only_interest_companies_and_keeps_postings_on_unstar(tmp
         assert "b" in {p["company"] for p in client.get("/api/postings").json()}
         job = wait_job(client, client.post("/api/scrape").json()["job_id"])
         assert list(job["companies"]) == ["a"]
+
+
+DETAIL_EXTRA = {"description", "requirements", "preferred", "breakdown", "feedback"}
+LEGACY = ("description", "requirements", "preferred", "breakdown")
+
+
+def first_posting(client: TestClient) -> int:
+    wait_job(client, client.post("/api/scrape").json()["job_id"])
+    return client.get("/api/postings").json()[0]["id"]
+
+
+def make_legacy(repo: Repository, posting_id: int) -> None:
+    repo.conn.execute(f"UPDATE postings SET {', '.join(f'{k}=NULL' for k in LEGACY)} WHERE id=?", (posting_id,))
+    repo.conn.commit()
+
+
+def test_posting_detail_and_list_shape(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        pid = first_posting(client)
+        listed = client.get("/api/postings").json()
+        assert all("description" not in p for p in listed)
+        assert listed[0]["breakdown"] == {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}
+
+        r = client.get(f"/api/postings/{pid}")
+        assert r.status_code == 200
+        body = r.json()
+        assert set(body) == set(listed[0]) | DETAIL_EXTRA
+        assert body["description"] == "d" * 200 and body["requirements"] == [] and body["feedback"] is None
+
+        assert client.get("/api/postings/9999").status_code == 404
+        repo.conn.execute("UPDATE postings SET deleted_at='T9' WHERE id=?", (pid,))
+        repo.conn.commit()
+        r = client.get(f"/api/postings/{pid}")
+        assert r.status_code == 404 and r.json()["detail"] == "posting not found"
+        assert client.post(f"/api/postings/{pid}/feedback").status_code == 404
+        assert client.post("/api/postings/9999/feedback").status_code == 404
+
+
+def test_posting_detail_legacy_row(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        pid = first_posting(client)
+        make_legacy(repo, pid)
+        body = client.get(f"/api/postings/{pid}").json()
+        assert {k: body[k] for k in LEGACY} == dict.fromkeys(LEGACY)
+        assert client.get("/api/postings").json()[0]["breakdown"] is None
+
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 200 and r.json()["feedback"]["current"] is True
+        assert feedback_calls[0][1]["description"] is None
+
+
+def test_feedback_generate_cache_and_profile_change(tmp_path):
+    current = {"h": "h1"}
+    client, repo = make_client(tmp_path, profile_hash=lambda: current["h"])
+    with client:
+        pid = first_posting(client)
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 200
+        body = r.json()
+        assert body["posting_id"] == pid
+        assert body["feedback"]["items"] == ["항목: 설명 1", "항목: 설명 2", "항목: 설명 3"]
+        assert body["feedback"]["current"] is True and body["feedback"]["created_at"]
+        profile, posting = feedback_calls[0]
+        assert profile == PROFILE and posting["id"] == pid and posting["description"] == "d" * 200
+        assert client.get(f"/api/postings/{pid}").json()["feedback"] == body["feedback"]
+
+        assert client.post(f"/api/postings/{pid}/feedback").json() == body
+        assert len(feedback_calls) == 1
+
+        current["h"] = "h2"
+        assert client.get(f"/api/postings/{pid}").json()["feedback"]["current"] is False
+        assert client.post(f"/api/postings/{pid}/feedback").json()["feedback"]["current"] is True
+        assert len(feedback_calls) == 2
+        assert repo.conn.execute("SELECT count(*) FROM feedbacks").fetchone()[0] == 2
+
+
+def test_feedback_login_required(tmp_path):
+    client, repo = make_client(tmp_path, logged_in={"claude": True, "codex": False})
+    with client:
+        pid = first_posting(client)
+        repo.set_setting("provider", "codex", "T1")
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 401
+        assert r.json() == {"code": "login_required", "provider": "codex", "message": llm.auth_message("codex"),
+                            "login_command": llm.LOGIN_COMMAND["codex"]}
+        assert auth_calls[-1] == "codex" and llm._provider == "codex"
+        assert feedback_calls == []
+
+
+def test_feedback_auth_error_during_generation_is_401(tmp_path):
+    async def failing(profile, posting):
+        raise LLMAuthError("Not logged in")
+
+    client, repo = make_client(tmp_path, feedback_fn=failing)
+    with client:
+        r = client.post(f"/api/postings/{first_posting(client)}/feedback")
+        assert r.status_code == 401 and r.json()["code"] == "login_required" and r.json()["provider"] == "claude"
+
+
+def test_feedback_409_when_job_lock_held(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        pid = first_posting(client)
+        with FileLock(tmp_path / "app.lock"):
+            r = client.post(f"/api/postings/{pid}/feedback")
+            assert r.status_code == 409 and r.json()["code"] == "job_running" and r.json()["message"]
+    assert feedback_calls == []
+
+
+def test_feedback_llm_error_is_502(tmp_path):
+    async def failing(profile, posting):
+        raise llm.LLMError("boom")
+
+    client, repo = make_client(tmp_path, feedback_fn=failing)
+    with client:
+        pid = first_posting(client)
+        r = client.post(f"/api/postings/{pid}/feedback")
+        assert r.status_code == 502 and r.json()["code"] == "llm_error" and r.json()["message"]
+        assert client.get(f"/api/postings/{pid}").json()["feedback"] is None
+
+
+def test_feedback_no_resume_is_400(tmp_path):
+    async def no_resume(repo):
+        raise FileNotFoundError("no files")
+
+    client, repo = make_client(tmp_path, profile_loader=no_resume)
+    with client:
+        r = client.post(f"/api/postings/{first_posting(client)}/feedback")
+        assert r.status_code == 400 and r.json()["code"] == "no_resume" and r.json()["message"]
+    assert feedback_calls == []
