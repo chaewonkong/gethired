@@ -32,7 +32,7 @@ PROGRESS_S = 1.0
 POSTING_FIELDS = ("id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at")
 FIT_MARK = {"met": "V", "partial": "△", "unmet": "X"}  # 요건 충족 표시 (사람용 출력)
 FULL_FIELDS = (*POSTING_FIELDS, "summary", "gaps", "breakdown")  # 본문은 posting --body로만
-DETAIL_FIELDS = (*FULL_FIELDS, "tech_stack", "requirements", "preferred", "feedback")
+DETAIL_FIELDS = (*FULL_FIELDS, "tech_stack", "requirements", "preferred", "feedback", "application")
 
 
 class Fail(Exception):
@@ -264,7 +264,8 @@ def _postings(args: argparse.Namespace) -> None:
     env = _env()
     since = args.since and _since(args.since)  # _env()가 데모 고정 시각을 건 뒤에 계산
     with closing(env.read_repo()) as repo:
-        rows = repo.list_postings(min_level=args.min_level, include_hidden=False, interests_only=True, since=since)
+        rows = repo.list_postings(min_level=args.min_level, include_hidden=False, interests_only=True, since=since,
+                                  include_applied=False)
     if args.company:
         rows = [r for r in rows if r["company"] in args.company]
     fields = FULL_FIELDS if args.full else POSTING_FIELDS
@@ -291,6 +292,8 @@ def _posting_text(p: dict[str, Any]) -> str:
     lines = [f"[{p['company']}] {p['title']}", f"{p['fit_level']} · {p['score']}  {p['apply_url']}"]
     if p.get("deadline"):
         lines.append(f"마감: {p['deadline']}")
+    if app := p.get("application"):
+        lines.append(f"지원완료: {app['applied_at']}" + (" (마감됨)" if p.get("deleted_at") else ""))
     lines += ["", f"요약: {p.get('summary') or '-'}", *items("기술", p.get("tech_stack")), "",
               *reqs("자격요건 (V 충족 · △ 부분 · X 미충족)", p.get("requirements")),
               *reqs("우대사항", p.get("preferred")), ""]
@@ -318,7 +321,7 @@ def _posting(args: argparse.Namespace) -> None:
     body = {k: p.get(k) for k in DETAIL_FIELDS}
     if args.body:
         body["description"] = p.get("description")
-    _emit(body, args.json, _posting_text(body))
+    _emit(body, args.json, _posting_text({**body, "deleted_at": p.get("deleted_at")}))
 
 
 def _progress_line(company: str, s) -> str:

@@ -28,7 +28,7 @@ STATUS_KEYS = {"resume_count", "provider", "chosen", "interests", "last_success"
 RUN_KEYS = {"id", "company", "started_at", "finished_at", "status", "error", "fetched_count"}
 POSTING_KEYS = {"id", "company", "title", "fit_level", "score", "fit_reason", "apply_url", "deadline", "scraped_at"}
 FULL_KEYS = POSTING_KEYS | {"summary", "gaps", "breakdown"}
-DETAIL_KEYS = FULL_KEYS | {"tech_stack", "requirements", "preferred", "feedback"}
+DETAIL_KEYS = FULL_KEYS | {"tech_stack", "requirements", "preferred", "feedback", "application"}
 COMPANY_KEYS = {"company", "display_name", "careers_url", "last_run", "interested"}
 JOB_KEYS = {"job_id", "status", "provider", "started_at", "finished_at", "cost_usd", "error", "companies"}
 STATE_KEYS = {"status", "fetched", "new", "stored", "excluded", "deleted", "error"}
@@ -279,7 +279,7 @@ def test_json_key_sets(capfd, fake, tmp_path):
     assert rows[0]["breakdown"] == {"skills": 35, "domain": 35, "seniority": 15, "preferred": 5}
 
     code, detail = run(capfd, "posting", str(rows[0]["id"]), "--json")
-    assert code == 0 and set(detail) == DETAIL_KEYS and detail["feedback"] is None
+    assert code == 0 and set(detail) == DETAIL_KEYS and detail["feedback"] is None and detail["application"] is None
     code, detail = run(capfd, "posting", str(rows[0]["id"]), "--json", "--body")
     assert code == 0 and set(detail) == DETAIL_KEYS | {"description"} and detail["description"] == "d" * 200
 
@@ -360,6 +360,35 @@ def test_posting_not_found(capfd, fake, tmp_path):
         assert code == 1 and err == {"code": "not_found", "message": err["message"]}
 
 
+def test_posting_applied(capfd, fake, tmp_path):
+    onboard(capfd, "a", "b")
+    run(capfd, "scrape", "--json")
+    _, rows = run(capfd, "postings", "--json")
+    by_company = {r["company"]: r["id"] for r in rows}
+    repo = Repository(tmp_path / "app.db")
+    repo.set_application(by_company["a"], "T1")
+    repo.close()
+
+    _, rows = run(capfd, "postings", "--json")
+    assert [r["company"] for r in rows] == ["b"]  # 지원완료 제외
+    code, detail = run(capfd, "posting", str(by_company["a"]), "--json")
+    assert code == 0 and detail["application"] == {"applied_at": "T1", "stage": None}
+    assert cli.main(["posting", str(by_company["a"])]) == 0
+    assert "지원완료: T1" in capfd.readouterr().out
+
+    repo = Repository(tmp_path / "app.db")
+    repo.soft_delete_missing("a", set(), "T2")
+    repo.soft_delete_missing("b", set(), "T2")
+    repo.close()
+    code, detail = run(capfd, "posting", str(by_company["a"]), "--json")
+    assert code == 0 and detail["application"]["applied_at"] == "T1"  # 마감돼도 지원완료는 조회
+    assert cli.main(["posting", str(by_company["a"])]) == 0
+    assert "지원완료: T1 (마감됨)" in capfd.readouterr().out
+    code, err = run(capfd, "posting", str(by_company["b"]), "--json")
+    assert code == 1 and err["code"] == "not_found"  # 비지원 마감
+    assert run(capfd, "postings", "--json") == (0, [])
+
+
 def test_posting_feedback_and_human_output(capfd, fake, tmp_path):
     onboard(capfd, "a")
     run(capfd, "scrape", "--json")
@@ -389,7 +418,8 @@ def old_db_0013(path: Path) -> None:
     for col in ("description", "requirements", "preferred", "breakdown"):
         schema = schema.replace(f"    {col} TEXT,\n", "")
     schema = re.sub(r"CREATE TABLE IF NOT EXISTS feedbacks \(.*?\);\n", "", schema, flags=re.S)
-    assert "feedbacks" not in schema and "breakdown" not in schema
+    schema, n = re.subn(r"CREATE TABLE IF NOT EXISTS applications \(.*?\);\n", "", schema, flags=re.S)
+    assert n == 1 and "feedbacks" not in schema and "breakdown" not in schema and "applications" not in schema
     conn = sqlite3.connect(path)
     conn.executescript(schema)
     conn.execute("""INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
@@ -405,7 +435,9 @@ def test_posting_legacy_db(capfd, tmp_path):
     code, detail = run(capfd, "posting", "1", "--json", "--body")
     assert code == 0 and set(detail) == DETAIL_KEYS | {"description"}
     assert detail["feedback"] is None and detail["breakdown"] is None and detail["requirements"] is None
-    assert detail["description"] is None and detail["tech_stack"] == ["Go"]
+    assert detail["description"] is None and detail["tech_stack"] == ["Go"] and detail["application"] is None
+    code, rows = run(capfd, "postings", "--json")
+    assert code == 0 and len(rows) == 1 and set(rows[0]) == POSTING_KEYS
     code, rows = run(capfd, "postings", "--json", "--full")
     assert code == 0 and rows[0]["breakdown"] is None
     assert cli.main(["posting", "1"]) == 0
