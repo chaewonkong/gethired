@@ -21,17 +21,18 @@ stdout은 JSON만. exit 0이면 결과, 아니면 `{code, message, login_command
 
 - `status` → `{resume_count, provider, chosen, interests: [...], last_success: {company: run}, stale, job_running}`
   - run = `{id, company, started_at, finished_at, status, error, fetched_count}`. 관심회사가 0이면 `stale`은 true
-- `postings` → `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]` (`--full`이면 `summary`(공고 요약), `gaps`, `breakdown` 추가). 숨김 제외·관심회사만·score 내림차순. `fit_level`은 `strong` > `good` > `stretch`
+- `postings` → `[{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at}]` (`--full`이면 `summary`(공고 요약), `gaps`, `breakdown` 추가). 숨김·지원완료 제외·관심회사만·score 내림차순. `fit_level`은 `strong` > `good` > `stretch`
 - `companies` → `[{company, display_name, careers_url, last_run: run | null, interested}]`. DB가 없어도(온보딩 전) 목록은 나온다
-- `posting <id>` → `{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at, summary, gaps, tech_stack, requirements, preferred, breakdown, feedback}` (`--body`면 `description`(공고 본문) 추가)
+- `posting <id>` → `{id, company, title, fit_level, score, fit_reason, apply_url, deadline, scraped_at, summary, gaps, tech_stack, requirements, preferred, breakdown, feedback, application}` (`--body`면 `description`(공고 본문) 추가)
   - `requirements`(자격요건)·`preferred`(우대사항): `[{text, fit}]`. `fit`은 판정 시 지원자 기준 충족 여부 `met`(충족)·`partial`(부분)·`unmet`(미충족). 요약할 때 미충족·부분 항목을 먼저 짚어 준다
   - `breakdown` = `{skills, domain, seniority, preferred}` (만점 35/35/20/10, 합계 = `score`). 축은 핵심 기술·도메인·연차·우대사항
   - `feedback` = `{items, created_at, current} | null`: UI에서 생성해 캐시된 이력서 피드백만. `current: false`면 이전 이력서 기준
+  - `application` = `{applied_at, stage} | null`: null이면 미지원. 값이 있으면 `applied_at`에 이미 지원한 공고이므로 "이미 지원한 공고"라고 밝힌다 (`stage`는 지금은 항상 null). 지원완료 공고는 `postings`에는 안 나오고 `posting <id>`로만 보이며, 공고가 내려가도 조회된다
   - 이전 버전에서 판정한 공고는 `requirements`·`preferred`·`breakdown`이 null (다음 스크래핑 때 재판정). `postings --full`의 `breakdown`도 같다
 - 오류 `code`
   - `not_onboarded` (exit 1): DB 없음. 온보딩 안내로
   - `job_running` (exit 1): 다른 곳에서 스크래핑 중. 끝나면 다시 읽는다
-  - `not_found` (exit 1): `posting <id>`의 공고가 없거나 삭제됨
+  - `not_found` (exit 1): `posting <id>`의 공고가 없음, 또는 지원완료가 아닌 삭제 공고
   - 그 외는 `message`를 그대로 전한다
 
 ## 절차

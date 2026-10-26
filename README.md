@@ -91,8 +91,8 @@ $ uvx gethired reset-db                # 공고·판정 이력 삭제
 | `uvx gethired companies` | 등록 회사 + 관심 여부 + 마지막 실행 |
 | `uvx gethired interest add\|rm <company...>` | 관심회사 설정 |
 | `uvx gethired scrape [company...]` | 스크래핑·판정을 끝까지 실행. 진행은 회사별로 stderr |
-| `uvx gethired postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고 (숨김 제외·관심회사만·score순) |
-| `uvx gethired posting <id> [--body]` | 공고 상세 1건: 요건·우대사항·축별 점수·캐시된 피드백. `--body`면 공고 원문 포함 (피드백 생성은 UI에서만) |
+| `uvx gethired postings [--min-level good] [--company ...] [--since 24h] [--limit N] [--full]` | 저장된 공고 (숨김·지원완료 제외·관심회사만·score순) |
+| `uvx gethired posting <id> [--body]` | 공고 상세 1건: 요건·우대사항·축별 점수·캐시된 피드백. `--body`면 공고 원문 포함 (피드백 생성은 UI에서만). 지원완료 여부(`application`) 포함 |
 
 - exit code: 0 성공(일부 회사 실패는 `failed`) · 1 실패·입력 오류·다른 곳에서 실행 중(`job_running`) · 3 로그인 필요(`login_command`) · 130 Ctrl+C
 - UI와 CLI는 같은 DB를 쓴다. 스크래핑은 한 번에 하나만 (파일 락. Windows는 **미검증**)
@@ -129,8 +129,9 @@ $ just build-wheel  # 프론트 포함 휠 → backend/dist/
 1. 첫 실행: 이력서 업로드 → 관심회사 선택. 관심회사는 회사 탭의 별로 언제든 바꿀 수 있다
 2. 공고 탭에서 **스크래핑 하기** → 관심회사만 병렬 수집 → 신규 공고만 LLM 판정 → 등급이 매겨진 공고 저장
 3. 관심회사가 아닌 회사의 공고는 모든 탭에서 보이지 않는다 (DB에는 남아 있어 다시 별을 켜면 돌아온다)
-4. 첫 실행은 23개사 기준 약 600건을 판정하므로 수 분 / 구독 사용량 $7 상당. 이후 실행은 신규 공고만
-5. 세션이 만료되면 배너가 뜸 → 터미널에서 `claude login` 후 다시 시도
+4. 지원한 공고는 카드의 체크로 **지원완료** 표시 → 공고·북마크 탭에서 빠지고 지원완료 탭에 지원일과 함께 모인다. 공고가 내려가도 이력으로 남는다
+5. 첫 실행은 23개사 기준 약 600건을 판정하므로 수 분 / 구독 사용량 $7 상당. 이후 실행은 신규 공고만
+6. 세션이 만료되면 배너가 뜸 → 터미널에서 `claude login` 후 다시 시도
 
 ## 에이전트에서 쓰기
 Claude Code 플러그인으로 설치하면 "요즘 나한테 맞는 공고 있어?" 같은 질문에 에이전트가 CLI로 상태·공고를 읽어 요약한다.

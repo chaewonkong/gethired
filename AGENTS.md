@@ -35,7 +35,7 @@ job-posting/
 |   `-- src/
 |       |-- App.tsx           # 상태 · 라우트(탭·상세) · 폴링
 |       |-- api.ts            # 타입 + fetch 래퍼
-|       |-- components/       # 탭(Postings, Bookmarks, Hidden, Companies), 상세(PostingDetail), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
+|       |-- components/       # 탭(Postings, Bookmarks, Applied, Hidden, Companies), 상세(PostingDetail), 온보딩(ResumeDropzone, ProviderSelect, CompanySelect), ...
 |       |-- test/             # vitest 설정 · 픽스처
 |       `-- e2e/              # Playwright (just test-e2e, sandbox 밖에서) + 데모 녹화(demo.spec.ts, make-gif.sh)
 |-- .claude-plugin/          # marketplace.json (Claude Code 마켓플레이스, plugins[0] → ./plugin)
