@@ -74,10 +74,11 @@ export function AppliedButton({ on, disabled, onClick }: ToggleProps) {
       disabled={disabled}
       onClick={(e) => (stop(e), onClick())}
     >
-      <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="9" />
         <path d="M8.3 12.4l2.5 2.5 4.9-5.2" />
       </svg>
+      <span>지원완료</span>
     </button>
   );
 }
@@ -120,7 +121,6 @@ export function PostingCard({ posting: p, companyName, visible, onToggleBookmark
         </span>
         <StarButton on={p.bookmarked} disabled={closed} onClick={() => onToggleBookmark(p)} />
         <HideButton on={p.hidden} disabled={closed} onClick={() => onToggleHidden(p)} />
-        <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={() => onToggleApplied(p)} />
       </div>
       <h3>{p.title}</h3>
       {p.application && (
@@ -149,9 +149,12 @@ export function PostingCard({ posting: p, companyName, visible, onToggleBookmark
       </p>
       <div className="card-foot">
         <span className="meta">수집 {p.first_seen_at.slice(0, 10)}</span>
-        <a className="apply" href={p.apply_url} target="_blank" rel="noopener noreferrer" onClick={stop}>
-          지원하기 →
-        </a>
+        <div className="actions">
+          <a className="apply" href={p.apply_url} target="_blank" rel="noopener noreferrer" onClick={stop}>
+            지원하기 →
+          </a>
+          <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={() => onToggleApplied(p)} />
+        </div>
       </div>
     </article>
   );

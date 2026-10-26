@@ -91,12 +91,14 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
         </span>
         <StarButton on={p.bookmarked} disabled={closed} onClick={toggle("bookmarked", onToggleBookmark)} />
         <HideButton on={p.hidden} disabled={closed} onClick={toggle("hidden", onToggleHidden)} />
-        <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={toggleApplied} />
       </div>
       <h2>{detail.title}</h2>
-      <a className="apply" href={detail.apply_url} target="_blank" rel="noopener noreferrer">
-        지원하기 →
-      </a>
+      <div className="actions">
+        <a className="apply" href={detail.apply_url} target="_blank" rel="noopener noreferrer">
+          지원하기 →
+        </a>
+        <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={toggleApplied} />
+      </div>
 
       <section>
         <h3>공고</h3>

@@ -130,22 +130,19 @@ select {
 .level.strong { background: #dcfce7; color: #166534; }
 .level.good { background: #e0f2fe; color: #075985; }
 .level.stretch { background: #fef3c7; color: #92400e; }
-.star, .hide, .applied {
+.star, .hide {
   flex: none; align-self: flex-start; width: 32px; height: 32px; margin: -4px -6px 0 -2px;
   border: 0; background: none; padding: 4px; cursor: pointer; border-radius: 50%;
   display: grid; place-items: center; transition: background .15s;
 }
-.star:hover, .hide:hover, .applied:hover { background: var(--chip); }
-.star svg, .hide svg, .applied svg { width: 22px; height: 22px; fill: none; stroke: #9ca3af; transition: fill .15s, stroke .15s, transform .15s; }
+.star:hover, .hide:hover { background: var(--chip); }
+.star svg, .hide svg { width: 22px; height: 22px; fill: none; stroke: #9ca3af; transition: fill .15s, stroke .15s, transform .15s; }
 .hide svg { width: 20px; height: 20px; }
-.applied svg { width: 21px; height: 21px; }
 .star.on svg { fill: #facc15; stroke: #eab308; }
 .hide.on svg { stroke: var(--accent-strong); }
-.applied.on svg circle { fill: var(--accent-strong); stroke: var(--accent-strong); }
-.applied.on svg path { stroke: #fff; }
-.star:active svg, .hide:active svg, .applied:active svg { transform: scale(.85); }
-.star:disabled, .hide:disabled, .applied:disabled { opacity: .35; cursor: default; background: none; }
-.star:disabled svg, .hide:disabled svg, .applied:disabled svg { transform: none; }
+.star:active svg, .hide:active svg { transform: scale(.85); }
+.star:disabled, .hide:disabled { opacity: .35; cursor: default; background: none; }
+.star:disabled svg, .hide:disabled svg { transform: none; }
 .gaps { margin: 0 0 12px; padding-left: 18px; font-size: 13px; color: var(--muted); }
 .gaps li::marker { color: #d97706; }
 .company { font-size: 14px; color: var(--text); }
@@ -165,13 +162,24 @@ select {
   background: #e0f2fe; border-radius: 10px; padding: 6px 14px; transition: background .15s;
 }
 .apply:hover { background: #bae6fd; }
+.actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.applied {
+  display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--accent-line); background: var(--surface);
+  color: var(--accent-text); font: inherit; font-size: 14px; font-weight: 600; border-radius: 10px; padding: 5px 12px 5px 9px;
+  cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.applied svg { width: 16px; height: 16px; fill: none; stroke: currentColor; }
+.applied:hover { background: var(--accent-soft); }
+.applied.on { background: var(--accent-strong); border-color: var(--accent-strong); color: #fff; }
+.applied.on:hover { background: #075985; }
+.applied:disabled { opacity: .4; cursor: default; background: var(--surface); }
 .empty { text-align: center; color: var(--muted); padding: 48px 16px; border-radius: 8px; box-shadow: var(--shadow); }
 .empty a { color: var(--accent-strong); }
 
 /* 공고 상세 */
 .detail .back { border: 0; background: none; padding: 4px 0; margin-bottom: 12px; color: var(--accent-strong); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .detail h2 { margin: 14px 0 10px; font-size: 21px; font-weight: 700; color: var(--accent-strong); line-height: 1.35; }
-.detail > .apply { display: inline-block; margin-bottom: 8px; }
+.detail > .actions { margin-bottom: 8px; }
 .detail section { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
 .detail h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; color: var(--accent-text); }
 .detail h4 { margin: 12px 0 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
