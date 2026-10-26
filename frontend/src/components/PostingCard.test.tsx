@@ -5,10 +5,10 @@ import { renderInRouter } from "../test/renderApp";
 import { makePosting } from "../test/fixtures";
 import { PostingCard } from "./PostingCard";
 
-function renderCard(over = {}, onToggleBookmark = vi.fn(), onToggleHidden = vi.fn()) {
+function renderCard(over = {}, onToggleBookmark = vi.fn(), onToggleHidden = vi.fn(), onToggleApplied = vi.fn()) {
   const posting = makePosting(over);
-  renderInRouter(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />);
-  return { posting, onToggleBookmark, onToggleHidden };
+  renderInRouter(<PostingCard posting={posting} companyName="토스" onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} onToggleApplied={onToggleApplied} />);
+  return { posting, onToggleBookmark, onToggleHidden, onToggleApplied };
 }
 
 describe("PostingCard", () => {
@@ -57,7 +57,7 @@ describe("PostingCard", () => {
 
   it("gaps·tech_stack이 비면 해당 영역을 그리지 않는다", () => {
     const { container } = renderInRouter(
-      <PostingCard posting={makePosting({ gaps: [], tech_stack: [] })} companyName="토스" onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />,
+      <PostingCard posting={makePosting({ gaps: [], tech_stack: [] })} companyName="토스" onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} onToggleApplied={vi.fn()} />,
     );
     expect(container.querySelector(".gaps")).toBeNull();
     expect(container.querySelector(".chips")).toBeNull();
@@ -105,11 +105,12 @@ describe("PostingCard 상세 이동", () => {
     const posting = makePosting(over);
     const onToggleBookmark = vi.fn();
     const onToggleHidden = vi.fn();
+    const onToggleApplied = vi.fn();
     const utils = renderInRouter(
-      <PostingCard posting={posting} companyName="토스" visible={40} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />,
+      <PostingCard posting={posting} companyName="토스" visible={40} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} onToggleApplied={onToggleApplied} />,
       { entries: ["/bookmarks"] },
     );
-    return { ...utils, posting, onToggleBookmark, onToggleHidden };
+    return { ...utils, posting, onToggleBookmark, onToggleHidden, onToggleApplied };
   };
 
   it("카드를 누르면 위치를 저장하고 /postings/:id로 이동한다", async () => {
@@ -142,5 +143,66 @@ describe("PostingCard 상세 이동", () => {
     expect(onToggleHidden).toHaveBeenCalledWith(posting);
     expect(location().pathname).toBe("/bookmarks");
     expect(sessionStorage.getItem("listPosition:/bookmarks")).toBeNull();
+  });
+});
+
+describe("PostingCard 지원완료", () => {
+  const applied = { applied_at: "2026-10-20T03:00:00+00:00", stage: null };
+  const closed = { deleted_at: "2026-10-25T00:00:00+00:00" };
+
+  it("미지원 공고는 빈 체크, 누르면 핸들러에 공고를 넘기고 이동하지 않는다", async () => {
+    const posting = makePosting();
+    const onToggleApplied = vi.fn();
+    const { location } = renderInRouter(
+      <PostingCard posting={posting} companyName="토스" onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} onToggleApplied={onToggleApplied} />,
+      { entries: ["/bookmarks"] },
+    );
+    const check = screen.getByRole("button", { name: "지원완료" });
+    expect(check).toHaveAttribute("aria-pressed", "false");
+    expect(check).not.toHaveClass("on");
+    expect(check).toBeEnabled();
+    await userEvent.click(check);
+    expect(onToggleApplied).toHaveBeenCalledWith(posting);
+    expect(location().pathname).toBe("/bookmarks");
+    expect(screen.queryByText(/지원완료 ·/)).toBeNull();
+  });
+
+  it("지원완료 공고는 채워진 체크와 로컬 날짜 기준 지원일", () => {
+    renderCard({ application: { applied_at: "2026-10-20T23:30:00+00:00", stage: null } });
+    const check = screen.getByRole("button", { name: "지원완료 해제" });
+    expect(check).toHaveAttribute("aria-pressed", "true");
+    expect(check).toHaveClass("on");
+    expect(screen.getByText("지원완료 · 2026-10-21")).toHaveClass("applied-at");
+  });
+
+  it("단계가 있으면 라벨 자리에 단계", () => {
+    renderCard({ application: { ...applied, stage: "서류합격" } });
+    expect(screen.getByText("서류합격 · 2026-10-20")).toBeInTheDocument();
+  });
+
+  it("마감된 지원완료 공고는 마감 배지, 별·숨김은 disabled, 체크는 해제 가능", async () => {
+    const { onToggleBookmark, onToggleHidden, onToggleApplied } = renderCard({ ...closed, application: applied, deadline: "2026-10-30" });
+    expect(screen.getByText("마감")).toHaveClass("deadline", "closed");
+    expect(screen.queryByText(/마감 2026-10-30/)).toBeNull();
+    const star = screen.getByRole("button", { name: "북마크" });
+    const eye = screen.getByRole("button", { name: "숨김" });
+    expect(star).toBeDisabled();
+    expect(eye).toBeDisabled();
+    await userEvent.click(star);
+    await userEvent.click(eye);
+    expect(onToggleBookmark).not.toHaveBeenCalled();
+    expect(onToggleHidden).not.toHaveBeenCalled();
+    const check = screen.getByRole("button", { name: "지원완료 해제" });
+    expect(check).toBeEnabled();
+    await userEvent.click(check);
+    expect(onToggleApplied).toHaveBeenCalled();
+  });
+
+  it("마감됐는데 지원완료가 아니면 체크도 disabled", async () => {
+    const { onToggleApplied } = renderCard(closed);
+    const check = screen.getByRole("button", { name: "지원완료" });
+    expect(check).toBeDisabled();
+    await userEvent.click(check);
+    expect(onToggleApplied).not.toHaveBeenCalled();
   });
 });

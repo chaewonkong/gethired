@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { api, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile, ResumeRejectedError } from "./api";
+import { api, Application, AuthStatus, Company, Job, JobRunningError, LoginRequiredError, Posting, Provider, ProviderSetting, ResumeFile, ResumeRejectedError } from "./api";
 import { Logo } from "./components/Logo";
 import { PostingsTab } from "./components/PostingsTab";
 import { BookmarksTab } from "./components/BookmarksTab";
+import { AppliedTab } from "./components/AppliedTab";
 import { HiddenTab } from "./components/HiddenTab";
 import { CompaniesTab } from "./components/CompaniesTab";
 import { PostingDetail } from "./components/PostingDetail";
@@ -16,10 +17,10 @@ import { invalidResumeFiles, ResumeDropzone } from "./components/ResumeDropzone"
 import { ResumeModal } from "./components/ResumeModal";
 import { Toast, ToastMessage } from "./components/Toast";
 
-type Tab = "postings" | "bookmarks" | "hidden" | "companies";
+type Tab = "postings" | "bookmarks" | "applied" | "hidden" | "companies";
 
-const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", hidden: "숨김", companies: "회사" };
-const TAB_PATH: Record<Tab, string> = { postings: "/", bookmarks: "/bookmarks", hidden: "/hidden", companies: "/companies" };
+const TAB_LABEL: Record<Tab, string> = { postings: "공고", bookmarks: "북마크", applied: "지원완료", hidden: "숨김", companies: "회사" };
+const TAB_PATH: Record<Tab, string> = { postings: "/", bookmarks: "/bookmarks", applied: "/applied", hidden: "/hidden", companies: "/companies" };
 const TABS = Object.keys(TAB_PATH) as Tab[];
 export const AUTH_POLL_MS = 3000;
 
@@ -249,13 +250,40 @@ export default function App() {
   const toggleBookmark = (p: Posting) => toggleFlag(p, "bookmarked");
   const toggleHidden = (p: Posting) => toggleFlag(p, "hidden");
 
+  // 지원완료는 리소스라 toggleFlag와 별도. 켜기는 PUT 응답의 지원 시각으로 교체, 마감 공고 해제는 되돌릴 수 없어 확인을 받는다
+  const toggleApplied = async (p: Posting): Promise<boolean> => {
+    const key = `application:${p.id}`;
+    if (pending.current.has(key)) return false;
+    const on = p.application === null;
+    if (!on && p.deleted_at !== null && !window.confirm("마감된 공고라 해제하면 다시 볼 수 없습니다. 해제할까요?")) return false;
+    pending.current.add(key);
+    const set = (v: Application | null) => setPostings((ps) => ps.map((x) => (x.id === p.id ? { ...x, application: v } : x)));
+    set(on ? { applied_at: new Date().toISOString(), stage: null } : null);
+    try {
+      if (on) set(await api.setApplied(p.id));
+      else await api.clearApplied(p.id);
+      return true;
+    } catch (e) {
+      set(p.application);
+      setError(String(e));
+      return false;
+    } finally {
+      pending.current.delete(key);
+    }
+  };
+
   const scraping = job?.status === "running";
-  // 관심회사가 아닌 회사의 공고는 모든 탭·배지에서 뺀다 (DB에는 남아 있음)
+  // 마감 공고는 지원완료인 것만 남긴다 (서버도 그렇게 주지만, 해제 직후 로컬 행이 다른 탭에 나타나지 않게)
+  const live = postings.filter((p) => p.deleted_at === null || p.application !== null);
+  // 관심회사가 아닌 회사의 공고는 모든 탭·배지에서 뺀다 (DB에는 남아 있음). 지원완료 탭은 이력이라 예외
   const interested = companies.filter((c) => c.interested);
   const interestSet = new Set(interested.map((c) => c.company));
-  const shown = postings.filter((p) => interestSet.has(p.company));
+  const shown = live.filter((p) => interestSet.has(p.company) && p.application === null);
+  const appliedAt = (p: Posting) => Date.parse(p.application!.applied_at);
+  const applied = live.filter((p) => p.application !== null).sort((a, b) => appliedAt(b) - appliedAt(a) || b.id - a.id);
   const count: Partial<Record<Tab, number>> = {
     bookmarks: shown.filter((p) => p.bookmarked && !p.hidden).length,
+    applied: applied.length,
     hidden: shown.filter((p) => p.hidden).length,
   };
   const byId = Object.fromEntries(companies.map((c) => [c.company, c]));
@@ -359,15 +387,16 @@ export default function App() {
 
           <Routes>
             <Route path="/" element={
-              <PostingsTab postings={shown} companies={interested} byId={byId} job={job} scraping={!!scraping}
-                           onScrape={startScrape} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />
+              <PostingsTab postings={shown} companies={interested} byId={byId} job={job} scraping={!!scraping} onScrape={startScrape}
+                           onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} onToggleApplied={toggleApplied} />
             } />
-            <Route path="/bookmarks" element={<BookmarksTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />} />
-            <Route path="/hidden" element={<HiddenTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} />} />
+            <Route path="/bookmarks" element={<BookmarksTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} onToggleApplied={toggleApplied} />} />
+            <Route path="/applied" element={<AppliedTab postings={applied} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} onToggleApplied={toggleApplied} />} />
+            <Route path="/hidden" element={<HiddenTab postings={shown} byId={byId} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden} onToggleApplied={toggleApplied} />} />
             <Route path="/companies" element={<CompaniesTab companies={companies} onToggleInterest={toggleInterest} />} />
             <Route path="/postings/:id" element={
-              <PostingDetail postings={postings} byId={byId} loginRequired={!!loginRequired} onToggleBookmark={toggleBookmark}
-                             onToggleHidden={toggleHidden} onRequireLogin={requireLogin} onToast={showToast} />
+              <PostingDetail postings={postings} byId={byId} loginRequired={!!loginRequired} onToggleBookmark={toggleBookmark} onToggleHidden={toggleHidden}
+                             onToggleApplied={toggleApplied} onRequireLogin={requireLogin} onToast={showToast} />
             } />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

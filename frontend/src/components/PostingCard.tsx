@@ -10,20 +10,35 @@ function daysLeft(deadline: string | null): number | null {
   return Math.round((new Date(`${deadline}T00:00:00`).getTime() - today.getTime()) / 86400000);
 }
 
-export function Deadline({ deadline }: { deadline: string | null }) {
+/** closed(공고 soft delete)면 D-day 대신 마감 배지 */
+export function Deadline({ deadline, closed = false }: { deadline: string | null; closed?: boolean }) {
+  if (closed) return <div className="deadline closed">마감</div>;
   const left = daysLeft(deadline);
   const soon = left !== null && left <= 7;
   return <div className={`deadline ${soon ? "soon" : ""}`}>{deadline ? `마감 ${deadline}${soon ? ` (D-${left})` : ""}` : "상시 채용"}</div>;
 }
 
+function localDate(iso: string): string {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 const stop = (e: MouseEvent) => e.stopPropagation();
 
-export function StarButton({ on, onClick }: { on: boolean; onClick: () => void }) {
+interface ToggleProps {
+  on: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+}
+
+export function StarButton({ on, disabled, onClick }: ToggleProps) {
   return (
     <button
       className={`star${on ? " on" : ""}`}
       aria-label={on ? "북마크 해제" : "북마크"}
       aria-pressed={on}
+      disabled={disabled}
       onClick={(e) => (stop(e), onClick())}
     >
       <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinejoin="round">
@@ -33,17 +48,35 @@ export function StarButton({ on, onClick }: { on: boolean; onClick: () => void }
   );
 }
 
-export function HideButton({ on, onClick }: { on: boolean; onClick: () => void }) {
+export function HideButton({ on, disabled, onClick }: ToggleProps) {
   return (
     <button
       className={`hide${on ? " on" : ""}`}
       aria-label={on ? "숨김 해제" : "숨김"}
       aria-pressed={on}
+      disabled={disabled}
       onClick={(e) => (stop(e), onClick())}
     >
       <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M10.6 5.1A9.8 9.8 0 0 1 12 5c5 0 8.5 4.5 9.5 7a13 13 0 0 1-2.3 3.4M6.6 6.6C4.5 8 3 10.2 2.5 12c1 2.5 4.5 7 9.5 7a9.6 9.6 0 0 0 5.4-1.6" />
         <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2M3 3l18 18" />
+      </svg>
+    </button>
+  );
+}
+
+export function AppliedButton({ on, disabled, onClick }: ToggleProps) {
+  return (
+    <button
+      className={`applied${on ? " on" : ""}`}
+      aria-label={on ? "지원완료 해제" : "지원완료"}
+      aria-pressed={on}
+      disabled={disabled}
+      onClick={(e) => (stop(e), onClick())}
+    >
+      <svg viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M8.3 12.4l2.5 2.5 4.9-5.2" />
       </svg>
     </button>
   );
@@ -56,9 +89,12 @@ interface Props {
   visible?: number;
   onToggleBookmark: (p: Posting) => void;
   onToggleHidden: (p: Posting) => void;
+  onToggleApplied: (p: Posting) => void;
 }
 
-export function PostingCard({ posting: p, companyName, visible, onToggleBookmark, onToggleHidden }: Props) {
+export function PostingCard({ posting: p, companyName, visible, onToggleBookmark, onToggleHidden, onToggleApplied }: Props) {
+  // 마감 공고는 지원완료 해제만 가능하다 (북마크·숨김은 서버가 404)
+  const closed = p.deleted_at !== null;
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -77,15 +113,21 @@ export function PostingCard({ posting: p, companyName, visible, onToggleBookmark
         <div className="co-logo">{companyName[0]}</div>
         <div className="co-info">
           <div className="company">{companyName}</div>
-          <Deadline deadline={p.deadline} />
+          <Deadline deadline={p.deadline} closed={closed} />
         </div>
         <span className={`level ${p.fit_level}`}>
           {p.fit_level} · {p.score}
         </span>
-        <StarButton on={p.bookmarked} onClick={() => onToggleBookmark(p)} />
-        <HideButton on={p.hidden} onClick={() => onToggleHidden(p)} />
+        <StarButton on={p.bookmarked} disabled={closed} onClick={() => onToggleBookmark(p)} />
+        <HideButton on={p.hidden} disabled={closed} onClick={() => onToggleHidden(p)} />
+        <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={() => onToggleApplied(p)} />
       </div>
       <h3>{p.title}</h3>
+      {p.application && (
+        <div className="applied-at">
+          {p.application.stage ?? "지원완료"} · {localDate(p.application.applied_at)}
+        </div>
+      )}
       <p className="summary">{p.summary}</p>
       {p.tech_stack.length > 0 && (
         <div className="chips">

@@ -7,6 +7,8 @@ import { makeCompany, makeDetail, makePosting, stubIntersectionObserver } from "
 
 type Handler = (init?: RequestInit) => Response | Promise<Response>;
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
+/** PUT /application 응답의 지원 시각. 낙관적 값(현재 시각)이 이걸로 교체되는지 본다 */
+const APPLIED = { applied_at: "2026-10-20T03:00:00+00:00", stage: null };
 
 interface ApiInit {
   provider?: Provider;
@@ -37,6 +39,8 @@ function stubApi(postings: Posting[], routes: Record<string, Handler> = {}, opts
     }
     if (key === "GET /api/scrape/j1") return json(job);
     if (key.endsWith("/bookmark") || key.endsWith("/hide")) return json({});
+    const app = key.match(/^(PUT|DELETE) \/api\/postings\/(\d+)\/application$/);
+    if (app) return json({ posting_id: Number(app[2]), application: app[1] === "PUT" ? APPLIED : null });
     return json({}, 404);
   });
   vi.stubGlobal("fetch", fetch);
@@ -487,5 +491,168 @@ describe("App", () => {
       expect(fetch).toHaveBeenCalledWith("/api/companies/toss/interest", { method: "DELETE" });
       expect(await screen.findByRole("heading", { name: "관심회사 선택" })).toBeInTheDocument();
     });
+  });
+});
+
+describe("App 지원완료", () => {
+  beforeEach(() => {
+    stubIntersectionObserver();
+  });
+  const closed = { deleted_at: "2026-10-25T00:00:00+00:00" };
+
+  it("체크를 누르면 PUT 후 공고 탭에서 빠지고 지원완료 탭·배지에 응답의 지원일로 나타난다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a" }), makePosting({ id: 2, title: "b", score: 10 })]);
+    renderApp();
+    await screen.findByRole("heading", { name: "a" });
+    expect(within(tab(/지원완료/)).queryByText("1")).toBeNull();
+
+    await userEvent.click(screen.getAllByRole("button", { name: "지원완료" })[0]);
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/application", { method: "PUT" });
+    expect(titles()).toEqual(["b"]);
+    expect(within(tab(/지원완료/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(tab(/지원완료/));
+    expect(titles()).toEqual(["a"]);
+    expect(await screen.findByText("지원완료 · 2026-10-20")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "지원완료 해제" })).toHaveClass("on");
+  });
+
+  it("북마크 공고를 지원완료하면 북마크 탭·배지에서 빠지고, 해제하면 DELETE 후 북마크 탭으로 돌아온다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a", bookmarked: true })]);
+    renderApp();
+    await screen.findByRole("heading", { name: "a" });
+    expect(within(tab(/북마크/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "지원완료" }));
+    expect(within(tab(/북마크/)).queryByText("1")).toBeNull();
+    await userEvent.click(tab(/북마크/));
+    expect(titles()).toEqual([]);
+
+    await userEvent.click(tab(/지원완료/));
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/application", { method: "DELETE" });
+    expect(titles()).toEqual([]);
+    await userEvent.click(tab(/북마크/));
+    expect(titles()).toEqual(["a"]);
+    expect(screen.getByRole("button", { name: "북마크 해제" })).toHaveClass("on");
+  });
+
+  it("숨긴 공고를 지원완료하면 숨김 탭에서 빠지고, 해제하면 숨김 탭으로만 돌아온다", async () => {
+    stubApi([makePosting({ id: 1, title: "a", hidden: true }), makePosting({ id: 2, title: "b" })]);
+    renderApp("/hidden");
+    await screen.findByRole("heading", { name: "a" });
+    expect(within(tab(/숨김/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "지원완료" }));
+    expect(titles()).toEqual([]);
+    expect(within(tab(/숨김/)).queryByText("1")).toBeNull();
+
+    await userEvent.click(tab(/지원완료/));
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    await userEvent.click(tab(/공고/));
+    expect(titles()).toEqual(["b"]);
+    await userEvent.click(tab(/숨김/));
+    expect(titles()).toEqual(["a"]);
+  });
+
+  it("지원완료 탭은 지원일 내림차순, 같은 시각이면 id 내림차순", async () => {
+    stubApi([
+      makePosting({ id: 1, title: "old", score: 99, application: { applied_at: "2026-10-18T00:00:00+00:00", stage: null } }),
+      makePosting({ id: 2, title: "new", score: 10, application: { applied_at: "2026-10-21T00:00:00+00:00", stage: null } }),
+      makePosting({ id: 3, title: "tie", score: 50, application: { applied_at: "2026-10-18T00:00:00+00:00", stage: null } }),
+    ]);
+    renderApp("/applied");
+    await screen.findByRole("heading", { name: "new" });
+    expect(titles()).toEqual(["new", "tie", "old"]);
+  });
+
+  it("관심회사가 아닌 회사의 지원완료 공고도 탭·배지에 들어간다", async () => {
+    stubApi([makePosting({ id: 1, title: "a", company: "naver", application: APPLIED }), makePosting({ id: 2, title: "b", company: "naver" })], {
+      "GET /api/companies": () => json([makeCompany(), makeCompany({ company: "naver", display_name: "네이버", interested: false })]),
+    });
+    renderApp();
+    await screen.findByRole("button", { name: "스크래핑 하기" });
+    expect(titles()).toEqual([]);
+    expect(within(tab(/지원완료/)).getByText("1")).toBeInTheDocument();
+
+    await userEvent.click(tab(/지원완료/));
+    expect(titles()).toEqual(["a"]);
+    expect(screen.getByText("네이버")).toBeInTheDocument();
+  });
+
+  it("마감된 지원완료 공고 해제는 confirm을 거친다. 취소면 그대로, 확인이면 DELETE 후 모든 탭에서 사라진다", async () => {
+    const fetch = stubApi([makePosting({ id: 1, title: "a", bookmarked: true, application: APPLIED, ...closed })]);
+    const confirm = vi.spyOn(window, "confirm").mockReturnValue(false);
+    renderApp("/applied");
+    await screen.findByRole("heading", { name: "a" });
+    expect(screen.getByText("마감")).toHaveClass("closed");
+
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    expect(confirm).toHaveBeenCalledWith(expect.stringContaining("마감된 공고"));
+    expect(fetch).not.toHaveBeenCalledWith("/api/postings/1/application", { method: "DELETE" });
+    expect(titles()).toEqual(["a"]);
+
+    confirm.mockReturnValue(true);
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    expect(fetch).toHaveBeenCalledWith("/api/postings/1/application", { method: "DELETE" });
+    expect(titles()).toEqual([]);
+    for (const name of [/공고/, /북마크/, /숨김/]) {
+      await userEvent.click(tab(name));
+      expect(titles()).toEqual([]);
+    }
+    expect(within(tab(/북마크/)).queryByText("1")).toBeNull();
+    confirm.mockRestore();
+  });
+
+  it("마감되지 않은 공고 해제는 confirm 없이 바로", async () => {
+    stubApi([makePosting({ id: 1, title: "a", application: APPLIED })]);
+    const confirm = vi.spyOn(window, "confirm");
+    renderApp("/applied");
+    await screen.findByRole("heading", { name: "a" });
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    expect(confirm).not.toHaveBeenCalled();
+    expect(titles()).toEqual([]);
+    confirm.mockRestore();
+  });
+
+  it("PUT이 실패하면 되돌리고 에러를 띄운다", async () => {
+    stubApi([makePosting({ id: 1, title: "a" })], {
+      "PUT /api/postings/1/application": () => new Response("", { status: 500 }),
+    });
+    renderApp();
+    await screen.findByRole("heading", { name: "a" });
+    await userEvent.click(screen.getByRole("button", { name: "지원완료" }));
+    await waitFor(() => expect(titles()).toEqual(["a"]));
+    expect(screen.getByText(/application: 500/)).toBeInTheDocument();
+    expect(within(tab(/지원완료/)).queryByText("1")).toBeNull();
+  });
+
+  it("요청이 끝나기 전에는 같은 공고를 다시 토글하지 않는다", async () => {
+    let release!: () => void;
+    const fetch = stubApi([makePosting({ id: 1, title: "a" })], {
+      "PUT /api/postings/1/application": () => new Promise((r) => (release = () => r(json({ posting_id: 1, application: APPLIED })))),
+    });
+    renderApp();
+    await screen.findByRole("heading", { name: "a" });
+    await userEvent.click(screen.getByRole("button", { name: "지원완료" }));
+    await userEvent.click(tab(/지원완료/));
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    const calls = () => fetch.mock.calls.filter(([path]) => String(path).endsWith("/application"));
+    expect(calls()).toEqual([["/api/postings/1/application", { method: "PUT" }]]);
+    expect(titles()).toEqual(["a"]);
+
+    release();
+    expect(await screen.findByText("지원완료 · 2026-10-20")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    await waitFor(() => expect(calls()).toHaveLength(2));
+    expect(titles()).toEqual([]);
+  });
+
+  it("탭 순서는 공고·북마크·지원완료·숨김·회사이고 /applied로 시작하면 지원완료 탭", async () => {
+    stubApi([]);
+    renderApp("/applied");
+    await screen.findByText(/지원한 공고가 없습니다/);
+    expect(screen.getAllByRole("tab").map((t) => t.textContent)).toEqual(["공고", "북마크", "지원완료", "숨김", "회사"]);
+    expect(tab(/지원완료/)).toHaveAttribute("aria-selected", "true");
   });
 });

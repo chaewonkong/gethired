@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { api, Breakdown, Company, Feedback, FitMark, JobRunningError, LlmError, LoginRequiredError, NotFoundError, Posting, PostingDetail as Detail, Requirement } from "../api";
 import { ToastMessage } from "./Toast";
-import { Deadline, HideButton, StarButton } from "./PostingCard";
+import { AppliedButton, Deadline, HideButton, StarButton } from "./PostingCard";
 
 interface Props {
   /** App의 전체 공고. 북마크·숨김 상태는 여기 있으면 이걸 쓴다 (낙관적 업데이트 반영) */
@@ -12,6 +12,7 @@ interface Props {
   loginRequired: boolean;
   onToggleBookmark: (p: Posting) => Promise<boolean>;
   onToggleHidden: (p: Posting) => Promise<boolean>;
+  onToggleApplied: (p: Posting) => Promise<boolean>;
   onRequireLogin: (message: string | null) => void;
   onToast: (text: string, kind: ToastMessage["kind"]) => void;
 }
@@ -23,7 +24,7 @@ const AXES: { key: keyof Breakdown; label: string; max: number }[] = [
   { key: "preferred", label: "우대사항", max: 10 },
 ];
 
-export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark, onToggleHidden, onRequireLogin, onToast }: Props) {
+export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark, onToggleHidden, onToggleApplied, onRequireLogin, onToast }: Props) {
   const id = Number(useParams().id);
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,6 +70,12 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
   const toggle = (flag: "bookmarked" | "hidden", fn: (p: Posting) => Promise<boolean>) => async () => {
     if ((await fn(p)) && !listed) setDetail((d) => (d ? { ...d, [flag]: !p[flag] } : d));
   };
+  const toggleApplied = async () => {
+    if ((await onToggleApplied(p)) && !listed) {
+      setDetail((d) => (d ? { ...d, application: p.application ? null : { applied_at: new Date().toISOString(), stage: null } } : d));
+    }
+  };
+  const closed = p.deleted_at !== null;
 
   return (
     <section className="panel detail">
@@ -77,13 +84,14 @@ export function PostingDetail({ postings, byId, loginRequired, onToggleBookmark,
         <div className="co-logo">{(byId[p.company]?.display_name ?? p.company)[0]}</div>
         <div className="co-info">
           <div className="company">{byId[p.company]?.display_name ?? p.company}</div>
-          <Deadline deadline={p.deadline} />
+          <Deadline deadline={p.deadline} closed={closed} />
         </div>
         <span className={`level ${p.fit_level}`}>
           {p.fit_level} · {p.score}
         </span>
-        <StarButton on={p.bookmarked} onClick={toggle("bookmarked", onToggleBookmark)} />
-        <HideButton on={p.hidden} onClick={toggle("hidden", onToggleHidden)} />
+        <StarButton on={p.bookmarked} disabled={closed} onClick={toggle("bookmarked", onToggleBookmark)} />
+        <HideButton on={p.hidden} disabled={closed} onClick={toggle("hidden", onToggleHidden)} />
+        <AppliedButton on={p.application !== null} disabled={closed && p.application === null} onClick={toggleApplied} />
       </div>
       <h2>{detail.title}</h2>
       <a className="apply" href={detail.apply_url} target="_blank" rel="noopener noreferrer">

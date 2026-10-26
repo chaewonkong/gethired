@@ -20,6 +20,15 @@ export interface Posting {
   bookmarked: boolean;
   hidden: boolean;
   breakdown: Breakdown | null;
+  /** 지원완료면 지원 시각·단계(이번 spec에서는 항상 null). null이면 미지원 */
+  application: Application | null;
+  /** 공고가 마감(soft delete)된 시각. 지원완료 공고만 마감된 채 내려온다 */
+  deleted_at: string | null;
+}
+
+export interface Application {
+  applied_at: string;
+  stage: string | null;
 }
 
 export interface Breakdown {
@@ -175,6 +184,12 @@ export const api = {
     const r = await fetch(`/api/postings/${id}/hide`, { method: on ? "PUT" : "DELETE" });
     if (!r.ok) throw new Error(`hide: ${r.status}`);
   },
+  async setApplied(id: number): Promise<Application> {
+    const r = await fetch(`/api/postings/${id}/application`, { method: "PUT" });
+    if (!r.ok) throw new Error(`application: ${r.status}`);
+    return (await r.json()).application;
+  },
+  clearApplied: (id: number) => send("application", `/api/postings/${id}/application`, "DELETE"),
   async startScrape(): Promise<{ job_id: string }> {
     const r = await fetch("/api/scrape", { method: "POST" });
     if (r.status === 401) throw new LoginRequiredError(await readJson(r));

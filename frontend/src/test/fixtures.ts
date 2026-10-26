@@ -24,6 +24,8 @@ export function makePosting(over: Partial<Posting> = {}): Posting {
     bookmarked: false,
     hidden: false,
     breakdown: null,
+    application: null,
+    deleted_at: null,
     ...over,
   };
 }

@@ -7,9 +7,10 @@ interface Props {
   byId: Record<string, Company>;
   onToggleBookmark: (p: Posting) => void;
   onToggleHidden: (p: Posting) => void;
+  onToggleApplied: (p: Posting) => void;
 }
 
-export function BookmarksTab({ postings, byId, onToggleBookmark, onToggleHidden }: Props) {
+export function BookmarksTab({ postings, byId, onToggleBookmark, onToggleHidden, onToggleApplied }: Props) {
   const items = postings.filter((p) => p.bookmarked && !p.hidden).sort((a, b) => b.score - a.score);
   useListPosition("/bookmarks", items.length > 0);
 
@@ -18,7 +19,7 @@ export function BookmarksTab({ postings, byId, onToggleBookmark, onToggleHidden 
       <div className="list">
         {items.length ? (
           items.map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} onToggleApplied={onToggleApplied} />
           ))
         ) : (
           <div className="empty">

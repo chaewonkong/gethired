@@ -16,7 +16,7 @@ function renderTab(postings: Posting[], props: Partial<Parameters<typeof Posting
   const onToggleHidden = vi.fn();
   const utils = renderInRouter(
     <PostingsTab postings={postings} companies={companies} byId={byId} job={null} scraping={false}
-                 onScrape={onScrape} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} {...props} />,
+                 onScrape={onScrape} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} onToggleApplied={vi.fn()} {...props} />,
   );
   return { ...utils, onScrape, onToggleBookmark, onToggleHidden };
 }
@@ -241,7 +241,7 @@ describe("PostingsTab infinite scroll", () => {
     const next = posts.map((p, i) => (i === 0 ? { ...p, hidden: true } : i === 1 ? { ...p, bookmarked: true } : p));
     rerender(
       <PostingsTab postings={next} companies={companies} byId={byId} job={null} scraping={false}
-                   onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />,
+                   onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} onToggleApplied={vi.fn()} />,
     );
     expect(titles()).toHaveLength(40);
   });
@@ -310,7 +310,7 @@ describe("PostingsTab 위치 복원", () => {
           <Route path="/companies" element={<Go />} />
           <Route path="/" element={
             <PostingsTab postings={many(45)} companies={companies} byId={byId} job={null} scraping={false}
-                         onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} />
+                         onScrape={vi.fn()} onToggleBookmark={vi.fn()} onToggleHidden={vi.fn()} onToggleApplied={vi.fn()} />
           } />
         </Routes>
       </MemoryRouter>,

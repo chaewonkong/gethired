@@ -32,6 +32,7 @@ function renderDetail({ postings = [], loginRequired = false, entries = ["/posti
     byId: { toss: makeCompany() },
     onToggleBookmark: vi.fn(async () => true),
     onToggleHidden: vi.fn(async () => true),
+    onToggleApplied: vi.fn(async () => true),
     onRequireLogin: vi.fn(),
     onToast: vi.fn(),
   };
@@ -203,5 +204,52 @@ describe("PostingDetail", () => {
       await userEvent.click(await screen.findByRole("button", { name: "피드백 생성" }));
       await waitFor(() => expect(onToast).toHaveBeenCalledWith("LLM 호출 실패", "error"));
     });
+  });
+});
+
+describe("PostingDetail 지원완료", () => {
+  const applied = { applied_at: "2026-10-20T03:00:00+00:00", stage: null };
+  const closed = { deleted_at: "2026-10-25T00:00:00+00:00" };
+
+  it("App 목록에 있으면 목록 상태로 체크를 그리고, 누르면 목록 Posting으로 핸들러 호출", async () => {
+    stubApi(makeDetail({ id: 1 }));
+    const listed = makePosting({ id: 1, application: applied });
+    const { onToggleApplied } = renderDetail({ postings: [listed] });
+    const check = await screen.findByRole("button", { name: "지원완료 해제" });
+    expect(check).toHaveClass("on");
+    await userEvent.click(check);
+    expect(onToggleApplied).toHaveBeenCalledWith(listed);
+  });
+
+  it("목록에 없으면 상세 응답으로 토글하고 성공하면 복사본을 갱신한다", async () => {
+    stubApi(makeDetail({ id: 1 }));
+    const { onToggleApplied } = renderDetail({ postings: [makePosting({ id: 2 })] });
+    await userEvent.click(await screen.findByRole("button", { name: "지원완료" }));
+    expect(onToggleApplied).toHaveBeenCalledWith(expect.objectContaining({ id: 1, application: null }));
+    expect(await screen.findByRole("button", { name: "지원완료 해제" })).toHaveClass("on");
+
+    onToggleApplied.mockResolvedValue(false);
+    await userEvent.click(screen.getByRole("button", { name: "지원완료 해제" }));
+    expect(screen.getByRole("button", { name: "지원완료 해제" })).toHaveClass("on");
+  });
+
+  it("마감 공고는 마감 배지, 별·숨김 disabled, 지원 링크와 피드백 버튼은 그대로", async () => {
+    stubApi(makeDetail({ id: 1, ...closed, application: applied, deadline: "2026-10-30" }));
+    renderDetail();
+    expect(await screen.findByText("마감")).toHaveClass("closed");
+    expect(screen.getByRole("button", { name: "북마크" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "숨김" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "지원완료 해제" })).toBeEnabled();
+    expect(screen.getByRole("link", { name: /지원하기/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "피드백 생성" })).toBeEnabled();
+  });
+
+  it("상세에 머문 채 마감 공고를 해제하면 상세는 유지되고 체크가 disabled", async () => {
+    stubApi(makeDetail({ id: 1, title: "Closed One", ...closed, application: applied }));
+    renderDetail();
+    await userEvent.click(await screen.findByRole("button", { name: "지원완료 해제" }));
+    const check = await screen.findByRole("button", { name: "지원완료" });
+    expect(check).toBeDisabled();
+    expect(screen.getByRole("heading", { level: 2, name: "Closed One" })).toBeInTheDocument();
   });
 });

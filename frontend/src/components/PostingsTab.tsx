@@ -14,6 +14,7 @@ interface Props {
   onScrape: () => void;
   onToggleBookmark: (p: Posting) => void;
   onToggleHidden: (p: Posting) => void;
+  onToggleApplied: (p: Posting) => void;
 }
 
 function lastScrapedAt(companies: Company[]): string | null {
@@ -38,7 +39,7 @@ const parseCompanies = (raw: unknown) => (Array.isArray(raw) && raw.every((c) =>
 const parseLevel = (raw: unknown) => (typeof raw === "string" && Object.hasOwn(LEVEL_RANK, raw) ? (raw as Level) : null);
 const parseSort = (raw: unknown) => (typeof raw === "string" && Object.hasOwn(SORTS, raw) ? (raw as Sort) : null);
 
-export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark, onToggleHidden }: Props) {
+export function PostingsTab({ postings, companies, byId, job, scraping, onScrape, onToggleBookmark, onToggleHidden, onToggleApplied }: Props) {
   // 해제한 회사를 저장해 새로 추가된 회사는 기본 선택 상태가 되게 한다
   const [excluded, setExcluded] = useSessionState<string[]>("postings.excludedCompanies", [], parseCompanies);
   const [minLevel, setMinLevel] = useSessionState<Level>("postings.minLevel", "stretch", parseLevel);
@@ -107,7 +108,7 @@ export function PostingsTab({ postings, companies, byId, job, scraping, onScrape
       <div className="list">
         {items.length ? (
           items.slice(0, visible).map((p) => (
-            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} visible={visible} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} />
+            <PostingCard key={p.id} posting={p} companyName={byId[p.company]?.display_name ?? p.company} visible={visible} onToggleBookmark={onToggleBookmark} onToggleHidden={onToggleHidden} onToggleApplied={onToggleApplied} />
           ))
         ) : noneSelected ? (
           <div className="empty">
