@@ -121,6 +121,7 @@ def test_rejudged_exclude_hard_deletes_with_bookmark_and_feedback(tmp_path):
     jobs.repo.set_bookmark(pid, True, "T1")
     jobs.repo.set_hidden(pid, True, "T1")
     jobs.repo.set_feedback(pid, "h", ["a: b"], "T1")
+    jobs.repo.set_application(pid, "T1")
 
     async def exclude(profile, postings):
         return [Match(external_id=p.external_id, fit_level="exclude", score=10, gaps=[], summary="summary text",
@@ -132,7 +133,7 @@ def test_rejudged_exclude_hard_deletes_with_bookmark_and_feedback(tmp_path):
     assert job.companies["a"].excluded == 1 and job.companies["a"].stored == 0
     conn = jobs.repo.conn
     assert conn.execute("SELECT count(*) FROM postings WHERE id=?", (pid,)).fetchone()[0] == 0
-    for table in ("bookmarks", "hides", "feedbacks"):
+    for table in ("bookmarks", "hides", "feedbacks", "applications"):
         assert conn.execute(f"SELECT count(*) FROM {table} WHERE posting_id=?", (pid,)).fetchone()[0] == 0, table
     assert jobs.repo.judged_ids("a") == {"1"}
 

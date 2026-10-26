@@ -194,6 +194,20 @@ def create_app(repo: Repository, jobs: JobManager,
     def remove_hide(posting_id: int):
         return hide(posting_id, False)
 
+    # 지원완료는 리소스 (spec 0015). 후속 spec에서 PUT body {stage}로 단계 변경에도 쓴다
+    @api.put("/postings/{posting_id}/application")
+    def add_application(posting_id: int):
+        application = repo.set_application(posting_id, now_iso())
+        if application is None:
+            raise HTTPException(status_code=404, detail="posting not found")
+        return {"posting_id": posting_id, "application": application}
+
+    @api.delete("/postings/{posting_id}/application")
+    def remove_application(posting_id: int):
+        if not repo.clear_application(posting_id, now_iso()):
+            raise HTTPException(status_code=404, detail="posting not found")
+        return {"posting_id": posting_id, "application": None}
+
     @api.get("/resume")
     def resume_files():
         return resume.list_files(resume_dir)

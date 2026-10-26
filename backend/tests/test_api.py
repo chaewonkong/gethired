@@ -333,6 +333,63 @@ def test_hide_put_delete(tmp_path):
         assert client.delete("/api/postings/9999/hide").status_code == 404
 
 
+def test_application_put_delete(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        wait_job(client, client.post("/api/scrape").json()["job_id"])
+        first = client.get("/api/postings").json()[0]
+        assert first["application"] is None and first["deleted_at"] is None
+
+        r = client.put(f"/api/postings/{first['id']}/application")
+        assert r.status_code == 200
+        body = r.json()
+        assert set(body) == {"posting_id", "application"} and body["posting_id"] == first["id"]
+        assert set(body["application"]) == {"applied_at", "stage"} and body["application"]["stage"] is None
+        assert client.put(f"/api/postings/{first['id']}/application").json() == body  # 멱등
+        assert [p["application"] for p in client.get("/api/postings").json() if p["id"] == first["id"]] == [body["application"]]
+        assert client.get(f"/api/postings/{first['id']}").json()["application"] == body["application"]
+
+        r = client.delete(f"/api/postings/{first['id']}/application")
+        assert r.status_code == 200 and r.json() == {"posting_id": first["id"], "application": None}
+        assert all(p["application"] is None for p in client.get("/api/postings").json())
+        assert repo.get_application(first["id"])["deleted_at"] is not None
+
+        assert client.put("/api/postings/9999/application").status_code == 404
+        assert client.delete("/api/postings/9999/application").status_code == 404
+
+
+def test_applied_posting_survives_soft_delete(tmp_path):
+    client, repo = make_client(tmp_path)
+    with client:
+        wait_job(client, client.post("/api/scrape").json()["job_id"])
+        by_eid = {p["external_id"]: p for p in client.get("/api/postings").json()}
+        pid = by_eid["1"]["id"]
+        applied = client.put(f"/api/postings/{pid}/application").json()["application"]
+
+        FakeScraper.data["a"] = [posting("a", "2", "iOS Engineer")]  # "1" 사라짐
+        FakeScraper.data["b"] = []  # 0건은 실패 → "3"은 soft delete 안 됨
+        wait_job(client, client.post("/api/scrape").json()["job_id"])
+        repo.conn.execute("UPDATE postings SET deleted_at='T9' WHERE id=?", (by_eid["3"]["id"],))
+        repo.conn.commit()
+
+        rows = client.get("/api/postings").json()
+        assert [p["external_id"] for p in rows] == ["1"]  # 지원완료만 남고 비지원 마감("3")은 제외
+        assert rows[0]["deleted_at"] and rows[0]["application"] == applied
+        detail = client.get(f"/api/postings/{pid}")
+        assert detail.status_code == 200 and detail.json()["deleted_at"] == rows[0]["deleted_at"]
+        assert client.get(f"/api/postings/{by_eid['3']['id']}").status_code == 404
+
+        assert client.put(f"/api/postings/{pid}/application").status_code == 404  # 마감은 새로 지원완료 불가
+        assert client.put(f"/api/postings/{pid}/bookmark").status_code == 404
+        r = client.post(f"/api/postings/{pid}/feedback")  # 마감된 지원완료 공고도 피드백 생성 가능 (spec 예외)
+        assert r.status_code == 200 and len(feedback_calls) == 1
+        assert client.post(f"/api/postings/{by_eid['3']['id']}/feedback").status_code == 404
+
+        assert client.delete(f"/api/postings/{pid}/application").status_code == 200
+        assert client.get("/api/postings").json() == []
+        assert client.get(f"/api/postings/{pid}").status_code == 404
+
+
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 
 

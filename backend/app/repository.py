@@ -63,6 +63,13 @@ CREATE TABLE IF NOT EXISTS hides (
     created_at TEXT NOT NULL,
     deleted_at TEXT
 );
+CREATE TABLE IF NOT EXISTS applications (
+    posting_id INTEGER PRIMARY KEY REFERENCES postings(id),
+    stage TEXT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    deleted_at TEXT
+);
 CREATE TABLE IF NOT EXISTS interests (
     company TEXT PRIMARY KEY,
     created_at TEXT NOT NULL
@@ -84,6 +91,10 @@ _SELECT_POSTINGS = ("SELECT p.*, b.posting_id IS NOT NULL AS bookmarked, h.posti
                     " FROM postings p"
                     " LEFT JOIN bookmarks b ON b.posting_id = p.id AND b.deleted_at IS NULL"
                     " LEFT JOIN hides h ON h.posting_id = p.id AND h.deleted_at IS NULL")
+# spec 0015. readonly 옛 DB에는 applications가 없어 JOIN 없는 _SELECT_POSTINGS로 폴백한다
+_SELECT_POSTINGS_APPLIED = (_SELECT_POSTINGS
+                            .replace(" FROM postings p", ", a.created_at AS applied_at, a.stage AS stage FROM postings p")
+                            + " LEFT JOIN applications a ON a.posting_id = p.id AND a.deleted_at IS NULL")
 
 _fixed_now: str | None = None
 
@@ -120,6 +131,8 @@ def _row(r: sqlite3.Row, keep_description: bool = False) -> dict[str, Any]:
     for k in ("bookmarked", "hidden"):
         if k in d:
             d[k] = bool(d[k])
+    applied_at, stage = d.pop("applied_at", None), d.pop("stage", None)
+    d["application"] = {"applied_at": applied_at, "stage": stage} if applied_at else None
     if not keep_description:
         d.pop("description", None)  # 목록 응답 크기. SELECT는 p.*를 유지한다 (명시 컬럼은 옛 DB에서 no such column)
     return d
@@ -142,6 +155,7 @@ class Repository:
                 raise FileNotFoundError(path)
             self.conn = sqlite3.connect(Path(path).resolve().as_uri() + "?mode=ro", uri=True, check_same_thread=False)
             self.conn.row_factory = sqlite3.Row
+            self._has_applications = self._has_table("applications")
             return
         if path != ":memory:":
             Path(path).parent.mkdir(parents=True, exist_ok=True)
@@ -149,6 +163,14 @@ class Repository:
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
         self._migrate()
+        self._has_applications = True
+
+    def _has_table(self, name: str) -> bool:
+        return bool(self.conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (name,)).fetchone())
+
+    def _select(self) -> str:
+        return _SELECT_POSTINGS_APPLIED if self._has_applications else _SELECT_POSTINGS
 
     def _migrate(self) -> None:
         cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(postings)")}
@@ -203,14 +225,20 @@ class Repository:
         self.conn.commit()
         return len(gone)
 
+    def _alive(self) -> str:
+        """지원완료 공고는 soft delete돼도 이력으로 남긴다 (spec 0015). applications가 없는 옛 DB는 기존 조건"""
+        return "(p.deleted_at IS NULL OR a.posting_id IS NOT NULL)" if self._has_applications else "p.deleted_at IS NULL"
+
     def list_postings(self, company: str | None = None, min_level: str | None = None,
                       include_deleted: bool = False, include_hidden: bool = True, interests_only: bool = False,
-                      since: str | None = None) -> list[dict[str, Any]]:
+                      since: str | None = None, include_applied: bool = True) -> list[dict[str, Any]]:
         where, params = [], []
         if not include_deleted:
-            where.append("p.deleted_at IS NULL")
+            where.append(self._alive())
         if not include_hidden:
             where.append("h.posting_id IS NULL")
+        if not include_applied and self._has_applications:
+            where.append("a.posting_id IS NULL")
         if interests_only:
             where.append("p.company IN (SELECT company FROM interests)")
         if company:
@@ -220,7 +248,7 @@ class Repository:
             levels = [lv for lv, rank in LEVEL_RANK.items() if rank >= LEVEL_RANK[min_level]]
             where.append(f"fit_level IN ({','.join('?' * len(levels))})")
             params += levels
-        sql = (_SELECT_POSTINGS + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
+        sql = (self._select() + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY p.score DESC, p.id")
         rows = [_row(r) for r in self.conn.execute(sql, params).fetchall()]
         if since:  # 오프셋이 섞일 수 있어 문자열 비교 대신 시각으로
             # readonly는 마이그레이션 전 DB일 수 있어 scraped_at으로 대체
@@ -228,12 +256,12 @@ class Repository:
         return rows
 
     def get_posting(self, posting_id: int) -> dict[str, Any] | None:
-        """상세 1건. description 포함. 삭제된 공고는 None, 숨김은 반환"""
-        r = self.conn.execute(_SELECT_POSTINGS + " WHERE p.id=? AND p.deleted_at IS NULL", (posting_id,)).fetchone()
+        """상세 1건. description 포함. 삭제된 공고는 None(지원완료면 반환), 숨김은 반환"""
+        r = self.conn.execute(self._select() + f" WHERE p.id=? AND {self._alive()}", (posting_id,)).fetchone()
         return _row(r, keep_description=True) if r else None
 
     def delete_postings(self, company: str, external_ids: set[str]) -> int:
-        """hard delete. 재판정에서 exclude로 바뀐 공고용 (soft delete는 mark_seen이 되살린다). 북마크·숨김·피드백도 함께"""
+        """hard delete. 재판정에서 exclude로 바뀐 공고용 (soft delete는 mark_seen이 되살린다). 북마크·숨김·피드백·지원완료도 함께"""
         if not external_ids:
             return 0
         marks = ",".join("?" * len(external_ids))
@@ -242,7 +270,7 @@ class Repository:
         if not ids:
             return 0
         id_marks = ",".join("?" * len(ids))
-        for table in ("bookmarks", "hides", "feedbacks"):
+        for table in ("bookmarks", "hides", "feedbacks", "applications"):
             self.conn.execute(f"DELETE FROM {table} WHERE posting_id IN ({id_marks})", ids)
         self.conn.execute(f"DELETE FROM postings WHERE id IN ({id_marks})", ids)
         self.conn.commit()
@@ -289,6 +317,34 @@ class Repository:
 
     def get_hidden(self, posting_id: int) -> dict[str, Any] | None:
         r = self.conn.execute("SELECT * FROM hides WHERE posting_id=?", (posting_id,)).fetchone()
+        return dict(r) if r else None
+
+    # --- applications (spec 0015) ---
+    # deleted_at은 사용자 해제 전용. 북마크·숨김과 달리 공고가 soft delete돼도 이력으로 남는다 (_alive).
+    def set_application(self, posting_id: int, now: str) -> dict[str, Any] | None:
+        """지원완료. 활성 공고가 없으면(삭제 포함) None. 이미 지원완료면 created_at 유지"""
+        if not self.conn.execute("SELECT 1 FROM postings WHERE id=? AND deleted_at IS NULL", (posting_id,)).fetchone():
+            return None
+        self.conn.execute(
+            """INSERT INTO applications (posting_id, stage, created_at, updated_at) VALUES (?, NULL, ?, ?)
+               ON CONFLICT (posting_id) DO UPDATE SET stage=NULL, created_at=excluded.created_at,
+                 updated_at=excluded.updated_at, deleted_at=NULL
+               WHERE applications.deleted_at IS NOT NULL""", (posting_id, now, now))
+        self.conn.commit()
+        r = self.conn.execute("SELECT created_at, stage FROM applications WHERE posting_id=?", (posting_id,)).fetchone()
+        return {"applied_at": r["created_at"], "stage": r["stage"]}
+
+    def clear_application(self, posting_id: int, now: str) -> bool:
+        """해제. 공고 행이 없으면 False. 삭제(마감) 여부 무관, 활성 지원완료가 없어도 True"""
+        if not self.conn.execute("SELECT 1 FROM postings WHERE id=?", (posting_id,)).fetchone():
+            return False
+        self.conn.execute("UPDATE applications SET deleted_at=? WHERE posting_id=? AND deleted_at IS NULL",
+                          (now, posting_id))
+        self.conn.commit()
+        return True
+
+    def get_application(self, posting_id: int) -> dict[str, Any] | None:
+        r = self.conn.execute("SELECT * FROM applications WHERE posting_id=?", (posting_id,)).fetchone()
         return dict(r) if r else None
 
     # --- interests ---

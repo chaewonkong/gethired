@@ -312,6 +312,8 @@ def old_db_0013(path):
         schema = schema.replace(f"    {col} TEXT,\n", "")
     schema, n = re.subn(r"CREATE TABLE IF NOT EXISTS feedbacks \(.*?\);\n", "", schema, flags=re.S)
     assert n == 1
+    schema, n = re.subn(r"CREATE TABLE IF NOT EXISTS applications \(.*?\);\n", "", schema, flags=re.S)
+    assert n == 1
     conn = sqlite3.connect(path)
     conn.executescript(schema)
     conn.execute("""INSERT INTO postings (company, external_id, title, summary, tech_stack, fit_level, score, gaps,
@@ -340,8 +342,10 @@ def test_readonly_old_db_tolerates_missing_columns_and_table(tmp_path):
     ro = Repository(db, readonly=True)
     rows = ro.list_postings()
     assert len(rows) == 1 and "breakdown" not in rows[0] and "description" not in rows[0]
+    assert rows[0]["application"] is None
+    assert [r["id"] for r in ro.list_postings(include_applied=False, include_hidden=False)] == [rows[0]["id"]]
     detail = ro.get_posting(rows[0]["id"])
-    assert detail["external_id"] == "a" and "breakdown" not in detail
+    assert detail["external_id"] == "a" and "breakdown" not in detail and detail["application"] is None
     assert ro.feedback_for(rows[0]["id"], "h") is None
 
 
@@ -389,8 +393,10 @@ def test_delete_postings_removes_bookmark_hide_feedback():
     repo.set_bookmark(a, True, "T1")
     repo.set_hidden(a, True, "T1")
     repo.set_feedback(a, "h", ["x: y"], "T1")
+    repo.set_application(a, "T1")
     assert repo.delete_postings("toss", {"a", "missing"}) == 1
     assert repo.get_posting(a) is None and repo.get_bookmark(a) is None and repo.get_hidden(a) is None
+    assert repo.get_application(a) is None
     assert repo.conn.execute("SELECT count(*) FROM feedbacks").fetchone()[0] == 0
     assert {(p["company"], p["external_id"]) for p in repo.list_postings()} == {("toss", "b"), ("naver", "a")}
     assert repo.delete_postings("toss", set()) == 0
@@ -416,3 +422,57 @@ def test_row_normalizes_string_requirements_to_objects():
     repo.upsert_postings([row(eid="a", requirements=["문자열 요건"], preferred=[])])
     got = repo.list_postings()[0]
     assert got["requirements"] == [{"text": "문자열 요건", "fit": None}] and got["preferred"] == []
+
+
+# --- spec 0015: 지원완료 ---
+def applied(repo):
+    return [p["external_id"] for p in repo.list_postings() if p["application"]]
+
+
+def test_application_set_clear_reapply_and_idempotent():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b")])
+    a = next(p["id"] for p in repo.list_postings() if p["external_id"] == "a")
+    assert all(p["application"] is None for p in repo.list_postings())
+
+    assert repo.set_application(a, "T1") == {"applied_at": "T1", "stage": None}
+    assert repo.set_application(a, "T2") == {"applied_at": "T1", "stage": None}  # 멱등
+    assert applied(repo) == ["a"]
+    assert repo.get_posting(a)["application"] == {"applied_at": "T1", "stage": None}
+    assert [p["external_id"] for p in repo.list_postings(include_applied=False)] == ["b"]
+
+    assert repo.clear_application(a, "T3") is True
+    assert applied(repo) == [] and repo.get_application(a)["deleted_at"] == "T3"
+    assert repo.clear_application(a, "T4") is True  # 이미 해제여도 True
+    assert repo.get_application(a)["deleted_at"] == "T3"
+
+    assert repo.set_application(a, "T5") == {"applied_at": "T5", "stage": None}  # 재지원은 created_at 갱신
+    assert repo.get_application(a)["updated_at"] == "T5"
+    assert repo.set_application(9999, "T6") is None
+    assert repo.clear_application(9999, "T6") is False
+
+
+def test_applied_posting_survives_soft_delete_and_restores():
+    repo = Repository()
+    repo.upsert_postings([row(eid="a"), row(eid="b")])
+    ids = {p["external_id"]: p["id"] for p in repo.list_postings()}
+    repo.set_application(ids["a"], "T1")
+    repo.set_bookmark(ids["b"], True, "T1")
+
+    assert repo.soft_delete_missing("toss", set(), "T2") == 2
+    rows = repo.list_postings()
+    assert [(p["external_id"], p["deleted_at"]) for p in rows] == [("a", "T2")]  # 지원완료만 남는다
+    assert rows[0]["application"]["applied_at"] == "T1"
+    assert repo.get_posting(ids["a"])["deleted_at"] == "T2" and repo.get_posting(ids["b"]) is None
+    assert repo.list_postings(include_applied=False) == []
+    assert repo.set_application(ids["a"], "T3") is None  # 마감 공고는 새로 지원완료 불가
+    assert repo.clear_application(ids["a"], "T3") is True  # 해제는 가능
+    assert repo.list_postings() == [] and repo.get_posting(ids["a"]) is None
+
+    assert repo.set_application(ids["a"], "T4") is None  # 해제된 마감 공고도 마찬가지
+    repo.mark_seen("toss", {"a"}, "T5")
+    assert repo.set_application(ids["a"], "T6") == {"applied_at": "T6", "stage": None}
+    repo.soft_delete_missing("toss", set(), "T7")
+    repo.mark_seen("toss", {"a"}, "T8")
+    p = repo.get_posting(ids["a"])
+    assert p["deleted_at"] is None and p["application"] == {"applied_at": "T6", "stage": None}
