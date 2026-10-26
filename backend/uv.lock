@@ -238,7 +238,7 @@ wheels = [
 
 [[package]]
 name = "gethired"
-version = "0.5.0"
+version = "0.6.0"
 source = { editable = "." }
 dependencies = [
     { name = "claude-agent-sdk" },
